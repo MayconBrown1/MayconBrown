@@ -115,6 +115,19 @@
       margin-top: 30px;
     }
 
+    .video-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .video-container iframe {
+      width: 300px;
+      height: 169px;
+      border: none;
+    }
+
     @media (max-width: 768px) {
       .buttons {
         flex-direction: column;
@@ -135,7 +148,12 @@
       }
       
       .header-image {
-        border: 3px neno #636363; /* Borda menor no tablet */
+        border: 3px none #636363; /* Borda menor no tablet */
+      }
+
+      .video-container iframe {
+        width: 200px;
+        height: 112px;
       }
     }
 
@@ -162,6 +180,11 @@
         max-width: 90%; /* Reduz o tamanho da imagem no mobile */
         border: 2px none #636363; /* Borda ainda menor no mobile */
       }
+
+      .video-container iframe {
+        width: 160px;
+        height: 90px;
+      }
     }
   </style>
 </head>
@@ -181,6 +204,13 @@
       <a href="https://www.exemplo-matriz.com" class="button">Matriz</a>
       <a href="https://www.exemplo-pack-de-artes.com" class="button">Pack de Artes</a>
       <a href="https://www.exemplo-repertorio.com" class="button">Repertório</a>
+    </div>
+
+    <!-- Video Section -->
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/bAkOCak3A1o" title="Vídeo 1" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/1kQ7v7uRsR4" title="Vídeo 2" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/xqdjF2N9V7Q" title="Vídeo 3" allowfullscreen></iframe>
     </div>
   </div>
 
