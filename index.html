@@ -3,21 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exemplo de Imagem</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <a href="https://www.mayconbrown.wordpress.com" target="_blank">
-        <img src="123.png" alt="Descrição da Imagem" class="header-image">
-      </a>
-      
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maycon Brown</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -25,17 +10,35 @@
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+    }
+
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #f1f1f1;
+    }
+
+    .header-image {
+      max-width: 100%;
+      height: auto;
     }
 
     .container {
       width: 100%;
+      max-width: 1200px;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     .buttons {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-top: 20px;
     }
 
     .button {
@@ -47,53 +50,21 @@
       border-radius: 20px;
       cursor: pointer;
       font-size: 16px;
+      text-decoration: none;
     }
 
     .button:hover {
       background-color: #00244b;
     }
-  </style>
-</head>
-
-  <div class="container">
-    <h1>Maycon Brown</h1>
-    <p>Aqui nesse site você vai encontrar diversos serviços que possam te atender nesse mundo digital.</p>
-    
-    <div class="buttons">
-        <a href="https://www.exemplo-software.com" class="button">Software</a>
-        <a href="https://www.exemplo-formatacao.com" class="button">Formatação</a>
-        <a href="https://www.exemplo-matriz.com" class="button">Matriz</a>
-        <a href="https://www.exemplo-pack-de-artes.com" class="button">Pack de Artes</a>
-        <a href="https://www.exemplo-repertorio.com" class="button">Repertório</a>
-    </div>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      var menuContent = document.getElementById('menu-content');
-      menuContent.style.display = (menuContent.style.display === 'block') ? 'none' : 'block';
-    }
-  </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sobre</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      padding: 50px;
-    }
 
     .form-container {
       max-width: 600px;
-      margin: auto;
+      margin: 20px auto;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
     }
 
     .form-group {
@@ -134,6 +105,66 @@
     .content {
       margin-top: 30px;
     }
+
+    @media (max-width: 768px) {
+      .buttons {
+        flex-direction: column;
+      }
+      
+      .button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+      
+      .form-group input, .form-group textarea {
+        font-size: 14px;
+      }
+      
+      .form-group button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 5px;
+      }
+      
+      .button {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .form-group input, .form-group textarea {
+        font-size: 12px;
+      }
+      
+      .form-group button {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
   </style>
 </head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body>
+
+  <header>
+    <a href="https://www.mayconbrown.wordpress.com" target="_blank">
+      <img src="C:\Users\BROWN01\Pictures\123.png" alt="Descrição da Imagem" class="header-image">
+    </a>
+  </header>
+
+  <div class="container">
+    <h1>Maycon Brown</h1>
+    <p>Aqui nesse site você vai encontrar diversos serviços que possam te atender nesse mundo digital.</p>
+    
+    <div class="buttons">
+      <a href="https://www.exemplo-software.com" class="button">Software</a>
+      <a href="https://www.exemplo-formatacao.com" class="button">Formatação</a>
+      <a href="https://www.exemplo-matriz.com" class="button">Matriz</a>
+      <a href="https://www.exemplo-pack-de-artes.com" class="button">Pack de Artes</a>
+      <a href="https://www.exemplo-repertorio.com" class="button">Repertório</a>
+    </div>
+  </div>
+
