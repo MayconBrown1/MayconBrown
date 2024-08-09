@@ -10,12 +10,27 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f4f4f4;
+    background-color: #000000;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff; /* Cor do texto dos botões */
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    opacity: 0.8;
 }
 
 .container {
     max-width: 600px;
-    margin: 20px auto;
+    margin: 60px auto 20px auto; /* Adiciona margem no topo para compensar o botão fixo */
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -31,20 +46,27 @@ p {
     margin-bottom: 10px;
 }
 
+/* Estilos para o botão de voltar */
+.back-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #000000; /* Cor preta */
+    color: #fff; /* Cor do texto em branco para contraste */
+    border: none;
+}
+
+.back-button:hover {
+    background-color: #333; /* Cor de hover para preto mais escuro */
+}
+
+/* Estilos para o botão de clique */
 .button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
     background-color: #25D366; /* Cor do botão do WhatsApp */
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: #128C7E; /* Cor de hover do WhatsApp */
+    background-color: #860000; /* Cor de hover do botão do WhatsApp */
 }
 
 /* Media Queries para telas menores */
@@ -58,6 +80,11 @@ p {
     }
 
     .button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .back-button {
         font-size: 14px;
         padding: 8px 15px;
     }
