@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo de Imagem</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="https://www.mayconbrown.wordpress.com" target="_blank">
+        <img src="C:\Users\BROWN01\Pictures\123.png" alt="Descrição da Imagem" class="header-image">
+      </a>
+      
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maycon Brown</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+    }
+
+    .container {
+      width: 100%;
+      padding: 20px;
+    }
+
+    .menu {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      cursor: pointer;
+    }
+
+    .menu-content {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 20px;
+      background: #333;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .menu-content a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .menu-content a:hover {
+      text-decoration: underline;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      text-align: center;
+      color: #fff;
+      background-color: #001aff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .button:hover {
+      background-color: #00244b;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu" onclick="toggleMenu()">☰</div>
+  <div id="menu-content" class="menu-content">
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+  </div>
+
+  <div class="container">
+    <h1>Maycon Brown</h1>
+    <p>Aqui nesse site você vai encontrar diversos serviços que possam te atender nesse mundo digital.</p>
+    
+    <div class="buttons">
+        <a href="https://www.exemplo-software.com" class="button">Software</a>
+        <a href="https://www.exemplo-formatacao.com" class="button">Formatação</a>
+        <a href="https://www.exemplo-matriz.com" class="button">Matriz</a>
+        <a href="https://www.exemplo-pack-de-artes.com" class="button">Pack de Artes</a>
+        <a href="https://www.exemplo-repertorio.com" class="button">Repertório</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      var menuContent = document.getElementById('menu-content');
+      menuContent.style.display = (menuContent.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      padding: 50px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+    }
+
+    .form-group textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .form-group button {
+      padding: 10px 20px;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+
+    .content {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Suporte</h1>
+    <form action="processar-contato.php" method="post">
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="whatsapp">WhatsApp:</label>
+        <input type="text" id="whatsapp" name="whatsapp">
+      </div>
+      <div class="form-group">
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" required></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+    
