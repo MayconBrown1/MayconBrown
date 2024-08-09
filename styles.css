@@ -1,0 +1,33 @@
+.video-container {
+    display: flex;
+    flex-direction: row; /* Alinha os vídeos horizontalmente */
+    gap: 10px;
+    margin-top: 30px;
+    overflow-x: auto; /* Permite rolar horizontalmente se necessário */
+    padding: 10px; /* Adiciona algum espaço interno para rolagem */
+  }
+  
+  .video-container iframe {
+    width: 340px; /* Define a largura dos vídeos */
+    height: 600px; /* Define a altura dos vídeos */
+    border: none;
+  }
+  
+  @media (max-width: 768px) {
+    .video-container iframe {
+      width: 360px; /* Ajusta a largura para tamanhos médios */
+      height: 640px; /* Ajusta a altura para tamanhos médios */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .video-container {
+      flex-wrap: nowrap; /* Garante que os vídeos não quebrem para a linha seguinte */
+    }
+  
+    .video-container iframe {
+      width: 240px; /* Ajusta a largura para dispositivos móveis */
+      height: 426px; /* Ajusta a altura para dispositivos móveis */
+    }
+  }
+  
