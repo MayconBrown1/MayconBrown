@@ -1,192 +1,221 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    background-color: #000; /* Fundo preto */
-    color: #fff; /* Texto branco */
-  }
-  
-  header {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    background-color: #333; /* Cor de fundo do cabeçalho */
-  }
-  
-  .header-image {
-    max-width: 100%;
-    height: auto;
-    border: 5px none #636363; /* Borda padrão */
-    border-radius: 10px; /* Bordas arredondadas padrão */
-  }
-  
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #1a1a1a; /* Cor de fundo da seção principal */
-    border-radius: 10px; /* Bordas arredondadas da seção */
-  }
-  
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .button {
-    padding: 20px 40px; /* Aumenta o tamanho vertical dos botões */
-    text-align: center;
-    color: #fff;
-    background-color: #001aff;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 24px; /* Aumenta o tamanho da fonte */
-    text-decoration: none;
-  }
-  
-  .button:hover {
-    background-color: #00244b;
-  }
-  
-  .form-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #333; /* Cor de fundo do formulário */
-    border: 1px solid #555; /* Borda do formulário */
-    border-radius: 5px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #ccc; /* Cor do texto das labels */
-  }
-  
-  .form-group input, .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #666; /* Cor da borda dos campos */
-    border-radius: 5px;
-    background-color: #222; /* Cor de fundo dos campos */
-    color: #fff; /* Cor do texto dos campos */
-  }
-  
-  .form-group textarea {
-    height: 150px;
-    resize: vertical;
-  }
-  
-  .form-group button {
-    padding: 10px 20px;
-    color: #fff;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .form-group button:hover {
-    background-color: #0056b3;
-  }
-  
-  .content {
-    margin-top: 30px;
-  }
-  
-  .video-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 30px;
-    flex-wrap: wrap; /* Permite que os vídeos se ajustem em múltiplas linhas em telas menores */
-  }
-  
-  .video-container iframe {
-    width: 340px; /* Metade da largura desejada (1080px) */
-    height: 600px; /* Altura desejada (1920px) */
-    border: none;
-  }
-  
-  @media (max-width: 768px) {
-    .buttons {
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maycon Brown</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
       flex-direction: column;
+      align-items: center;
+      padding: 0;
+      background-color: #000; /* Fundo preto */
+      color: #fff; /* Texto branco */
     }
-    
-    .button {
-      font-size: 20px; /* Ajusta o tamanho da fonte para tamanhos médios */
-      padding: 16px 32px; /* Ajusta o padding para tamanhos médios */
-    }
-    
-    .form-group input, .form-group textarea {
-      font-size: 14px;
-    }
-    
-    .form-group button {
-      font-size: 14px;
-      padding: 8px 16px;
-    }
-    
-    .header-image {
-      border: 3px none #636363; /* Borda menor no tablet */
-    }
-  
-    .video-container {
-      flex-direction: row; /* Garante que os vídeos fiquem lado a lado */
-      overflow-x: auto; /* Permite rolar horizontalmente se necessário */
-    }
-  
-    .video-container iframe {
-      width: 300px; /* Largura ajustada para tamanhos médios */
-      height: 400px; /* Altura ajustada para tamanhos médios */
-    }
-  }
-  
-  @media (max-width: 480px) {
+
     header {
-      padding: 5px;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #333; /* Cor de fundo do cabeçalho */
     }
-    
-    .button {
-      font-size: 18px; /* Ajusta o tamanho da fonte para dispositivos móveis */
-      padding: 12px 24px; /* Ajusta o padding para dispositivos móveis */
-    }
-  
-    .form-group input, .form-group textarea {
-      font-size: 12px;
-    }
-    
-    .form-group button {
-      font-size: 12px;
-      padding: 6px 12px;
-    }
-  
+
     .header-image {
-      max-width: 90%; /* Reduz o tamanho da imagem no mobile */
-      border: 2px none #636363; /* Borda ainda menor no mobile */
+      max-width: 100%;
+      height: auto;
+      border: 5px none #636363; /* Borda padrão */
+      border-radius: 10px; /* Bordas arredondadas padrão */
     }
-  
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #1a1a1a; /* Cor de fundo da seção principal */
+      border-radius: 10px; /* Bordas arredondadas da seção */
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .button {
+      padding: 20px 40px; /* Aumenta o tamanho vertical dos botões */
+      text-align: center;
+      color: #fff;
+      background-color: #001aff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 24px; /* Aumenta o tamanho da fonte */
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #00244b;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #333; /* Cor de fundo do formulário */
+      border: 1px solid #555; /* Borda do formulário */
+      border-radius: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #ccc; /* Cor do texto das labels */
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #666; /* Cor da borda dos campos */
+      border-radius: 5px;
+      background-color: #222; /* Cor de fundo dos campos */
+      color: #fff; /* Cor do texto dos campos */
+    }
+
+    .form-group textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .form-group button {
+      padding: 10px 20px;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+
+    .content {
+      margin-top: 30px;
+    }
+
     .video-container {
-      flex-direction: row; /* Garante que os vídeos fiquem lado a lado */
-      overflow-x: auto; /* Permite rolar horizontalmente se necessário */
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+      flex-wrap: wrap; /* Permite que os vídeos se ajustem em múltiplas linhas em telas menores */
     }
-  
+
     .video-container iframe {
-      width: 100px; /* Ajusta a largura para dispositivos móveis */
-      height: 180px; /* Ajusta a altura para dispositivos móveis */
+      width: 340px; /* Metade da largura desejada (1080px) */
+      height: 600px; /* Altura desejada (1920px) */
+      border: none;
     }
-  }
-  
+
+    @media (max-width: 768px) {
+      .buttons {
+        flex-direction: column;
+      }
+      
+      .button {
+        font-size: 20px; /* Ajusta o tamanho da fonte para tamanhos médios */
+        padding: 16px 32px; /* Ajusta o padding para tamanhos médios */
+      }
+      
+      .form-group input, .form-group textarea {
+        font-size: 14px;
+      }
+      
+      .form-group button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+      
+      .header-image {
+        border: 3px none #636363; /* Borda menor no tablet */
+      }
+
+      .video-container iframe {
+        width: 360px; /* Ajusta a largura para tamanhos médios */
+        height: 640px; /* Ajusta a altura para tamanhos médios */
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 5px;
+      }
+      
+      .button {
+        font-size: 18px; /* Ajusta o tamanho da fonte para dispositivos móveis */
+        padding: 12px 24px; /* Ajusta o padding para dispositivos móveis */
+      }
+
+      .form-group input, .form-group textarea {
+        font-size: 12px;
+      }
+      
+      .form-group button {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .header-image {
+        max-width: 90%; /* Reduz o tamanho da imagem no mobile */
+        border: 2px none #636363; /* Borda ainda menor no mobile */
+      }
+
+      .video-container iframe {
+        width: 240px; /* Ajusta a largura para dispositivos móveis */
+        height: 426px; /* Ajusta a altura para dispositivos móveis */
+      }
+    }
+  </style>
+</head> <link rel="stylesheet" href="style.css">
+
+<body>
+
+  <header>
+    <img src="logobranca.png" alt="Descrição da Imagem" class="header-image">
+  </header>
+
+  <div class="container">
+    <h1>Maycon Brown</h1>
+    <p>Olá! Tudo bem? Meu nome é Maycon Brown e trabalho diretamente online.</p>
+      <p>Estou aqui para te servir.</p>
+      <p>No que posso ajudar? Escolha uma das opções abaixo.</p>
+    <div class="buttons">
+      <a href="https://sb-homes.my.canva.site/brown-softwares-vitalicio" class="button">Software</a>
+      <a href="https://pay.kiwify.com.br/eRcBavl" class="button">Formatação</a>
+      <a href="https://www.mayconbrown.com.br\matriz\matriz.html" class="button">Matriz</a>
+      <a href="https://www.mayconbrown.com.br\pack\pack.html" class="button">Pack de Artes</a>
+      <a href="https://linkbio.co/brown-repertorio" class="button">Repertório</a>
+    </div>
+
+    <!-- Video Section -->
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/bAkOCak3A1o" title="Vídeo 1" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/1kQ7v7uRsR4" title="Vídeo 2" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/xqdjF2N9V7Q" title="Vídeo 3" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</body>
+</html>
