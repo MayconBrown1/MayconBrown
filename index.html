@@ -124,8 +124,8 @@
     }
 
     .video-container iframe {
-      width: 340px; /* Metade da largura desejada (1080px) */
-      height: 600px; /* Altura desejada (1920px) */
+      width: 340px; /* Largura padrão */
+      height: 600px; /* Altura padrão */
       border: none;
     }
 
@@ -152,8 +152,14 @@
         border: 3px none #636363; /* Borda menor no tablet */
       }
 
+      .video-container {
+        flex-direction: row; /* Alinha vídeos lado a lado em telas menores */
+        justify-content: space-between; /* Espaça vídeos igualmente */
+      }
+
       .video-container iframe {
-        width: 360px; /* Ajusta a largura para tamanhos médios */
+        width: 100%; /* Ajusta a largura para preencher o contêiner */
+        max-width: 360px; /* Largura máxima para cada vídeo */
         height: 640px; /* Ajusta a altura para tamanhos médios */
       }
     }
@@ -182,8 +188,14 @@
         border: 2px none #636363; /* Borda ainda menor no mobile */
       }
 
+      .video-container {
+        flex-direction: row; /* Alinha vídeos lado a lado em telas pequenas */
+        justify-content: space-between; /* Espaça vídeos igualmente */
+      }
+
       .video-container iframe {
-        width: 240px; /* Ajusta a largura para dispositivos móveis */
+        width: 100%; /* Ajusta a largura para preencher o contêiner */
+        max-width: 240px; /* Largura máxima para cada vídeo */
         height: 426px; /* Ajusta a altura para dispositivos móveis */
       }
     }
