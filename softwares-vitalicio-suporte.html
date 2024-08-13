@@ -10,87 +10,106 @@
     <link rel="icon" href="img/icone.ico" type="image/x-icon"> <!-- Referência ao ícone -->
     <link rel="shortcut icon" href="icone.ico" type="image/x-icon"> <!-- Referência ao ícone para compatibilidade -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-        }
-        .container {
-            width: 90%;
-            margin: auto;
-            overflow: hidden;
-        }
-        header {
-            background: #333;
-            padding: 20px 0;
-            color: #fff;
-            text-align: center;
-            position: relative;
-        }
-        header .logo {
-            margin: 0 auto;
-            display: block;
-            max-width: 400px; /* Ajuste o tamanho da logo conforme necessário */
-        }
-        header a {
-            display: inline-block;
-            text-decoration: none;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        .product {
-            background: #1a1a1a;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #444;
-            border-radius: 8px;
-        }
-        .product img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #444;
-            margin-bottom: 10px;
-        }
-        .product h3 {
-            font-size: 1.2em;
-            margin: 10px 0;
-            color: #fff;
-        }
-        .product p {
-            color: #ccc;
-            font-size: 1.1em;
-            margin: 5px 0;
-        }
-        .product-price {
-            font-size: 1.3em;
-            color: #e74c3c;
-        }
-        @media (max-width: 1024px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 480px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        footer {
-            background: #333;
-            padding: 20px 0;
-            color: #fff;
-            text-align: center;
-        }
+        /* Estilo global */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: #333;
+    padding: 20px 0;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+header .logo {
+    margin: 0 auto;
+    display: block;
+    max-width: 400px; /* Ajuste o tamanho da logo conforme necessário */
+}
+
+header a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 produtos por linha por padrão */
+    gap: 20px;
+}
+
+.product {
+    background: #1a1a1a;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #444;
+    margin-bottom: 10px;
+}
+
+.product h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.product p {
+    color: #ccc;
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+.product-price {
+    font-size: 1.3em;
+    color: #e74c3c;
+}
+
+/* Estilo para tablets e dispositivos menores */
+@media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 produtos por linha */
+    }
+}
+
+/* Estilo para smartphones em modo paisagem */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 produtos por linha */
+    }
+}
+
+/* Estilo para smartphones em modo retrato */
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 produtos por linha */
+    }
+}
+
+footer {
+    background: #333;
+    padding: 20px 0;
+    color: #fff;
+    text-align: center;
+}
+
     </style>
     <script type="application/ld+json">
     {
