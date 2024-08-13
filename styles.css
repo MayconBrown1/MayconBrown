@@ -175,7 +175,7 @@ body {
     }
   
     .header-image {
-      max-width: 50%; /* Reduz o tamanho da imagem no mobile */
+      max-width: 90%; /* Reduz o tamanho da imagem no mobile */
       border: 2px none #636363; /* Borda ainda menor no mobile */
     }
   
@@ -189,3 +189,4 @@ body {
       height: 180px; /* Ajusta a altura para dispositivos móveis */
     }
   }
+  
