@@ -278,7 +278,7 @@ header a {
 }
 
 /* Estilo para smartphones em modo retrato */
-@media (max-width: 280px) {
+@media (max-width: 180px) {
     .product-grid {
         grid-template-columns: 1fr; /* Um produto por linha */
     }
