@@ -271,12 +271,9 @@
             margin: 0 auto;
             text-align: center;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
+        /* Remover estilo da lista e links */
+        #playlist {
+            display: none; /* Ocultar a lista de músicas */
         }
     </style>
 </head>
@@ -284,72 +281,50 @@
 <div class="playlist-container">
     <h1>Playlist de Músicas</h1>
     <audio id="player" controls autoplay>
-        <source src="musica1.mp3" type="audio/mpeg">
+        <source id="audioSource" src="musica1.mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
+    <!-- Lista de músicas oculta -->
     <ul id="playlist">
-        <li><a href="music/01. VIDA LOKA (PT 1).mp3" data-src="musica1.mp3">Música 1</a></li>
-        <li><a href="music/06. PIRAÇÃO.mp3" data-src="musica2.mp3">Música 2</a></li>
-        <li><a href="music/12. MUÍDO DE VAQUEJADA.mp3" data-src="musica3.mp3">Música 3</a></li>
-        <li><a href="music/15. BORA REVOAR.mp3" data-src="musica4.mp3">Música 4</a></li>
-        <li><a href="music/25. FORRÓ E DESMANTELO.mp3" data-src="musica5.mp3">Música 5</a></li>
-        <li><a href="music/26. NÃO PRECISA NEGAR.mp3" data-src="musica6.mp3">Música 6</a></li>
-        <!-- Adicione mais músicas conforme necessário -->
+        <li><a href="music/01. VIDA LOKA (PT 1).mp3" data-src="musica1.mp3"></a></li>
+        <li><a href="music/06. PIRAÇÃO.mp3" data-src="musica2.mp3"></a></li>
+        <li><a href="music/12. MUÍDO DE VAQUEJADA.mp3" data-src="musica3.mp3"></a></li>
+        <li><a href="music/15. BORA REVOAR.mp3" data-src="musica4.mp3"></a></li>
+        <li><a href="music/25. FORRÓ E DESMANTELO.mp3" data-src="musica5.mp3"></a></li>
+        <li><a href="music/26. NÃO PRECISA NEGAR.mp3" data-src="musica6.mp3"></a></li>
     </ul>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const player = document.getElementById('player');
-        const playlistLinks = document.querySelectorAll('#playlist a');
-
-        function playSong(src) {
-            player.src = src;
-            player.play();
-        }
-
-        playlistLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const src = this.getAttribute('data-src');
-                playSong(src);
-            });
-        });
-
-        // Play the first song in the playlist on page load
-        if (playlistLinks.length > 0) {
-            const firstSongSrc = playlistLinks[0].getAttribute('data-src');
-            playSong(firstSongSrc);
-        }
-    });
-</script>
-</body>
-</html>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
     const player = document.getElementById('player');
-    const playlist = document.getElementById('playlist');
-    const links = playlist.getElementsByTagName('a');
-    
-    let currentTrack = 0;
-    
-    function playTrack(index) {
-        player.src = links[index].dataset.src;
+    const playlist = document.querySelectorAll('#playlist a');
+    let currentTrackIndex = 0;
+
+    function loadTrack(index) {
+        const track = playlist[index];
+        const src = track.getAttribute('data-src');
+        player.src = src;
         player.play();
     }
-    
-    player.addEventListener('ended', function() {
-        currentTrack++;
-        if (currentTrack >= links.length) {
-            currentTrack = 0; // Reiniciar a playlist
+
+    function initializePlaylist() {
+        if (playlist.length > 0) {
+            loadTrack(currentTrackIndex);
         }
-        playTrack(currentTrack);
+    }
+
+    player.addEventListener('ended', () => {
+        currentTrackIndex++;
+        if (currentTrackIndex < playlist.length) {
+            loadTrack(currentTrackIndex);
+        } else {
+            currentTrackIndex = 0; // Reinicia a playlist, se desejar
+            loadTrack(currentTrackIndex);
+        }
     });
 
-    playTrack(currentTrack);
-});
+    // Inicializa a playlist quando a página é carregada
+    window.addEventListener('load', initializePlaylist);
 </script>
 </body>
 </html>
