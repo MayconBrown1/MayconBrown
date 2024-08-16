@@ -263,68 +263,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist de Músicas</title>
+    <title>Minha Playlist</title>
     <style>
-        /* Adicione seu CSS aqui */
-        .playlist-container {
-            width: 300px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        /* Remover estilo da lista e links */
-        #playlist {
-            display: none; /* Ocultar a lista de músicas */
+        .controls {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-<div class="playlist-container">
-    <h1>Playlist de Músicas</h1>
-    <audio id="player" controls autoplay>
-        <source id="audioSource" src="musica1.mp3" type="audio/mpeg">
+
+    <audio id="player" controls>
+        <source src="music/01. VIDA LOKA (PT 1).mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
-    <!-- Lista de músicas oculta -->
-    <ul id="playlist">
-        <li><a href="music/01. VIDA LOKA (PT 1).mp3" data-src="musica1.mp3"></a></li>
-        <li><a href="music/06. PIRAÇÃO.mp3" data-src="musica2.mp3"></a></li>
-        <li><a href="music/12. MUÍDO DE VAQUEJADA.mp3" data-src="musica3.mp3"></a></li>
-        <li><a href="music/15. BORA REVOAR.mp3" data-src="musica4.mp3"></a></li>
-        <li><a href="music/25. FORRÓ E DESMANTELO.mp3" data-src="musica5.mp3"></a></li>
-        <li><a href="music/26. NÃO PRECISA NEGAR.mp3" data-src="musica6.mp3"></a></li>
-    </ul>
-</div>
 
-<script>
-    const player = document.getElementById('player');
-    const playlist = document.querySelectorAll('#playlist a');
-    let currentTrackIndex = 0;
+    <div class="controls">
+        <button id="nextButton">Próxima Música</button>
+    </div>
 
-    function loadTrack(index) {
-        const track = playlist[index];
-        const src = track.getAttribute('data-src');
-        player.src = src;
-        player.play();
-    }
+    <script>
+        // Array com as músicas da playlist
+        const playlist = [
+            'music/06. PIRAÇÃO.mp3',
+            'music/12. MUÍDO DE VAQUEJADA.mp3',
+            'music/15. BORA REVOAR.mp3',
+            'music/25. FORRÓ E DESMANTELO.mp3',
+            'music/01. VIDA LOKA (PT 1).mp3',
+            'music/26. NÃO PRECISA NEGAR.mp3'
+        ];
 
-    function initializePlaylist() {
-        if (playlist.length > 0) {
-            loadTrack(currentTrackIndex);
+        // Seleciona o elemento de áudio e o botão de próxima música
+        const audio = document.getElementById('player');
+        const nextButton = document.getElementById('nextButton');
+        let currentTrack = 0;
+
+        // Função para tocar a próxima música
+        function playNext() {
+            currentTrack++;
+            if (currentTrack >= playlist.length) {
+                currentTrack = 0; // Volta para a primeira música se a última for alcançada
+            }
+            audio.src = playlist[currentTrack];
+            audio.play();
         }
-    }
 
-    player.addEventListener('ended', () => {
-        currentTrackIndex++;
-        if (currentTrackIndex < playlist.length) {
-            loadTrack(currentTrackIndex);
-        } else {
-            currentTrackIndex = 0; // Reinicia a playlist, se desejar
-            loadTrack(currentTrackIndex);
-        }
-    });
+        // Adiciona um ouvinte de evento para o fim da música
+        audio.addEventListener('ended', playNext);
 
-    // Inicializa a playlist quando a página é carregada
-    window.addEventListener('load', initializePlaylist);
-</script>
+        // Adiciona um ouvinte de evento para o botão de próxima música
+        nextButton.addEventListener('click', playNext);
+
+        // Inicia a playlist
+        audio.src = playlist[currentTrack];
+        audio.play();
+    </script>
 </body>
 </html>
