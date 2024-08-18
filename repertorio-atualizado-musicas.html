@@ -312,6 +312,18 @@
 
         var currentTrackIndex = 0;
 
+        // Função para tocar a música automaticamente ao carregar a página
+        function playAudio() {
+            audio.play().catch(function(error) {
+                console.log("Reprodução automática falhou: " + error);
+            });
+        }
+
+        // Inicia a reprodução automática
+        window.onload = function() {
+            playAudio();
+        };
+
         nextButton.addEventListener('click', function() {
             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
             audio.src = playlist[currentTrackIndex];
