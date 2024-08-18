@@ -14,6 +14,7 @@
             padding: 0;
             color: #f4f4f4;
             background-color: #000;
+            text-align: center; /* Centraliza o texto no corpo da página */
         }
         .container {
             width: 90%;
@@ -34,24 +35,24 @@
         }
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 0;
-            font-size: 16px;
+            padding: 20px 40px; /* Aumentado em 100% em relação ao tamanho original */
+            font-size: 32px; /* Aumentado em 100% em relação ao tamanho original */
             color: #fff;
             background-color: #007bff;
             text-decoration: none;
             border-radius: 5px;
+            margin: 10px 0;
         }
         .btn:hover {
             background-color: #0056b3;
         }
         h1, h2 {
             color: #fff;
+            margin: 0; /* Remove a margem padrão dos títulos */
         }
         .section-title {
             font-size: 24px;
             margin-bottom: 10px;
-            text-align: center; /* Centraliza os títulos h2 */
         }
         .section-content {
             font-size: 16px;
@@ -61,25 +62,24 @@
         }
         ul {
             list-style-type: disc;
-            margin-left: 0; /* Remove a margem esquerda padrão */
-            padding-left: 0; /* Remove o padding padrão */
-            text-align: center; /* Centraliza o texto da lista */
+            margin: 0 auto; /* Centraliza a lista */
+            padding: 0;
+            max-width: 800px; /* Limita a largura da lista para maior uniformidade */
+            text-align: left; /* Garante que o texto dentro da lista esteja à esquerda */
         }
         ul li {
-            display: inline-block; /* Faz os itens da lista serem exibidos em linha */
+            display: list-item; /* Garante que os itens da lista sejam exibidos de forma adequada */
             margin: 10px 0; /* Espaçamento entre os itens */
-            text-align: left; /* Garante que o texto dentro do li não fique centralizado */
         }
         footer {
             text-align: center;
             padding: 20px 0;
             background-color: #222;
         }
-
         @media (max-width: 768px) {
             .btn {
-                padding: 10px 18px;
-                font-size: 15px;
+                padding: 16px 32px; /* Ajuste para tamanhos menores */
+                font-size: 24px;
             }
             .section-title {
                 font-size: 22px;
@@ -91,11 +91,10 @@
                 max-width: 250px;
             }
         }
-
         @media (max-width: 480px) {
             .btn {
-                padding: 10px 16px;
-                font-size: 14px;
+                padding: 12px 24px; /* Ajuste para tamanhos menores */
+                font-size: 18px;
             }
             .section-title {
                 font-size: 20px;
@@ -107,11 +106,11 @@
                 max-width: 200px;
             }
         }
-
         .gallery {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            justify-content: center; /* Centraliza a galeria */
         }
         .gallery-item {
             flex: 1 1 calc(50% - 10px); /* Ajustado para melhor visualização em telas pequenas */
@@ -124,8 +123,6 @@
             border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-
-        /* Estilos do Modal */
         .modal {
             display: none;
             position: fixed;
@@ -213,13 +210,6 @@
                 <div class="gallery-item"><img src="img/musica/repertorio-atualizado (6).png" alt="Repertório Atualizado"></div>
                 <div class="gallery-item"><img src="img/musica/repertorio-atualizado (7).png" alt="Repertório Atualizado"></div>
                 <div class="gallery-item"><img src="img/musica/repertorio-atualizado (8).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (9).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (10).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (11).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (12).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (13).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (14).png" alt="Repertório Atualizado"></div>
-                <div class="gallery-item"><img src="img/musica/repertorio-atualizado (15).png" alt="Repertório Atualizado"></div>
             </div>
         </section>
     </div>
@@ -231,31 +221,31 @@
     </div>
 
     <script>
-        // Modal
+        // Script para o Modal
         var modal = document.getElementById("myModal");
+        var img = document.querySelector(".gallery-item img");
         var modalImg = document.getElementById("img01");
-        var closeBtn = document.getElementsByClassName("close")[0];
+        var span = document.getElementsByClassName("close")[0];
 
-        var galleryItems = document.querySelectorAll('.gallery-item img');
-        galleryItems.forEach(function(item) {
-            item.addEventListener('click', function() {
-                modal.style.display = "flex";
-                modalImg.src = this.src;
-            });
-        });
+        img.onclick = function(){
+            modal.style.display = "flex";
+            modalImg.src = this.src;
+        }
 
-        closeBtn.onclick = function() {
+        span.onclick = function() { 
             modal.style.display = "none";
         }
 
         window.onclick = function(event) {
-            if (event.target === modal) {
+            if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
     </script>
 </body>
 </html>
+
+
 
 
 <!DOCTYPE html>
@@ -265,13 +255,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Playlist</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            text-align: center; /* Centraliza o texto no corpo da página */
+            margin: 0;
+            padding: 0;
+        }
+        audio {
+            display: block;
+            margin: 20px auto; /* Centraliza o player de áudio */
+            width: 90%;
+            max-width: 600px;
+            background: #222;
+            border-radius: 5px;
+            padding: 10px;
+        }
         .controls {
-            margin-top: 10px;
+            margin: 20px auto;
+        }
+        button {
+            padding: 20px 40px; /* Aumentado em 100% em relação ao tamanho original */
+            font-size: 32px; /* Aumentado em 100% em relação ao tamanho original */
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
+            audio {
+                width: 100%;
+                max-width: none;
+            }
+            button {
+                padding: 16px 32px; /* Ajuste para tamanhos menores */
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-
     <audio id="player" controls>
         <source src="music/01. VIDA LOKA (PT 1).mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
@@ -282,40 +310,24 @@
     </div>
 
     <script>
-        // Array com as músicas da playlist
-        const playlist = [
-            'music/06. PIRAÇÃO.mp3',
-            'music/12. MUÍDO DE VAQUEJADA.mp3',
-            'music/15. BORA REVOAR.mp3',
-            'music/25. FORRÓ E DESMANTELO.mp3',
+        // Script para a Playlist
+        var audio = document.getElementById('player');
+        var nextButton = document.getElementById('nextButton');
+
+        var playlist = [
             'music/01. VIDA LOKA (PT 1).mp3',
-            'music/26. NÃO PRECISA NEGAR.mp3'
+            'music/02. EXEMPLO.mp3',
+            'music/03. NOVA MUSICA.mp3'
+            // Adicione mais músicas conforme necessário
         ];
 
-        // Seleciona o elemento de áudio e o botão de próxima música
-        const audio = document.getElementById('player');
-        const nextButton = document.getElementById('nextButton');
-        let currentTrack = 0;
+        var currentTrackIndex = 0;
 
-        // Função para tocar a próxima música
-        function playNext() {
-            currentTrack++;
-            if (currentTrack >= playlist.length) {
-                currentTrack = 0; // Volta para a primeira música se a última for alcançada
-            }
-            audio.src = playlist[currentTrack];
+        nextButton.addEventListener('click', function() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            audio.src = playlist[currentTrackIndex];
             audio.play();
-        }
-
-        // Adiciona um ouvinte de evento para o fim da música
-        audio.addEventListener('ended', playNext);
-
-        // Adiciona um ouvinte de evento para o botão de próxima música
-        nextButton.addEventListener('click', playNext);
-
-        // Inicia a playlist
-        audio.src = playlist[currentTrack];
-        audio.play();
+        });
     </script>
 </body>
 </html>
