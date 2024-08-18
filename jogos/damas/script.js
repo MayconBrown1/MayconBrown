@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         piece.classList.add('piece', 'white');
                         piece.dataset.row = i;
                         piece.dataset.col = j;
-                        piece.addEventListener('touchstart', touchStart);
+                        piece.addEventListener('click', selectPiece);
                         square.appendChild(piece);
                         boardState[i][j] = 'white';
                     } else if (i > 4) {
@@ -42,30 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
                         piece.classList.add('piece', 'coral');
                         piece.dataset.row = i;
                         piece.dataset.col = j;
-                        piece.addEventListener('touchstart', touchStart);
+                        piece.addEventListener('click', selectPiece);
                         square.appendChild(piece);
                         boardState[i][j] = 'coral';
                     }
                 }
+                square.addEventListener('click', movePieceToSquare);
                 board.appendChild(square);
             }
         }
-
-        // Adiciona eventos para as células do tabuleiro
-        board.querySelectorAll('.square').forEach(square => {
-            square.addEventListener('touchstart', handleSquareTouchStart);
-        });
     }
 
-    function touchStart(event) {
+    function selectPiece(event) {
         if (!gameStarted || currentPlayer !== (event.target.classList.contains('coral') ? 'coral' : 'white')) return;
+
+        if (selectedPiece) {
+            selectedPiece.classList.remove('selected');
+        }
 
         selectedPiece = event.target;
         selectedPiece.classList.add('selected');
-        event.preventDefault(); // Evita comportamento padrão de toque
     }
 
-    function handleSquareTouchStart(event) {
+    function movePieceToSquare(event) {
         if (selectedPiece) {
             const targetSquare = event.target;
             if (targetSquare.classList.contains('square')) {
@@ -86,19 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     currentPlayer = 'white';
                     message.textContent = 'Agora é a vez da IA!';
+
+                    // Adiciona um atraso de 1 segundo antes da jogada da IA
+                    setTimeout(makeAIMove, 1000);
+
                     if (moveCount >= 20 && !hasCaptureMoved()) {
                         message.textContent = 'Empate por falta de captura!';
                         gameStarted = false;
                         return;
                     }
-                    makeAIMove();
-                    if (checkForWin('white')) {
-                        message.innerHTML = `<p>Você perdeu! Tente novamente.</p>`;
-                        gameStarted = false;
-                        return;
-                    }
-                    currentPlayer = 'coral';
-                    message.textContent = 'Sua vez!';
                 }
 
                 selectedPiece.classList.remove('selected');
@@ -161,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 piece.classList.add('piece', boardState[row][col]);
                 piece.dataset.row = row;
                 piece.dataset.col = col;
-                piece.addEventListener('touchstart', touchStart);
+                piece.addEventListener('click', selectPiece);
                 square.appendChild(piece);
             }
         });
