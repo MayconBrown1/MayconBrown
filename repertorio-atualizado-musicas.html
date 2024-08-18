@@ -33,22 +33,20 @@
             margin-bottom: 20px;
         }
         .btn {
-            display: block;
-            width: 100%;
-            padding: 15px 0;
-            margin: 10px 0;
-            font-size: 18px;
+            display: inline-block;
+            width: 13%; /* Aumentado em 30% do 10% original */
+            padding: 30px 0;
+            margin: 5px 0;
+            font-size: 30px;
             color: #fff;
             background-color: #007bff;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 20px;
             text-align: center;
+            box-sizing: border-box;
         }
         .btn:hover {
             background-color: #0056b3;
-        }
-        h1, h2 {
-            color: #fff;
         }
         .section-title {
             font-size: 24px;
@@ -77,10 +75,14 @@
             padding: 20px 0;
             background-color: #222;
         }
+        .btn-container {
+            text-align: center; /* Centraliza os botões */
+        }
         @media (max-width: 768px) {
             .btn {
                 padding: 10px 0;
                 font-size: 16px;
+                width: 20%; /* Ajusta a largura para telas menores */
             }
             .section-title {
                 font-size: 22px;
@@ -96,6 +98,7 @@
             .btn {
                 padding: 10px 0;
                 font-size: 14px;
+                width: 30%; /* Ajusta a largura para telas menores */
             }
             .section-title {
                 font-size: 20px;
@@ -105,6 +108,10 @@
             }
             .logo {
                 max-width: 400px;
+            }
+            .gallery-item {
+                flex: 1 1 calc(50% - 10px); /* 2 itens por linha em telas pequenas */
+                max-width: calc(50% - 10px);
             }
         }
         .gallery {
@@ -170,12 +177,30 @@
             border-radius: 3px;
             user-select: none;
             background-color: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 0;
+            z-index: 10;
         }
         .next {
-            right: 0;
+            right: 50px;
         }
-        .prev:hover, .next:hover {
+        .prev {
+            left: 50px;
+        }
+        .prev:hover,
+        .next:hover {
             background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-controls {
+            position: absolute;
+            bottom: 20px; /* Distância da parte inferior da modal */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
     </style>
 </head>
@@ -185,7 +210,9 @@
             <img src="img/logobranca.png" alt="Logo do Repertório Atualizado de Músicas - Músicas Novas e Pendrive Atualizado" class="logo">
         </a>
         <h1>Repertório Atualizado de Músicas: Novidades e Clássicos em Seu Pendrive</h1>
-        <a href="https://pay.kiwify.com.br/2JQG99E" class="btn">COMPRE AQUI</a>
+        <div class="btn-container">
+            <a href="https://pay.kiwify.com.br/2JQG99E" class="btn">COMPRE AQUI</a>
+        </div>
     </header>
 
     <section>
@@ -214,7 +241,10 @@
     </section>
 
     <footer>
-        <a href="https://pay.kiwify.com.br/2JQG99E" class="btn">COMPRE AQUI</a>
+        <p>&copy; 2024 Repertório Atualizado de Músicas. Todos os direitos reservados.</p>
+        <div class="btn-container">
+            <a href="https://pay.kiwify.com.br/2JQG99E" class="btn">COMPRE AQUI</a>
+        </div>
     </footer>
 
     <div class="container">
@@ -298,6 +328,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
