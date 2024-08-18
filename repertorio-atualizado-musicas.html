@@ -28,7 +28,7 @@
         }
         .logo {
             width: 100%;
-            max-width: 400px;
+            max-width: 300px;
             height: auto;
             margin-bottom: 20px;
         }
@@ -51,7 +51,7 @@
         .section-title {
             font-size: 24px;
             margin-bottom: 10px;
-            text-align: center; /* Centraliza os títulos h2 */
+            text-align: center;
         }
         .section-content {
             font-size: 16px;
@@ -61,21 +61,20 @@
         }
         ul {
             list-style-type: disc;
-            margin-left: 0; /* Remove a margem esquerda padrão */
-            padding-left: 0; /* Remove o padding padrão */
-            text-align: center; /* Centraliza o texto da lista */
+            margin-left: 0;
+            padding-left: 0;
+            text-align: center;
         }
         ul li {
-            display: inline-block; /* Faz os itens da lista serem exibidos em linha */
-            margin: 10px 0; /* Espaçamento entre os itens */
-            text-align: left; /* Garante que o texto dentro do li não fique centralizado */
+            display: inline-block;
+            margin: 10px 0;
+            text-align: left;
         }
         footer {
             text-align: center;
             padding: 20px 0;
             background-color: #222;
         }
-
         @media (max-width: 768px) {
             .btn {
                 padding: 10px 18px;
@@ -88,10 +87,9 @@
                 font-size: 15px;
             }
             .logo {
-                max-width: 400px;
+                max-width: 250px;
             }
         }
-
         @media (max-width: 480px) {
             .btn {
                 padding: 10px 16px;
@@ -104,17 +102,16 @@
                 font-size: 14px;
             }
             .logo {
-                max-width: 400px;
+                max-width: 200px;
             }
         }
-
         .gallery {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
         .gallery-item {
-            flex: 1 1 calc(50% - 10px); /* Ajustado para melhor visualização em telas pequenas */
+            flex: 1 1 calc(50% - 10px);
             max-width: calc(50% - 10px);
             cursor: pointer;
         }
@@ -124,8 +121,6 @@
             border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-
-        /* Estilos do Modal */
         .modal {
             display: none;
             position: fixed;
@@ -142,7 +137,7 @@
         .modal-content {
             margin: auto;
             display: block;
-            max-width: 90%;
+            max-width: 80%;
             max-height: 80%;
         }
         .close {
@@ -159,6 +154,26 @@
             color: #bbb;
             text-decoration: none;
             cursor: pointer;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 3px;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .next {
+            right: 0;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
@@ -227,7 +242,9 @@
     <!-- Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
+        <a class="prev">&#10094;</a>
         <img class="modal-content" id="img01">
+        <a class="next">&#10095;</a>
     </div>
 
     <script>
@@ -235,17 +252,40 @@
         var modal = document.getElementById("myModal");
         var modalImg = document.getElementById("img01");
         var closeBtn = document.getElementsByClassName("close")[0];
-
+        var prevBtn = document.getElementsByClassName("prev")[0];
+        var nextBtn = document.getElementsByClassName("next")[0];
         var galleryItems = document.querySelectorAll('.gallery-item img');
-        galleryItems.forEach(function(item) {
+        var currentIndex = 0;
+
+        function openModal(index) {
+            modal.style.display = "flex";
+            modalImg.src = galleryItems[index].src;
+            currentIndex = index;
+        }
+
+        function showImage(index) {
+            if (index >= 0 && index < galleryItems.length) {
+                modalImg.src = galleryItems[index].src;
+                currentIndex = index;
+            }
+        }
+
+        galleryItems.forEach(function(item, index) {
             item.addEventListener('click', function() {
-                modal.style.display = "flex";
-                modalImg.src = this.src;
+                openModal(index);
             });
         });
 
         closeBtn.onclick = function() {
             modal.style.display = "none";
+        }
+
+        prevBtn.onclick = function() {
+            showImage(currentIndex - 1);
+        }
+
+        nextBtn.onclick = function() {
+            showImage(currentIndex + 1);
         }
 
         window.onclick = function(event) {
@@ -256,6 +296,7 @@
     </script>
 </body>
 </html>
+
 
 
 <!DOCTYPE html>
