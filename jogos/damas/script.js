@@ -8,10 +8,9 @@ const scoreBoard = document.createElement('div');
 scoreBoard.id = 'scoreBoard';
 document.body.appendChild(scoreBoard);
 
-let canvasWidth, canvasHeight;
-const paddleWidth = 0.03; // Proporção da largura do canvas
-const paddleHeight = 0.3; // Proporção da altura do canvas
-const ballSize = 0.02; // Proporção do tamanho do canvas
+// Configurações do jogo
+const paddleWidth = 10, paddleHeight = 100;
+const ballSize = 20; // Ajuste para se adequar à imagem
 const initialBallSpeed = 4;
 let ballSpeed = initialBallSpeed;
 let ballSpeedX = ballSpeed, ballSpeedY = ballSpeed;
@@ -21,39 +20,13 @@ let leftScore = 0;
 let rightScore = 0;
 
 // Paddles e bola
-const leftPaddle = { x: 0, y: 0 };
-const rightPaddle = { x: 0, y: 0 };
-const ball = { x: 0, y: 0 };
+const leftPaddle = { x: 10, y: canvas.height / 2 - paddleHeight / 2 };
+const rightPaddle = { x: canvas.width - paddleWidth - 10, y: canvas.height / 2 - paddleHeight / 2 };
+const ball = { x: canvas.width / 2, y: canvas.height / 2 };
 
 // Carregar a imagem da bola
 const ballImage = new Image();
 ballImage.src = 'icone.ico'; // Caminho para a imagem
-
-// Atualiza o tamanho do canvas e os objetos do jogo
-function resizeCanvas() {
-    canvasWidth = window.innerWidth * 0.8; // 80% da largura da tela
-    canvasHeight = window.innerHeight * 0.8; // 80% da altura da tela
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-
-    // Atualiza as dimensões dos paddles e da bola
-    leftPaddle.width = canvasWidth * paddleWidth;
-    leftPaddle.height = canvasHeight * paddleHeight;
-    rightPaddle.width = leftPaddle.width;
-    rightPaddle.height = leftPaddle.height;
-    ball.size = canvasWidth * ballSize;
-
-    // Inicializa as posições dos paddles e da bola
-    leftPaddle.x = canvasWidth * 0.01;
-    leftPaddle.y = (canvasHeight - leftPaddle.height) / 2;
-    rightPaddle.x = canvasWidth - canvasWidth * 0.01 - rightPaddle.width;
-    rightPaddle.y = (canvasHeight - rightPaddle.height) / 2;
-    ball.x = canvasWidth / 2;
-    ball.y = canvasHeight / 2;
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas(); // Inicializa o tamanho correto
 
 // Inicializa o estado do jogo
 function initializeGame() {
@@ -83,9 +56,8 @@ startButton.addEventListener('click', startGame);
 
 // Controle dos paddles
 document.addEventListener('keydown', (e) => {
-    const paddleSpeed = ballSpeed;
-    if (e.key === 'w') leftPaddle.y -= paddleSpeed;
-    if (e.key === 's') leftPaddle.y += paddleSpeed;
+    if (e.key === 'w') leftPaddle.y -= ballSpeed;
+    if (e.key === 's') leftPaddle.y += ballSpeed;
 });
 
 function update() {
@@ -94,23 +66,23 @@ function update() {
     ball.y += ballSpeedY;
 
     // Colisão com o topo e a base
-    if (ball.y <= 0 || ball.y >= canvasHeight - ball.size) ballSpeedY = -ballSpeedY;
+    if (ball.y <= 0 || ball.y >= canvas.height - ballSize) ballSpeedY = -ballSpeedY;
 
     // IA para o paddle direito
     const aiSpeed = ballSpeed;
-    const aiMargin = 0.05 * canvasHeight; // Margem de erro para a IA
+    const aiMargin = 0.1; // Margem de erro para tornar a IA mais desafiadora
 
-    if (ball.y < rightPaddle.y + rightPaddle.height / 2 - aiMargin) {
+    if (ball.y < rightPaddle.y + paddleHeight / 2 - aiMargin) {
         rightPaddle.y -= aiSpeed;
-    } else if (ball.y > rightPaddle.y + rightPaddle.height / 2 + aiMargin) {
+    } else if (ball.y > rightPaddle.y + paddleHeight / 2 + aiMargin) {
         rightPaddle.y += aiSpeed;
     }
 
     // Colisão com os paddles
-    if (ball.x <= leftPaddle.x + leftPaddle.width && ball.y >= leftPaddle.y && ball.y <= leftPaddle.y + leftPaddle.height) {
+    if (ball.x <= leftPaddle.x + paddleWidth && ball.y >= leftPaddle.y && ball.y <= leftPaddle.y + paddleHeight) {
         ballSpeedX = -ballSpeedX;
     }
-    if (ball.x >= rightPaddle.x - ball.size && ball.y >= rightPaddle.y && ball.y <= rightPaddle.y + rightPaddle.height) {
+    if (ball.x >= rightPaddle.x - ballSize && ball.y >= rightPaddle.y && ball.y <= rightPaddle.y + paddleHeight) {
         ballSpeedX = -ballSpeedX;
     }
 
@@ -121,7 +93,7 @@ function update() {
         increaseBallSpeed();
         resetBall();
         checkWinner();
-    } else if (ball.x >= canvasWidth) {
+    } else if (ball.x >= canvas.width) {
         leftScore++;
         updateScoreBoard();
         increaseBallSpeed();
@@ -130,25 +102,25 @@ function update() {
     }
 
     // Previne paddles de saírem da tela
-    leftPaddle.y = Math.max(0, Math.min(canvasHeight - leftPaddle.height, leftPaddle.y));
-    rightPaddle.y = Math.max(0, Math.min(canvasHeight - rightPaddle.height, rightPaddle.y));
+    leftPaddle.y = Math.max(0, Math.min(canvas.height - paddleHeight, leftPaddle.y));
+    rightPaddle.y = Math.max(0, Math.min(canvas.height - paddleHeight, rightPaddle.y));
 }
 
 function draw() {
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenha paddles
     ctx.fillStyle = 'white';
-    ctx.fillRect(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height);
-    ctx.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
+    ctx.fillRect(leftPaddle.x, leftPaddle.y, paddleWidth, paddleHeight);
+    ctx.fillRect(rightPaddle.x, rightPaddle.y, paddleWidth, paddleHeight);
 
     // Desenha a bola como uma imagem
-    ctx.drawImage(ballImage, ball.x - ball.size / 2, ball.y - ball.size / 2, ball.size, ball.size);
+    ctx.drawImage(ballImage, ball.x - ballSize / 2, ball.y - ballSize / 2, ballSize, ballSize);
 }
 
 function resetBall() {
-    ball.x = canvasWidth / 2;
-    ball.y = canvasHeight / 2;
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
     ballSpeedX = -ballSpeedX; // Faz a bola ir para o lado oposto
 }
 
