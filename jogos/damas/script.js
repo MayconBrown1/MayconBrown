@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function makeAIMove() {
         const possibleMoves = getPossibleMoves('white');
         if (possibleMoves.length > 0) {
-            const bestMove = minimaxWithAlphaBeta(boardState, 4, -Infinity, Infinity, true);
+            const bestMove = minimaxWithAlphaBeta(boardState, 4, -Infinity, Infinity, true).move;
             const [startRow, startCol] = bestMove.from;
             const [endRow, endCol] = bestMove.to;
             movePiece(startRow, startCol, endRow, endCol);
@@ -199,11 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         return moves;
-    }
-
-    function selectBestMove(moves) {
-        // Implement logic to select the best move based on the capture rules
-        return moves[Math.floor(Math.random() * moves.length)];
     }
 
     function getValidMoves(row, col) {
@@ -289,27 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return score;
     }
 
-    function movePiece(board, startRow, startCol, endRow, endCol) {
-        board[endRow][endCol] = board[startRow][startCol];
-        board[startRow][startCol] = null;
-
-        // Check if piece needs to be promoted to king
-        if (endRow === 0 && board[endRow][endCol] === 'coral') {
-            board[endRow][endCol] = 'coralKing';
-        } else if (endRow === SIZE - 1 && board[endRow][endCol] === 'white') {
-            board[endRow][endCol] = 'whiteKing';
-        }
-
-        // Check if a capture was made
-        if (Math.abs(endRow - startRow) === 2) {
-            const midRow = (startRow + endRow) / 2;
-            const midCol = (startCol + endCol) / 2;
-            board[midRow][midCol] = null;
-        }
-    }
-
     function hasCaptureMoved() {
         // Check if there was any capture move in the last 20 moves
-        return boardState.flat().some(cell => cell === 'coral' || cell === 'white');
+        return moveCount - (lastMove ? 1 : 0) >= 20;
     }
 });
