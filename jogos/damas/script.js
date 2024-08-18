@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function makeAIMove() {
         const possibleMoves = getPossibleMoves('white');
         if (possibleMoves.length > 0) {
-            const bestMove = selectBestMove(possibleMoves);
+            const bestMove = minimaxWithAlphaBeta(boardState, 4, -Infinity, Infinity, true);
             const [startRow, startCol] = bestMove.from;
             const [endRow, endCol] = bestMove.to;
             movePiece(startRow, startCol, endRow, endCol);
@@ -233,6 +233,79 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         return moves;
+    }
+
+    function minimaxWithAlphaBeta(board, depth, alpha, beta, isMaximizing) {
+        if (depth === 0 || checkForWin('white') || checkForWin('coral')) {
+            return { score: evaluateBoard(board) };
+        }
+
+        const possibleMoves = getPossibleMoves(isMaximizing ? 'white' : 'coral');
+        let bestMove = null;
+
+        if (isMaximizing) {
+            let maxEval = -Infinity;
+            possibleMoves.forEach(move => {
+                const tempBoard = JSON.parse(JSON.stringify(board));
+                movePiece(tempBoard, move.from[0], move.from[1], move.to[0], move.to[1]);
+                const eval = minimaxWithAlphaBeta(tempBoard, depth - 1, alpha, beta, false).score;
+                if (eval > maxEval) {
+                    maxEval = eval;
+                    bestMove = move;
+                }
+                alpha = Math.max(alpha, eval);
+                if (beta <= alpha) return;
+            });
+            return { score: maxEval, move: bestMove };
+        } else {
+            let minEval = Infinity;
+            possibleMoves.forEach(move => {
+                const tempBoard = JSON.parse(JSON.stringify(board));
+                movePiece(tempBoard, move.from[0], move.from[1], move.to[0], move.to[1]);
+                const eval = minimaxWithAlphaBeta(tempBoard, depth - 1, alpha, beta, true).score;
+                if (eval < minEval) {
+                    minEval = eval;
+                    bestMove = move;
+                }
+                beta = Math.min(beta, eval);
+                if (beta <= alpha) return;
+            });
+            return { score: minEval, move: bestMove };
+        }
+    }
+
+    function evaluateBoard(board) {
+        // Implement a function to evaluate the board score
+        // Higher values for better positions for white and lower for coral
+        let score = 0;
+        board.forEach(row => {
+            row.forEach(cell => {
+                if (cell === 'white') score += 1;
+                if (cell === 'whiteKing') score += 5;
+                if (cell === 'coral') score -= 1;
+                if (cell === 'coralKing') score -= 5;
+            });
+        });
+        return score;
+    }
+
+    function movePiece(board, startRow, startCol, endRow, endCol) {
+        board[endRow][endCol] = board[startRow][startCol];
+        board[startRow][startCol] = null;
+
+        // Check if piece needs to be promoted to king
+        if (endRow === 0 && board[endRow][endCol] === 'coral') {
+            board[endRow][endCol] = 'coralKing';
+        } else if (endRow === SIZE - 1 && board[endRow][endCol] === 'white') {
+            board[endRow][endCol] = 'whiteKing';
+        }
+
+        // Check if a capture was made
+        if (Math.abs(endRow - startRow) === 2) {
+            const midRow = (startRow + endRow) / 2;
+            const midCol = (startCol + endCol) / 2;
+            board[midRow][midCol] = null;
+        }
     }
 
     function hasCaptureMoved() {
