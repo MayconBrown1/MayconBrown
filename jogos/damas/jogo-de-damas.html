@@ -1,17 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo de Damas</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Pong Game</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid white;
+        }
+        #menu, #gameOver {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        #menu button {
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+        #gameOver {
+            display: none;
+        }
+        #scoreBoard {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+        }
+        #winnerMessage {
+            font-size: 36px;
+            text-align: center;
+        }
+        #winnerLink {
+            display: none;
+            margin-top: 20px;
+            color: #0f0;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <button id="playButton">Play</button>
-        <div id="board"></div>
-        <div id="message"></div>
+    <div id="menu">
+        <button id="startButton">Start Game</button>
     </div>
-    <script src="script.js"></script>
+    <div id="gameOver">
+        <div id="winnerMessage"></div>
+        <a id="winnerLink" href="#" target="_blank">You win! Click here for your prize!</a>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    <script src="game.js"></script>
 </body>
 </html>
