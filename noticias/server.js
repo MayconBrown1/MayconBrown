@@ -9,8 +9,8 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos (como CSS e imagens)
-app.use(express.static('public'));
+// Servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Rota para obter todas as notícias
 app.get('/posts', (req, res) => {
