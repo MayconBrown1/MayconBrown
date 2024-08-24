@@ -28,5 +28,33 @@
             <button type="submit">Publicar Notícia</button>
         </form>
     </main>
+    <script>
+        document.getElementById('news-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Coleta dados do formulário
+            const title = document.getElementById('title').value;
+            const image = document.getElementById('image').value;
+            const text = document.getElementById('text').value;
+            const video = document.getElementById('video').value;
+
+            // Cria um objeto para a nova notícia
+            const newsItem = {
+                title,
+                image,
+                text,
+                video,
+                date: new Date().toISOString()
+            };
+
+            // Armazena a notícia no LocalStorage
+            let newsArray = JSON.parse(localStorage.getItem('news')) || [];
+            newsArray.push(newsItem);
+            localStorage.setItem('news', JSON.stringify(newsArray));
+
+            // Limpa o formulário
+            document.getElementById('news-form').reset();
+        });
+    </script>
 </body>
 </html>
