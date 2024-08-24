@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Notícias</title>
+    <meta name="description" content="Área de administração para adicionar e editar notícias. Apenas acessível para administradores.">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <header>
+        <h1>Administração de Notícias</h1>
+    </header>
+    <main>
+        <form id="news-form">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required>
+            
+            <label for="image">Imagem URL:</label>
+            <input type="text" id="image" name="image">
+            
+            <label for="text">Texto da Notícia:</label>
+            <textarea id="text" name="text" rows="10" required></textarea>
+            
+            <label for="video">URL do Vídeo:</label>
+            <input type="text" id="video" name="video">
+            
+            <button type="submit">Publicar Notícia</button>
+        </form>
+    </main>
+</body>
+</html>
