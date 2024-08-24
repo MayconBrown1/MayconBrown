@@ -41,6 +41,9 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        textarea {
+            resize: vertical;
+        }
         button {
             padding: 10px 15px;
             background-color: #333;
@@ -68,6 +71,11 @@
         .news-item .date {
             color: #666;
             font-size: 0.9em;
+        }
+        .news-item img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
         }
         .edit-btn, .delete-btn {
             padding: 5px 10px;
@@ -121,6 +129,9 @@
             
             <label for="content">Conteúdo:</label>
             <textarea id="content" name="content" rows="5" required></textarea>
+
+            <label for="image">Imagem:</label>
+            <input type="text" id="image" name="image" placeholder="Nome da imagem (por exemplo, imagem.jpg)" required>
             
             <button type="submit">Salvar Notícia</button>
         </form>
@@ -154,6 +165,7 @@
                     <h2>${news.title}</h2>
                     <p class="date">${news.date}</p>
                     <p>${news.content}</p>
+                    ${news.image ? `<img src="img/${news.image}" alt="Imagem da notícia">` : ''}
                     <button class="edit-btn" data-index="${index}">Editar</button>
                     <button class="delete-btn" data-index="${index}">Excluir</button>
                 `;
@@ -168,6 +180,7 @@
                     document.getElementById('title').value = news.title;
                     document.getElementById('date').value = news.date;
                     document.getElementById('content').value = news.content;
+                    document.getElementById('image').value = news.image ? news.image.replace('img/', '') : ''; // Remove prefix 'img/'
                 });
             });
 
@@ -186,12 +199,13 @@
             const title = document.getElementById('title').value;
             const date = document.getElementById('date').value;
             const content = document.getElementById('content').value;
+            const image = document.getElementById('image').value;
             const editIndex = editIndexInput.value;
 
             if (editIndex === '') {
-                newsItems.push({ title, date, content });
+                newsItems.push({ title, date, content, image: `img/${image}` });
             } else {
-                newsItems[editIndex] = { title, date, content };
+                newsItems[editIndex] = { title, date, content, image: `img/${image}` };
                 editIndexInput.value = '';
             }
 
