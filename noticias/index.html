@@ -40,20 +40,33 @@
     <header>
         <h1>Notícias do Dia</h1>
     </header>
-    <main>
-        <article class="news-item">
-            <h2>Título da Notícia</h2>
-            <img src="noticia1.jpg" alt="Descrição da imagem da notícia sobre tecnologia">
-            <p>Texto da notícia aqui...</p>
-            <video controls>
-                <source src="video-noticia1.mp4" type="video/mp4">
-                Seu navegador não suporta o elemento de vídeo.
-            </video>
-        </article>
-        <!-- Adicione mais artigos de notícias aqui -->
+    <main id="news-container">
+        <!-- As notícias serão inseridas aqui pelo JavaScript -->
     </main>
     <footer>
         <p>&copy; 2024 Seu Nome ou Empresa</p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lê as notícias do LocalStorage
+            const newsArray = JSON.parse(localStorage.getItem('news')) || [];
+            const newsContainer = document.getElementById('news-container');
+
+            // Adiciona as notícias à página
+            newsArray.forEach(newsItem => {
+                const article = document.createElement('article');
+                article.classList.add('news-item');
+                
+                article.innerHTML = `
+                    <h2>${newsItem.title}</h2>
+                    ${newsItem.image ? `<img src="${newsItem.image}" alt="Imagem da notícia">` : ''}
+                    <p>${newsItem.text}</p>
+                    ${newsItem.video ? `<video controls><source src="${newsItem.video}" type="video/mp4">Seu navegador não suporta o elemento de vídeo.</video>` : ''}
+                `;
+                
+                newsContainer.appendChild(article);
+            });
+        });
+    </script>
 </body>
 </html>
