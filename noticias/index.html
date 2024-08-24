@@ -48,11 +48,9 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Lê as notícias do LocalStorage
             const newsArray = JSON.parse(localStorage.getItem('news')) || [];
             const newsContainer = document.getElementById('news-container');
 
-            // Adiciona as notícias à página
             newsArray.forEach(newsItem => {
                 const article = document.createElement('article');
                 article.classList.add('news-item');
