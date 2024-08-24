@@ -5,115 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração de Notícias</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin: 0;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        textarea {
-            resize: vertical;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #555;
-        }
-        .news-list {
-            margin-top: 20px;
-        }
-        .news-item {
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        .news-item:last-child {
-            border-bottom: none;
-        }
-        .news-item h2 {
-            margin-top: 0;
-        }
-        .news-item .date {
-            color: #666;
-            font-size: 0.9em;
-        }
-        .news-item img {
-            max-width: 100%;
-            height: auto;
-            max-height: 500px; /* Ajuste a altura máxima conforme necessário */
-            object-fit: cover;
-            margin-top: 10px;
-        }
-        .edit-btn, .delete-btn {
-            padding: 5px 10px;
-            margin-right: 5px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .edit-btn {
-            background-color: #007bff;
-            color: #fff;
-        }
-        .edit-btn:hover {
-            background-color: #0056b3;
-        }
-        .delete-btn {
-            background-color: #dc3545;
-            color: #fff;
-        }
-        .delete-btn:hover {
-            background-color: #c82333;
-        }
-        .logout-btn {
-            display: block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .logout-btn:hover {
-            background-color: #c82333;
-        }
+        /* Adicione o CSS aqui */
     </style>
 </head>
 <body>
@@ -123,7 +15,7 @@
 
     <div class="container">
         <form id="newsForm">
-            <input type="hidden" id="editIndex" name="editIndex">
+            <input type="hidden" id="editId" name="editId">
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" required>
             
@@ -149,7 +41,7 @@
     <script>
         const newsForm = document.getElementById('newsForm');
         const newsList = document.getElementById('newsList');
-        const editIndexInput = document.getElementById('editIndex');
+        const editIdInput = document.getElementById('editId');
         const logoutBtn = document.getElementById('logoutBtn');
 
         // Verifica se o usuário está autenticado
@@ -157,44 +49,52 @@
             window.location.href = 'login.html'; // Redireciona para a página de login
         }
 
-        let newsItems = JSON.parse(localStorage.getItem('newsItems')) || [];
-
         function displayNews() {
-            newsList.innerHTML = '';
-            newsItems.forEach((news, index) => {
-                const newsItem = document.createElement('div');
-                newsItem.classList.add('news-item');
-                newsItem.innerHTML = `
-                    <h2>${news.title}</h2>
-                    <p class="date">${news.date}</p>
-                    <p>${news.content}</p>
-                    ${news.image ? `<img src="${news.image}" alt="Imagem da notícia">` : ''}
-                    <button class="edit-btn" data-index="${index}">Editar</button>
-                    <button class="delete-btn" data-index="${index}">Excluir</button>
-                `;
-                newsList.appendChild(newsItem);
-            });
+            fetch('/posts')
+                .then(response => response.json())
+                .then(newsItems => {
+                    newsList.innerHTML = '';
+                    newsItems.forEach(news => {
+                        const newsItem = document.createElement('div');
+                        newsItem.classList.add('news-item');
+                        newsItem.innerHTML = `
+                            <h2>${news.title}</h2>
+                            <p class="date">${news.date}</p>
+                            <p>${news.content}</p>
+                            ${news.image ? `<img src="${news.image}" alt="Imagem da notícia">` : ''}
+                            <button class="edit-btn" data-id="${news.id}">Editar</button>
+                            <button class="delete-btn" data-id="${news.id}">Excluir</button>
+                        `;
+                        newsList.appendChild(newsItem);
+                    });
 
-            document.querySelectorAll('.edit-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const index = e.target.getAttribute('data-index');
-                    const news = newsItems[index];
-                    editIndexInput.value = index;
-                    document.getElementById('title').value = news.title;
-                    document.getElementById('date').value = news.date;
-                    document.getElementById('content').value = news.content;
-                    document.getElementById('image').value = news.image.replace(/^img\//, ''); // Remove o prefixo 'img/'
-                });
-            });
+                    document.querySelectorAll('.edit-btn').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const id = e.target.getAttribute('data-id');
+                            fetch(`/posts/${id}`)
+                                .then(response => response.json())
+                                .then(news => {
+                                    editIdInput.value = id;
+                                    document.getElementById('title').value = news.title;
+                                    document.getElementById('date').value = news.date;
+                                    document.getElementById('content').value = news.content;
+                                    document.getElementById('image').value = news.image;
+                                });
+                        });
+                    });
 
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const index = e.target.getAttribute('data-index');
-                    newsItems.splice(index, 1);
-                    localStorage.setItem('newsItems', JSON.stringify(newsItems));
-                    displayNews();
+                    document.querySelectorAll('.delete-btn').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const id = e.target.getAttribute('data-id');
+                            fetch(`/delete-post/${id}`, { method: 'DELETE' })
+                                .then(response => response.text())
+                                .then(message => {
+                                    alert(message);
+                                    displayNews();
+                                });
+                        });
+                    });
                 });
-            });
         }
 
         newsForm.addEventListener('submit', (e) => {
@@ -203,18 +103,25 @@
             const date = document.getElementById('date').value;
             const content = document.getElementById('content').value;
             const image = document.getElementById('image').value;
-            const editIndex = editIndexInput.value;
+            const editId = editIdInput.value;
 
-            if (editIndex === '') {
-                newsItems.push({ title, date, content, image });
-            } else {
-                newsItems[editIndex] = { title, date, content, image };
-                editIndexInput.value = '';
-            }
+            const method = editId ? 'POST' : 'POST';
+            const url = editId ? `/update-post/${editId}` : '/add-post';
 
-            localStorage.setItem('newsItems', JSON.stringify(newsItems));
-            newsForm.reset();
-            displayNews();
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, date, content, image })
+            })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                newsForm.reset();
+                editIdInput.value = '';
+                displayNews();
+            });
         });
 
         logoutBtn.addEventListener('click', () => {
