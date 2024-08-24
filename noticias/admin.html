@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração de Notícias</title>
     <meta name="description" content="Área de administração para adicionar, editar e excluir notícias. Apenas acessível para administradores.">
+    <meta name="keywords" content="administração de notícias, gerenciamento de conteúdo, edição de notícias">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="Administração de Notícias">
+    <meta property="og:description" content="Área de administração para adicionar, editar e excluir notícias. Exclusivo para administradores.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://example.com/admin">
+    <meta property="og:image" content="https://example.com/admin-thumbnail.jpg">
     <link rel="stylesheet" href="admin-styles.css">
 </head>
 <body>
@@ -25,6 +32,9 @@
             
             <label for="video">URL do Vídeo:</label>
             <input type="text" id="video" name="video">
+            
+            <label for="tags">Tags (separadas por vírgula):</label>
+            <input type="text" id="tags" name="tags">
             
             <button type="submit">Salvar Notícia</button>
         </form>
@@ -47,6 +57,7 @@
                     ${newsItem.image ? `<img src="${newsItem.image}" alt="Imagem da notícia" style="max-width: 100px;">` : ''}
                     <p>${newsItem.text}</p>
                     ${newsItem.video ? `<video controls style="max-width: 200px;"><source src="${newsItem.video}" type="video/mp4">Seu navegador não suporta o elemento de vídeo.</video>` : ''}
+                    ${newsItem.tags ? `<p><strong>Tags:</strong> ${newsItem.tags.join(', ')}</p>` : ''}
                     <button onclick="editNews(${index})">Editar</button>
                     <button onclick="deleteNews(${index})">Excluir</button>
                 `;
@@ -62,24 +73,17 @@
             document.getElementById('image').value = newsItem.image;
             document.getElementById('text').value = newsItem.text;
             document.getElementById('video').value = newsItem.video;
+            document.getElementById('tags').value = newsItem.tags ? newsItem.tags.join(', ') : '';
         }
 
         function deleteNews(index) {
-            let newsArray = JSON.parse(localStorage.getItem('news')) || [];
-            newsArray.splice(index, 1); // Remove o item da lista
-            localStorage.setItem('news', JSON.stringify(newsArray));
-            loadNews(); // Atualiza a lista de notícias
+            if (confirm('Você tem certeza de que deseja excluir esta notícia?')) {
+                let newsArray = JSON.parse(localStorage.getItem('news')) || [];
+                newsArray.splice(index, 1); // Remove o item da lista
+                localStorage.setItem('news', JSON.stringify(newsArray));
+                loadNews(); // Atualiza a lista de notícias
+            }
         }
-
-        function deleteNews(index) {
-    if (confirm('Você tem certeza de que deseja excluir esta notícia?')) {
-        let newsArray = JSON.parse(localStorage.getItem('news')) || [];
-        newsArray.splice(index, 1); // Remove o item da lista
-        localStorage.setItem('news', JSON.stringify(newsArray));
-        loadNews(); // Atualiza a lista de notícias
-    }
-}
-
 
         document.getElementById('news-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -89,12 +93,14 @@
             const image = document.getElementById('image').value;
             const text = document.getElementById('text').value;
             const video = document.getElementById('video').value;
+            const tags = document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
 
             const newsItem = {
                 title,
                 image,
                 text,
                 video,
+                tags,
                 date: new Date().toISOString()
             };
 
