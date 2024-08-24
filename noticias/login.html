@@ -6,51 +6,60 @@
     <title>Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f2f5;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
         }
         .login-container {
-            background-color: #fff;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
         }
         h1 {
-            margin-top: 0;
+            margin: 0 0 20px;
+            font-size: 24px;
+            color: #333;
         }
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
         }
         input {
             width: 100%;
             padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 4px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
             padding: 10px;
-            background-color: #333;
-            color: #fff;
+            background-color: #007bff;
             border: none;
             border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #555;
+            background-color: #0056b3;
         }
-        .error {
-            color: red;
+        .error-message {
+            color: #dc3545;
             margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -58,36 +67,32 @@
     <div class="login-container">
         <h1>Login</h1>
         <form id="loginForm">
-            <label for="email">E-mail:</label>
+            <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             
             <label for="password">Senha:</label>
             <input type="password" id="password" name="password" required>
             
             <button type="submit">Entrar</button>
-            <p class="error" id="errorMessage"></p>
+            <div class="error-message" id="error-message"></div>
         </form>
     </div>
 
     <script>
         const loginForm = document.getElementById('loginForm');
-        const errorMessage = document.getElementById('errorMessage');
+        const errorMessage = document.getElementById('error-message');
 
-        // Credenciais válidas
-        const VALID_EMAIL = 'mayconbrown083@gmail.com';
-        const VALID_PASSWORD = 'Branquinha(10)';
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            if (email === VALID_EMAIL && password === VALID_PASSWORD) {
+            if (email === 'mayconbrown083@gmail.com' && password === 'Branquinha(10)') {
                 localStorage.setItem('loggedIn', 'true');
                 window.location.href = 'admin.html'; // Redireciona para a página de administração
             } else {
-                errorMessage.textContent = 'E-mail ou senha incorretos.';
+                errorMessage.textContent = 'Email ou senha incorretos.';
             }
         });
     </script>
