@@ -60,6 +60,8 @@
                     ${newsItem.image ? `<img src="${newsItem.image}" alt="Imagem da notícia">` : ''}
                     <p>${newsItem.text}</p>
                     ${newsItem.video ? `<video controls><source src="${newsItem.video}" type="video/mp4">Seu navegador não suporta o elemento de vídeo.</video>` : ''}
+                    ${newsItem.tags ? `<p><strong>Tags:</strong> ${newsItem.tags.join(', ')}</p>` : ''}
+                    <time datetime="${newsItem.date}">${new Date(newsItem.date).toLocaleDateString()}</time>
                 `;
                 
                 newsContainer.appendChild(article);
