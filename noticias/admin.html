@@ -5,7 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração de Notícias</title>
     <style>
-        /* Adicione seu CSS aqui */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .form-container, .news-list {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-container h2, .news-list h2 {
+            margin-top: 0;
+            color: #343a40;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .news-list {
+            margin-top: 20px;
+        }
+        .news-item {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: grid;
+            gap: 10px;
+            position: relative;
+        }
+        .news-item h3 {
+            margin: 0;
+            font-size: 1.25em;
+            color: #343a40;
+        }
+        .news-item .date {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .news-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .news-item button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .news-item button.edit {
+            background-color: #28a745;
+        }
+        .news-item button.edit:hover {
+            background-color: #218838;
+        }
+        .news-item button.delete:hover {
+            background-color: #c82333;
+        }
+        .logout-btn {
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .logout-btn:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
@@ -14,22 +127,25 @@
     </header>
 
     <div class="container">
-        <form id="newsForm">
-            <input type="hidden" id="editId" name="editId">
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="title" required>
-            
-            <label for="date">Data:</label>
-            <input type="date" id="date" name="date" required>
-            
-            <label for="content">Conteúdo:</label>
-            <textarea id="content" name="content" rows="5" required></textarea>
+        <div class="form-container">
+            <h2>Adicionar / Editar Notícia</h2>
+            <form id="newsForm">
+                <input type="hidden" id="editId" name="editId">
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <label for="content">Conteúdo:</label>
+                <textarea id="content" name="content" required></textarea>
 
-            <label for="image">Imagem (URL):</label>
-            <input type="text" id="image" name="image" placeholder="URL da imagem" required>
-            
-            <button type="submit">Salvar Notícia</button>
-        </form>
+                <label for="image">Imagem (URL):</label>
+                <input type="text" id="image" name="image" placeholder="URL da imagem" required>
+                
+                <button type="submit">Salvar Notícia</button>
+            </form>
+        </div>
 
         <div class="news-list" id="newsList">
             <!-- As notícias serão exibidas aqui -->
@@ -57,7 +173,7 @@
                         const newsItem = document.createElement('div');
                         newsItem.classList.add('news-item');
                         newsItem.innerHTML = `
-                            <h2>${news.title}</h2>
+                            <h3>${news.title}</h3>
                             <p class="date">${news.date}</p>
                             <p>${news.content}</p>
                             ${news.image ? `<img src="${news.image}" alt="Imagem da notícia">` : ''}
