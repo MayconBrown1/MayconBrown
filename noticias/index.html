@@ -60,7 +60,7 @@
         const newsContainer = document.getElementById('newsContainer');
 
         function displayNews() {
-            fetch('/posts')
+            fetch('https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPOSITORIO/main/noticias/posts.json')
                 .then(response => response.json())
                 .then(newsItems => {
                     newsContainer.innerHTML = '';
