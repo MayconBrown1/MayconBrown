@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração de Notícias</title>
     <style>
-        /* Estilos CSS ajustados para um layout mais moderno */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -166,7 +165,7 @@
         }
 
         function displayNews() {
-            fetch('/posts')
+            fetch('https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPOSITORIO/main/noticias/posts.json')
                 .then(response => response.json())
                 .then(newsItems => {
                     newsList.innerHTML = '';
@@ -187,27 +186,16 @@
                     document.querySelectorAll('.edit-btn').forEach(button => {
                         button.addEventListener('click', (e) => {
                             const id = e.target.getAttribute('data-id');
-                            fetch(`/posts/${id}`)
-                                .then(response => response.json())
-                                .then(news => {
-                                    editIdInput.value = id;
-                                    document.getElementById('title').value = news.title;
-                                    document.getElementById('date').value = news.date;
-                                    document.getElementById('content').value = news.content;
-                                    document.getElementById('image').value = news.image;
-                                });
+                            // A edição aqui é fictícia, pois GitHub Pages não suporta operações CRUD dinâmicas
+                            alert('Função de editar ainda não implementada.');
                         });
                     });
 
                     document.querySelectorAll('.delete-btn').forEach(button => {
                         button.addEventListener('click', (e) => {
                             const id = e.target.getAttribute('data-id');
-                            fetch(`/delete-post/${id}`, { method: 'DELETE' })
-                                .then(response => response.text())
-                                .then(message => {
-                                    alert(message);
-                                    displayNews();
-                                });
+                            // A exclusão aqui é fictícia, pois GitHub Pages não suporta operações CRUD dinâmicas
+                            alert('Função de excluir ainda não implementada.');
                         });
                     });
                 });
@@ -221,23 +209,11 @@
             const image = document.getElementById('image').value;
             const editId = editIdInput.value;
 
-            const method = editId ? 'PUT' : 'POST';
-            const url = editId ? `/update-post/${editId}` : '/add-post';
+            // A adição aqui é fictícia, pois GitHub Pages não suporta operações CRUD dinâmicas
+            alert('Função de adicionar notícia ainda não implementada.');
 
-            fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ title, date, content, image })
-            })
-            .then(response => response.text())
-            .then(message => {
-                alert(message);
-                newsForm.reset();
-                editIdInput.value = '';
-                displayNews();
-            });
+            // Para atualizar a lista de notícias
+            displayNews();
         });
 
         logoutBtn.addEventListener('click', () => {
