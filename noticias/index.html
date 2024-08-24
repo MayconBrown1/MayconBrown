@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Notícias</title>
+    <title>Página de Notícias</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,12 +24,6 @@
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
-            margin: 0;
-        }
-        .news-list {
-            margin-top: 20px;
-        }
         .news-item {
             padding: 15px;
             border-bottom: 1px solid #ddd;
@@ -44,46 +38,44 @@
             color: #666;
             font-size: 0.9em;
         }
-        .admin-link {
-            display: block;
-            margin: 20px 0;
-            text-align: center;
+        .news-item img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Portal de Notícias</h1>
+        <h1>Notícias</h1>
     </header>
 
     <div class="container">
-        <a href="admin.html" class="admin-link">Ir para a administração</a>
         <div class="news-list" id="newsList">
             <!-- As notícias serão exibidas aqui -->
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const newsList = document.getElementById('newsList');
-            let newsItems = JSON.parse(localStorage.getItem('newsItems')) || [];
+        const newsList = document.getElementById('newsList');
 
-            function displayNews() {
-                newsList.innerHTML = '';
-                newsItems.forEach(news => {
-                    const newsItem = document.createElement('div');
-                    newsItem.classList.add('news-item');
-                    newsItem.innerHTML = `
-                        <h2>${news.title}</h2>
-                        <p class="date">${news.date}</p>
-                        <p>${news.content}</p>
-                    `;
-                    newsList.appendChild(newsItem);
-                });
-            }
+        function displayNews() {
+            const newsItems = JSON.parse(localStorage.getItem('newsItems')) || [];
+            newsList.innerHTML = '';
+            newsItems.forEach(news => {
+                const newsItem = document.createElement('div');
+                newsItem.classList.add('news-item');
+                newsItem.innerHTML = `
+                    <h2>${news.title}</h2>
+                    <p class="date">${news.date}</p>
+                    <p>${news.content}</p>
+                    ${news.image ? `<img src="${news.image}" alt="Imagem da notícia">` : ''}
+                `;
+                newsList.appendChild(newsItem);
+            });
+        }
 
-            displayNews();
-        });
+        displayNews();
     </script>
 </body>
 </html>
