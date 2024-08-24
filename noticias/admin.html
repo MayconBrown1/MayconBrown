@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração de Notícias</title>
-    <meta name="description" content="Área de administração para adicionar e editar notícias. Apenas acessível para administradores.">
+    <meta name="description" content="Área de administração para adicionar, editar e excluir notícias. Apenas acessível para administradores.">
     <link rel="stylesheet" href="admin-styles.css">
 </head>
 <body>
@@ -48,6 +48,7 @@
                     <p>${newsItem.text}</p>
                     ${newsItem.video ? `<video controls style="max-width: 200px;"><source src="${newsItem.video}" type="video/mp4">Seu navegador não suporta o elemento de vídeo.</video>` : ''}
                     <button onclick="editNews(${index})">Editar</button>
+                    <button onclick="deleteNews(${index})">Excluir</button>
                 `;
                 newsList.appendChild(listItem);
             });
@@ -62,6 +63,23 @@
             document.getElementById('text').value = newsItem.text;
             document.getElementById('video').value = newsItem.video;
         }
+
+        function deleteNews(index) {
+            let newsArray = JSON.parse(localStorage.getItem('news')) || [];
+            newsArray.splice(index, 1); // Remove o item da lista
+            localStorage.setItem('news', JSON.stringify(newsArray));
+            loadNews(); // Atualiza a lista de notícias
+        }
+
+        function deleteNews(index) {
+    if (confirm('Você tem certeza de que deseja excluir esta notícia?')) {
+        let newsArray = JSON.parse(localStorage.getItem('news')) || [];
+        newsArray.splice(index, 1); // Remove o item da lista
+        localStorage.setItem('news', JSON.stringify(newsArray));
+        loadNews(); // Atualiza a lista de notícias
+    }
+}
+
 
         document.getElementById('news-form').addEventListener('submit', function(event) {
             event.preventDefault();
