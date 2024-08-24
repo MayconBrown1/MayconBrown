@@ -63,19 +63,22 @@
         const newsList = document.getElementById('newsList');
 
         function displayNews() {
-            const newsItems = JSON.parse(localStorage.getItem('newsItems')) || [];
-            newsList.innerHTML = '';
-            newsItems.forEach(news => {
-                const newsItem = document.createElement('div');
-                newsItem.classList.add('news-item');
-                newsItem.innerHTML = `
-                    <h2>${news.title}</h2>
-                    <p class="date">${news.date}</p>
-                    <p>${news.content}</p>
-                    ${news.image ? `<img src="${news.image}" alt="Imagem da notícia">` : ''}
-                `;
-                newsList.appendChild(newsItem);
-            });
+            fetch('/posts')
+                .then(response => response.json())
+                .then(newsItems => {
+                    newsList.innerHTML = '';
+                    newsItems.forEach(news => {
+                        const newsItem = document.createElement('div');
+                        newsItem.classList.add('news-item');
+                        newsItem.innerHTML = `
+                            <h2>${news.title}</h2>
+                            <p class="date">${news.date}</p>
+                            <p>${news.content}</p>
+                            ${news.image ? `<img src="${news.image}" alt="Imagem da notícia">` : ''}
+                        `;
+                        newsList.appendChild(newsItem);
+                    });
+                });
         }
 
         displayNews();
