@@ -13,6 +13,7 @@
     </header>
     <main>
         <form id="news-form">
+            <input type="hidden" id="edit-id" name="edit-id">
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" required>
             
@@ -25,20 +26,52 @@
             <label for="video">URL do Vídeo:</label>
             <input type="text" id="video" name="video">
             
-            <button type="submit">Publicar Notícia</button>
+            <button type="submit">Salvar Notícia</button>
         </form>
+        <hr>
+        <h2>Lista de Notícias</h2>
+        <ul id="news-list">
+            <!-- A lista de notícias será inserida aqui pelo JavaScript -->
+        </ul>
     </main>
     <script>
+        function loadNews() {
+            const newsArray = JSON.parse(localStorage.getItem('news')) || [];
+            const newsList = document.getElementById('news-list');
+            newsList.innerHTML = '';
+            
+            newsArray.forEach((newsItem, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <h3>${newsItem.title}</h3>
+                    ${newsItem.image ? `<img src="${newsItem.image}" alt="Imagem da notícia" style="max-width: 100px;">` : ''}
+                    <p>${newsItem.text}</p>
+                    ${newsItem.video ? `<video controls style="max-width: 200px;"><source src="${newsItem.video}" type="video/mp4">Seu navegador não suporta o elemento de vídeo.</video>` : ''}
+                    <button onclick="editNews(${index})">Editar</button>
+                `;
+                newsList.appendChild(listItem);
+            });
+        }
+        
+        function editNews(index) {
+            const newsArray = JSON.parse(localStorage.getItem('news')) || [];
+            const newsItem = newsArray[index];
+            document.getElementById('edit-id').value = index;
+            document.getElementById('title').value = newsItem.title;
+            document.getElementById('image').value = newsItem.image;
+            document.getElementById('text').value = newsItem.text;
+            document.getElementById('video').value = newsItem.video;
+        }
+
         document.getElementById('news-form').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Coleta dados do formulário
+            const index = document.getElementById('edit-id').value;
             const title = document.getElementById('title').value;
             const image = document.getElementById('image').value;
             const text = document.getElementById('text').value;
             const video = document.getElementById('video').value;
 
-            // Cria um objeto para a nova notícia
             const newsItem = {
                 title,
                 image,
@@ -47,14 +80,21 @@
                 date: new Date().toISOString()
             };
 
-            // Armazena a notícia no LocalStorage
             let newsArray = JSON.parse(localStorage.getItem('news')) || [];
-            newsArray.push(newsItem);
+            if (index === '') {
+                // Adiciona nova notícia
+                newsArray.push(newsItem);
+            } else {
+                // Atualiza notícia existente
+                newsArray[parseInt(index)] = newsItem;
+            }
             localStorage.setItem('news', JSON.stringify(newsArray));
-
-            // Limpa o formulário
             document.getElementById('news-form').reset();
+            document.getElementById('edit-id').value = '';
+            loadNews();
         });
+
+        document.addEventListener('DOMContentLoaded', loadNews);
     </script>
 </body>
 </html>
