@@ -32,7 +32,8 @@
             const password = document.getElementById('password').value;
             
             if (email === correctEmail && password === correctPassword) {
-                // Redireciona para a página de administração
+                // Define o status de login no localStorage e redireciona
+                localStorage.setItem('loggedIn', 'true');
                 window.location.href = 'admin.html';
             } else {
                 document.getElementById('error-message').style.display = 'block';
