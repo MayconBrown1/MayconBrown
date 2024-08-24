@@ -45,6 +45,14 @@
         </ul>
     </main>
     <script>
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('loggedIn');
+            if (isLoggedIn !== 'true') {
+                // Redireciona para a página de login
+                window.location.href = 'login.html';
+            }
+        }
+
         function loadNews() {
             const newsArray = JSON.parse(localStorage.getItem('news')) || [];
             const newsList = document.getElementById('news-list');
@@ -118,7 +126,10 @@
             loadNews();
         });
 
-        document.addEventListener('DOMContentLoaded', loadNews);
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadNews();
+        });
     </script>
 </body>
 </html>
