@@ -1,16 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Administração</title>
-    <meta name="description" content="Área de login para acesso à administração de notícias.">
-    <link rel="stylesheet" href="login-styles.css">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <main>
-        <h1>Login de Administração</h1>
-        <form id="login-form">
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm">
             <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" required>
             
@@ -18,25 +65,29 @@
             <input type="password" id="password" name="password" required>
             
             <button type="submit">Entrar</button>
+            <p class="error" id="errorMessage"></p>
         </form>
-        <p id="error-message" style="color: red; display: none;">E-mail ou senha incorretos.</p>
-    </main>
+    </div>
+
     <script>
-        const correctEmail = 'mayconbrown083@gmail.com';
-        const correctPassword = '@Branquinha(10)';
-        
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Credenciais válidas
+        const VALID_EMAIL = 'mayconbrown083@gmail.com';
+        const VALID_PASSWORD = 'Branquinha(10)';
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            
-            if (email === correctEmail && password === correctPassword) {
-                // Define o status de login no localStorage e redireciona
+
+            if (email === VALID_EMAIL && password === VALID_PASSWORD) {
                 localStorage.setItem('loggedIn', 'true');
-                window.location.href = 'admin.html';
+                window.location.href = 'admin.html'; // Redireciona para a página de administração
             } else {
-                document.getElementById('error-message').style.display = 'block';
+                errorMessage.textContent = 'E-mail ou senha incorretos.';
             }
         });
     </script>
