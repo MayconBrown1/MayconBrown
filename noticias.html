@@ -14,47 +14,68 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333;
         }
         header {
-            background-color: #333;
+            background-color: #444;
             color: white;
-            padding: 10px 0;
+            padding: 20px;
             text-align: center;
         }
         .container {
-            width: 80%;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
         .news-article {
             background-color: white;
             margin: 20px 0;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .news-article h2 {
-            margin-top: 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 400px; /* Ajuste a altura para manter a uniformidade */
         }
         .news-article img {
             max-width: 100%;
-            height: auto;
-            border-radius: 5px;
+            height: 200px; /* Ajuste a altura da imagem */
+            object-fit: cover;
+            border-radius: 8px;
             margin-bottom: 15px;
         }
-        .footer-note {
-            background-color: #333; /* Fundo escuro */
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px; /* Espaço entre a notícia e a mensagem */
+        .news-article h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            line-height: 1.4;
+        }
+        .news-article p {
+            margin: 0;
+            line-height: 1.6;
+            flex: 1; /* Faz com que o conteúdo flexível ocupe o espaço restante */
         }
         footer {
-            background-color: #333;
+            background-color: #444;
             color: white;
             text-align: center;
-            padding: 10px 0;
-            position: relative; /* Alterado de absolute para relative */
+            padding: 15px;
+            position: relative;
             width: 100%;
+            bottom: 0;
+            clear: both;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .news-article {
+                height: auto;
+                padding: 10px;
+            }
+            .news-article img {
+                height: 150px;
+            }
         }
     </style>
 </head>
@@ -126,87 +147,33 @@
 
 
 
-       <div class="container">
+<div class="container">
         <section class="news-article">
             <h2>Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro em Veneza</h2>
             <img src="https://i.ytimg.com/vi/OrX7kv4FPT4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAEMmCcWggPJE0f8Y1DciRXFTtKyg" alt="Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro">
             <p><strong>Data:</strong> 01/09/2024</p> 
-            <p>Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro em Veneza. A ovação ocorreu após a exibição do filme ‘Ainda Estou Aqui’, dirigido por Walter Salles, na 81ª edição do Festival de Veneza, na Itália, neste domingo, 1º. O longa foi aplaudido por cerca de 10 minutos pelo público presente na sessão de gala e deixou os atores emocionados com a reação. O drama conta a história de Eunice Paiva, que luta para descobrir o paradeiro de seu marido após ele ser levado pela Polícia Militar em 1971, durante a ditadura no Brasil. Reprodução/cinematographico7/Instagram Reprodução/oficialfernandatorres/Instagram Reprodução/simonezuccolotto/Instagram</p>
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-        </section> 
+            <p>Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro em Veneza. A ovação ocorreu após a exibição do filme ‘Ainda Estou Aqui’, dirigido por Walter Salles, na 81ª edição do Festival de Veneza, na Itália, neste domingo, 1º. O longa foi aplaudido por cerca de 10 minutos pelo público presente na sessão de gala e deixou os atores emocionados com a reação. O drama conta a história de Eunice Paiva, que luta para descobrir o paradeiro de seu marido após ele ser levado pela Polícia Militar em 1971, durante a ditadura no Brasil.</p>
+        </section>
 
-
-
-
-           <div class="container">
         <section class="news-article">
             <h2>Marco Pigossi se casa com cineasta Marco Calvani na Itália</h2>
             <img src="https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/09/casamento-pigosi-calvani.jpg?w=1220&h=674&crop=1&quality=85" alt="Marco Pigossi e Marco Calvani se casam na Itália ">
             <p><strong>Data:</strong> 02/09/2024</p> 
-            <p>Casal assumiu o relacionamento em novembro de 2021, durante o "Thanksgiving"</p>
-            <p>O ator Marco Pigossi, 35, se casou com o cineasta italiano Marco Calvani, 43, no último sábado (31), em Toscana, na Itália. A cerimônia intimista ocorreu após o casal oficializar a união civil no final de 2023, em São Paulo.</p> 
-            <p>Um breve vídeo do evento foi publicado pelo portal Hugo Gloss no Instagram. Para o momento, os dois, que estavam descalços, usaram ternos claros iguais, e, logo na sequência, foram recebidos pelos convidados.</p> 
-            <p>Pigossi e Calvani assumiram o relacionamento em novembro de 2021, durante o “Thanksgiving” (Dia de Ação de Graças, em tradução). Na época, o brasileiro postou um story andando de mãos dadas com o namorado e brincou: “Chocando um total de zero pessoas”.</p> 
-            <p>Quem é Marco Calvani, marido de Marco Pigossi?
-Irmão mais velho do ator famoso Luca Calvani, Marco Calvani é um dramaturgo, diretor, cineasta, tradutor e ator italiano. Dentre seus trabalhos por trás das telas, estão “Best Place” e “The View From Up Here” (2017).
+            <p>O ator Marco Pigossi, 35, se casou com o cineasta italiano Marco Calvani, 43, no último sábado (31), em Toscana, na Itália. A cerimônia intimista ocorreu após o casal oficializar a união civil no final de 2023, em São Paulo.</p>
+            <p>Um breve vídeo do evento foi publicado pelo portal Hugo Gloss no Instagram. Para o momento, os dois, que estavam descalços, usaram ternos claros iguais, e, logo na sequência, foram recebidos pelos convidados.</p>
+            <p>Pigossi e Calvani assumiram o relacionamento em novembro de 2021, durante o “Thanksgiving” (Dia de Ação de Graças, em tradução). Na época, o brasileiro postou um story andando de mãos dadas com o namorado e brincou: “Chocando um total de zero pessoas”.</p>
+            <p>Quem é Marco Calvani, marido de Marco Pigossi? Irmão mais velho do ator famoso Luca Calvani, Marco Calvani é um dramaturgo, diretor, cineasta, tradutor e ator italiano. Dentre seus trabalhos por trás das telas, estão “Best Place” e “The View From Up Here” (2017).</p>
+        </section>
 
-Dentre suas atuações estão a série “Os Bórgias”, sucesso em países europeus e o filme “Caravaggio”. Ele também é fundador do Mixô, um centro cultural em Roma.</p> 
-            <p></p> 
-        </section> 
-
-
-    
-
-    <div class="container">
         <section class="news-article">
             <h2>“Boules”, “Pablito” e xingamentos: o debate agressivo em SP que deixou propostas de lado</h2>
             <img src="https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/09/WhatsApp-Image-2024-09-01-at-21.33.00.jpeg?w=1029&h=547&crop=1&quality=85" alt="Imagem do debate em São Paulo mostrando candidatos discutindo acaloradamente">
             <p><strong>Data:</strong> 01/09/2024</p>
-            <p>Embate promovido pela TV Gazeta deixou problemas de São Paulo de lado, vira "ringue" e oportunidade para produzir material para cortes para a internet</p>
-            <p>“Picareta”, “bananinha”, “palhaço”, “bandido”, “invasor”, “criminoso”, “sem caráter”, “estelionatário”, “ladrãozinho”, “vagabundo”. Essas foram apenas algumas das expressões utilizadas pelos principais candidatos à prefeitura de São Paulo durante o debate promovido pela pela TV Gazeta em parceria com o canal MyNews.</p>
-            <p>O encontro, que aconteceu neste domingo (1º), foi marcado pela agressividade e acusações. E também por um acirramento no tom de acusações e perguntas por parte dos principais candidatos à prefeitura de São Paulo contra Pablo Marçal (PRTB). Poucos dos problemas da cidade foram discutidos. Entre as raríssimas interações envolvendo aspectos de São Paulo, o tom foi similarmente agressivo.
-
-                Além de Marçal, Ricardo Nunes (MDB), Guilherme Boulos (PSOL), José Luiz Datena (PSDB) e Tabata Amaral (PSB) estiveram presentes no debate. Preocupados de antemão nos cortes para as redes sociais, os candidatos usaram termos duros contra o coach nas interações com o candidato do PRTB e entre os demais adversários.</p>
-            <p>Em ascensão nas pesquisas, Marçal virou alvo principal de todos os candidatos. Quatro pesquisas divulgadas na útima semana apontam empate técnico na liderança entre Boulos, Nunes e Marçal. Marcado por ataques entre os políticos, o debate foi pobre em propostas e em nível das discussões.
-
-                A tríade que divide a liderança nas pesquisas preferiu os embates entre si.</p>  
-            <p>Datena chegou a deixar o púlpito e caminhar em direção a Pablo Marçal, o chamando de “vagabundo”. Ele foi advertido formalmente pela moderadora, a jornalista Denise Campos de Toledo — que também repreendeu Marçal por chamar o jornalista “para a briga”.
-
-                A comunicadora pediu reiteradamente durante as mais de duas horas que os candidatos se comportassem, tivessem decoro e respeitassem a televisão e os eleitores. Ela revelou que, nos bastidores, houve embates.
-                
-                Anteriormente, o apresentador licenciado já havia atacado Ricardo Nunes. “Ele disse que eu não tenho coragem de falar na sua cara, eu falo na sua cara: picareta”, afirmou. Os dois protagonizaram um bate-boca acalorado com o microfone desligado.
-                
-                O encontro entre os candidatos foi marcado por uma quantidade cansativa de pedidos de direito de resposta.
-                
-                O terceiro bloco contemplava o sorteio de perguntas temáticas que obrigou os candidatos a falar sobre as questões da maior metrópole da América do Sul — mas, reitere-se, en passant.
-                
-                Depois de faltarem ao debate promovido pela revista Veja em parceria com a universidade ESPM, Datena, Boulos e Nunes concordaram em comparecer depois de a Gazeta estipular regras mais rígidas — com a possibilidade de expulsão de candidatos em caso de descumprimento do acordado pelas campanhas junto à rede de televisão. As ausências do trio no debate anterior foram criticadas por Pablo Marçal e Tabata Amaral.
-                
-                Entre as regras, estava a proibição de apresentação de objetos pelos candidato.
-                
-                Pela ordem definida por sorteio, Marçal já iniciou dando o tom que o debate teria. Ele iniciou as discussões provocando Guilherme Boulos. O candidato do PRTB passou as mais de duas horas referindo-se ao candidato do PSOL de “Boules”, em alusão ao episódio envolvendo a adaptação do Hino Nacional com linguagem neutra em um evento de campanha do psolista. Ele voltou a aludir que Boulos já fez uso de drogas.
-                
-                “Sobre o uso de droga, a farsa já foi demonstrada. O cidadão usar um homônimo para atacar uma pessoa mostra o nível de alguém que quer ser prefeito de São Paulo”, respondeu Boulos, que, em tom mais duro do que anteriormente, afirmou que Marçal “é bandido e condenado” e que a população “está sabendo disso agora”. Ele mencionou supostas condenações de Marçal e ligou o candidato a Nunes e Bolsonaro.
-                
-                Tentando colar sua imagem à de Jair Bolsonaro, Nunes adotou um tom mais parecido com o do ex-presidente e iniciou o debate chamando o candidato do PRTB de “Pablito”, com quem divide os votos bolsonaristas. “[Marçal] participou, foi condenado e preso por integrar uma quadrilha que entrava na conta das pessoas e subtraía recursos dos mais humildes e aposentados”, acusou o prefeito. Ele chamou o candidato de “tchutchuca do PCC”, referiu-se a Boulos como “invasor”.
-                
-                Boulos mirou os eleitores da periferia, onde tem menos afeição por parte do eleitorado. Ele apresentou em mais de uma ocasião sua candidata a vice, Marta Suplicy (PT), que já foi prefeita de São Paulo e foi bem avaliada nas regiões mais pobres.
-                
-                Além de trazer ao debate os vídeos produzidos pela campanha repletos de acusações contra Pablo Marçal, Tabata mirou Nunes e indagou o prefeito sobre índices envolvendo a educação na capital paulista e sobre políticas para a cracolândia.
-                
-                Datena mirou sua narrativa em mostrar-se como um prefeito que basearia sua gestão no combate à criminalidade, trazendo sua experiência como apresentador de um programa policial.
-                
-                Marçal repetiu a estratégia de outros debates, inventou apelidos para todos os candidatos e aproveitou os momentos em que dividiu a tela com adversários para pedir, fazendo gestos com as mãos, votos.
-                
-                Ao final de um cansativo debate, o eleitor ficou carente de respostas sobre as políticas públicas para a maior e mais rica metrópole do país. Os cortes para as redes sociais, porém, estão garantidos.</p>  
+            <p>“Picareta”, “bananinha”, “palhaço”, “bandido”, “invasor”, “criminoso”, “sem caráter”, “estelionatário”, “ladrãozinho”, “vagabundo”. Essas foram apenas algumas das expressões utilizadas pelos principais candidatos à prefeitura de São Paulo durante o debate promovido pela TV Gazeta em parceria com o canal MyNews.</p>
+            <p>O encontro, que aconteceu neste domingo (1º), foi marcado pela agressividade e acusações. E também por um acirramento no tom de acusações e perguntas por parte dos principais candidatos à prefeitura de São Paulo contra Pablo Marçal (PRTB). Poucos dos problemas da cidade foram discutidos.</p>
+            <p>Em ascensão nas pesquisas, Marçal virou alvo principal de todos os candidatos. Quatro pesquisas divulgadas na última semana apontam empate técnico na liderança entre Boulos, Nunes e Marçal. Marcado por ataques entre os políticos, o debate foi pobre em propostas e em nível das discussões.</p>
         </section>
-
- 
-        
+    </div>
 
     <footer>
         <p>&copy; 2024 Portal de Notícias. Todos os direitos reservados.</p>
