@@ -1,0 +1,116 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container principal */
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 90%;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto; /* Ajustar altura conforme o conteúdo */
+    min-height: 400px; /* Definir uma altura mínima para garantir que a imagem não empurre o conteúdo */
+    margin: 0 auto;
+}
+
+/* Cabeçalho */
+header {
+    text-align: center;
+    margin-bottom: 20px; /* Ajustado para reduzir o espaço vertical */
+}
+
+h1 {
+    color: #333;
+    font-size: 32px; /* Reduzido para ajustar a proporção */
+}
+
+/* Área principal */
+main {
+    text-align: center;
+}
+
+p {
+    margin-bottom: 20px; /* Ajustado para reduzir o espaço vertical */
+    color: #666;
+    font-size: 18px; /* Ajustado para reduzir o tamanho da fonte */
+}
+
+/* Botões */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Ajustado para reduzir o espaço entre os botões */
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px; /* Ajustado para reduzir o tamanho do padding */
+    font-size: 24px; /* Ajustado para reduzir o tamanho da fonte */
+    text-decoration: none;
+    color: #fff;
+    border-radius: 8px; /* Ajustado para um border-radius mais sutil */
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-32bit {
+    background-color: #08c440;
+}
+
+.btn-32bit:hover {
+    background-color: #075f16;
+}
+
+.btn-64bit {
+    background-color: #28a745;
+}
+
+.btn-64bit:hover {
+    background-color: #218838;
+}
+
+/* Imagem do rodapé */
+footer {
+    margin-top: auto; /* Empurra a imagem para o rodapé */
+}
+
+.footer-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto 0; /* Adiciona um pouco de margem acima e centraliza a imagem horizontalmente */
+    border: 2px solid #28a745; /* Adiciona um contorno verde de 2px */
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .btn {
+        font-size: 20px; /* Ajustado para uma fonte menor em dispositivos móveis */
+        padding: 12px 24px; /* Ajustado para um padding menor */
+    }
+}
