@@ -37,18 +37,19 @@ header {
     padding: 10px;
     background-color: #333;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
     align-items: center;
 }
 
 .header-content {
     display: flex;
+    flex-direction: column; /* Alinhar logo e GIF verticalmente */
     align-items: center;
 }
 
 .header-gif {
     max-width: 150px; /* Ajuste o tamanho do GIF conforme necessário */
-    margin-right: 10px; /* Espaçamento entre o GIF e a logo */
+    margin-top: 10px; /* Espaçamento entre o GIF e a logo */
 }
 
 .header-image {
@@ -57,6 +58,7 @@ header {
     border: 5px none #636363;
     border-radius: 10px;
 }
+
 
 
 .container {
@@ -291,14 +293,14 @@ header {
 <body>
 
     <header>
-        <!-- Container para logo e GIF -->
         <div class="header-content">
-            <!-- Novo GIF -->
-            <img src="https://veja.abril.com.br/wp-content/uploads/2016/05/giphy-3-original.gif" alt="GIF Animado" class="header-gif">
             <!-- Logo existente -->
             <img src="img/logobranca.png" alt="Logo Maycon Brown - Recursos e Softwares para Designers" class="header-image">
+            <!-- Novo GIF -->
+            <img src="https://veja.abril.com.br/wp-content/uploads/2016/05/giphy-3-original.gif" alt="GIF Animado" class="header-gif">
         </div>
     </header>
+    
 
     <div class="container">
         <h1 class="title-animated">Maycon Brown - Recursos e Softwares para Designers</h1>
