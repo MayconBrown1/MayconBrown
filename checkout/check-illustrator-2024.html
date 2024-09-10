@@ -66,7 +66,46 @@
         .whatsapp-button:hover {
             background-color: #128C7E;
         }
+    .pix-container {
+            margin-top: 20px;
+        }
+        .pix-container p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .pix-code {
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+        .copy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
     </style>
+    <script>
+        function copyPixCode() {
+            const pixCode = document.getElementById('pix-code').innerText;
+            navigator.clipboard.writeText(pixCode).then(() => {
+                alert('Código Pix copiado para a área de transferência!');
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -75,6 +114,13 @@
             <img src="https://mayconbrown.com.br/img/qr-illustrator-2024.png" alt="Imagem Illustrator">
         </div>
         <div class="text-below">R$79,99</div>
+        <div class="pix-container">
+            <p>Código Pix:</p>
+            <div id="pix-code" class="pix-code">
+                00020126780014br.gov.bcb.pix013676287992-24cf-4265-a7e4-474bcce82f510216Illustrator 2024520400005303986540579.995802BR592544.982.036 RAFAELA INACIO6010Parnamirim6211050726f78796304D77A
+            </div>
+            <button class="copy-button" onclick="copyPixCode()">Copiar Código Pix</button>
+        </div>
         <div class="whatsapp-button-container">
             <p>Mande o comprovante aqui:</p>
             <a href="https://wa.me/5584981770146" class="whatsapp-button">Enviar Comprovante</a>
