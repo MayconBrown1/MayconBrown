@@ -21,262 +21,279 @@
     <link rel="icon" href="img/icone.ico" type="image/x-icon">
     <style>
         body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0;
-    background-color: #000;
-    color: #fff;
-}
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+        }
 
-header {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
-    display: flex;
-    flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
-    align-items: center;
-}
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            display: flex;
+            flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
+            align-items: center;
+        }
 
-.header-content {
-    display: flex;
-    flex-direction: column; /* Alinhar logo e GIF verticalmente */
-    align-items: center;
-}
+        .header-content {
+            display: flex;
+            flex-direction: column; /* Alinhar logo e GIF verticalmente */
+            align-items: center;
+        }
 
-.header-gif {
-    max-width: 200px; /* Ajuste o tamanho do GIF conforme necessário */
-    margin-top: 10px; /* Espaçamento entre o GIF e a logo */
-}
+        .header-gif {
+            max-width: 200px; /* Ajuste o tamanho do GIF conforme necessário */
+            margin-top: 10px; /* Espaçamento entre o GIF e a logo */
+        }
 
-.header-image {
-    max-width: 100%;
-    height: auto;
-    border: 5px none #636363;
-    border-radius: 10px;
-}
+        .header-image {
+            max-width: 100%;
+            height: auto;
+            border: 5px none #636363;
+            border-radius: 0px;
+        }
 
+        .social-buttons {
+            display: flex;
+            gap: 50px;
+            margin: 20px 0; /* Espaçamento entre a logo e os botões sociais */
+        }
 
+        .social-buttons a {
+            display: inline-block;
+        }
 
-.container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #1a1a1a;
-    border-radius: 10px;
-}
+        .social-buttons img {
+            width: 50px; /* Tamanho dos ícones dos botões */
+            height: auto;
+            border-radius: 0%;
+            transition: transform 0.5s ease;
+        }
 
-.buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
+        .social-buttons img:hover {
+            transform: scale(2.2); /* Efeito de zoom ao passar o mouse */
+        }
 
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+        }
 
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
 
+        /* Define the shake animation */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
 
-/* Define the shake animation */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-}
+        /* Apply the animation to the active button */
+        .button.active {
+            animation: shake 1s ease-in-out; /* Aplica a animação com duração de 1 segundo */
+        }
 
-/* Apply the animation to the active button */
-.button.active {
-    animation: shake 1s ease-in-out; /* Aplica a animação com duração de 1 segundo */
-}
+        /* Style for buttons */
+        .button {
+            padding: 20px 40px;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(45deg, #1e90ff, #8a2be2); /* Azul forte para destaque e roxo */
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+            display: inline-block;
+        }
 
-/* Style for buttons */
-.button {
-    padding: 20px 40px;
-    text-align: center;
-    color: #fff;
-    background: linear-gradient(45deg, #1e90ff, #8a2be2); /* Azul forte para destaque e roxo */
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 24px;
-    text-decoration: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    margin: 10px;
-    display: inline-block;
-}
+        /* Hover effect */
+        .button:hover {
+            background: linear-gradient(45deg, #ff6347, #ff4500); /* Muda para um gradiente vermelho/laranja para alto contraste */
+            transform: scale(1.05); /* Aplica o zoom no botão */
+            color: #000; /* Muda a cor do texto para preto para contraste */
+        }
 
-/* Hover effect */
-.button:hover {
-    background: linear-gradient(45deg, #ff6347, #ff4500); /* Muda para um gradiente vermelho/laranja para alto contraste */
-    transform: scale(1.05); /* Aplica o zoom no botão */
-    color: #000; /* Muda a cor do texto para preto para contraste */
-}
+        /* Animação do título */
+        @keyframes fadeInSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        .title-animated {
+            animation: fadeInSlideUp 1s ease-out; /* Aplica a animação com duração de 1 segundo */
+        }
 
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
 
-/* Animação do título */
-@keyframes fadeInSlideUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-.title-animated {
-    animation: fadeInSlideUp 1s ease-out; /* Aplica a animação com duração de 1 segundo */
-}
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
 
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+        }
 
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
 
+        .form-group button {
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
 
-.form-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #333;
-    border: 1px solid #555;
-    border-radius: 5px;
-}
+        .content {
+            margin-top: 30px;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
+        .video-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #ccc;
-}
+        .video-container iframe {
+            width: 340px;
+            height: 600px;
+            border: none;
+        }
 
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #666;
-    border-radius: 5px;
-    background-color: #222;
-    color: #fff;
-}
+        @media (max-width: 768px) {
+            .buttons {
+                flex-direction: column;
+            }
 
-.form-group textarea {
-    height: 150px;
-    resize: vertical;
-}
+            .button {
+                font-size: 20px;
+                padding: 16px 32px;
+            }
 
-.form-group button {
-    padding: 10px 20px;
-    color: #fff;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
+            .form-group input,
+            .form-group textarea {
+                font-size: 14px;
+            }
 
-.form-group button:hover {
-    background-color: #0056b3;
-}
+            .form-group button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
 
-.content {
-    margin-top: 30px;
-}
+            .header-image {
+                border: 3px none #636363;
+            }
 
-.video-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
+            .video-container {
+                flex-direction: row;
+                overflow-x: auto;
+            }
 
-.video-container iframe {
-    width: 340px;
-    height: 600px;
-    border: none;
-}
+            .video-container iframe {
+                width: 300px;
+                height: 400px;
+            }
 
-@media (max-width: 768px) {
-    .buttons {
-        flex-direction: column;
-    }
+            .social-buttons img {
+                width: 30px;
+            }
+        }
 
-    .button {
-        font-size: 20px;
-        padding: 16px 32px;
-    }
+        @media (max-width: 480px) {
+            header {
+                padding: 5px;
+            }
 
-    .form-group input,
-    .form-group textarea {
-        font-size: 14px;
-    }
+            .button {
+                font-size: 18px;
+                padding: 12px 24px;
+            }
 
-    .form-group button {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
+            .form-group input,
+            .form-group textarea {
+                font-size: 12px;
+            }
 
-    .header-image {
-        border: 3px none #636363;
-    }
+            .form-group button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
 
-    .video-container {
-        flex-direction: row;
-        overflow-x: auto;
-    }
+            .header-image {
+                max-width: 90%;
+                border: 2px none #636363;
+            }
 
-    .video-container iframe {
-        width: 300px;
-        height: 400px;
-    }
-}
+            .video-container {
+                flex-direction: row;
+                overflow-x: auto;
+            }
 
-@media (max-width: 480px) {
-    header {
-        padding: 5px;
-    }
+            .video-container iframe {
+                width: 130px;
+                height: 210px;
+            }
 
-    .button {
-        font-size: 18px;
-        padding: 12px 24px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        font-size: 12px;
-    }
-
-    .form-group button {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-
-    .header-image {
-        max-width: 90%;
-        border: 2px none #636363;
-    }
-
-    .video-container {
-        flex-direction: row;
-        overflow-x: auto;
-    }
-
-    .video-container iframe {
-        width: 130px;
-        height: 210px;
-    }
-}
-
+            .social-buttons img {
+                width: 25px;
+            }
+        }
     </style>
     <script type="application/ld+json">
         {
@@ -299,8 +316,22 @@ header {
             <!-- Novo GIF -->
             <img src="https://veja.abril.com.br/wp-content/uploads/2016/05/giphy-3-original.gif" alt="GIF Animado" class="header-gif">
         </div>
+        <!-- Botões sociais -->
+<div class="social-buttons">
+    <a href="https://www.instagram.com/maycon.brown/" target="_blank">
+        <img src="https://mayconbrown.com.br/img/instagram.png" alt="Instagram">
+    </a>
+    <a href="https://www.youtube.com/@MayconBrown" target="_blank">
+        <img src="https://mayconbrown.com.br/img/youtube.png" alt="YouTube">
+    </a>
+    <!-- Novo botão WhatsApp -->
+    <a href="https://wa.me/5584981770146?text=Olá%2C%20vim%20pelo%20site%20mayconbrown.com.br.%20Gostaria%20de%20mais%20informações%20sobre%20os%20seus%20serviços.%20Obrigado%21
+    " target="_blank">
+        <img src="https://mayconbrown.com.br/img/whatsapp.png" alt="WhatsApp">
+    </a>
+</div>
+
     </header>
-    
 
     <div class="container">
         <h1 class="title-animated">Maycon Brown - Recursos e Softwares para Designers</h1>
@@ -312,7 +343,6 @@ header {
             <a href="https://www.mayconbrown.com.br/formatação-a-distancia-remoto.html" class="button">Formatação Remota</a>
             <a href="https://www.mayconbrown.com.br/repertorio-atualizado-musicas" class="button">Repertório Atualizado</a>
         </div>
-        
 
         <!-- Video Section -->
         <div class="video-container">
@@ -336,7 +366,6 @@ header {
         title.classList.add('title-animated');
     });
 </script>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
