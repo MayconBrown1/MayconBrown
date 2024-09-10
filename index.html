@@ -36,6 +36,19 @@ header {
     text-align: center;
     padding: 10px;
     background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.header-gif {
+    max-width: 150px; /* Ajuste o tamanho do GIF conforme necessário */
+    margin-right: 10px; /* Espaçamento entre o GIF e a logo */
 }
 
 .header-image {
@@ -44,6 +57,7 @@ header {
     border: 5px none #636363;
     border-radius: 10px;
 }
+
 
 .container {
     width: 100%;
@@ -61,6 +75,24 @@ header {
     margin-top: 20px;
 }
 
+
+
+
+/* Define the shake animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Apply the animation to the active button */
+.button.active {
+    animation: shake 1s ease-in-out; /* Aplica a animação com duração de 1 segundo */
+}
+
+/* Style for buttons */
 .button {
     padding: 20px 40px;
     text-align: center;
@@ -72,14 +104,36 @@ header {
     font-size: 24px;
     text-decoration: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: background 0.3s, transform 0.3s, color 0.3s; /* Adiciona transição para cor e transformação */
+    margin: 10px;
+    display: inline-block;
 }
 
+/* Hover effect */
 .button:hover {
     background: linear-gradient(45deg, #ff6347, #ff4500); /* Muda para um gradiente vermelho/laranja para alto contraste */
     transform: scale(1.05); /* Aplica o zoom no botão */
     color: #000; /* Muda a cor do texto para preto para contraste */
 }
+
+
+
+/* Animação do título */
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title-animated {
+    animation: fadeInSlideUp 1s ease-out; /* Aplica a animação com duração de 1 segundo */
+}
+
+
 
 
 
@@ -237,11 +291,17 @@ header {
 <body>
 
     <header>
-        <img src="img/logobranca.png" alt="Logo Maycon Brown - Recursos e Softwares para Designers" class="header-image">
+        <!-- Container para logo e GIF -->
+        <div class="header-content">
+            <!-- Novo GIF -->
+            <img src="https://veja.abril.com.br/wp-content/uploads/2016/05/giphy-3-original.gif" alt="GIF Animado" class="header-gif">
+            <!-- Logo existente -->
+            <img src="img/logobranca.png" alt="Logo Maycon Brown - Recursos e Softwares para Designers" class="header-image">
+        </div>
     </header>
 
     <div class="container">
-        <h1>Maycon Brown - Recursos e Softwares para Designers</h1>
+        <h1 class="title-animated">Maycon Brown - Recursos e Softwares para Designers</h1>
         <p>Olá! Tudo bem? Meu nome é Maycon Brown e trabalho diretamente online oferecendo recursos e ferramentas essenciais para designers gráficos.</p>
         <p>Explore nossos softwares Vitalícios e serviços para aprimorar seus projetos de design.</p>
         <p>No que posso ajudar? Escolha uma das opções abaixo.</p>
@@ -250,6 +310,7 @@ header {
             <a href="https://www.mayconbrown.com.br/formatação-a-distancia-remoto.html" class="button">Formatação Remota</a>
             <a href="https://www.mayconbrown.com.br/repertorio-atualizado-musicas" class="button">Repertório Atualizado</a>
         </div>
+        
 
         <!-- Video Section -->
         <div class="video-container">
@@ -265,4 +326,36 @@ header {
     </div>
 </body>
 
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const title = document.querySelector('.title-animated');
+        title.classList.add('title-animated');
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.button');
+        let currentIndex = 0;
+
+        function activateButton() {
+            // Remove a classe active de todos os botões
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Adiciona a classe active ao botão atual
+            buttons[currentIndex].classList.add('active');
+
+            // Atualiza o índice para o próximo botão
+            currentIndex = (currentIndex + 1) % buttons.length;
+        }
+
+        // Ativa o primeiro botão imediatamente e depois em intervalos
+        activateButton();
+        setInterval(activateButton, 1000); // 1000 ms = 1 segundos, ajuste conforme necessário
+    });
+</script>
+</body>
 </html>
