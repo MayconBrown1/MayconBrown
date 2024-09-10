@@ -59,33 +59,49 @@
             border-radius: 0px;
         }
 
-        .social-buttons {
+        /* Botões sociais */
+.social-buttons {
     display: flex;
+    flex-wrap: wrap; /* Permite que os botões se movam para a linha seguinte se não houver espaço suficiente */
     justify-content: center; /* Alinha os botões no centro horizontalmente */
     gap: 50px; /* Espaçamento entre os botões */
     margin: 20px 0; /* Espaçamento entre a logo e os botões sociais */
 }
 
 .social-buttons a {
-    display: inline-block;
-}
-
-.social-buttons img {
-    width: 50px; /* Tamanho uniforme para todos os ícones dos botões sociais */
-    height: 50px; /* Manter a proporção com a largura */
-    border-radius: 0%; /* Opcional: deixar os ícones circulares */
+    display: flex; /* Alinha o ícone centralizado */
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Tamanho padrão dos ícones */
+    height: 50px; /* Manter a proporção dos ícones */
     transition: transform 0.5s ease; /* Transição suave para o efeito de zoom */
 }
 
-/* Efeito de zoom ao passar o mouse sobre os ícones sociais */
-.social-buttons img:hover {
-    transform: scale(2.2); /* Efeito de zoom ao passar o mouse */
+.social-buttons img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0%; /* Deixa os ícones circulares */
 }
 
-/* Seleciona o botão do YouTube especificamente e aplica um aumento de 28% */
-.social-button-youtube img {
-    transform: scale(1.00); /* Aumenta o tamanho do ícone do YouTube em 32% */
+/* Efeito de zoom ao passar o mouse sobre os ícones sociais */
+.social-buttons a:hover img {
+    transform: scale(1.6); /* Efeito de zoom ao passar o mouse */
 }
+
+@media (max-width: 768px) {
+    .social-buttons a {
+        width: 40px; /* Ajusta o tamanho dos ícones em telas menores */
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-buttons a {
+        width: 30px; /* Ajusta ainda mais o tamanho dos ícones em telas muito pequenas */
+        height: 30px;
+    }
+}
+
 
 
 
