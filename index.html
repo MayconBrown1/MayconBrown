@@ -28,14 +28,14 @@
             align-items: center;
             padding: 0;
             background-color: #000;
-            color: #fff;
+            color: #ffffff;
         }
 
         header {
             width: 100%;
             text-align: center;
             padding: 10px;
-            background-color: #333;
+            background-color: #000000;
             display: flex;
             flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
             align-items: center;
@@ -60,32 +60,41 @@
         }
 
         .social-buttons {
-            display: flex;
-            gap: 50px;
-            margin: 20px 0; /* Espaçamento entre a logo e os botões sociais */
-        }
+    display: flex;
+    justify-content: center; /* Alinha os botões no centro horizontalmente */
+    gap: 50px; /* Espaçamento entre os botões */
+    margin: 20px 0; /* Espaçamento entre a logo e os botões sociais */
+}
 
-        .social-buttons a {
-            display: inline-block;
-        }
+.social-buttons a {
+    display: inline-block;
+}
 
-        .social-buttons img {
-            width: 50px; /* Tamanho dos ícones dos botões */
-            height: auto;
-            border-radius: 0%;
-            transition: transform 0.5s ease;
-        }
+.social-buttons img {
+    width: 50px; /* Tamanho uniforme para todos os ícones dos botões sociais */
+    height: 50px; /* Manter a proporção com a largura */
+    border-radius: 0%; /* Opcional: deixar os ícones circulares */
+    transition: transform 0.5s ease; /* Transição suave para o efeito de zoom */
+}
 
-        .social-buttons img:hover {
-            transform: scale(2.2); /* Efeito de zoom ao passar o mouse */
-        }
+/* Efeito de zoom ao passar o mouse sobre os ícones sociais */
+.social-buttons img:hover {
+    transform: scale(2.2); /* Efeito de zoom ao passar o mouse */
+}
+
+/* Seleciona o botão do YouTube especificamente e aplica um aumento de 28% */
+.social-button-youtube img {
+    transform: scale(1.00); /* Aumenta o tamanho do ícone do YouTube em 32% */
+}
+
+
 
         .container {
             width: 100%;
             max-width: 1200px;
             padding: 20px;
             box-sizing: border-box;
-            background-color: #1a1a1a;
+            background-color: #8400ff2d;
             border-radius: 10px;
         }
 
@@ -316,20 +325,6 @@
             <!-- Novo GIF -->
             <img src="https://veja.abril.com.br/wp-content/uploads/2016/05/giphy-3-original.gif" alt="GIF Animado" class="header-gif">
         </div>
-        <!-- Botões sociais -->
-<div class="social-buttons">
-    <a href="https://www.instagram.com/maycon.brown/" target="_blank">
-        <img src="https://mayconbrown.com.br/img/instagram.png" alt="Instagram">
-    </a>
-    <a href="https://www.youtube.com/@MayconBrown" target="_blank">
-        <img src="https://mayconbrown.com.br/img/youtube.png" alt="YouTube">
-    </a>
-    <!-- Novo botão WhatsApp -->
-    <a href="https://wa.me/5584981770146?text=Olá%2C%20vim%20pelo%20site%20mayconbrown.com.br.%20Gostaria%20de%20mais%20informações%20sobre%20os%20seus%20serviços.%20Obrigado%21
-    " target="_blank">
-        <img src="https://mayconbrown.com.br/img/whatsapp.png" alt="WhatsApp">
-    </a>
-</div>
 
     </header>
 
@@ -360,6 +355,20 @@
 
 </html>
 
+        <!-- Botões sociais -->
+        <div class="social-buttons">
+            <a href="https://www.instagram.com/maycon.brown/" target="_blank">
+                <img src="https://mayconbrown.com.br/img/instagram.png" alt="Instagram">
+            </a>
+            <a href="https://www.youtube.com/@MayconBrown" target="_blank" class="social-button-youtube">
+                <img src="https://mayconbrown.com.br/img/youtube.png" alt="YouTube">
+            </a>
+            <!-- Novo botão WhatsApp -->
+            <a href="https://wa.me/5584981770146?text=Olá%2C%20vim%20pelo%20site%20mayconbrown.com.br.%20Gostaria%20de%20mais%20informações%20sobre%20os%20seus%20serviços.%20Obrigado%21
+            " target="_blank">
+                <img src="https://mayconbrown.com.br/img/whatsapp.png" alt="WhatsApp">
+            </a>
+        </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const title = document.querySelector('.title-animated');
