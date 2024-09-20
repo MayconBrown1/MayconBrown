@@ -11,51 +11,45 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #000;
             font-family: Arial, sans-serif;
             text-align: center;
+            color: #fff;
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
+            max-width: 600px; /* Limite a largura do container */
+            width: 100%; /* Largura 100% para telas menores */
         }
-        .text-above {
-            font-size: 25px;
+        .text-above, .text-below {
+            font-size: 2rem; /* Usando rem para responsividade */
             font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .text-below {
-            font-size: 25px;
-            font-weight: bold;
-            margin-top: 10px;
+            margin: 10px 0;
         }
         .image-container {
-            width: 400px;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            width: 100%; /* Ajustar para 100% */
+            height: auto; /* Altura automática para manter a proporção */
+            max-width: 400px; /* Limite a largura da imagem */
         }
         .image-container img {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: auto; /* Manter proporção da imagem */
         }
         .whatsapp-button-container {
             margin-top: 20px;
             text-align: center;
         }
         .whatsapp-button-container p {
-            font-size: 25px;
-            font-weight: bold;
+            font-size: 1.5rem; /* Ajustar para responsividade */
             margin-bottom: 10px;
         }
         .whatsapp-button {
             display: inline-block;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 1rem;
             color: #fff;
             background-color: #25D366;
             border: none;
@@ -70,32 +64,42 @@
             margin-top: 20px;
         }
         .pix-container p {
-            font-size: 18px;
+            font-size: 1.2rem; /* Ajustar para responsividade */
             margin-bottom: 10px;
         }
         .pix-code {
             font-family: monospace;
-            font-size: 16px;
-            background-color: #fff;
+            font-size: 1rem;
+            background-color: #707070;
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
             word-break: break-all;
             margin-bottom: 10px;
+            overflow-wrap: break-word; /* Para quebrar palavras longas */
         }
         .copy-button {
             display: inline-block;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 1rem;
             color: #fff;
             background-color: #007BFF;
             border: none;
             border-radius: 5px;
-            text-decoration: none;
             cursor: pointer;
         }
         .copy-button:hover {
             background-color: #0056b3;
+        }
+
+        /* Media Queries para telas menores */
+        @media (max-width: 600px) {
+            .text-above, .text-below, .whatsapp-button-container p {
+                font-size: 1.5rem; /* Diminuir o tamanho da fonte */
+            }
+            .whatsapp-button, .copy-button {
+                font-size: 0.9rem; /* Ajustar tamanho do botão */
+            }
         }
     </style>
     <script>
