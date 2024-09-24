@@ -98,6 +98,14 @@
                 font-size: 14px;
             }
         }
+        /* Container para centralizar o vídeo */
+.video-container {
+    position: absolute;
+    bottom: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 20px; /* Espaçamento opcional ao redor do vídeo */
+}
     </style>  
 </head>
 <body>
@@ -148,6 +156,13 @@
 
         <div class="spacer"></div>
     </div>
+
+    <div class="video-container">
+    <video width="640" height="360" controls autoplay>
+        <source src="https://mayconbrown.com.br/video/cliente-softwares-4.mp4" type="video/mp4">
+        Seu navegador não suporta a tag de vídeo.
+    </video>
+</div>
 
     <footer>
         <p>&copy; 2024 Serviço de Formatação Remota. Todos os direitos reservados.</p>
