@@ -251,3 +251,20 @@
 
 </body>
 </html>
+
+function playVideo() {
+            video.play().catch(function(error) {
+                console.log("Reprodução automática falhou: " + error);
+            });
+        }
+
+        // Inicia a reprodução automática
+        window.onload = function() {
+            playVideo();
+        };
+
+        nextButton.addEventListener('click', function() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            video.src = playlist[currentTrackIndex];
+            video.play();
+        });
