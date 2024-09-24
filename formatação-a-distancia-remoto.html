@@ -36,7 +36,20 @@
         }
         h1, h2 {
             color: #00aaff;
+            
         }
+                    .video-container {
+    display: flex; /* Utiliza flexbox para o layout horizontal */
+    justify-content: space-between; /* Distribui o espaço entre os vídeos */
+    overflow-x: auto; /* Permite rolagem horizontal, se necessário */
+    gap: 10px; /* Espaçamento entre os vídeos */
+}
+
+.video-container video {
+    flex: 1; /* Faz com que os vídeos cresçam para ocupar o espaço disponível */
+    max-width: 32%; /* Limita a largura máxima para que três vídeos caibam na linha */
+    height: auto; /* Mantém a proporção dos vídeos */
+}
         .button {
             display: inline-block;
             padding: 10px 20px;
@@ -85,14 +98,6 @@
                 padding: 8px 16px;
                 font-size: 14px;
             }
-            /* Container para centralizar o vídeo */
-.video-container {
-    position: center;
-    bottom: 10;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 20px; /* Espaçamento opcional ao redor do vídeo */
-}
             .feature, .testimonial {
                 padding: 15px;
                 margin: 15px 0;
