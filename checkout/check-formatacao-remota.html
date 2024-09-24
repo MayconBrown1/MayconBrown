@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviço de Formatação Remoto de Computador</title>
+    <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 600px; /* Limite a largura do container */
+            width: 100%; /* Largura 100% para telas menores */
+        }
+        .text-above, .text-below {
+            font-size: 2rem; /* Usando rem para responsividade */
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .image-container {
+            width: 100%; /* Ajustar para 100% */
+            height: auto; /* Altura automática para manter a proporção */
+            max-width: 400px; /* Limite a largura da imagem */
+        }
+        .image-container img {
+            width: 100%;
+            height: auto; /* Manter proporção da imagem */
+        }
+        .whatsapp-button-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .whatsapp-button-container p {
+            font-size: 1.5rem; /* Ajustar para responsividade */
+            margin-bottom: 10px;
+        }
+        .whatsapp-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #25D366;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+        }
+        .pix-container {
+            margin-top: 20px;
+        }
+        .pix-container p {
+            font-size: 1.2rem; /* Ajustar para responsividade */
+            margin-bottom: 10px;
+        }
+        .pix-code {
+            font-family: monospace;
+            font-size: 1rem;
+            background-color: #707070;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin-bottom: 10px;
+            overflow-wrap: break-word; /* Para quebrar palavras longas */
+        }
+        .copy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Media Queries para telas menores */
+        @media (max-width: 600px) {
+            .text-above, .text-below, .whatsapp-button-container p {
+                font-size: 1.5rem; /* Diminuir o tamanho da fonte */
+            }
+            .whatsapp-button, .copy-button {
+                font-size: 0.9rem; /* Ajustar tamanho do botão */
+            }
+        }
+    </style>
+    <script>
+        function copyPixCode() {
+            const pixCode = document.getElementById('pix-code').innerText;
+            navigator.clipboard.writeText(pixCode).then(() => {
+                alert('Código Pix copiado para a área de transferência!');
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="text-above">Serviço de Formatação Remoto de Computador</div>
+        <div class="image-container">
+            <img src="https://mayconbrown.com.br/img/qr-formatacao-remota.png" alt="Imagem Serviço de Formatação Remoto de Computador">
+        </div>
+        <div class="text-below">R$79,99</div>
+        <div class="pix-container">
+            <p>Código Pix:</p>
+            <div id="pix-code" class="pix-code">
+                00020126790014br.gov.bcb.pix013676287992-24cf-4265-a7e4-474bcce82f510217Formatação remota520400005303986540579.995802BR592544.982.036 RAFAELA INACIO6010Parnamirim6211050726f78796304DD0D
+            </div>
+            <button class="copy-button" onclick="copyPixCode()">Copiar Código Pix</button>
+        </div>
+        <div class="whatsapp-button-container">
+            <p>Mande o comprovante aqui:</p>
+            <a href="https://wa.me/5584981770146" class="whatsapp-button">Enviar Comprovante</a>
+        </div>
+    </div>
+</body>
+</html>
