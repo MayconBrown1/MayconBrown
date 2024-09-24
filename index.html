@@ -228,27 +228,6 @@
             margin-top: 30px;
         }
 
-        .video-container {
-    display: flex; /* Mantém os vídeos em linha */
-    justify-content: center; /* Centraliza os vídeos */
-    flex-wrap: nowrap; /* Não permite que os vídeos quebrem para a linha seguinte */
-    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
-    gap: 10px; /* Espaçamento entre os vídeos */
-    margin-top: 30px;
-}
-
-.video-container video {
-    flex: 0 0 auto; /* Garante que os vídeos não se expandam e mantenham seu tamanho */
-    width: 340px; /* Largura fixa */
-    height: 600px; /* Altura fixa */
-}
-
-
-        @media (max-width: 768px) {
-            .buttons {
-                flex-direction: column;
-            }
-
             .button {
                 font-size: 20px;
                 padding: 16px 32px;
@@ -269,15 +248,18 @@
             }
 
             .video-container {
-                flex-direction: row;
-                overflow-x: auto;
-            }
+    display: flex; /* Utiliza flexbox para o layout horizontal */
+    justify-content: space-between; /* Distribui o espaço entre os vídeos */
+    overflow-x: auto; /* Permite rolagem horizontal, se necessário */
+    gap: 10px; /* Espaçamento entre os vídeos */
+}
 
-            .video-container iframe {
-                width: 300px;
-                height: 400px;
-            }         
-        }
+.video-container video {
+    flex: 1; /* Faz com que os vídeos cresçam para ocupar o espaço disponível */
+    max-width: 32%; /* Limita a largura máxima para que três vídeos caibam na linha */
+    height: auto; /* Mantém a proporção dos vídeos */
+}
+
         footer {
             text-align: center;
             padding: 20px 0;
@@ -311,16 +293,6 @@
             .header-image {
                 max-width: 90%;
                 border: 2px none #636363;
-            }
-
-            .video-container {
-                flex-direction: row;
-                overflow-x: auto;
-            }
-
-            .video-container iframe {
-                width: 130px;
-                height: 210px;
             }
 
             .social-buttons img {
@@ -377,7 +349,7 @@
                 <source src="https://mayconbrown.com.br/video/cliente-softwares-8.mp4" type="video/mp4">
                 Seu navegador não suporta o vídeo.
             </video>
-        </div>        
+        </div>                      
 
 
 </body>
