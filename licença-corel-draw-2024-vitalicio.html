@@ -177,7 +177,9 @@
         "@type": "Place",
         "address": {
           "@type": "PostalAddress",
-          "addressCountry": "BR"
+          "addressCountry": "BR",
+          "addressLocality": "Sua Cidade",
+          "addressRegion": "Seu Estado"
         }
       },
       "deliveryTime": {
@@ -186,6 +188,11 @@
         "handlingTime": {
           "@type": "QuantitativeValue",
           "value": "1",
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "value": "3",
           "unitCode": "DAY"
         }
       },
@@ -199,7 +206,11 @@
       "@type": "MerchantReturnPolicy",
       "name": "Política de Devolução",
       "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-      "returnPolicyDuration": "30 dias"
+      "returnPolicyDuration": "30 dias",
+      "returnMethod": "Online",
+      "returnFees": "0.00",
+      "merchantReturnDays": "30",
+      "applicableCountry": "BR"
     }
   },
   "aggregateRating": {
