@@ -170,7 +170,37 @@
     "price": "79.99",
     "itemCondition": "https://schema.org/NewCondition",
     "availability": "https://schema.org/InStock",
-    "priceValidUntil": "2024-12-31"
+    "priceValidUntil": "2024-12-31",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingDestination": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "BR"
+        }
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "businessDays": "5",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "value": "1",
+          "unitCode": "DAY"
+        }
+      },
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0.00",
+        "currency": "BRL"
+      }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "name": "Política de Devolução",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "returnPolicyDuration": "30 dias"
+    }
   },
   "aggregateRating": {
     "@type": "AggregateRating",
