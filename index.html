@@ -229,18 +229,20 @@
         }
 
         .video-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
+    display: flex; /* Mantém os vídeos em linha */
+    justify-content: center; /* Centraliza os vídeos */
+    flex-wrap: nowrap; /* Não permite que os vídeos quebrem para a linha seguinte */
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+    gap: 10px; /* Espaçamento entre os vídeos */
+    margin-top: 30px;
+}
 
-        .video-container iframe {
-            width: 340px;
-            height: 600px;
-            border: none;
-        }
+.video-container video {
+    flex: 0 0 auto; /* Garante que os vídeos não se expandam e mantenham seu tamanho */
+    width: 340px; /* Largura fixa */
+    height: 600px; /* Altura fixa */
+}
+
 
         @media (max-width: 768px) {
             .buttons {
@@ -362,20 +364,20 @@
         </div>
 
         <!-- Video Section -->
-<div class="video-container">
-    <video width="340" height="600" controls autoplay>
-        <source src="https://mayconbrown.com.br/video/cliente-softwares-3.mp4" type="video/mp4">
-        Seu navegador não suporta o vídeo.
-    </video>
-    <video width="340" height="600" controls>
-        <source src="https://mayconbrown.com.br/video/cliente-softwares-5.mp4" type="video/mp4">
-        Seu navegador não suporta o vídeo.
-    </video>
-    <video width="340" height="600" controls>
-        <source src="https://mayconbrown.com.br/video/cliente-softwares-8.mp4" type="video/mp4">
-        Seu navegador não suporta o vídeo.
-    </video>
-</div>
+        <div class="video-container">
+            <video controls autoplay>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-3.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-5.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-8.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+        </div>        
 
 
 </body>
