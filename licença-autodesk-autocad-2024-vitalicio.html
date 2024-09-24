@@ -247,12 +247,8 @@
         <source src="https://mayconbrown.com.br/video/cliente-softwares-4.mp4" type="video/mp4">
         Seu navegador não suporta a tag de vídeo.
     </video>
-</div>
 
-</body>
-</html>
-
-<script>
+    <script>
 function playVideo() {
             video.play().catch(function(error) {
                 console.log("Reprodução automática falhou: " + error);
@@ -269,3 +265,7 @@ function playVideo() {
             video.src = playlist[currentTrackIndex];
             video.play();
         });
+</div>
+
+</body>
+</html>
