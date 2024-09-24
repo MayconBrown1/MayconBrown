@@ -242,11 +242,22 @@
 </body>
 </html>
 
-<div class="video-container">
-    <video width="640" height="360" autoplay>
-        <source src="https://mayconbrown.com.br/video/cliente-softwares-5.mp4" type="video/mp4">
+<<div class="video-container">
+    <video id="myVideo" width="640" height="360" playsinline>
+        <source src="https://mayconbrown.com.br/video/cliente-softwares-4.mp4" type="video/mp4">
         Seu navegador não suporta a tag de vídeo.
     </video>
+    <button id="playButton">Iniciar Vídeo</button>
 </div>
+
+<script>
+    const video = document.getElementById('myVideo');
+    const button = document.getElementById('playButton');
+
+    button.addEventListener('click', () => {
+        video.play();
+        button.style.display = 'none'; // Oculta o botão após o clique
+    });
+</script>
 </body>
 </html>
