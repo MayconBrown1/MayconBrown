@@ -79,18 +79,27 @@
             margin-bottom: 10px;
             overflow-wrap: break-word; /* Para quebrar palavras longas */
         }
-        .copy-button {
+        .copy-button, .credit-button {
             display: inline-block;
             padding: 10px 20px;
             font-size: 1rem;
             color: #fff;
-            background-color: #007BFF;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-right: 10px; /* Espaçamento entre os botões */
+        }
+        .copy-button {
+            background-color: #007BFF;
         }
         .copy-button:hover {
             background-color: #0056b3;
+        }
+        .credit-button {
+            background-color: #28A745; /* Cor verde para o botão de cartão de crédito */
+        }
+        .credit-button:hover {
+            background-color: #218838;
         }
 
         /* Media Queries para telas menores */
@@ -98,7 +107,7 @@
             .text-above, .text-below, .whatsapp-button-container p {
                 font-size: 1.5rem; /* Diminuir o tamanho da fonte */
             }
-            .whatsapp-button, .copy-button {
+            .whatsapp-button, .copy-button, .credit-button {
                 font-size: 0.9rem; /* Ajustar tamanho do botão */
             }
         }
@@ -125,6 +134,7 @@
                 00020126730014br.gov.bcb.pix013676287992-24cf-4265-a7e4-474bcce82f510211Office 2021520400005303986540579.995802BR592544.982.036 RAFAELA INACIO6010Parnamirim6211050726f787963040A2B
             </div>
             <button class="copy-button" onclick="copyPixCode()">Copiar Código Pix</button>
+            <a href="https://pay.cakto.com.br/ADkfbSe" class="credit-button" target="_blank">Cartão de Crédito</a>
         </div>
         <div class="whatsapp-button-container">
             <p>Mande o comprovante aqui:</p>
