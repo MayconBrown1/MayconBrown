@@ -30,9 +30,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             padding: 20px;
         }
         header {
-            background: #333;
-            padding: 20px 0;
+            width: 100%;
             text-align: center;
+            padding: 10px;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
+            align-items: center;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column; /* Alinhar logo e GIF verticalmente */
+            align-items: center;
+        }
+
+        .header-gif {
+            max-width: 400px; /* Ajuste o tamanho do GIF conforme necessário */
+            margin-top: 10px; /* Espaçamento entre o GIF e a logo */
+        }
         }
         header .logo {
     margin: 0 auto;
@@ -253,6 +269,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <header>
         <a href="https://mayconbrown.com.br/">
             <img src="img/logobranca.png" alt="Logo da Loja" class="logo">
+            <!-- Novo GIF -->
+            <img src="http://mayconbrown.com.br/img/promoção.gif" alt="GIF Animado" class="header-gif">
         </a>
         <div class="container">
             <h1>Licença Adobe Photoshop 2024 Vitalício – Compra Garantida e Suporte Completo</h1>
