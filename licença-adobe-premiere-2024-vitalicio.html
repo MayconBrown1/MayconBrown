@@ -3,362 +3,200 @@
 <head>
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
-<!-- End Google Tag Manager -->
-    <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16690139124"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-16690139124'); </script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Adquira sua Licença Adobe Premiere 2024 Vitalício com desconto especial. Instalação fácil com vídeo tutorial e suporte técnico completo incluído!">
-    <meta name="keywords" content="Licença Adobe Premiere 2024, Premiere, suporte pós-venda, instalação remota, edição de vídeo, ferramentas Adobe Premiere">
-    <title>Licença Adobe Premiere 2024 Vitalício – Compra Garantida e Suporte Completo</title>
+    <title>Página de Venda do Premiere Pro 2024 Vitalício</title>
     <link rel="icon" href="img/icone.ico" type="image/x-icon">
     <style>
+        /* Tema escuro como padrão */
+        :root {
+            --background-color: #000000;
+            --text-color: #f4f4f4;
+            --button-color: #28a745; /* Cor verde para o botão */
+            --button-hover-color: #218838;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            color: #fff;
-            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Para empilhar os itens */
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            width: 100%;
+
+        /* Logo centralizada */
+        .logo {
+            margin-top: 20px;
             text-align: center;
-            padding: 10px;
-            background-color: #000000;
-            display: flex;
-            flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
-            align-items: center;
         }
 
-        .header-content {
-            display: flex;
-            flex-direction: column; /* Alinhar logo e GIF verticalmente */
-            align-items: center;
+        .logo img {
+            width: 400px;
+            height: auto;
         }
 
-        .header-gif {
-            max-width: 400px; /* Ajuste o tamanho do GIF conforme necessário */
-            margin-top: 10px; /* Espaçamento entre o GIF e a logo */
-        }
-        header .logo {
-    margin: 0 auto;
-    display: block;
-    max-width: 400px; /* Ajuste o tamanho da logo conforme necessário */
-}
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #fff;
-        }
-        .product-wrapper {
+        .container {
             display: flex;
-            flex-wrap: wrap;
-            background-color: #222;
+            flex-wrap: wrap; /* Garante que os itens se ajustem em telas menores */
+            max-width: 900px;
+            background-color: #444;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
         }
-        .product-image {
+
+        .left-side {
             flex: 1;
-            max-width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Garante que a imagem fique centralizada */
         }
-        .product-image img {
-            max-width: 60%; /* Reduzido em 40% */
-            height: auto;
+
+        .right-side {
+            flex: 1;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            max-width: 100%; /* Garante que a imagem nunca ultrapasse o tamanho do container */
+            height: auto;   /* Mantém a proporção original da imagem */
             border-radius: 8px;
         }
-        .product-info {
-            flex: 1;
-            max-width: 100%;
-            padding-left: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .product-info h2 {
-            color: #ff9900;
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        .price {
-            font-size: 1.8em;
-            margin: 20px 0;
-        }
-        .price .old-price {
-            color: #ff0000; /* Cor vermelha para o preço antigo */
+
+        .old-price {
+            color: red;
+            font-size: 1.2em;
             text-decoration: line-through;
+            margin: 10px 0;
         }
-        .price .new-price {
-            color: #ff9900;
+
+        .price {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #28a745; /* Cor verde para o preço atual */
             font-weight: bold;
         }
-        .cta-button {
+
+        /* Animação do botão piscando entre verde e vermelho */
+        @keyframes pulse {
+            0% {
+                background-color: #28a745; /* Verde */
+            }
+            50% {
+                background-color: #dc3545; /* Vermelho */
+            }
+            100% {
+                background-color: #28a745; /* Verde */
+            }
+        }
+
+        .buy-button {
             display: inline-block;
-            padding: 15px 25px;
-            font-size: 1.2em;
+            padding: 10px 20px;
+            font-size: 1em;
             color: #fff;
-            background-color: #ff9900;
+            background-color: var(--button-color);
+            font-weight: bold;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .cta-button:hover {
-            background-color: #e68a00;
-        }
-        .section {
-            margin-top: 20px;
-            color: #ddd;
-        }
-        .section h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-        .section ul {
-            list-style-type: disc;
-            margin-left: 20px;
-        }
-        .faq {
-            margin-top: 20px;
-        }
-        .faq dt {
-            font-weight: bold;
+            transition: background-color 0.3s ease;
             margin-top: 10px;
+            animation: pulse 1s infinite; /* Aplica a animação de piscar */
         }
-        .faq dd {
-            margin: 5px 0;
+
+        .buy-button:hover {
+            background-color: var(--button-hover-color);
+            animation: none; /* Desativa a animação ao passar o mouse */
         }
-        .buy-now-container {
-            text-align: center;
-            margin: 40px 0;
+
+        .instructions, .requirements {
+            margin-top: 20px;
+            text-align: left;
         }
+
+        /* Adiciona responsividade para telas menores (mobile) */
         @media (max-width: 768px) {
-            .product-wrapper {
-                flex-direction: column;
-            }
-            .product-info {
-                padding-left: 0;
+            .container {
+                flex-direction: column; /* Empilha os elementos para telas menores */
                 text-align: center;
             }
-            .cta-button {
-                width: 100%;
+
+            .right-side {
+                padding-left: 0;
+                margin-top: 20px; /* Adiciona um espaço entre os elementos */
             }
         }
-        html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-/* Container para centralizar o vídeo */
-.video-container {
-    position: absolute;
-    bottom: 10;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 20px; /* Espaçamento opcional ao redor do vídeo */
-}
     </style>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "Licença Adobe Premiere 2024 Vitalício",
-  "image": "https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png",
-  "description": "Adquira sua Licença Adobe Premiere 2024 Vitalício com desconto especial. Instalação fácil com vídeo tutorial e suporte técnico completo incluído!",
-  "sku": "SKU-7894498210361",
-  "brand": {
-    "@type": "Brand",
-    "name": "Adobe"
-  },
-  "offers": {
-    "@type": "Offer",
-    "url": "https://mayconbrown.com.br/checkout/check-premiere-2024",
-    "priceCurrency": "BRL",
-    "price": "79.99",
-    "itemCondition": "https://schema.org/NewCondition",
-    "availability": "https://schema.org/InStock",
-    "priceValidUntil": "2024-12-31",
-    "shippingDetails": {
-      "@type": "OfferShippingDetails",
-      "shippingDestination": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "BR",
-          "addressLocality": "Parnamirim",
-          "addressRegion": "Rio Grande do Norte"
-        }
-      },
-      "deliveryTime": {
-        "@type": "ShippingDeliveryTime",
-        "businessDays": "5",
-        "handlingTime": {
-          "@type": "QuantitativeValue",
-          "value": "1",
-          "unitCode": "DAY"
-        },
-        "transitTime": {
-          "@type": "QuantitativeValue",
-          "value": "3",
-          "unitCode": "DAY"
-        }
-      },
-      "shippingRate": {
-        "@type": "MonetaryAmount",
-        "value": "0.00",
-        "currency": "BRL"
-      }
-    },
-    "hasMerchantReturnPolicy": {
-      "@type": "MerchantReturnPolicy",
-      "name": "Política de Devolução",
-      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-      "returnPolicyDuration": "30 dias",
-      "returnMethod": "Online",
-      "returnFees": "0.00",
-      "merchantReturnDays": "30",
-      "applicableCountry": "BR"
-    }
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "ratingCount": "20"
-  },
-  "review": {
-    "@type": "Review",
-    "author": {
-      "@type": "Person",
-      "name": "Cliente Satisfeito"
-    },
-    "datePublished": "2023-09-15",
-    "reviewBody": "Excelente produto! A instalação foi fácil e o suporte foi muito útil.",
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "5",
-      "bestRating": "5"
-    }
-  }
-}
-</script>
-
-
-    
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
+     <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-    <header>
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Logo -->
+    <div class="logo">
         <a href="https://mayconbrown.com.br/">
-            <img src="img/logobranca.png" alt="Logo da Loja" class="logo">
-            <!-- Novo GIF -->
-         <!--   <img src="http://mayconbrown.com.br/img/promoção.gif" alt="GIF Animado" class="header-gif"> -->
+            <img src="https://mayconbrown.com.br/img/logobranca.png" alt="Logo">
         </a>
-        <div class="container">
-            <h1>Licença Adobe Premiere 2024 Vitalício – Compra Garantida e Suporte Completo</h1>
-        </div>
-    </header>
-    
+    </div>
+
     <div class="container">
-        <div class="product-wrapper">
-            <div class="product-image">
-                <img src="https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png" alt="Licença Adobe Premiere 2024">
-            </div>
-            <div class="product-info">
-                <h2 class="price">
-                    <span class="old-price">De R$ 99,99</span> <br>
-                    por R$ 79,99!
-                </h2>
-                <p><strong>🔹 Instalação Fácil com Vídeo Tutorial:</strong> Ao adquirir a Licença Adobe Premiere 2024 Vitalício, você receberá um e-mail com todas as instruções necessárias para a instalação, incluindo um vídeo tutorial detalhado.</p>
-                <p><strong>🔹 Suporte Pós-Venda Exclusivo:</strong> Nosso suporte vai além da compra! Se você tiver dificuldades com a instalação, oferecemos uma instalação remota via AnyDesk para garantir que tudo funcione perfeitamente. Além disso, você tem acesso a um canal de suporte rápido para qualquer dúvida ou assistência adicional.</p>
-                <a href="https://pay.cakto.com.br/mhyExKX" class="cta-button">Comprar Agora</a>
-            </div>
+        <div class="left-side">
+            <!-- Imagem do Produto -->
+            <img src="https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png" alt="Imagem do Premiere Pro 2024" class="product-image">
         </div>
-        
-        <section class="section">
-            <h3>Por Que Escolher a Licença Adobe Premiere 2024?</h3>
-            <ul>
-                <li><strong>🔧 Instalação Descomplicada:</strong> Receba um guia passo a passo e suporte remoto para uma instalação sem problemas.</li>
-                <li><strong>💬 Suporte Pós-Venda Rápido e Eficiente:</strong> Suporte via e-mail e instalação remota incluídos.</li>
-            </ul>
-        </section>
 
-        <section class="section">
-            <h3>Ideal Para:</h3>
-            <ul>
-                <li>Profissionais de Edição de Vídeo</li>
-                <li>Produtores de Conteúdo e YouTubers</li>
-                <li>Agências de Publicidade e Marketing</li>
-                <li>Editoras e Estúdios de Produção</li>
-                <li>Empresas de Mídia e Entretenimento</li>
-                <li>Entusiastas de Vídeo e Criadores de Conteúdo</li>
-            </ul>
-        </section>
+        <div class="right-side">
+            <!-- Título da Página -->
+            <h1 class="title">Premiere Pro 2024 Vitalício</h1>
 
-        <section class="section">
-            <h3>Principais Recursos e Ferramentas:</h3>
-            <ul>
-                <li>Ferramentas de Edição de Vídeo Profissionais</li>
-                <li>Suporte a Vídeo 4K e 8K</li>
-                <li>Edição Multicam e Efeitos Avançados</li>
-                <li>Integração com Adobe After Effects</li>
-                <li>Correção de Cor e Ajustes Avançados</li>
-                <li>Exportação para Diversos Formatos e Plataformas</li>
-            </ul>
-        </section>
+            <!-- Preço Antigo e Novo Preço do Produto -->
+            <p class="old-price">De R$ 179,99</p>
+            <p class="price">Por R$ 79,99</p>
 
-        <section class="section">
-            <h3>Requisitos Mínimos:</h3>
-            <ul>
-                <li><strong>Sistema Operacional:</strong> Windows 11 (64-bit) ou Windows 10 (64-bit).</li>
-                <li><strong>Processador:</strong> Intel Core i7 ou processador AMD equivalente com suporte a 64-bit.</li>
-                <li><strong>Memória RAM:</strong> 16 GB de RAM (32 GB recomendados).</li>
-                <li><strong>Armazenamento:</strong> SSD com espaço de armazenamento disponível de 8 GB (recomendado para melhor desempenho).</li>
-                <li><strong>Espaço em Disco:</strong> 10 GB de espaço disponível no disco rígido para instalação.</li>
-                <li><strong>Resolução da Tela:</strong> 1280 x 800 pixels (1920 x 1080 pixels recomendado).</li>
-                <li><strong>Placa de Vídeo:</strong> Placa de vídeo com suporte a OpenGL 2.0 e 2 GB de VRAM.</li>
-            </ul>
-        </section>
+            <!-- Botão de Compra -->
+            <a href="https://pay.cakto.com.br/mhyExKX" class="buy-button">Comprar Agora</a>
 
-        <section class="section faq">
-            <h3>Perguntas Frequentes:</h3>
-            <dl>
-                <dt>1. O que está incluído na compra?</dt>
-                <dd>A compra inclui a licença vitalícia do Adobe Premiere 2024, tutorial em vídeo para instalação e suporte técnico completo.</dd>
-                <dt>2. Posso transferir a licença para outro computador?</dt>
-                <dd>Sim, a licença pode ser transferida. Consulte nosso suporte para mais informações sobre o processo.</dd>
-                <dt>3. O Adobe Premiere 2024 é compatível com versões anteriores?</dt>
-                <dd>Sim, é compatível com arquivos criados em versões anteriores do Premiere.</dd>
-                <dt>4. E se eu encontrar problemas na instalação?</dt>
-                <dd>Nosso suporte está disponível para ajudar com qualquer problema durante a instalação, inclusive com instalação remota via AnyDesk.</dd>
-            </dl>
-        </section>
-        
-        <div class="buy-now-container">
-            <a href="https://pay.cakto.com.br/mhyExKX" class="cta-button">Comprar Agora</a>
+            <!-- Instruções do Produto -->
+            <div class="instructions">
+                <h2>Instruções sobre o Produto</h2>
+                <p>1. Após a compra, você receberá as instruções de download diretamente em seu e-mail.</p>
+                <p>2. Este produto é 100% digital, sem necessidade de envio físico.</p>
+                <p>3. Acompanha vídeo tutorial, mas também tem direito a uma instalação remota via Anydesk.</p>
+            </div>
+
+            <!-- Requisitos de Instalação -->
+            <div class="requirements">
+                <h2>Requisitos de Instalação</h2>
+                <p><strong>Sistema Operacional:</strong> Windows 10 ou superior (apenas 64 bits)</p>
+                <p><strong>Processador:</strong> Intel Core i5/AMD Ryzen 5 ou superior</p>
+                <p><strong>Memória RAM:</strong> 8 GB (16 GB ou mais recomendados)</p>
+                <p><strong>Espaço em Disco:</strong> 8 GB de espaço livre para instalação</p>
+                <p><strong>Resolução de Tela:</strong> 1920 x 1080 (1920 x 1080 recomendados)</p>
+                <p><strong>Internet:</strong> Conexão necessária para instalação e ativação</p>
+            </div>
         </div>
     </div>
-<div class="video-container">
-    <video width="640" height="360" controls autoplay>
-        <source src="https://mayconbrown.com.br/video/cliente-softwares-11.mp4" type="video/mp4">
-        Seu navegador não suporta a tag de vídeo.
-    </video>
-</div>
+
 </body>
 </html>
