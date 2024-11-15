@@ -1,19 +1,295 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matriz de Bordado</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+    <link rel="icon" href="img/icone.ico" type="image/x-icon">
+    <style>
+        /* Estilo da página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            color: #fff; /* Texto branco */
+        }
+
+        .price-original {
+    text-decoration: line-through;
+    color: #009b08; /* Cor para o preço riscado */
+    text-decoration-color: red; /* Deixa a linha vermelha */
+}
+
+        /* Logo no topo */
+        .header {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .header img {
+            width: 400px;
+        }
+
+        /* Container dos produtos */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        /* Produto individual */
+        .product {
+            background-color: #333; /* Fundo escuro para os produtos */
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            flex: 1 1 22%; /* Por padrão, ocupa 22% da linha */
+            max-width: 16%;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product h3 {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .product p {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #009b08;
+            margin-top: 10px;
+        }
+
+        /* Responsividade para telas menores (mobile) */
+        @media (max-width: 1024px) {
+            .product {
+                flex: 4 4 25%; /* 2 produtos por linha em dispositivos móveis */
+                max-width: 48%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product {
+                flex: 3 3 25%; /* 2 produtos por linha em dispositivos móveis */
+                max-width: 48%;
+            }
+        }
+        
+        /* Para telas muito pequenas */
+        @media (max-width: 480px) {
+            .product {
+                flex: 2 2 25%; /* 2 produtos por linha em dispositivos móveis */
+                max-width: 48%;
+            }
+        }
+
+    </style>
 </head>
 <body>
-    <a href="https://mayconbrown.com.br/" class="button back-button">VOLTAR</a>
-    <div class="container">
-        <h1>Matriz de Bordado</h1>
-        <p>Em manutenção...</p>
-        <p>Mas se precisar de alguma matriz personalizada, peça nesse número:</p>
-        <a href=https://wa.me/5584996798304?text=Olá!%20Vim%20pelo%20seu%20site%20mayconbrown.com.br%20e%20gostaria%20de%20saber%20mais%20sobre%20seu%20trabalho%20de%20Matriz%20de%20Bordado" class="button">CLIQUE AQUI</a>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Topo com a logo -->
+    <div class="header">
+        <a href="https://mayconbrown.com.br">
+        <img src="https://mayconbrown.com.br/img/logobranca.png" alt="Logo">
+    </a>
     </div>
-</body>
+
+    <!-- Container de produtos -->
+    <div class="product-container">
+        <!-- Produtos 1 a 30 -->
+        <!-- Produto 1 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+            <img src="https://mayconbrown.com.br/img/matriz-bordado-lacoste-0001.png" alt="Produto 1">
+        </a>
+            <h3>Lacoste 0001</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 2 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+            <img src="https://mayconbrown.com.br/img/matriz-bordado-brasil-0002.png" alt="Produto 2">
+        </a>
+            <h3>Brasil 0002</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 3 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+            <img src="https://mayconbrown.com.br/img/matriz-bordado-carrefour-0003.png" alt="Produto 3">
+        </a>
+            <h3>Carrefour 0003</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 4 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-cocacola-0004.png" alt="Produto 4">
+        </a>
+            <h3>Coca Cola 0004</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 5 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-eletrotecnica-0005.png" alt="Produto 5">
+        </a>
+        <h3>Eletrotécnica 0005</h3>
+        <p class="price-original">De R$ 24,99</p>
+        <div class="product-price">Por R$ 14,99</div>
+       </div>
+
+        <!-- Produto 6 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-farmacia-0006.png" alt="Produto 6">
+        </a>
+            <h3>Farmácia 0006</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 6.1 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-flamengo-0007.png" alt="Produto 6.1">
+        </a>
+            <h3>Flamengo 0007</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 7 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-goku-0008.png" alt="Produto 7">
+        </a>
+            <h3>Goku 0008</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 8 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-gucci-0009.png" alt="Produto 8">
+        </a>
+            <h3>Gucci 0009</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 9 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-corinthians-0010.png" alt="Produto 9">
+        </a>
+            <h3>Corinthians 0010</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 10 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-rebelde-0011.png" alt="Produto 10">
+        </a>
+            <h3>Rebelde 0011</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 11 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-monster-0012.png" alt="Produto 11">
+        </a>
+            <h3>Monster 0012</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 12 -->
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-rebelde-0013.png" alt="Produto 12">
+        </a>
+            <h3>Rebelde 0013</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 13 --> 
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-palmeiras-0014.png" alt="Produto 13">
+       </a>
+            <h3>Palmeiras 0014</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 14 --> 
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-quiksilver-0015.png" alt="Produto 14">
+       </a>
+            <h3>QuikSilver 0015</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 14 --> 
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-shell-0016.png" alt="Produto 14">
+       </a>
+            <h3>Shell 0016</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+        <!-- Produto 14 --> 
+        <div class="product">
+            <a href="https://mayconbrown.com.br/manutenção">
+                <img src="https://mayconbrown.com.br/img/matriz-bordado-stitch-0017.png" alt="Produto 14">
+       </a>
+            <h3>Stitch 0017</h3>
+            <p class="price-original">De R$ 24,99</p>
+            <div class="product-price">Por R$ 14,99</div>
+        </div>
+
+ </body>
 </html>
