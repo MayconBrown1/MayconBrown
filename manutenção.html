@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Em Manutenção</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 4rem;
+            color: red;
+            text-align: center;
+            animation: flicker 1.5s infinite alternate;
+        }
+        a {
+            font-size: 1.5rem;
+            color: yellow;
+            text-decoration: none;
+            margin-top: 20px;
+            animation: flicker 1.5s infinite alternate-reverse;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @keyframes flicker {
+            0% {
+                color: red;
+                text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px yellow, 0 0 40px yellow;
+            }
+            50% {
+                color: yellow;
+                text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px red, 0 0 40px red;
+            }
+            100% {
+                color: red;
+                text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px yellow, 0 0 40px yellow;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Em Manutenção</h1>
+    <a href="https://instagram.com/maycon.brown" target="_blank">@maycon.brown</a>
+</body>
+</html>
