@@ -1,0 +1,136 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #333;
+    text-align: center;
+}
+
+/* Cabeçalho */
+h1 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+    color: #222;
+}
+
+p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+/* Imagem banner */
+.banner {
+    display: block;
+    margin: 10px auto;
+    max-width: 90%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Contêiner do player */
+.player-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Controles do player */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+button {
+    font-size: 1.2rem;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Barra de progresso */
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ddd;
+    height: 5px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #007bff;
+    border: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+
+/* Lista de reprodução */
+.playlist {
+    text-align: left;
+}
+
+ul#playlist {
+    list-style: none;
+    padding: 0;
+}
+
+ul#playlist li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+ul#playlist li:hover {
+    background-color: #f0f0f0;
+}
+
+ul#playlist li.playing {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 8px;
+    }
+}
