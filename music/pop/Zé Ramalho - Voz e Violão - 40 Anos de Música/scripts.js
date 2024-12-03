@@ -1,20 +1,28 @@
 // URLs das músicas no GitHub
 const songs = [
-    { title: "Música 1", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (1).mp3" },
-    { title: "Música 2", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (2).mp3" },
-    { title: "Música 3", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (3).mp3" },
-    { title: "Música 4", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (4).mp3" },
-    { title: "Música 5", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (5).mp3" },
-    { title: "Música 6", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (6).mp3" },
-    { title: "Música 7", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (7).mp3" },
-    { title: "Música 8", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (8).mp3" },
-    { title: "Música 9", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (9).mp3" },
-    { title: "Música 10", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (10).mp3" },
-    { title: "Música 11", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (11).mp3" },
-    { title: "Música 12", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (12).mp3" },
-    { title: "Música 13", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (13).mp3" },
-    { title: "Música 14", url: "http://mayconbrown.com.br/music/NATANZINHO LIMA 2024 DEZEMBRO, MEU FECHAMENTO É VOCÊ/brownmusic (14).mp3" },
-
+    { title: "Avôhai", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/01 - Zé Ramalho - Avôhai.mp3" },
+    { title: "Chão de Giz", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/02 - Zé Ramalho - Chão de Giz.mp3" },
+    { title: "Vila do Sossego", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/03 - Zé Ramalho - Vila do Sossego.mp3" },
+    { title: "A Terceira Lâmina", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/04 - Zé Ramalho - A Terceira Lâmina.mp3" },
+    { title: "Eternas Ondas", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/05 - Zé Ramalho - Eternas Ondas.mp3" },
+    { title: "Táxi Lunar", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/06 - Zé Ramalho - Táxi Lunar.mp3" },
+    { title: "Frevo Mulher", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/07 - Zé Ramalho - Frevo Mulher.mp3" },
+    { title: "Admirável Gado Novo", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/08 - Zé Ramalho - Admirável Gado Novo.mp3" },
+    { title: "Canção Agalopada", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/09 - Zé Ramalho - Canção Agalopada.mp3" },
+    { title: "Pepitas de Fogo", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/10 - Zé Ramalho - Pepitas de Fogo.mp3" },
+    { title: "Força Verde", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/11 - Zé Ramalho - Força Verde.mp3" },
+    { title: "Mulher Nova, Bonita e Carinhosa Faz o Homem Gemer Sem Sentir Dor", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/12 - Zé Ramalho - Mulher Nova, Bonita e Carinhosa Faz o Homem Gemer Sem Sentir Dor.mp3" },
+    { title: "Galope Razante", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/13 - Zé Ramalho - Galope Razante.mp3" },
+    { title: "Kryptônia", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/14 - Zé Ramalho - Kryptônia.mp3" },
+    { title: "Garoto de Aluguel", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/15 - Zé Ramalho - Garoto de Aluguel.mp3" },
+    { title: "Banquete de Signos", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/16 - Zé Ramalho - Banquete de Signos.mp3" },
+    { title: "Entre a Serpente e a Estrela", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/17 - Zé Ramalho - Entre a Serpente e a Estrela.mp3" },
+    { title: "Sinônimos", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/18 - Zé Ramalho - Sinônimos.mp3" },
+    { title: "Mistérios da Meia Noite", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/19 - Zé Ramalho - Mistérios da Meia Noite.mp3" },
+    { title: "Jardim das Acácias", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/20 - Zé Ramalho - Jardim das Acácias.mp3" },
+    { title: "Beira-Mar", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/21 - Zé Ramalho - Beira-Mar.mp3" },
+    { title: "Batendo na Porta do Céu", url: "http://mayconbrown.com.br/music/pop/Zé Ramalho - Voz e Violão - 40 Anos de Música/22 - Zé Ramalho - Batendo na Porta do Céu.mp3" },
+    
 ];
 
 // Variáveis para controle
