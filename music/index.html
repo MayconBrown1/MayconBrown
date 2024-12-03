@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NATANZINHO LIMA 2024 DEZEMBRO</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="player-container">
+        <h1>NATANZINHO LIMA 2024 DEZEMBRO</h1>
+        <img src="https://mayconbrown.com.br/img/natanzinho%20dezembro.png" alt="Imagem do Natanzinho Lima" class="banner">
+        <p>Músicas sem anúncio</p>
+    
+        <div class="controls">
+            <button id="prev-button">◀</button>
+            <button id="play-button">⏯</button>
+            <button id="next-button">▶</button>
+        </div>
+    
+        <div class="progress-container">
+            <span id="current-time">0:00</span>
+            <input type="range" id="progress-bar" min="0" value="0">
+            <span id="duration">0:00</span>
+        </div>
+    
+        <audio id="audio-player"></audio>    
+    
+        <div class="playlist">
+            <ul id="playlist">
+                <!-- Músicas listadas aqui --> 
+            </ul>
+        </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
