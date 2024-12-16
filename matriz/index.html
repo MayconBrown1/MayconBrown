@@ -2,10 +2,10 @@
 <html lang="pt-br">
 <head>
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
     <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
@@ -13,7 +13,6 @@
     <title>Matriz de Bordado</title>
     <link rel="icon" href="http://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
     <style>
-        
         /* Estilo da página */
         body {
             font-family: Arial, sans-serif;
@@ -24,10 +23,10 @@
         }
 
         .price-original {
-    text-decoration: line-through;
-    color: #009b08; /* Cor para o preço riscado */
-    text-decoration-color: red; /* Deixa a linha vermelha */
-}
+            text-decoration: line-through;
+            color: #009b08; /* Cor para o preço riscado */
+            text-decoration-color: red; /* Deixa a linha vermelha */
+        }
 
         /* Logo no topo */
         .header {
@@ -95,7 +94,7 @@
                 max-width: 48%;
             }
         }
-        
+
         /* Para telas muito pequenas */
         @media (max-width: 480px) {
             .product {
@@ -104,12 +103,25 @@
             }
         }
 
+        /* Estilo do botão "Mostrar mais" */
+        #showMoreBtn {
+            background-color: #009b08;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- Topo com a logo -->
@@ -129,192 +141,83 @@
     </div>
 
     <!-- Container de produtos -->
-    <div class="product-container">
-        <!-- Produtos 1 a 30 -->
-        <!-- Produto 1 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-lacoste-0001">
-            <img src="https://mayconbrown.com.br/img/matriz-bordado-lacoste-0001.png" alt="Produto 1">
-        </a>
-            <h3>Lacoste 0001</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
+    <div class="product-container" id="productContainer">
+        <!-- Produtos serão carregados aqui dinamicamente -->
+    </div>
 
-        <!-- Produto 2 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-brasil-0002">
-            <img src="https://mayconbrown.com.br/img/matriz-bordado-brasil-0002.png" alt="Produto 2">
-        </a>
-            <h3>Brasil 0002</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
+    <!-- Botão para carregar mais produtos -->
+    <button id="showMoreBtn" onclick="showMoreProducts()">Mostrar mais</button>
 
-        <!-- Produto 3 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-carrefour-0003">
-            <img src="https://mayconbrown.com.br/img/matriz-bordado-carrefour-0003.png" alt="Produto 3">
-        </a>
-            <h3>Carrefour 0003</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
+    <script>
+        const products = [
+            { id: 1, title: 'Lacoste 0001', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-lacoste-0001.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-lacoste-0001' },
+            { id: 2, title: 'Brasil 0002', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-brasil-0002.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-brasil-0002' },
+            { id: 3, title: 'Carrefour 0003', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-carrefour-0003.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-carrefour-0003' },
+            { id: 4, title: 'Coca Cola 0004', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-cocacola-0004.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-cocacola-0004' },
+            { id: 5, title: 'Eletrotécnica 0005', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-eletrotecnica-0005.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-eletrotecnica-0005' },
+            { id: 6, title: 'Farmácia 0006', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-farmacia-0006.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-farmacia-0006' },
+            { id: 7, title: 'Flamengo 0007', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-flamengo-0007.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-flamengo-0007' },
+            { id: 8, title: 'Goku 0008', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-goku-0008.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-goku-0008' },
+            { id: 9, title: 'Gucci 0009', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-gucci-0009.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-gucci-0009' },
+            { id: 10, title: 'Corinthians 0010', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-corinthians-0010.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-corinthians-0010' },
+            { id: 11, title: 'Rebelde 0011', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-rebelde-0011.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-rebelde-0011' },
+            { id: 12, title: 'Monster 0012', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-monster-0012.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-monster-0012' },
+            { id: 13, title: 'Rebelde 0013', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-rebelde-0013.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-rebelde-0013' },
+            { id: 14, title: 'Palmeiras 0014', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-palmeiras-0014.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-palmeiras-0014' },
+            { id: 15, title: 'QuikSilver 0015', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-quiksilver-0015.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-quiksilver-0015' },
+            { id: 16, title: 'Shell 0016', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-shell-0016.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-shell-0016' },
+            { id: 17, title: 'Stitch 0017', price: 'R$ 14,99', originalPrice: 'R$ 24,99', img: 'https://mayconbrown.com.br/img/matriz-bordado-stitch-0017.png', link: 'https://mayconbrown.com.br/matriz/matriz-bordado-stitch-0017' }
+        ];
 
-        <!-- Produto 4 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-cocacola-0004">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-cocacola-0004.png" alt="Produto 4">
-        </a>
-            <h3>Coca Cola 0004</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
+        let currentIndex = 0;
+    const productsPerPage = 10;
+    const productContainer = document.getElementById('productContainer');
+    const showMoreBtn = document.getElementById('showMoreBtn');
 
-        <!-- Produto 5 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-eletrotecnica-0005">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-eletrotecnica-0005.png" alt="Produto 5">
-        </a>
-        <h3>Eletrotécnica 0005</h3>
-        <p class="price-original">De R$ 24,99</p>
-        <div class="product-price">Por R$ 14,99</div>
-       </div>
+    // Função para renderizar os produtos
+    function renderProducts(filteredProducts = products) {
+        productContainer.innerHTML = ''; // Limpa os produtos antes de adicionar novos
+        const start = currentIndex;
+        const end = currentIndex + productsPerPage;
+        const productsToDisplay = filteredProducts.slice(start, end);
 
-        <!-- Produto 6 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-farmacia-0006">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-farmacia-0006.png" alt="Produto 6">
-        </a>
-            <h3>Farmácia 0006</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 6.1 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-flamengo-0007">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-flamengo-0007.png" alt="Produto 6.1">
-        </a>
-            <h3>Flamengo 0007</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 7 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-goku-0008">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-goku-0008.png" alt="Produto 7">
-        </a>
-            <h3>Goku 0008</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 8 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-gucci-0009">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-gucci-0009.png" alt="Produto 8">
-        </a>
-            <h3>Gucci 0009</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 9 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-corinthians-0010">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-corinthians-0010.png" alt="Produto 9">
-        </a>
-            <h3>Corinthians 0010</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 10 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-rebelde-0011">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-rebelde-0011.png" alt="Produto 10">
-        </a>
-            <h3>Rebelde 0011</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 11 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-monster-0012">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-monster-0012.png" alt="Produto 11">
-        </a>
-            <h3>Monster 0012</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 12 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-rebelde-0013">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-rebelde-0013.png" alt="Produto 12">
-        </a>
-            <h3>Rebelde 0013</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 13 --> 
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-palmeiras-0014">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-palmeiras-0014.png" alt="Produto 13">
-       </a>
-            <h3>Palmeiras 0014</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 14 --> 
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-quiksilver-0015">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-quiksilver-0015.png" alt="Produto 14">
-       </a>
-            <h3>QuikSilver 0015</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 14 --> 
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-shell-0016">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-shell-0016.png" alt="Produto 14">
-       </a>
-            <h3>Shell 0016</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <!-- Produto 14 --> 
-        <div class="product">
-            <a href="https://mayconbrown.com.br/matriz/matriz-bordado-stitch-0017">
-                <img src="https://mayconbrown.com.br/img/matriz-bordado-stitch-0017.png" alt="Produto 14">
-       </a>
-            <h3>Stitch 0017</h3>
-            <p class="price-original">De R$ 24,99</p>
-            <div class="product-price">Por R$ 14,99</div>
-        </div>
-
-        <script>
-    function filterProducts() {
-        const input = document.getElementById('searchBar').value.toLowerCase();
-        const products = document.querySelectorAll('.product');
-
-        products.forEach(product => {
-            const title = product.querySelector('h3').innerText.toLowerCase();
-            if (title.includes(input)) {
-                product.style.display = "block"; // Mostra o produto
-            } else {
-                product.style.display = "none"; // Esconde o produto
-            }
+        productsToDisplay.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.classList.add('product');
+            productElement.innerHTML = `
+                <a href="${product.link}">
+                    <img src="${product.img}" alt="${product.title}">
+                </a>
+                <h3>${product.title}</h3>
+                <p class="price-original">De ${product.originalPrice}</p>
+                <div class="product-price">Por ${product.price}</div>
+            `;
+            productContainer.appendChild(productElement);
         });
+
+        currentIndex += productsPerPage;
+
+        // Verificar se há mais produtos para mostrar
+        if (currentIndex >= filteredProducts.length) {
+            showMoreBtn.style.display = 'none'; // Esconde o botão quando não há mais produtos
+        }
     }
+
+    // Função para carregar mais produtos ao clicar no botão
+    function showMoreProducts() {
+        renderProducts();
+    }
+
+    // Função para filtrar produtos pela pesquisa
+    function filterProducts() {
+        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+        const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchTerm));
+        currentIndex = 0; // Resetar o índice para mostrar os produtos filtrados desde o início
+        renderProducts(filteredProducts);
+    }
+
+    // Carregar os primeiros produtos ao carregar a página
+    renderProducts();
 </script>
 
  </body>
