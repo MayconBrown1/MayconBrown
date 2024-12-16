@@ -118,6 +118,15 @@
     </a>
     </div>
 
+    <div style="text-align: center; margin: 20px;">
+        <input 
+            type="text" 
+            id="searchBar" 
+            placeholder="Pesquise um produto..." 
+            style="width: 50%; padding: 10px; font-size: 16px;"
+            onkeyup="filterProducts()">
+    </div>
+
     <!-- Container de produtos -->
     <div class="product-container">
         <!-- Produtos 1 a 30 -->
@@ -290,6 +299,22 @@
             <p class="price-original">De R$ 24,99</p>
             <div class="product-price">Por R$ 14,99</div>
         </div>
+
+        <script>
+    function filterProducts() {
+        const input = document.getElementById('searchBar').value.toLowerCase();
+        const products = document.querySelectorAll('.product');
+
+        products.forEach(product => {
+            const title = product.querySelector('h3').innerText.toLowerCase();
+            if (title.includes(input)) {
+                product.style.display = "block"; // Mostra o produto
+            } else {
+                product.style.display = "none"; // Esconde o produto
+            }
+        });
+    }
+</script>
 
  </body>
 </html>
