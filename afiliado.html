@@ -67,6 +67,7 @@
             border-radius: 5px;
             flex: 1 1 22%; /* Por padrão, ocupa 22% da linha */
             max-width: 16%;
+            display: none; /* Oculta os produtos inicialmente */
         }
 
         .product img {
@@ -89,6 +90,24 @@
             font-weight: bold;
             color: #009b08;
             margin-top: 10px;
+        }
+
+        /* Botão Mostrar Mais */
+        #showMoreBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #009b08;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #showMoreBtn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
         }
 
         /* Responsividade para telas menores (mobile) */
@@ -310,151 +329,56 @@
             <p class="product-price">Preço R$ 75,99</p>
             <div class="product-price">Comissão R$ 15,20</div>
         </div>
+        <!-- Mais produtos aqui -->
+    </div>
 
-        <!-- Produto 15 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 15">
-            <h3>Produto 15</h3>
-            <p>Descrição do produto 15.</p>
-            <div class="product-price">R$ 149,99</div>
-        </div>
+    <button id="showMoreBtn" onclick="showMoreProducts()">Mostrar mais</button>
 
-        <!-- Produto 16 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 16">
-            <h3>Produto 16</h3>
-            <p>Descrição do produto 16.</p>
-            <div class="product-price">R$ 99,99</div>
-        </div>
+    <script>
+        let productsShown = 0;
+        const productsPerPage = 10;
 
-        <!-- Produto 17 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 17">
-            <h3>Produto 17</h3>
-            <p>Descrição do produto 17.</p>
-            <div class="product-price">R$ 189,99</div>
-        </div>
+        function showMoreProducts() {
+            const products = document.querySelectorAll('.product');
+            const totalProducts = products.length;
+            const maxToShow = productsShown + productsPerPage;
 
-        <!-- Produto 18 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 18">
-            <h3>Produto 18</h3>
-            <p>Descrição do produto 18.</p>
-            <div class="product-price">R$ 159,99</div>
-        </div>
-
-        <!-- Produto 19 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 19">
-            <h3>Produto 19</h3>
-            <p>Descrição do produto 19.</p>
-            <div class="product-price">R$ 179,99</div>
-        </div>
-
-        <!-- Produto 20 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 20">
-            <h3>Produto 20</h3>
-            <p>Descrição do produto 20.</p>
-            <div class="product-price">R$ 199,99</div>
-        </div>
-
-        <!-- Produto 21 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 21">
-            <h3>Produto 21</h3>
-            <p>Descrição do produto 21.</p>
-            <div class="product-price">R$ 249,99</div>
-        </div>
-
-        <!-- Produto 22 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 22">
-            <h3>Produto 22</h3>
-            <p>Descrição do produto 22.</p>
-            <div class="product-price">R$ 229,99</div>
-        </div>
-
-        <!-- Produto 23 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 23">
-            <h3>Produto 23</h3>
-            <p>Descrição do produto 23.</p>
-            <div class="product-price">R$ 219,99</div>
-        </div>
-
-        <!-- Produto 24 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 24">
-            <h3>Produto 24</h3>
-            <p>Descrição do produto 24.</p>
-            <div class="product-price">R$ 139,99</div>
-        </div>
-
-        <!-- Produto 25 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 25">
-            <h3>Produto 25</h3>
-            <p>Descrição do produto 25.</p>
-            <div class="product-price">R$ 159,99</div>
-        </div>
-
-        <!-- Produto 26 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 26">
-            <h3>Produto 26</h3>
-            <p>Descrição do produto 26.</p>
-            <div class="product-price">R$ 119,99</div>
-        </div>
-
-        <!-- Produto 27 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 27">
-            <h3>Produto 27</h3>
-            <p>Descrição do produto 27.</p>
-            <div class="product-price">R$ 139,99</div>
-        </div>
-
-        <!-- Produto 28 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 28">
-            <h3>Produto 28</h3>
-            <p>Descrição do produto 28.</p>
-            <div class="product-price">R$ 169,99</div>
-        </div>
-
-        <!-- Produto 29 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 29">
-            <h3>Produto 29</h3>
-            <p>Descrição do produto 29.</p>
-            <div class="product-price">R$ 189,99</div>
-        </div>
-
-        <!-- Produto 30 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 30">
-            <h3>Produto 30</h3>
-            <p>Descrição do produto 30.</p>
-            <div class="product-price">R$ 219,99</div>
-        </div>
-    </div>    -->
-        
-        <script>
-    function filterProducts() {
-        const input = document.getElementById('searchBar').value.toLowerCase();
-        const products = document.querySelectorAll('.product');
-
-        products.forEach(product => {
-            const title = product.querySelector('h3').innerText.toLowerCase();
-            if (title.includes(input)) {
-                product.style.display = "block"; // Mostra o produto
-            } else {
-                product.style.display = "none"; // Esconde o produto
+            for (let i = productsShown; i < maxToShow && i < totalProducts; i++) {
+                products[i].style.display = "block";
             }
-        });
-    }
-</script>
 
+            productsShown += productsPerPage;
+
+            if (productsShown >= totalProducts) {
+                document.getElementById('showMoreBtn').style.display = 'none';
+            }
+        }
+
+        // Inicializa exibindo os primeiros produtos
+        showMoreProducts();
+
+        function filterProducts() {
+            const input = document.getElementById('searchBar').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            let countVisible = 0;
+
+            products.forEach(product => {
+                const title = product.querySelector('h3').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    product.style.display = "block";
+                    countVisible++;
+                } else {
+                    product.style.display = "none";
+                }
+            });
+
+            if (countVisible > productsPerPage) {
+                productsShown = productsPerPage;
+                document.getElementById('showMoreBtn').style.display = 'block';
+            } else {
+                document.getElementById('showMoreBtn').style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
