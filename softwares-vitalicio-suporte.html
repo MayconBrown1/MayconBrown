@@ -2,22 +2,22 @@
 <html lang="pt-br">
 <head>
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); 
-})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); 
+    })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
     <!-- End Google Tag Manager -->
     
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-  gtag('config', 'GT-KVJTHGPF');
-</script>
+        gtag('config', 'GT-KVJTHGPF');
+    </script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,10 +34,10 @@
         }
 
         .price-original {
-    text-decoration: line-through;
-    color: #009b08; /* Cor para o preço riscado */
-    text-decoration-color: red; /* Deixa a linha vermelha */
-}
+            text-decoration: line-through;
+            color: #009b08; /* Cor para o preço riscado */
+            text-decoration-color: red; /* Deixa a linha vermelha */
+        }
 
         /* Logo no topo */
         .header {
@@ -114,9 +114,9 @@
             }
         }
 
-        /* Estilo para os botões */
-        .show-more, .back-button {
-            display: inline-block;
+        /* Estilo para o botão Mostrar Mais */
+        .show-more {
+            display: block;
             margin: 20px auto;
             padding: 10px 20px;
             background-color: #009b08;
@@ -126,7 +126,23 @@
             cursor: pointer;
         }
 
-        .show-more:disabled, .back-button:disabled {
+        .show-more:disabled {
+            background-color: #555;
+        }
+
+        /* Estilo para o botão Voltar */
+        .show-prev {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #e60000;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .show-prev:disabled {
             background-color: #555;
         }
 
@@ -134,8 +150,8 @@
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- Topo com a logo -->
@@ -159,11 +175,9 @@
         <!-- Produtos vão aqui... -->
     </div>
 
-    <!-- Botões de navegação -->
-    <div style="text-align: center;">
-        <button id="backBtn" class="back-button" onclick="loadPreviousProducts()" disabled>Voltar</button>
-        <button id="showMoreBtn" class="show-more" onclick="loadMoreProducts()">Mostrar Mais</button>
-    </div>
+    <!-- Botões de "Mostrar Mais" e "Voltar" -->
+    <button id="showMoreBtn" class="show-more" onclick="loadMoreProducts()">Mostrar Mais</button>
+    <button id="showPrevBtn" class="show-prev" onclick="loadPrevProducts()">Voltar</button>
 
     <script>
         const products = [
@@ -192,8 +206,8 @@
         function loadMoreProducts() {
             const container = document.getElementById('product-container');
             const showMoreButton = document.getElementById('showMoreBtn');
-            const backButton = document.getElementById('backBtn');
-    
+            const showPrevButton = document.getElementById('showPrevBtn');
+            
             // Limpa os produtos atuais
             container.innerHTML = '';
 
@@ -215,22 +229,24 @@
 
             currentProductIndex += productsPerPage;
 
-            // Ativa/desativa os botões conforme necessário
-            backButton.disabled = currentProductIndex === productsPerPage;
-            showMoreButton.style.display = currentProductIndex >= products.length ? 'none' : 'inline-block';
+            // Verifica se há mais produtos para carregar
+            if (currentProductIndex >= products.length) {
+                showMoreButton.style.display = 'none'; // Esconde o botão
+            }
+
+            showPrevButton.style.display = 'block'; // Exibe o botão de voltar
         }
 
-        function loadPreviousProducts() {
+        function loadPrevProducts() {
             const container = document.getElementById('product-container');
-            const showMoreButton = document.getElementById('showMoreBtn');
-            const backButton = document.getElementById('backBtn');
-
+            const showPrevButton = document.getElementById('showPrevBtn');
+            
             // Limpa os produtos atuais
             container.innerHTML = '';
-
-            // Retrocede 10 produtos
+            
+            // Carrega os 10 produtos anteriores
             currentProductIndex -= productsPerPage;
-            const productsToLoad = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
+            const productsToLoad = products.slice(currentProductIndex - productsPerPage, currentProductIndex);
             productsToLoad.forEach(product => {
                 const productElement = document.createElement('div');
                 productElement.classList.add('product');
@@ -245,9 +261,26 @@
                 container.appendChild(productElement);
             });
 
-            // Ativa/desativa os botões conforme necessário
-            backButton.disabled = currentProductIndex === 0;
-            showMoreButton.style.display = currentProductIndex >= products.length - productsPerPage ? 'none' : 'inline-block';
+            if (currentProductIndex <= productsPerPage) {
+                showPrevButton.style.display = 'none'; // Esconde o botão
+            }
+
+            const showMoreButton = document.getElementById('showMoreBtn');
+            showMoreButton.style.display = 'block'; // Exibe o botão de mostrar mais
+        }
+
+        function filterProducts() {
+            const input = document.getElementById('searchBar').value.toLowerCase();
+            const allProducts = document.querySelectorAll('.product');
+
+            allProducts.forEach(product => {
+                const title = product.querySelector('h3').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    product.style.display = "block"; // Mostra o produto
+                } else {
+                    product.style.display = "none"; // Esconde o produto
+                }
+            });
         }
 
         // Carrega os primeiros 10 produtos
