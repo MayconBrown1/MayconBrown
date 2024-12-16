@@ -4,9 +4,9 @@
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); 
+})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
     <!-- End Google Tag Manager -->
     
     <!-- Google tag (gtag.js) -->
@@ -18,7 +18,7 @@
 
   gtag('config', 'GT-KVJTHGPF');
 </script>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Softwares Vitalícios</title>
@@ -114,6 +114,22 @@
             }
         }
 
+        /* Estilo para o botão Mostrar Mais */
+        .show-more {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #009b08;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .show-more:disabled {
+            background-color: #555;
+        }
+
     </style>
 </head>
 <body>
@@ -134,327 +150,84 @@
             type="text" 
             id="searchBar" 
             placeholder="Pesquise um software..." 
-            style="width: 50%; padding: 10px; font-size: 16px;"
+            style="width: 50%; padding: 10px; font-size: 16px;" 
             onkeyup="filterProducts()">
     </div>
 
     <!-- Container de produtos -->
-    <div class="product-container">
-        <!-- Produtos 1 a 30 -->
-        <!-- Produto 1 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-corel-draw-2024-vitalicio">
-            <img src="https://mayconbrown.com.br/img/corel-draw-2024-vitalicio.png" alt="Produto 1">
-        </a>
-            <h3>CorelDRAW 2024</h3>
-            <p class="price-original">De R$ 179,99</p>
-            <div class="product-price">Por R$ 79,99</div>
-        </div>
-
-        <!-- Produto 2 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-corel-draw-2023-vitalicio">
-            <img src="https://mayconbrown.com.br/img/corel-draw-2023-vitalicio.png" alt="Produto 2">
-        </a>
-            <h3>CorelDRAW 2023</h3>
-            <p class="price-original">De R$ 175,99</p>
-            <div class="product-price">Por R$ 75,99</div>
-        </div>
-
-        <!-- Produto 3 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-corel-draw-2022-vitalicio">
-            <img src="https://mayconbrown.com.br/img/corel-draw-2022-vitalicio.png" alt="Produto 3">
-        </a>
-            <h3>CorelDRAW 2022</h3>
-            <p class="price-original">De R$ 171,99</p>
-            <div class="product-price">Por R$ 71,99</div>
-        </div>
-
-                <!-- Produto 4 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-adobe-photoshop-2025-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-photoshop-2025-vitalicio.png" alt="Produto 4">
-        </a>
-            <h3>Photoshop 2025</h3>
-            <p class="price-original">De R$ 189,99</p>
-            <div class="product-price">Por R$ 89,99</div>
-        </div>
-
-        <!-- Produto 4.1 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-adobe-photoshop-2024-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-photoshop-2024-vitalicio.png" alt="Produto 4.1">
-        </a>
-            <h3>Photoshop 2024</h3>
-            <p class="price-original">De R$ 179,99</p>
-            <div class="product-price">Por R$ 79,99</div>
-        </div>
-
-        <!-- Produto 5 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-adobe-photoshop-2023-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-photoshop-2023-vitalicio.png" alt="Produto 5">
-        </a>
-        <h3>Photoshop 2023</h3>
-        <p class="price-original">De R$ 175,99</p>
-        <div class="product-price">Por R$ 75,99</div>
+    <div class="product-container" id="product-container">
+        <!-- Produtos vão aqui... -->
     </div>
 
-        <!-- Produto 6 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-adobe-illustrator-2025-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-illustrator-2025-vitalicio.png" alt="Produto 6">
-        </a>
-            <h3>Illustrator 2025</h3>
-            <p class="price-original">De R$ 189,99</p>
-            <div class="product-price">Por R$ 89,99</div>
-        </div>
-        
-        <!-- Produto 6.1 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-adobe-illustrator-2024-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-illustrator-2024-vitalicio.png" alt="Produto 6.1">
-        </a>
-            <h3>Illustrator 2024</h3>
-            <p class="price-original">De R$ 179,99</p>
-            <div class="product-price">Por R$ 79,99</div>
-        </div>
+    <!-- Botão de "Mostrar Mais" -->
+    <button id="showMoreBtn" class="show-more" onclick="loadMoreProducts()">Mostrar Mais</button>
 
-        <!-- Produto 6.2 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-adobe-illustrator-2023-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-illustrator-2023-vitalicio.png" alt="Produto 6.2">
-        </a>
-            <h3>Illustrator 2023</h3>
-            <p class="price-original">De R$ 175,99</p>
-            <div class="product-price">Por R$ 75,99</div>
-        </div>
-
-        <!-- Produto 7 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licen%C3%A7a-microsoft-office-2021-vitalicio">
-            <img src="https://mayconbrown.com.br/img/pacote-office-pro-plus-2021-vitalicio-online.png" alt="Produto 7">
-        </a>
-            <h3>Office Pro Plus 21</h3>
-        <p class="price-original">De R$ 179,99</p>
-        <div class="product-price">Por R$ 79,99</div>
-        </div>
-
-        <!-- Produto 8 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licen%C3%A7a-adobe-indesign-2024-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-indesign-2024-vitalicio.png" alt="Produto 8">
-        </a>
-            <h3>InDesign 2024</h3>
-            <p class="price-original">De R$ 179,99</p>
-            <div class="product-price">Por R$ 79,99</div>
-        </div>
-
-        <!-- Produto 9 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licen%C3%A7a-adobe-premiere-2024-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png" alt="Produto 9">
-        </a>
-            <h3>Premiere 2024</h3>
-            <p class="price-original">De R$ 179,99</p>
-            <div class="product-price">Por R$ 79,99</div>
-        </div>
-
-        <!-- Produto 10 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licen%C3%A7a-adobe-after-effects-2023-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-after-effects-2023-vitalicio.png" alt="Produto 10">
-        </a>
-            <h3>After Effects 2023</h3>
-            <p class="price-original">De R$ 175,99</p>
-            <div class="product-price">Por R$ 75,99</div>
-        </div>
-
-        <!-- Produto 11 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licen%C3%A7a-sketchup-pro-2023-vitalicio">
-            <img src="https://mayconbrown.com.br/img/sketchup-pro-2023-vitalicio.png" alt="Produto 11">
-        </a>
-            <h3>Sketchup Pro 2023</h3>
-            <p class="price-original">De R$ 175,99</p>
-            <div class="product-price">Por R$ 75,99</div>
-        </div>
-
-        <!-- Produto 12 -->
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licenca-windows-11-vitalicio">
-            <img src="https://mayconbrown.com.br/img/licenca-windows-11-vitalicio.png" alt="Produto 12">
-        </a>
-            <h3>Licença Windows 11</h3>
-            <p class="price-original">De R$ 49,99</p>
-            <div class="product-price">Por R$ 19,99</div>
-        </div>
-
-        <!-- Produto 13 --> 
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licen%C3%A7a-adobe-collection-2023-vitalicio">
-            <img src="https://mayconbrown.com.br/img/adobe-collection-2023-vitalicio.png" alt="Produto 13">
-       </a>
-            <h3>Adobe Collection 2023</h3>
-            <p class="price-original">De R$ 399,99</p>
-            <div class="product-price">Por R$ 199,99</div>
-        </div>
-
-        <!-- Produto 14 --> 
-        <div class="product">
-            <a href="https://mayconbrown.com.br/licença-rhinoceros-7-vitalicio">
-            <img src="https://mayconbrown.com.br/img/rhinoceros-7-vitalicio.png" alt="Produto 14">
-       </a>
-            <h3>Rhinoceros 7 Vitalício</h3>
-            <p class="price-original">De R$ 175,99</p>
-            <div class="product-price">Por R$ 75,99</div>
-        </div>
-
-        <!-- Produto 15 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 15">
-            <h3>Produto 15</h3>
-            <p>Descrição do produto 15.</p>
-            <div class="product-price">R$ 149,99</div>
-        </div>
-
-        <!-- Produto 16 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 16">
-            <h3>Produto 16</h3>
-            <p>Descrição do produto 16.</p>
-            <div class="product-price">R$ 99,99</div>
-        </div>
-
-        <!-- Produto 17 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 17">
-            <h3>Produto 17</h3>
-            <p>Descrição do produto 17.</p>
-            <div class="product-price">R$ 189,99</div>
-        </div>
-
-        <!-- Produto 18 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 18">
-            <h3>Produto 18</h3>
-            <p>Descrição do produto 18.</p>
-            <div class="product-price">R$ 159,99</div>
-        </div>
-
-        <!-- Produto 19 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 19">
-            <h3>Produto 19</h3>
-            <p>Descrição do produto 19.</p>
-            <div class="product-price">R$ 179,99</div>
-        </div>
-
-        <!-- Produto 20 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 20">
-            <h3>Produto 20</h3>
-            <p>Descrição do produto 20.</p>
-            <div class="product-price">R$ 199,99</div>
-        </div>
-
-        <!-- Produto 21 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 21">
-            <h3>Produto 21</h3>
-            <p>Descrição do produto 21.</p>
-            <div class="product-price">R$ 249,99</div>
-        </div>
-
-        <!-- Produto 22 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 22">
-            <h3>Produto 22</h3>
-            <p>Descrição do produto 22.</p>
-            <div class="product-price">R$ 229,99</div>
-        </div>
-
-        <!-- Produto 23 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 23">
-            <h3>Produto 23</h3>
-            <p>Descrição do produto 23.</p>
-            <div class="product-price">R$ 219,99</div>
-        </div>
-
-        <!-- Produto 24 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 24">
-            <h3>Produto 24</h3>
-            <p>Descrição do produto 24.</p>
-            <div class="product-price">R$ 139,99</div>
-        </div>
-
-        <!-- Produto 25 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 25">
-            <h3>Produto 25</h3>
-            <p>Descrição do produto 25.</p>
-            <div class="product-price">R$ 159,99</div>
-        </div>
-
-        <!-- Produto 26 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 26">
-            <h3>Produto 26</h3>
-            <p>Descrição do produto 26.</p>
-            <div class="product-price">R$ 119,99</div>
-        </div>
-
-        <!-- Produto 27 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 27">
-            <h3>Produto 27</h3>
-            <p>Descrição do produto 27.</p>
-            <div class="product-price">R$ 139,99</div>
-        </div>
-
-        <!-- Produto 28 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 28">
-            <h3>Produto 28</h3>
-            <p>Descrição do produto 28.</p>
-            <div class="product-price">R$ 169,99</div>
-        </div>
-
-        <!-- Produto 29 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 29">
-            <h3>Produto 29</h3>
-            <p>Descrição do produto 29.</p>
-            <div class="product-price">R$ 189,99</div>
-        </div>
-
-        <!-- Produto 30 -->
-<!--        <div class="product">
-            <img src="https://via.placeholder.com/300x200" alt="Produto 30">
-            <h3>Produto 30</h3>
-            <p>Descrição do produto 30.</p>
-            <div class="product-price">R$ 219,99</div>
-        </div>
-    </div>   -->
-
-        <script>
-    function filterProducts() {
-        const input = document.getElementById('searchBar').value.toLowerCase();
-        const products = document.querySelectorAll('.product');
-
-        products.forEach(product => {
-            const title = product.querySelector('h3').innerText.toLowerCase();
-            if (title.includes(input)) {
-                product.style.display = "block"; // Mostra o produto
-            } else {
-                product.style.display = "none"; // Esconde o produto
+    <script>
+        const products = [
+            { id: 1, title: 'CorelDRAW 2024', price: 'R$ 79,99', originalPrice: 'R$ 179,99', img: 'https://mayconbrown.com.br/img/corel-draw-2024-vitalicio.png', link: 'https://mayconbrown.com.br/licença-corel-draw-2024-vitalicio' },
+            { id: 2, title: 'CorelDRAW 2023', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/corel-draw-2023-vitalicio.png', link: 'https://mayconbrown.com.br/licença-corel-draw-2023-vitalicio' },
+            { id: 3, title: 'CorelDRAW 2022', price: 'R$ 71,99', originalPrice: 'R$ 171,99', img: 'https://mayconbrown.com.br/img/corel-draw-2022-vitalicio.png', link: 'https://mayconbrown.com.br/licença-corel-draw-2022-vitalicio' },
+            { id: 4, title: 'Photoshop 2025', price: 'R$ 89,99', originalPrice: 'R$ 189,99', img: 'https://mayconbrown.com.br/img/adobe-photoshop-2025-vitalicio.png', link: 'https://mayconbrown.com.br/licença-adobe-photoshop-2025-vitalicio' },
+            { id: 5, title: 'Photoshop 2024', price: 'R$ 79,99', originalPrice: 'R$ 179,99', img: 'https://mayconbrown.com.br/img/adobe-photoshop-2024-vitalicio.png', link: 'https://mayconbrown.com.br/licença-adobe-photoshop-2024-vitalicio' },
+            { id: 6, title: 'Photoshop 2023', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/adobe-photoshop-2023-vitalicio.png', link: 'https://mayconbrown.com.br/licença-adobe-photoshop-2023-vitalicio' },
+            { id: 7, title: 'Illustrator 2025', price: 'R$ 89,99', originalPrice: 'R$ 189,99', img: 'https://mayconbrown.com.br/img/adobe-illustrator-2025-vitalicio.png', link: 'https://mayconbrown.com.br/licença-adobe-illustrator-2025-vitalicio' },
+            { id: 8, title: 'Illustrator 2024', price: 'R$ 79,99', originalPrice: 'R$ 179,99', img: 'https://mayconbrown.com.br/img/adobe-illustrator-2024-vitalicio.png', link: 'https://mayconbrown.com.br/licença-adobe-illustrator-2024-vitalicio' },
+            { id: 9, title: 'Illustrator 2023', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/adobe-illustrator-2023-vitalicio.png', link: 'https://mayconbrown.com.br/licença-adobe-illustrator-2023-vitalicio' },
+            { id: 10, title: 'Office Pro Plus 21', price: 'R$ 79,99', originalPrice: 'R$ 179,99', img: 'https://mayconbrown.com.br/img/pacote-office-pro-plus-2021-vitalicio-online.png', link: 'https://mayconbrown.com.br/licen%C3%A7a-microsoft-office-2021-vitalicio' },
+            { id: 11, title: 'InDesign 2024', price: 'R$ 79,99', originalPrice: 'R$ 179,99', img: 'https://mayconbrown.com.br/img/adobe-indesign-2024-vitalicio.png', link: 'https://mayconbrown.com.br/licen%C3%A7a-adobe-indesign-2024-vitalicio' },
+            { id: 12, title: 'Premiere 2024', price: 'R$ 79,99', originalPrice: 'R$ 179,99', img: 'https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png', link: 'https://mayconbrown.com.br/licen%C3%A7a-adobe-premiere-2024-vitalicio' },
+            { id: 13, title: 'After Effects 2023', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/adobe-after-effects-2023-vitalicio.png', link: 'https://mayconbrown.com.br/licen%C3%A7a-adobe-after-effects-2023-vitalicio' },
+            { id: 14, title: 'Sketchup Pro 2023', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/sketchup-pro-2023-vitalicio.png', link: 'https://mayconbrown.com.br/licen%C3%A7a-sketchup-pro-2023-vitalicio' },
+            { id: 15, title: 'Licença Windows 11', price: 'R$ 19,99', originalPrice: 'R$ 49,99', img: 'https://mayconbrown.com.br/img/licenca-windows-11-vitalicio.png', link: 'https://mayconbrown.com.br/licenca-windows-11-vitalicio' },
+            { id: 16, title: 'Adobe Collection 2023', price: 'R$ 199,99', originalPrice: 'R$ 399,99', img: 'https://mayconbrown.com.br/img/adobe-collection-2023-vitalicio.png', link: 'https://mayconbrown.com.br/licen%C3%A7a-adobe-collection-2023-vitalicio' },
+            { id: 17, title: 'Rhinoceros 7 Vitalício', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/rhinoceros-7-vitalicio.png', link: 'https://mayconbrown.com.br/licença-rhinoceros-7-vitalicio' }
+        ];
+    
+        let currentProductIndex = 0;
+        const productsPerPage = 10;
+    
+        function loadMoreProducts() {
+            const container = document.getElementById('product-container');
+            const showMoreButton = document.getElementById('showMoreBtn');
+            
+            const productsToLoad = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
+            productsToLoad.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('product');
+                productElement.innerHTML = `
+                    <a href="${product.link}">
+                        <img src="${product.img}" alt="${product.title}">
+                    </a>
+                    <h3>${product.title}</h3>
+                    <p class="price-original">De ${product.originalPrice}</p>
+                    <div class="product-price">Por ${product.price}</div>
+                `;
+                container.appendChild(productElement);
+            });
+    
+            currentProductIndex += productsPerPage;
+    
+            // Verifica se há mais produtos para carregar
+            if (currentProductIndex >= products.length) {
+                showMoreButton.style.display = 'none'; // Esconde o botão
             }
-        });
-    }
-</script>
-
-</body>
-</html>
+        }
+    
+        function filterProducts() {
+            const input = document.getElementById('searchBar').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+    
+            products.forEach(product => {
+                const title = product.querySelector('h3').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    product.style.display = "block"; // Mostra o produto
+                } else {
+                    product.style.display = "none"; // Esconde o produto
+                }
+            });
+        }
+    
+        // Carrega os primeiros 10 produtos
+        loadMoreProducts();
+    </script>
+    
