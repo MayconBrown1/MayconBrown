@@ -103,8 +103,8 @@
             }
         }
 
-        /* Estilo do botão "Mostrar mais" */
-        #showMoreBtn {
+        /* Estilo dos botões */
+        #showMoreBtn, #backBtn {
             background-color: #009b08;
             color: white;
             border: none;
@@ -145,7 +145,8 @@
         <!-- Produtos serão carregados aqui dinamicamente -->
     </div>
 
-    <!-- Botão para carregar mais produtos -->
+    <!-- Botões para navegação -->
+    <button id="backBtn" onclick="showPreviousProducts()" style="display: none;">Voltar</button>
     <button id="showMoreBtn" onclick="showMoreProducts()">Mostrar mais</button>
 
     <script>
@@ -170,55 +171,60 @@
         ];
 
         let currentIndex = 0;
-    const productsPerPage = 10;
-    const productContainer = document.getElementById('productContainer');
-    const showMoreBtn = document.getElementById('showMoreBtn');
+        const productsPerPage = 10;
+        const productContainer = document.getElementById('productContainer');
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        const backBtn = document.getElementById('backBtn');
 
-    // Função para renderizar os produtos
-    function renderProducts(filteredProducts = products) {
-        productContainer.innerHTML = ''; // Limpa os produtos antes de adicionar novos
-        const start = currentIndex;
-        const end = currentIndex + productsPerPage;
-        const productsToDisplay = filteredProducts.slice(start, end);
+        // Função para renderizar os produtos
+        function renderProducts(filteredProducts = products) {
+            productContainer.innerHTML = ''; // Limpa os produtos antes de adicionar novos
+            const start = currentIndex;
+            const end = currentIndex + productsPerPage;
+            const productsToDisplay = filteredProducts.slice(start, end);
 
-        productsToDisplay.forEach(product => {
-            const productElement = document.createElement('div');
-            productElement.classList.add('product');
-            productElement.innerHTML = `
-                <a href="${product.link}">
-                    <img src="${product.img}" alt="${product.title}">
-                </a>
-                <h3>${product.title}</h3>
-                <p class="price-original">De ${product.originalPrice}</p>
-                <div class="product-price">Por ${product.price}</div>
-            `;
-            productContainer.appendChild(productElement);
-        });
+            productsToDisplay.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('product');
+                productElement.innerHTML = `
+                    <a href="${product.link}">
+                        <img src="${product.img}" alt="${product.title}">
+                    </a>
+                    <h3>${product.title}</h3>
+                    <p class="price-original">De ${product.originalPrice}</p>
+                    <div class="product-price">Por ${product.price}</div>
+                `;
+                productContainer.appendChild(productElement);
+            });
 
-        currentIndex += productsPerPage;
-
-        // Verificar se há mais produtos para mostrar
-        if (currentIndex >= filteredProducts.length) {
-            showMoreBtn.style.display = 'none'; // Esconde o botão quando não há mais produtos
+            // Mostrar ou esconder os botões de navegação
+            showMoreBtn.style.display = currentIndex + productsPerPage < filteredProducts.length ? 'block' : 'none';
+            backBtn.style.display = currentIndex > 0 ? 'block' : 'none';
         }
-    }
 
-    // Função para carregar mais produtos ao clicar no botão
-    function showMoreProducts() {
+        // Função para carregar mais produtos ao clicar no botão
+        function showMoreProducts() {
+            currentIndex += productsPerPage;
+            renderProducts();
+        }
+
+        // Função para voltar aos 10 produtos anteriores
+        function showPreviousProducts() {
+            currentIndex -= productsPerPage;
+            renderProducts();
+        }
+
+        // Função para filtrar produtos pela pesquisa
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+            const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchTerm));
+            currentIndex = 0; // Resetar o índice para mostrar os produtos filtrados desde o início
+            renderProducts(filteredProducts);
+        }
+
+        // Carregar os primeiros produtos ao carregar a página
         renderProducts();
-    }
+    </script>
 
-    // Função para filtrar produtos pela pesquisa
-    function filterProducts() {
-        const searchTerm = document.getElementById('searchBar').value.toLowerCase();
-        const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchTerm));
-        currentIndex = 0; // Resetar o índice para mostrar os produtos filtrados desde o início
-        renderProducts(filteredProducts);
-    }
-
-    // Carregar os primeiros produtos ao carregar a página
-    renderProducts();
-</script>
-
- </body>
+</body>
 </html>
