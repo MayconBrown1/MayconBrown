@@ -129,8 +129,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }
 
 
-
-
         .container {
             width: 100%;
             max-width: 1200px;
@@ -141,11 +139,68 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha */
+    justify-content: center; /* Centraliza os botões */
+    gap: 20px; /* Espaçamento entre os botões */
+    margin-top: 20px;
+    margin-bottom: 40px; /* Adiciona um espaço entre os botões e os vídeos */
+}
+
+.button {
+    width: 22%; /* Aproximadamente 4 botões por linha (com espaçamento) */
+    min-width: 150px; /* Garante que o botão tenha tamanho mínimo */
+    height: 150px;
+    background-image: url('http://mayconbrown.com.br/img/botao-softwares.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    z-index: 1;
+}
+
+.button span {
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    color: #ffdd57;
+}
+
+@media (max-width: 1024px) {
+    .button {
+        width: 45%; /* Aproximadamente 2 botões por linha em telas médias */
+    }
+}
+
+@media (max-width: 480px) {
+    .button {
+        width: 45%; /* Aproximadamente 2 botões por linha em celulares */
+    }
+}
 
         /* Define the shake animation */
         @keyframes shake {
@@ -161,28 +216,52 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             animation: shake 1s ease-in-out; /* Aplica a animação com duração de 1 segundo */
         }
 
-        /* Style for buttons */
-        .button {
-            padding: 20px 40px;
-            text-align: center;
-            color: #fff;
-            background: linear-gradient(45deg, #1e90ff, #8a2be2); /* Azul forte para destaque e roxo */
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 24px;
-            text-decoration: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin: 10px;
-            display: inline-block;
-        }
+        /* Estiliza os botões como quadrados com imagem de fundo */
+.button {
+    width: 150px; /* Define o tamanho do botão como quadrado */
+    height: 150px;
+    background-image: url('URL_DA_SUA_IMAGEM'); /* Substitua com a URL da imagem desejada */
+    background-size: cover; /* A imagem ocupa todo o botão */
+    background-position: center; /* Centraliza a imagem */
+    position: relative; /* Permite adicionar a vinheta */
+    text-align: center;
+    color: #fff; /* Cor do texto */
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 0; /* Remove bordas arredondadas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Garante que a vinheta cobre tudo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para realce */
+    transition: transform 0.3s ease;
+}
 
-        /* Hover effect */
-        .button:hover {
-            background: linear-gradient(45deg, #ff6347, #ff4500); /* Muda para um gradiente vermelho/laranja para alto contraste */
-            transform: scale(1.05); /* Aplica o zoom no botão */
-            color: #000; /* Muda a cor do texto para preto para contraste */
-        }
+/* Vinheta escura sobre a imagem */
+.button::before {
+    content: ''; /* Pseudo-elemento para a vinheta */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.8)); /* Gradiente escuro */
+    z-index: 1; /* Garante que está acima da imagem */
+}
+
+/* Texto sobre a vinheta */
+.button span {
+    position: relative;
+    z-index: 2; /* Texto fica acima da vinheta */
+    font-weight: bold;
+}
+
+/* Efeito hover */
+.button:hover {
+    transform: scale(1.05); /* Efeito de zoom */
+    color: #ffdd57; /* Cor do texto ao passar o mouse */
+}
+
 
         /* Animação do título */
         @keyframes fadeInSlideUp {
@@ -374,12 +453,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Especializado em suporte remoto e fornecimento de ferramentas, atendendo grandes e pequenas empresas com eficiência e excelência.</p>
 
         <div class="buttons">
-            <a href="https://www.mayconbrown.com.br/softwares-vitalicio-suporte" class="button">Softwares Vitalícios</a>
-           <!-- <a href="https://www.mayconbrown.com.br/afiliado" class="button">Seja um Afiliado</a> -->
-            <a href="https://www.mayconbrown.com.br/formatação-a-distancia-remoto" class="button">Formatação a Distência</a>
-            <a href="https://mayconbrown.com.br/matriz" class="button">Matriz de Bordado</a>
-           <!-- <a href="https://www.mayconbrown.com.br/music" class="button">Brown Music</a> -->
-        </div>
+            <a href="https://www.mayconbrown.com.br/softwares-vitalicio-suporte" class="button"
+                style="background-image: url('http://mayconbrown.com.br/img/botao-softwares.png');">
+                <span>Softwares Vitalícios</span>
+            </a>
+            <a href="https://www.mayconbrown.com.br/formatação-a-distancia-remoto" class="button" 
+            style="background-image: url('http://mayconbrown.com.br/img/formatacao.png');">
+                <span>Formatação a Distância</span>
+            </a>
+            <a href="https://mayconbrown.com.br/matriz" class="button"
+            style="background-image: url('http://mayconbrown.com.br/img/matriz-bordado.png');">
+                <span>Matriz de Bordado</span>
+            </a>
+        </div>        
 
         <!-- Video Section -->
         <div class="video-container">
