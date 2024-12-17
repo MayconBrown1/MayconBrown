@@ -2,27 +2,16 @@
 <html lang="pt-br">
 <head>
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
     <!-- End Google Tag Manager -->
-    
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'GT-KVJTHGPF');
-</script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seja um Afiliado</title>
-    <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+    <title>Softwares Vitalício</title>
+    <link rel="icon" href="http://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
     <style>
         /* Estilo da página */
         body {
@@ -32,12 +21,6 @@
             background-color: #000; /* Fundo preto */
             color: #fff; /* Texto branco */
         }
-
-        .price-original {
-    text-decoration: line-through;
-    color: #009b08; /* Cor para o preço riscado */
-    text-decoration-color: red; /* Deixa a linha vermelha */
-}
 
         /* Logo no topo */
         .header {
@@ -67,7 +50,6 @@
             border-radius: 5px;
             flex: 1 1 22%; /* Por padrão, ocupa 22% da linha */
             max-width: 16%;
-            display: none; /* Oculta os produtos inicialmente */
         }
 
         .product img {
@@ -92,24 +74,6 @@
             margin-top: 10px;
         }
 
-        /* Botão Mostrar Mais */
-        #showMoreBtn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #009b08;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #showMoreBtn:disabled {
-            background-color: #666;
-            cursor: not-allowed;
-        }
-
         /* Responsividade para telas menores (mobile) */
         @media (max-width: 1024px) {
             .product {
@@ -124,7 +88,7 @@
                 max-width: 48%;
             }
         }
-        
+
         /* Para telas muito pequenas */
         @media (max-width: 480px) {
             .product {
@@ -133,12 +97,25 @@
             }
         }
 
+        /* Estilo dos botões */
+        #showMoreBtn, #backBtn {
+            background-color: #009b08;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- Topo com a logo -->
@@ -152,233 +129,96 @@
         <input 
             type="text" 
             id="searchBar" 
-            placeholder="Pesquise um produto..." 
+            placeholder="Pesquise um Software..." 
             style="width: 50%; padding: 10px; font-size: 16px;"
             onkeyup="filterProducts()">
     </div>
 
     <!-- Container de produtos -->
-    <div class="product-container">
-        <!-- Produtos 1 a 30 -->
-        <!-- Produto 1 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/79494223-3e1a-4a89-a6b6-fd93f1ad0868">
-            <img src="https://mayconbrown.com.br/img/corel-draw-2024-vitalicio.png" alt="Produto 1">
-        </a>
-            <h3>CorelDRAW 2024</h3>
-            <p class="product-price">Preço R$ 79,99</p>
-            <div class="product-price">Comissão R$ 16,00</div>
-        </div>
-
-        <!-- Produto 2 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/b85a3399-70e8-458f-90fd-a311549b2560">
-            <img src="https://mayconbrown.com.br/img/corel-draw-2023-vitalicio.png" alt="Produto 2">
-        </a>
-            <h3>CorelDRAW 2023</h3>
-            <p class="product-price">Preço R$ 75,99</p>
-            <div class="product-price">Comissão R$ 15,20</div>
-        </div>
-
-        <!-- Produto 3 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/6b461df0-c60e-4aa9-9463-6fb79a8bd3cd">
-            <img src="https://mayconbrown.com.br/img/corel-draw-2022-vitalicio.png" alt="Produto 3">
-        </a>
-            <h3>CorelDRAW 2022</h3>
-            <p class="product-price">Preço R$ 71,99</p>
-            <div class="product-price">Comissão R$ 14,40</div>
-        </div>
-
-                <!-- Produto 4 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/5035768a-0c03-4973-89b2-8b49ee650a73">
-            <img src="https://mayconbrown.com.br/img/adobe-photoshop-2025-vitalicio.png" alt="Produto 4">
-        </a>
-            <h3>Photoshop 2025</h3>
-            <p class="product-price">Preço R$ 89,99</p>
-            <div class="product-price">Comissão R$ 18,00</div>
-        </div>
-
-        <!-- Produto 4.1 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/d3ac97b4-9766-4c2c-973d-2718896e18e6">
-            <img src="https://mayconbrown.com.br/img/adobe-photoshop-2024-vitalicio.png" alt="Produto 4.1">
-        </a>
-            <h3>Photoshop 2024</h3>
-            <p class="product-price">Preço R$ 79,99</p>
-            <div class="product-price">Comissão R$ 16,00</div>
-        </div>
-
-        <!-- Produto 5 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/9de84517-6a1a-459e-a708-3c7b09479f24">
-            <img src="https://mayconbrown.com.br/img/adobe-photoshop-2023-vitalicio.png" alt="Produto 5">
-        </a>
-        <h3>Photoshop 2023</h3>
-        <p class="product-price">Preço R$ 75,99</p>
-        <div class="product-price">Comissão R$ 15,20</div>
+    <div class="product-container" id="productContainer">
+        <!-- Produtos serão carregados aqui dinamicamente -->
     </div>
 
-        <!-- Produto 6 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/7b6f95b6-050b-4f88-a7b9-d70bafac7239">
-            <img src="https://mayconbrown.com.br/img/adobe-illustrator-2025-vitalicio.png" alt="Produto 6">
-        </a>
-            <h3>Illustrator 2025</h3>
-            <p class="product-price">Preço R$ 89,99</p>
-            <div class="product-price">Comissão R$ 18,00</div>
-        </div>
-        
-        <!-- Produto 6.1 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/c88a4211-501d-4f16-a2be-dc5a20601927">
-            <img src="https://mayconbrown.com.br/img/adobe-illustrator-2024-vitalicio.png" alt="Produto 6.1">
-        </a>
-            <h3>Illustrator 2024</h3>
-            <p class="product-price">Preço R$ 79,99</p>
-            <div class="product-price">Comissão R$ 16,00</div>
-        </div>
-
-        <!-- Produto 6.2 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/a1ab53ae-46a8-460f-9651-01168453821e">
-            <img src="https://mayconbrown.com.br/img/adobe-illustrator-2023-vitalicio.png" alt="Produto 6.2">
-        </a>
-            <h3>Illustrator 2023</h3>
-            <p class="product-price">Preço R$ 75,99</p>
-            <div class="product-price">Comissão R$ 15,20</div>
-        </div>
-
-        <!-- Produto 7 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/f8a4b88c-4067-491c-824a-b0c30ddd7906">
-            <img src="https://mayconbrown.com.br/img/pacote-office-pro-plus-2021-vitalicio-online.png" alt="Produto 7">
-        </a>
-            <h3>Office Pro Plus 21</h3>
-            <p class="product-price">Preço R$ 79,99</p>
-            <div class="product-price">Comissão R$ 16,00</div>
-        </div>
-
-        <!-- Produto 8 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/0bcbeb75-9766-41c5-8a91-3e3f971d167f">
-            <img src="https://mayconbrown.com.br/img/adobe-indesign-2024-vitalicio.png" alt="Produto 8">
-        </a>
-            <h3>InDesign 2024</h3>
-            <p class="product-price">Preço R$ 79,99</p>
-            <div class="product-price">Comissão R$ 16,00</div>
-        </div>
-
-        <!-- Produto 9 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/24da59bf-b6bd-4c99-9db6-f1725b230064">
-            <img src="https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png" alt="Produto 9">
-        </a>
-            <h3>Premiere 2024</h3>
-            <p class="product-price">Preço R$ 79,99</p>
-            <div class="product-price">Comissão R$ 16,00</div>
-        </div>
-
-        <!-- Produto 10 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/978313b5-e2c0-41c9-8bec-66087d396bfb">
-            <img src="https://mayconbrown.com.br/img/adobe-after-effects-2023-vitalicio.png" alt="Produto 10">
-        </a>
-            <h3>After Effects 2023</h3>
-            <p class="product-price">Preço R$ 75,99</p>
-            <div class="product-price">Comissão R$ 15,20</div>
-        </div>
-
-        <!-- Produto 11 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/4af011e6-36f2-4546-a583-f901f2ab4ffa">
-            <img src="https://mayconbrown.com.br/img/sketchup-pro-2023-vitalicio.png" alt="Produto 11">
-        </a>
-            <h3>Sketchup Pro 2023</h3>
-            <p class="product-price">Preço R$ 75,99</p>
-            <div class="product-price">Comissão R$ 15,20</div>
-        </div>
-
-        <!-- Produto 12 -->
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/70eff5e2-c355-414a-adec-6258a1e7d4c6">
-            <img src="https://mayconbrown.com.br/img/licenca-windows-11-vitalicio.png" alt="Produto 12">
-        </a>
-            <h3>Licença Windows 11</h3>
-            <p class="product-price">Preço R$ 19,99</p>
-            <div class="product-price">Comissão R$ 4,00</div>
-        </div>
-
-        <!-- Produto 13 --> 
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/f59405c7-ce14-42d7-b461-8c4fbd31a5e1">
-            <img src="https://mayconbrown.com.br/img/adobe-collection-2023-vitalicio.png" alt="Produto 13">
-       </a>
-            <h3>Adobe Collection 2023</h3>
-            <p class="product-price">Preço R$ 199,99</p>
-            <div class="product-price">Comissão R$ 40,00</div>
-        </div>
-
-        <!-- Produto 14 --> 
-        <div class="product">
-            <a href="https://app.cakto.com.br/affiliate/invite/1b775fd4-ccb4-43e0-ab3c-4c460792a5e8">
-            <img src="https://mayconbrown.com.br/img/rhinoceros-7-vitalicio.png" alt="Produto 14">
-       </a>
-            <h3>Rhinoceros 7 Vitalício</h3>
-            <p class="product-price">Preço R$ 75,99</p>
-            <div class="product-price">Comissão R$ 15,20</div>
-        </div>
-        <!-- Mais produtos aqui -->
-    </div>
-
+    <!-- Botões para navegação -->
+    <button id="backBtn" onclick="showPreviousProducts()" style="display: none;">Voltar</button>
     <button id="showMoreBtn" onclick="showMoreProducts()">Mostrar mais</button>
 
     <script>
-        let productsShown = 0;
+        const products = [
+            { id: 1, title: 'CorelDRAW 2024', price: ' R$ 16,00', originalPrice: 'R$ 79,99', img: 'https://mayconbrown.com.br/img/corel-draw-2024-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/79494223-3e1a-4a89-a6b6-fd93f1ad0868' },
+            { id: 2, title: 'CorelDRAW 2023', price: 'R$ 15,20', originalPrice: 'R$ R$ 75,99', img: 'https://mayconbrown.com.br/img/corel-draw-2023-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/b85a3399-70e8-458f-90fd-a311549b2560' },
+            { id: 3, title: 'CorelDRAW 2022', price: 'R$ 14,40', originalPrice: 'R$ 71,99', img: 'https://mayconbrown.com.br/img/corel-draw-2022-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/6b461df0-c60e-4aa9-9463-6fb79a8bd3cd' },
+            { id: 4, title: 'Photoshop 2025', price: 'R$ 18,00', originalPrice: 'R$ 89,99', img: 'https://mayconbrown.com.br/img/adobe-photoshop-2025-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/5035768a-0c03-4973-89b2-8b49ee650a73' },
+            { id: 5, title: 'Photoshop 2024', price: 'R$ 16,00', originalPrice: 'R$ 79,99', img: 'https://mayconbrown.com.br/img/adobe-photoshop-2024-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/d3ac97b4-9766-4c2c-973d-2718896e18e6' },
+            { id: 6, title: 'Photoshop 2023', price: 'R$ 15,20', originalPrice: 'R$ 75,99', img: 'https://mayconbrown.com.br/img/adobe-photoshop-2023-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/9de84517-6a1a-459e-a708-3c7b09479f24' },
+            { id: 7, title: 'Illustrator 2025', price: 'R$ 18,00', originalPrice: 'R$ 89,99', img: 'https://mayconbrown.com.br/img/adobe-illustrator-2025-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/7b6f95b6-050b-4f88-a7b9-d70bafac7239' },
+            { id: 8, title: 'Illustrator 2024', price: 'R$ 16,00', originalPrice: 'R$ 79,99', img: 'https://mayconbrown.com.br/img/adobe-illustrator-2024-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/c88a4211-501d-4f16-a2be-dc5a20601927' },
+            { id: 9, title: 'Illustrator 2023', price: 'R$ 15,20', originalPrice: 'R$ 75,99', img: 'https://mayconbrown.com.br/img/adobe-illustrator-2023-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/a1ab53ae-46a8-460f-9651-01168453821e' },
+            { id: 10, title: 'Office Pro Plus 21', price: 'R$ 16,00', originalPrice: 'R$ 79,99', img: 'https://mayconbrown.com.br/img/pacote-office-pro-plus-2021-vitalicio-online.png', link: 'https://app.cakto.com.br/affiliate/invite/f8a4b88c-4067-491c-824a-b0c30ddd7906' },
+            { id: 11, title: 'InDesign 2024', price: 'R$ 16,00', originalPrice: 'R$ 79,99', img: 'https://mayconbrown.com.br/img/adobe-indesign-2024-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/0bcbeb75-9766-41c5-8a91-3e3f971d167f' },
+            { id: 12, title: 'Premiere 2024', price: 'R$ 16,00', originalPrice: 'R$ 79,99', img: 'https://mayconbrown.com.br/img/adobe-premiere-2024-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/24da59bf-b6bd-4c99-9db6-f1725b230064' },
+            { id: 13, title: 'After Effects 2023', price: 'R$ 15,20', originalPrice: 'R$ 75,99', img: 'https://mayconbrown.com.br/img/adobe-after-effects-2023-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/978313b5-e2c0-41c9-8bec-66087d396bfb' },
+            { id: 14, title: 'Sketchup Pro 2023', price: 'R$ 15,20', originalPrice: 'R$ 75,99', img: 'https://mayconbrown.com.br/img/sketchup-pro-2023-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/4af011e6-36f2-4546-a583-f901f2ab4ffa' },
+            { id: 15, title: 'Licença Windows 11', price: 'R$ 4,00', originalPrice: 'R$ 19,99', img: 'https://mayconbrown.com.br/img/licenca-windows-11-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/70eff5e2-c355-414a-adec-6258a1e7d4c6' },
+            { id: 16, title: 'Adobe Collection 2023', price: 'R$ 40,00', originalPrice: 'R$ 199,99', img: 'https://mayconbrown.com.br/img/adobe-collection-2023-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/f59405c7-ce14-42d7-b461-8c4fbd31a5e1' },
+            { id: 17, title: 'Rhinoceros 7 Vitalício', price: 'R$ 15,20', originalPrice: 'R$ 75,99', img: 'https://mayconbrown.com.br/img/rhinoceros-7-vitalicio.png', link: 'https://app.cakto.com.br/affiliate/invite/1b775fd4-ccb4-43e0-ab3c-4c460792a5e8' }
+        ];
+    
+        let currentIndex = 0;
         const productsPerPage = 10;
+        const productContainer = document.getElementById('productContainer');
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        const backBtn = document.getElementById('backBtn');
 
-        function showMoreProducts() {
-            const products = document.querySelectorAll('.product');
-            const totalProducts = products.length;
-            const maxToShow = productsShown + productsPerPage;
+        // Função para renderizar os produtos
+        function renderProducts(filteredProducts = products) {
+            productContainer.innerHTML = ''; // Limpa os produtos antes de adicionar novos
+            const start = currentIndex;
+            const end = currentIndex + productsPerPage;
+            const productsToDisplay = filteredProducts.slice(start, end);
 
-            for (let i = productsShown; i < maxToShow && i < totalProducts; i++) {
-                products[i].style.display = "block";
-            }
-
-            productsShown += productsPerPage;
-
-            if (productsShown >= totalProducts) {
-                document.getElementById('showMoreBtn').style.display = 'none';
-            }
-        }
-
-        // Inicializa exibindo os primeiros produtos
-        showMoreProducts();
-
-        function filterProducts() {
-            const input = document.getElementById('searchBar').value.toLowerCase();
-            const products = document.querySelectorAll('.product');
-            let countVisible = 0;
-
-            products.forEach(product => {
-                const title = product.querySelector('h3').innerText.toLowerCase();
-                if (title.includes(input)) {
-                    product.style.display = "block";
-                    countVisible++;
-                } else {
-                    product.style.display = "none";
-                }
+            productsToDisplay.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('product');
+                productElement.innerHTML = `
+                    <a href="${product.link}">
+                        <img src="${product.img}" alt="${product.title}">
+                    </a>
+                    <h3>${product.title}</h3>
+                    <p class="price-original">Preço ${product.originalPrice}</p>
+                    <div class="product-price">Comissão ${product.price}</div>
+                `;
+                productContainer.appendChild(productElement);
             });
 
-            if (countVisible > productsPerPage) {
-                productsShown = productsPerPage;
-                document.getElementById('showMoreBtn').style.display = 'block';
-            } else {
-                document.getElementById('showMoreBtn').style.display = 'none';
-            }
+            // Mostrar ou esconder os botões de navegação
+            showMoreBtn.style.display = currentIndex + productsPerPage < filteredProducts.length ? 'block' : 'none';
+            backBtn.style.display = currentIndex > 0 ? 'block' : 'none';
         }
+
+        // Função para carregar mais produtos ao clicar no botão
+        function showMoreProducts() {
+            currentIndex += productsPerPage;
+            renderProducts();
+        }
+
+        // Função para voltar aos 10 produtos anteriores
+        function showPreviousProducts() {
+            currentIndex -= productsPerPage;
+            renderProducts();
+        }
+
+        // Função para filtrar produtos pela pesquisa
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+            const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchTerm));
+            currentIndex = 0; // Resetar o índice para mostrar os produtos filtrados desde o início
+            renderProducts(filteredProducts);
+        }
+
+        // Carregar os primeiros produtos ao carregar a página
+        renderProducts();
     </script>
+
 </body>
 </html>
