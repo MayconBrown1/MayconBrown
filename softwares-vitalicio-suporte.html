@@ -271,20 +271,30 @@
 
         function filterProducts() {
             const input = document.getElementById('searchBar').value.toLowerCase();
-            const allProducts = document.querySelectorAll('.product');
-
-            allProducts.forEach(product => {
-                const title = product.querySelector('h3').innerText.toLowerCase();
-                if (title.includes(input)) {
-                    product.style.display = "block"; // Mostra o produto
-                } else {
-                    product.style.display = "none"; // Esconde o produto
-                }
+            const allProducts = products;
+            const filteredProducts = allProducts.filter(product => product.title.toLowerCase().includes(input));
+    
+            const container = document.getElementById('product-container');
+            container.innerHTML = ''; // Limpa a exibição atual
+    
+            filteredProducts.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('product');
+                productElement.innerHTML = `
+                    <a href="${product.link}">
+                        <img src="${product.img}" alt="${product.title}">
+                    </a>
+                    <h3>${product.title}</h3>
+                    <p class="price-original">De ${product.originalPrice}</p>
+                    <div class="product-price">Por ${product.price}</div>
+                `;
+                container.appendChild(productElement);
             });
         }
-
-        // Carrega os primeiros 10 produtos
+    
+        // Carrega os primeiros 10 produtos ao carregar a página
         loadMoreProducts();
     </script>
+
 </body>
 </html>
