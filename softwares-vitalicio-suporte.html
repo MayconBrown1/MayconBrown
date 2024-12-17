@@ -4,25 +4,14 @@
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); 
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
     <!-- End Google Tag Manager -->
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'GT-KVJTHGPF');
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Softwares Vitalícios</title>
-    <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+    <title>Softwares Vitalício</title>
+    <link rel="icon" href="http://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
     <style>
         /* Estilo da página */
         body {
@@ -105,7 +94,7 @@
                 max-width: 48%;
             }
         }
-        
+
         /* Para telas muito pequenas */
         @media (max-width: 480px) {
             .product {
@@ -114,38 +103,19 @@
             }
         }
 
-        /* Estilo para o botão Mostrar Mais */
-        .show-more {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
+        /* Estilo dos botões */
+        #showMoreBtn, #backBtn {
             background-color: #009b08;
-            color: #fff;
+            color: white;
             border: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .show-more:disabled {
-            background-color: #555;
-        }
-
-        /* Estilo para o botão Voltar */
-        .show-prev {
-            display: block;
-            margin: 20px auto;
             padding: 10px 20px;
-            background-color: #e60000;
-            color: #fff;
-            border: none;
             font-size: 16px;
             cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .show-prev:disabled {
-            background-color: #555;
-        }
-
     </style>
 </head>
 <body>
@@ -165,19 +135,19 @@
         <input 
             type="text" 
             id="searchBar" 
-            placeholder="Pesquise um software..." 
-            style="width: 50%; padding: 10px; font-size: 16px;" 
+            placeholder="Pesquise um Software..." 
+            style="width: 50%; padding: 10px; font-size: 16px;"
             onkeyup="filterProducts()">
     </div>
 
     <!-- Container de produtos -->
-    <div class="product-container" id="product-container">
-        <!-- Produtos vão aqui... -->
+    <div class="product-container" id="productContainer">
+        <!-- Produtos serão carregados aqui dinamicamente -->
     </div>
 
-    <!-- Botões de "Mostrar Mais" e "Voltar" -->
-    <button id="showMoreBtn" class="show-more" onclick="loadMoreProducts()">Mostrar Mais</button>
-    <button id="showPrevBtn" class="show-prev" onclick="loadPrevProducts()">Voltar</button>
+    <!-- Botões para navegação -->
+    <button id="backBtn" onclick="showPreviousProducts()" style="display: none;">Voltar</button>
+    <button id="showMoreBtn" onclick="showMoreProducts()">Mostrar mais</button>
 
     <script>
         const products = [
@@ -200,20 +170,20 @@
             { id: 17, title: 'Rhinoceros 7 Vitalício', price: 'R$ 75,99', originalPrice: 'R$ 175,99', img: 'https://mayconbrown.com.br/img/rhinoceros-7-vitalicio.png', link: 'https://mayconbrown.com.br/licença-rhinoceros-7-vitalicio' }
         ];
     
-        let currentProductIndex = 0;
+        let currentIndex = 0;
         const productsPerPage = 10;
-    
-        function loadMoreProducts() {
-            const container = document.getElementById('product-container');
-            const showMoreButton = document.getElementById('showMoreBtn');
-            const showPrevButton = document.getElementById('showPrevBtn');
-            
-            // Limpa os produtos atuais
-            container.innerHTML = '';
+        const productContainer = document.getElementById('productContainer');
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        const backBtn = document.getElementById('backBtn');
 
-            // Carrega os próximos 10 produtos
-            const productsToLoad = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
-            productsToLoad.forEach(product => {
+        // Função para renderizar os produtos
+        function renderProducts(filteredProducts = products) {
+            productContainer.innerHTML = ''; // Limpa os produtos antes de adicionar novos
+            const start = currentIndex;
+            const end = currentIndex + productsPerPage;
+            const productsToDisplay = filteredProducts.slice(start, end);
+
+            productsToDisplay.forEach(product => {
                 const productElement = document.createElement('div');
                 productElement.classList.add('product');
                 productElement.innerHTML = `
@@ -224,76 +194,36 @@
                     <p class="price-original">De ${product.originalPrice}</p>
                     <div class="product-price">Por ${product.price}</div>
                 `;
-                container.appendChild(productElement);
+                productContainer.appendChild(productElement);
             });
 
-            currentProductIndex += productsPerPage;
-
-            // Verifica se há mais produtos para carregar
-            if (currentProductIndex >= products.length) {
-                showMoreButton.style.display = 'none'; // Esconde o botão
-            }
-
-            showPrevButton.style.display = 'block'; // Exibe o botão de voltar
+            // Mostrar ou esconder os botões de navegação
+            showMoreBtn.style.display = currentIndex + productsPerPage < filteredProducts.length ? 'block' : 'none';
+            backBtn.style.display = currentIndex > 0 ? 'block' : 'none';
         }
 
-        function loadPrevProducts() {
-            const container = document.getElementById('product-container');
-            const showPrevButton = document.getElementById('showPrevBtn');
-            
-            // Limpa os produtos atuais
-            container.innerHTML = '';
-            
-            // Carrega os 10 produtos anteriores
-            currentProductIndex -= productsPerPage;
-            const productsToLoad = products.slice(currentProductIndex - productsPerPage, currentProductIndex);
-            productsToLoad.forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.classList.add('product');
-                productElement.innerHTML = `
-                    <a href="${product.link}">
-                        <img src="${product.img}" alt="${product.title}">
-                    </a>
-                    <h3>${product.title}</h3>
-                    <p class="price-original">De ${product.originalPrice}</p>
-                    <div class="product-price">Por ${product.price}</div>
-                `;
-                container.appendChild(productElement);
-            });
-
-            if (currentProductIndex <= productsPerPage) {
-                showPrevButton.style.display = 'none'; // Esconde o botão
-            }
-
-            const showMoreButton = document.getElementById('showMoreBtn');
-            showMoreButton.style.display = 'block'; // Exibe o botão de mostrar mais
+        // Função para carregar mais produtos ao clicar no botão
+        function showMoreProducts() {
+            currentIndex += productsPerPage;
+            renderProducts();
         }
 
+        // Função para voltar aos 10 produtos anteriores
+        function showPreviousProducts() {
+            currentIndex -= productsPerPage;
+            renderProducts();
+        }
+
+        // Função para filtrar produtos pela pesquisa
         function filterProducts() {
-            const input = document.getElementById('searchBar').value.toLowerCase();
-            const allProducts = products;
-            const filteredProducts = allProducts.filter(product => product.title.toLowerCase().includes(input));
-    
-            const container = document.getElementById('product-container');
-            container.innerHTML = ''; // Limpa a exibição atual
-    
-            filteredProducts.forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.classList.add('product');
-                productElement.innerHTML = `
-                    <a href="${product.link}">
-                        <img src="${product.img}" alt="${product.title}">
-                    </a>
-                    <h3>${product.title}</h3>
-                    <p class="price-original">De ${product.originalPrice}</p>
-                    <div class="product-price">Por ${product.price}</div>
-                `;
-                container.appendChild(productElement);
-            });
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+            const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchTerm));
+            currentIndex = 0; // Resetar o índice para mostrar os produtos filtrados desde o início
+            renderProducts(filteredProducts);
         }
-    
-        // Carrega os primeiros 10 produtos ao carregar a página
-        loadMoreProducts();
+
+        // Carregar os primeiros produtos ao carregar a página
+        renderProducts();
     </script>
 
 </body>
