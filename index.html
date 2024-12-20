@@ -91,15 +91,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     flex-wrap: wrap; /* Permite que os botões se movam para a linha seguinte se não houver espaço suficiente */
     justify-content: center; /* Alinha os botões no centro horizontalmente */
     gap: 50px; /* Espaçamento entre os botões */
-    margin: 20px 0; /* Espaçamento entre a logo e os botões sociais */
+    margin: 5px 0; /* Espaçamento entre a logo e os botões sociais */
 }
 
 .social-buttons a {
     display: flex; /* Alinha o ícone centralizado */
     align-items: center;
     justify-content: center;
-    width: 60px; /* Tamanho padrão dos ícones */
-    height: 60px; /* Manter a proporção dos ícones */
+    width: 50px; /* Tamanho padrão dos ícones */
+    height: 50px; /* Manter a proporção dos ícones */
     transition: transform 0.5s ease; /* Transição suave para o efeito de zoom */
 }
 
@@ -111,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 /* Efeito de zoom ao passar o mouse sobre os ícones sociais */
 .social-buttons a:hover img {
-    transform: scale(1.6); /* Efeito de zoom ao passar o mouse */
+    transform: scale(1.5); /* Efeito de zoom ao passar o mouse */
 }
 
 @media (max-width: 768px) {
@@ -123,8 +123,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 @media (max-width: 480px) {
     .social-buttons a {
-        width: 40px; /* Ajusta ainda mais o tamanho dos ícones em telas muito pequenas */
-        height: 40px;
+        width: 50px; /* Ajusta ainda mais o tamanho dos ícones em telas muito pequenas */
+        height: 50px;
     }
 }
 
@@ -144,7 +144,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     justify-content: center; /* Centraliza os botões */
     gap: 10px; /* Espaçamento entre os botões */
     margin-top: 20px;
-    margin-bottom: 40px; /* Adiciona um espaço entre os botões e os vídeos */
+    margin-bottom: 30px; /* Adiciona um espaço entre os botões e os vídeos */
 }
 
 .button {
@@ -219,13 +219,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         /* Estiliza os botões como quadrados com imagem de fundo */
 .button {
     width: 150px; /* Define o tamanho do botão como quadrado */
-    height: 150px;
+    height: 170px;
     background-image: url('URL_DA_SUA_IMAGEM'); /* Substitua com a URL da imagem desejada */
     background-size: cover; /* A imagem ocupa todo o botão */
     background-position: center; /* Centraliza a imagem */
     position: relative; /* Permite adicionar a vinheta */
     text-align: center;
-    color: #fff; /* Cor do texto */
+    color: #ffffff; /* Cor do texto */
     font-size: 18px;
     text-decoration: none;
     border-radius: 0; /* Remove bordas arredondadas */
@@ -258,8 +258,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 /* Efeito hover */
 .button:hover {
-    transform: scale(1.05); /* Efeito de zoom */
-    color: #ffdd57; /* Cor do texto ao passar o mouse */
+    transform: scale(1.10); /* Efeito de zoom */
+    color: #15ff00; /* Cor do texto ao passar o mouse */
 }
 
 
@@ -267,7 +267,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         @keyframes fadeInSlideUp {
             0% {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(80px);
             }
             100% {
                 opacity: 1;
@@ -356,12 +356,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     display: flex; /* Utiliza flexbox para o layout horizontal */
     justify-content: space-between; /* Distribui o espaço entre os vídeos */
     overflow-x: auto; /* Permite rolagem horizontal, se necessário */
-    gap: 10px; /* Espaçamento entre os vídeos */
+    gap: 1px; /* Espaçamento entre os vídeos */
 }
 
 .video-container video {
     flex: 1; /* Faz com que os vídeos cresçam para ocupar o espaço disponível */
-    max-width: 32%; /* Limita a largura máxima para que três vídeos caibam na linha */
+    max-width: 30%; /* Limita a largura máxima para que três vídeos caibam na linha */
     height: auto; /* Mantém a proporção dos vídeos */
 }
 
@@ -476,11 +476,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- Video Section -->
         <div class="video-container">
-            <video controls autoplay>
+            <video controls>
                 <source src="https://mayconbrown.com.br/video/cliente-softwares-3.mp4" type="video/mp4">
                 Seu navegador não suporta o vídeo.
             </video>
-            <video controls>
+            <video controls autoplay>
                 <source src="https://mayconbrown.com.br/video/cliente-softwares-5.mp4" type="video/mp4">
                 Seu navegador não suporta o vídeo.
             </video>
