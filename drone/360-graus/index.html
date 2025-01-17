@@ -75,7 +75,8 @@
 
         // Função para trocar a imagem exibida no Pannellum
         function trocarImagem(imagem) {
-            viewer.loadScene('default', {
+            viewer.destroy(); // Remove o visualizador atual
+            viewer = pannellum.viewer('panorama', { // Recria o visualizador com a nova imagem
                 type: 'equirectangular',
                 panorama: imagem,
                 autoLoad: true
