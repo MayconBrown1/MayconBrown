@@ -1,19 +1,23 @@
 let isFullScreen = false;
 let isDragging = false;
 let previousMouseX = 0;
+let sphere;
+let camera;
+let renderer;
+let scene;
 
 function initViewer(containerId, imagePath) {
     const container = document.getElementById(containerId);
 
     // Criando a cena do Three.js
-    const scene = new THREE.Scene();
+    scene = new THREE.Scene();
 
     // Definindo a câmera
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.set(0, 0, 0);
 
     // Criando o renderizador
-    const renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer();
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
@@ -24,7 +28,7 @@ function initViewer(containerId, imagePath) {
 
     // Criando o material e aplicando na esfera
     const material = new THREE.MeshBasicMaterial({ map: texture });
-    const sphere = new THREE.Mesh(geometry, material);
+    sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
 
     // Função de animação para renderizar a cena
@@ -108,4 +112,14 @@ function enterFullScreen(containerId) {
 
         isFullScreen = true;
     }
+}
+
+// Função para permitir o controle do giroscópio (dispositivos móveis)
+if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', function(event) {
+        if (isFullScreen) {
+            const gamma = event.gamma; // Controle da rotação em torno do eixo Y
+            sphere.rotation.y = gamma * Math.PI / 180;  // Ajusta a rotação com base no giroscópio
+        }
+    });
 }
