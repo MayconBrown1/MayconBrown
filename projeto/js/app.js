@@ -1,3 +1,7 @@
+let isFullScreen = false;
+let isDragging = false;
+let previousMouseX = 0;
+
 function initViewer(containerId, imagePath) {
     const container = document.getElementById(containerId);
 
@@ -27,14 +31,39 @@ function initViewer(containerId, imagePath) {
     function animate() {
         requestAnimationFrame(animate);
 
-        // Controlando a rotação da esfera para visualização 360º
-        sphere.rotation.y += 0.001; // Isso fará a imagem girar
+        // Se a imagem estiver em tela cheia, a rotação será controlada pelo mouse
+        if (isDragging) {
+            const deltaX = previousMouseX - event.clientX;
+            sphere.rotation.y += deltaX * 0.005;  // Ajusta a velocidade da rotação
+            previousMouseX = event.clientX;
+        }
 
-        // Renderizando a cena
         renderer.render(scene, camera);
     }
 
     animate();
+
+    // Adicionando o evento de mouse para arrastar a imagem
+    container.addEventListener('mousedown', function(event) {
+        isDragging = true;
+        previousMouseX = event.clientX;
+    });
+
+    container.addEventListener('mousemove', function(event) {
+        if (isDragging) {
+            const deltaX = previousMouseX - event.clientX;
+            sphere.rotation.y += deltaX * 0.005;
+            previousMouseX = event.clientX;
+        }
+    });
+
+    container.addEventListener('mouseup', function() {
+        isDragging = false;
+    });
+
+    container.addEventListener('mouseleave', function() {
+        isDragging = false;
+    });
 }
 
 // Inicializando os visualizadores com as imagens 360º
@@ -47,22 +76,36 @@ initViewer('viewer4', 'imagens/imagem4.jpg');
 function enterFullScreen(containerId) {
     const container = document.getElementById(containerId);
 
-    // Verifica se a tela cheia está disponível e entra em tela cheia
-    if (container.requestFullscreen) {
-        container.requestFullscreen();
-    } else if (container.mozRequestFullScreen) { // Firefox
-        container.mozRequestFullScreen();
-    } else if (container.webkitRequestFullscreen) { // Chrome, Safari e Opera
-        container.webkitRequestFullscreen();
-    } else if (container.msRequestFullscreen) { // IE/Edge
-        container.msRequestFullscreen();
-    }
+    if (isFullScreen) {
+        // Sair do modo tela cheia
+        document.exitFullscreen ? document.exitFullscreen() :
+        document.mozCancelFullScreen ? document.mozCancelFullScreen() :
+        document.webkitExitFullscreen ? document.webkitExitFullscreen() :
+        document.msExitFullscreen && document.msExitFullscreen();
 
-    // Redimensiona o visualizador para a tela cheia
-    const viewer = container.querySelector('.viewer');
-    viewer.style.width = '100vw';
-    viewer.style.height = '100vh';
-    
-    // Re-inicializa o visualizador para a tela cheia
-    initViewer(containerId, 'imagens/' + containerId + '.jpg');
+        // Ajustar o estilo para o modo normal
+        const viewer = container.querySelector('.viewer');
+        viewer.style.width = '48%';
+        viewer.style.height = '300px';
+
+        isFullScreen = false;
+    } else {
+        // Entrar no modo tela cheia
+        if (container.requestFullscreen) {
+            container.requestFullscreen();
+        } else if (container.mozRequestFullScreen) { // Firefox
+            container.mozRequestFullScreen();
+        } else if (container.webkitRequestFullscreen) { // Chrome, Safari e Opera
+            container.webkitRequestFullscreen();
+        } else if (container.msRequestFullscreen) { // IE/Edge
+            container.msRequestFullscreen();
+        }
+
+        // Ajustar o estilo para o modo tela cheia
+        const viewer = container.querySelector('.viewer');
+        viewer.style.width = '100vw';
+        viewer.style.height = '100vh';
+
+        isFullScreen = true;
+    }
 }
