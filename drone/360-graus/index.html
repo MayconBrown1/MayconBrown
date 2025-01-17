@@ -61,7 +61,7 @@
         <!-- Miniaturas das imagens -->
         <div class="thumbnails">
             <img src="https://mayconbrown.com.br/drone/360-graus/imagem1.jpg" alt="Panorama 1" class="thumbnail" onclick="trocarImagem('https://mayconbrown.com.br/drone/360-graus/imagem1.jpg')">
-            <img src="https://mayconbrown.com.br/drone/360-graus/imagem2.jpg" alt="Panorama 1" class="thumbnail" onclick="trocarImagem('https://mayconbrown.com.br/drone/360-graus/imagem2.jpg')">
+            <img src="https://mayconbrown.com.br/drone/360-graus/imagem2.jpg" alt="Panorama 2" class="thumbnail" onclick="trocarImagem('https://mayconbrown.com.br/drone/360-graus/imagem2.jpg')">
         </div>
     </div>
 
@@ -77,7 +77,8 @@
         function trocarImagem(imagem) {
             viewer.loadScene({
                 type: 'equirectangular',
-                panorama: imagem
+                panorama: imagem,
+                autoLoad: true
             });
         }
     </script>
