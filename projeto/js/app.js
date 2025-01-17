@@ -42,3 +42,27 @@ initViewer('viewer1', 'imagens/imagem1.jpg');
 initViewer('viewer2', 'imagens/imagem2.jpg');
 initViewer('viewer3', 'imagens/imagem3.jpg');
 initViewer('viewer4', 'imagens/imagem4.jpg');
+
+// Função para entrar no modo tela cheia
+function enterFullScreen(containerId) {
+    const container = document.getElementById(containerId);
+
+    // Verifica se a tela cheia está disponível e entra em tela cheia
+    if (container.requestFullscreen) {
+        container.requestFullscreen();
+    } else if (container.mozRequestFullScreen) { // Firefox
+        container.mozRequestFullScreen();
+    } else if (container.webkitRequestFullscreen) { // Chrome, Safari e Opera
+        container.webkitRequestFullscreen();
+    } else if (container.msRequestFullscreen) { // IE/Edge
+        container.msRequestFullscreen();
+    }
+
+    // Redimensiona o visualizador para a tela cheia
+    const viewer = container.querySelector('.viewer');
+    viewer.style.width = '100vw';
+    viewer.style.height = '100vh';
+    
+    // Re-inicializa o visualizador para a tela cheia
+    initViewer(containerId, 'imagens/' + containerId + '.jpg');
+}
