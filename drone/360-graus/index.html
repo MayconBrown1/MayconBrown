@@ -66,16 +66,16 @@
     </div>
 
     <script>
-        // Inicializa o Pannellum
+        // Inicializa o Pannellum com uma imagem padrão
         let viewer = pannellum.viewer('panorama', {
             type: 'equirectangular',
             panorama: 'https://mayconbrown.com.br/drone/360-graus/imagem1.jpg', // Imagem padrão ao carregar
             autoLoad: true
         });
 
-        // Função para trocar a imagem exibida
+        // Função para trocar a imagem exibida no Pannellum
         function trocarImagem(imagem) {
-            viewer.loadScene({
+            viewer.loadScene('default', {
                 type: 'equirectangular',
                 panorama: imagem,
                 autoLoad: true
