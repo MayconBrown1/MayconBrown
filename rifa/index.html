@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rifa do Brown</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    input[type="number"] {
+      width: 100px;
+      padding: 5px;
+      margin: 10px 0;
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .ranking, .numeros-disponiveis {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .ranking h3, .numeros-disponiveis h3 {
+      margin-bottom: 10px;
+    }
+    .numeros-disponiveis {
+      max-height: 300px;
+      overflow-y: scroll;
+      border: 1px solid #555;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #222;
+    }
+    .numeros-disponiveis button {
+      margin: 5px;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+      border: 1px solid #555;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .numeros-disponiveis button:hover {
+      background-color: #444;
+    }
+    .preco-rifa {
+      position: absolute;
+      top: 10px; /* Ajusta a distância do topo */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 18px;
+      margin-bottom: 20px; /* Espaçamento maior entre o preço e o título */
+    }
+    h1 {
+      margin-top: 60px; /* Distância do título em relação ao preço */
+    }
+    #valorTotal {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4CAF50;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Rifa - Prêmio: R$ 1.000,00</h1>
+    <h3>Números Escolhidos:</h3>
+    <p id="numerosEscolhidos">Nenhum número escolhido.</p>
+
+    <h3>Total a pagar:</h3>
+    <p id="valorTotal">R$ 0,00</p>
+
+    <div class="preco-rifa">Preço: R$ 0,22</div> <!-- Preço agora está abaixo do total a pagar -->
+  
+    <button onclick="mostrarPix()">Mostrar PIX e Detalhes</button>
+    <div id="detalhesPix" style="display: none; margin-top: 20px;">
+      <p><strong>Chave PIX:</strong> <span id="chavePIX">5fd83ffd-e75e-4b6b-a7a4-6474eac115a2</span></p>
+      <button onclick="copiarChavePIX()">Copiar Chave PIX</button>
+      <p id="detalhes"></p>
+      <p>Envie Comprovante para o WhatsApp abaixo:</p>
+    </div>
+
+    <button onclick="enviarWhatsApp()">Enviar para WhatsApp</button>
+
+    <div class="ranking">
+      <h3>Ranking de Compradores:</h3>
+      <ol id="ranking">
+        <li>1º Lugar: Fulano (R$ 100,00)</li>
+        <li>2º Lugar: Ciclano (R$ 50,00)</li>
+        <li>3º Lugar: Beltrano (R$ 50,00)</li>
+      </ol>
+    </div>
+
+    <div class="informacoes">
+      <h3>Informações Importantes:</h3>
+      <p>A rifa será realizada somente após a venda de todos os números disponíveis. O sorteio acontecerá ao vivo no Instagram: <a href="https://instagram.com/maycon.brown" target="_blank">@maycon.brown</a>.</p>
+    </div>
+
+    <div class="numeros-disponiveis">
+      <h3>Números Disponíveis:</h3>
+      <div id="numerosDisponiveis"></div>
+    </div>
+  </div>
+
+  <script>
+    let numeros = [];
+    const precoRifa = 0.22;
+    const totalNumeros = 10000;
+    let disponiveis = Array.from({ length: totalNumeros }, (_, i) => i + 1).filter(n => ![1,3,].includes(n));
+
+    function atualizarNumerosDisponiveis() {
+      const numerosDisponiveis = document.getElementById('numerosDisponiveis');
+      numerosDisponiveis.innerHTML = '';
+      disponiveis.forEach(numero => {
+        const botao = document.createElement('button');
+        botao.textContent = numero;
+        botao.onclick = () => adicionarNumero(numero);
+        numerosDisponiveis.appendChild(botao);
+      });
+    }
+
+    function adicionarNumero(numero) {
+      if (disponiveis.includes(numero)) {
+        numeros.push(numero);
+        disponiveis = disponiveis.filter(n => n !== numero);
+        atualizarTela();
+        falarNumero(numero); // Chama a função para falar o número escolhido
+      } else {
+        alert('Número inválido ou já escolhido!');
+      }
+    }
+
+    function atualizarTela() {
+      const numerosEscolhidos = document.getElementById('numerosEscolhidos');
+      const valorTotal = document.getElementById('valorTotal');
+
+      numerosEscolhidos.textContent = numeros.length ? numeros.join(', ') : 'Nenhum número escolhido.';
+      valorTotal.textContent = `R$ ${(numeros.length * precoRifa).toFixed(2)}`;
+      atualizarNumerosDisponiveis();
+    }
+
+    function mostrarPix() {
+      const detalhesPix = document.getElementById('detalhesPix');
+      const detalhes = document.getElementById('detalhes');
+
+      detalhes.textContent = `Você escolheu ${numeros.length} número(s): ${numeros.join(', ')}. Total a pagar: R$ ${(numeros.length * precoRifa).toFixed(2)}.`;
+      detalhesPix.style.display = 'block';
+
+      // Fala a mensagem solicitada com o valor total
+      falarMensagem("Agora copie a chave pix e faça o pagamento de valor, e envie o comprovante no uatizapi abaixo, Boa sorte no sorteio!");
+    }
+
+    function enviarWhatsApp() {
+      const texto = `Olá! Eu escolhi ${numeros.length} número(s) na rifa: ${numeros.join(', ')}. Total a pagar: R$ ${(numeros.length * precoRifa).toFixed(2)}.`;
+      const url = `https://wa.me/5584996798304?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+
+    function copiarChavePIX() {
+      const chavePIX = document.getElementById('chavePIX').textContent;
+      navigator.clipboard.writeText(chavePIX).then(() => {
+        alert('Chave PIX copiada!');
+      }).catch(err => {
+        alert('Falha ao copiar a chave PIX!');
+      });
+    }
+
+    function falarNumero(numero) {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "pt-BR"; // Configura a linguagem para português
+      speech.text = `Número ${numero}`; // Texto que será falado
+      speech.volume = 1; // Volume máximo
+      speech.rate = 1; // Velocidade normal
+      speech.pitch = 0; // Tom normal
+      window.speechSynthesis.speak(speech); // Executa a fala
+    }
+
+    // Nova função para falar a mensagem personalizada
+    function falarMensagem(mensagem) {
+      const total = (numeros.length * precoRifa).toFixed(2); // Calcula o total
+      const valorVerbalizado = converterParaExtenso(total); // Converte o total para extenso
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "pt-BR";
+      speech.text = mensagem.replace("valor", valorVerbalizado); // Substitui "valor" pelo total verbalizado
+      speech.volume = 1;
+      speech.rate = 1;
+      speech.pitch = 0;
+      window.speechSynthesis.speak(speech);
+    }
+
+    // Função para converter o valor numérico em extenso
+    function converterParaExtenso(valor) {
+      const valorDecimal = valor.split('.');
+      const reais = valorDecimal[0];
+      const centavos = valorDecimal[1] || '00';
+
+      const extensoReais = numeroParaExtenso(parseInt(reais));
+      const extensoCentavos = numeroParaExtenso(parseInt(centavos));
+
+      return `${extensoReais} e ${extensoCentavos} centavos`;
+    }
+
+    // Função para converter números em extenso
+    function numeroParaExtenso(numero) {
+      const unidades = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
+      const dezenas = ['dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
+      const dezenas10 = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
+      const centenas = ['', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos'];
+
+      if (numero < 10) return unidades[numero];
+      if (numero < 20) return dezenas[numero - 10];
+      if (numero < 100) {
+        const dezena = Math.floor(numero / 10);
+        const unidade = numero % 10;
+        return `${dezenas10[dezena]}${unidade > 0 ? ' e ' + unidades[unidade] : ''}`;
+      }
+      if (numero < 1000) {
+        const centena = Math.floor(numero / 100);
+        const resto = numero % 100;
+        return `${centenas[centena]}${resto > 0 ? ' e ' + numeroParaExtenso(resto) : ''}`;
+      }
+      return numero; // Para números maiores que 999
+    }
+
+    // Inicializar lista de números disponíveis na tela
+    atualizarNumerosDisponiveis();
+  </script>
+</body>
+</html>
