@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rifa do Brown</title>
-  <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -136,7 +135,7 @@
     let numeros = [];
     const precoRifa = 0.22;
     const totalNumeros = 10000;
-    let disponiveis = Array.from({ length: totalNumeros }, (_, i) => i + 1).filter(n => ![1,3,22, 30, 55, 80, 102,].includes(n));
+    let disponiveis = Array.from({ length: totalNumeros }, (_, i) => i + 1).filter(n => ![1,3,].includes(n));
 
     function atualizarNumerosDisponiveis() {
       const numerosDisponiveis = document.getElementById('numerosDisponiveis');
@@ -198,7 +197,7 @@
     function falarNumero(numero) {
       const speech = new SpeechSynthesisUtterance();
       speech.lang = "pt-BR"; // Configura a linguagem para português
-      speech.text = `Número ${numero}`; // Texto que será falado
+      speech.text = `${numero}`; // Texto que será falado
       speech.volume = 1; // Volume máximo
       speech.rate = 1; // Velocidade normal
       speech.pitch = 0; // Tom normal
