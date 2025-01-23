@@ -187,7 +187,7 @@
       speech.lang = "pt-BR"; // Configura a linguagem para português
       speech.text = `${numero}`; // Texto que será falado
       speech.volume = 1; // Volume máximo
-      speech.rate = 5; // Velocidade normal
+      speech.rate = 2; // Velocidade normal
       speech.pitch = 0; // Tom normal
       window.speechSynthesis.speak(speech); // Executa a fala
     }
@@ -200,7 +200,7 @@
       speech.lang = "pt-BR";
       speech.text = mensagem.replace("valor", valorVerbalizado); // Substitui "valor" pelo total verbalizado
       speech.volume = 1;
-      speech.rate = 3;
+      speech.rate = 2;
       speech.pitch = 0;
       window.speechSynthesis.speak(speech);
     }
