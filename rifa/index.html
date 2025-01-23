@@ -135,8 +135,8 @@
     let numeros = [];
     const precoRifa = 0.22;
     const totalNumeros = 10000;
-    let disponiveis = Array.from({ length: totalNumeros }, (_, i) => i + 1).filter(n => ![1,3,].includes(n));
-
+    let disponiveis = Array.from({ length: totalNumeros }, (_, i) => i + 1).filter(n => ![0,].includes(n));
+    <!-- NUMEROS VENDIDOS -->
     function atualizarNumerosDisponiveis() {
       const numerosDisponiveis = document.getElementById('numerosDisponiveis');
       numerosDisponiveis.innerHTML = '';
