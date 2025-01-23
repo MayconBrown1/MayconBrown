@@ -64,20 +64,8 @@
     .numeros-disponiveis button:hover {
       background-color: #444;
     }
-    .preco-rifa {
-      position: absolute;
-      top: 10px; /* Ajusta a distância do topo */
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 18px;
-      margin-bottom: 20px; /* Espaçamento maior entre o preço e o título */
-    }
     h1 {
-      margin-top: 60px; /* Distância do título em relação ao preço */
+      margin-top: 1px; /* Distância do título em relação ao preço */
     }
     #valorTotal {
       font-size: 24px;
@@ -93,14 +81,13 @@
 </head>
 <body>
   <div class="container">
+    <img src="http://mayconbrown.com.br/img/rifa.jpg" alt="Descrição da imagem" style="width: 100%; max-width: 600px; margin-bottom: 20px;">
     <h1>Rifa - Prêmio: R$ 1.000,00</h1>
     <h3>Números Escolhidos:</h3>
     <p id="numerosEscolhidos">Nenhum número escolhido.</p>
 
     <h3>Total a pagar:</h3>
     <p id="valorTotal">R$ 0,00</p>
-
-    <div class="preco-rifa">Preço: R$ 0,22</div> <!-- Preço agora está abaixo do total a pagar -->
   
     <button onclick="mostrarPix()">Mostrar PIX e Detalhes</button>
     <div id="detalhesPix" style="display: none; margin-top: 20px;">
@@ -249,10 +236,9 @@
         const resto = numero % 100;
         return `${centenas[centena]}${resto > 0 ? ' e ' + numeroParaExtenso(resto) : ''}`;
       }
-      return numero; // Para números maiores que 999
     }
 
-    // Inicializar lista de números disponíveis na tela
+    // Inicializa a lista de números disponíveis ao carregar a página
     atualizarNumerosDisponiveis();
   </script>
 </body>
