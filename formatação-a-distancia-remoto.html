@@ -1,190 +1,148 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
-<!-- End Google Tag Manager -->
-    
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'GT-KVJTHGPF');
-</script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formatação Remoto de Computador | Serviço Rápido e Seguro</title>
-    <meta name="description" content="Serviço de formatação remoto e a distância de computadores. Transforme seu PC de forma rápida e segura, sem sair de casa. Serviço especializado em formatação do Windows.">
-    <meta name="keywords" content="Formatação Remota, Formatação a Distância, Formatação do Windows, Serviço de Formatação, Formatação de Computador, Formatação Remota de PC, Formatação Remota de Windows">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.seusite.com/formatação-remota">
-    <!-- Adiciona o ícone do site -->
-    <link rel="icon" href="img/icone.ico" type="image/x-icon">
+    <meta name="description" content="Formatação de computador à distância com praticidade, segurança e eficiência. Escolha entre Windows 10 ou 11, com licença vitalícia e instalação de programas essenciais.">
+    <meta name="keywords" content="formatação de computador, formatação remota, Windows 10, Windows 11, licença vitalícia, instalação de programas, suporte técnico">
+    <meta name="author" content="Formatação Remota">
+    <title>Formatação de Computador à Distância</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            color: #ddd;
-            background-color: #000;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
         header {
-            background-color: #1a1a1a;
-            color: #fff;
-            padding: 20px;
+            width: 100%;
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            padding: 10px 0;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        header img {
+            width: 100%;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+        @media (min-width: 768px) {
+            header img {
+                max-height: 200px;
+                object-fit: cover;
+            }
         }
         .container {
+            background: #1f1f1f;
+            padding: 20px;
+            margin: 20px;
+            max-width: 800px;
             width: 90%;
-            max-width: 1200px;
-            margin: auto;
-            overflow: hidden;
-        }
-        .logo {
-            width: 400px; /* Ajuste o tamanho da logo conforme necessário */
-            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         h1, h2 {
-            color: #00aaff;
-        }
-        .video-container {
-            position: relative;
-            width: 100%; /* Ocupa 100% da largura do contêiner */
-            height: 0;
-            padding-bottom: 56.25%; /* Aspect ratio 16:9 */
-            overflow: hidden;
-            margin: 20px 0; /* Espaçamento do vídeo */
-        }
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Mantém a proporção e ajusta para caber no espaço */
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            color: #fff;
-            background-color: #007bff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
+            color: #4CAF50;
             text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #2a2a2a;
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 5px solid #4CAF50;
+            border-radius: 5px;
+        }
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+        .highlight-value {
+            color: #FFEB3B; /* Cor inicial amarela */
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 10px;
+            display: inline-block;
+            animation: blink-animation 0.2s infinite alternate; /* Animação de piscar */
+        }
+
+        @keyframes blink-animation {
+            0% {
+                color: #FFEB3B; /* Cor amarela */
+            }
+            100% {
+                color: #FF1744; /* Cor vermelha */
+            }
+        }
+
+        .button {
+            display: block;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 200px;
             transition: background-color 0.3s;
-            margin: 20px 0;
         }
         .button:hover {
-            background-color: #0056b3;
-        }
-        .feature, .testimonial {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 5px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .feature h3, .testimonial p {
-            color: #ddd;
-        }
-        .spacer {
-            height: 50px;
+            background-color: #45a049;
         }
         footer {
+            margin-top: auto;
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            padding: 10px;
             text-align: center;
-            padding: 20px 0;
-            background-color: #222;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
         }
-        .button-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
-            header {
-                padding: 15px;
-            }
-            .button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-            .feature, .testimonial {
-                padding: 15px;
-                margin: 15px 0;
-            }
-        }
-    </style>  
+    </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
     <header>
-        <div class="container">
-            <a href="https://mayconbrown.com.br/">
-                <img src="img\logobranca.png" alt="Logo" class="logo">
-            </a>
-            <h1>Serviço de Formatação Remoto de Computador</h1>
-            <p>Transforme seu computador de forma rápida e segura, sem sair de casa! Especializados em formatação a distância e do Windows.</p>
-            <div class="button-container">
-                <a href="https://mayconbrown.com.br/checkout/check-formatacao-remota" class="button">CONTRATE AQUI</a>
-            </div>
-        </div>
+        <img src="https://mayconbrown.com.br/img/formatacao.jpg" alt="Banner de Formatação de Computador à Distância">
     </header>
-    
-
     <div class="container">
-        <section>
-            <h2>Por Que Escolher a Formatação Remota?</h2>
-            <p>Você está cansado de enfrentar problemas com seu computador? Nossa solução de formatação remota é a resposta que você procura! Oferecemos um serviço completo e eficaz para garantir que seu computador esteja funcionando como novo, tudo isso sem a necessidade de você sair de casa.</p>
-        </section>
+        <h1>Formatação de Computador à Distância</h1>
+        <p>Já pensou em formatar o seu computador sem sair de casa? Com a nossa solução de formatação à distância, você ganha praticidade, segurança e eficiência! Não precisa de pendrive, CD ou qualquer equipamento adicional para realizar o serviço.</p>
 
-        <section class="feature">
-            <h2>Vantagens da Formatação Remota</h2>
-            <h3>1. Conveniência</h3>
-            <p>Realizamos o serviço de formatação a distância diretamente do conforto da sua casa ou escritório. Sem deslocamentos ou esperas!</p>
-            <h3>2. Rapidez</h3>
-            <p>Nosso processo de formatação remota é ágil e eficiente, minimizando o tempo de inatividade do seu computador.</p>
-            <h3>3. Segurança</h3>
-            <p>Utilizamos ferramentas de acesso remoto seguras e confiáveis, garantindo a proteção dos seus dados durante a formatação do Windows.</p>
-            <h3>4. Atendimento Personalizado</h3>
-            <p>Nosso suporte é personalizado para atender às suas necessidades específicas, com orientação em tempo real durante a formatação remota.</p>
-        </section>
+        <h2>O que está incluído:</h2>
+        <ul>
+            <li>Escolha entre Windows 10 ou Windows 11.</li>
+            <li>Instalação do Adobe Reader para visualização de PDFs.</li>
+            <li>Licença vitalícia do Windows.</li>
+            <li>Possibilidade de instalar outros programas (valor a ser combinado na hora).</li>
+        </ul>
 
-        <section class="testimonial">
-            <h2>O que nossos clientes dizem</h2>
-            <p><strong>Henrique Silva:</strong> "O serviço de formatação remota foi excelente! Tudo foi feito rapidamente e eu pude acompanhar o processo. Super recomendo!"</p>
-            <p><strong>Maria Oliveira:</strong> "Profissionais muito competentes e atenciosos. Meu computador está como novo e eu não precisei me deslocar. Fantástico!"</p>
-        </section>
+        <h2>Como funciona o backup?</h2>
+        <p>O cliente precisa ter espaço suficiente para guardar os arquivos importantes antes de iniciarmos a formatação. A segurança dos seus dados é prioridade!</p>
 
-        <section>
-            <p>Pronto para transformar seu computador? Clique no botão abaixo para contratar nosso serviço de formatação remota e receba os arquivos automaticamente sem espera, tudo pelo seu e-mail. Faça o download e, assim que terminar, nos chame.</p>
-            <div class="button-container">
-                <a href="https://mayconbrown.com.br/checkout/check-formatacao-remota" class="button">CONTRATE AQUI</a>
-            </div>
-        </section>
+        <h2>Valor</h2>
+        <p>A vista no Pix ou em até 12x no Cartão de Crédito.<strong class="highlight-value">R$99,99 ou 12 X de R$11,63</strong>.</p>
 
-        <div class="video-container">
-            <video controls autoplay>
-                <source src="https://mayconbrown.com.br/video/cliente-softwares-1.mp4" type="video/mp4">
-                Seu navegador não suporta o vídeo.
-            </video>
-        </div>
-
-        <footer>
-            <p>&copy; 2024 Maycon Brown Informática. Todos os direitos reservados.</p>
-        </footer>
+        <a href="https://pay.cakto.com.br/BV4am49" class="button" target="_blank">Comprar Agora</a>
+    </div>
+    <footer>
+        &copy; 2025 Formatação Remota - Todos os direitos reservados.
+    </footer>
 </body>
 </html>
