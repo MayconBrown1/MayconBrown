@@ -3,7 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rifa do Brown</title>
+  <title>Rifa do Brown - Ganhe R$ 1.000,00</title>
+  <meta name="description" content="Participe da rifa do Brown e tenha a chance de ganhar R$ 1.000,00. Escolha seus números e faça o pagamento via PIX. Confira o ranking e mais informações sobre o sorteio ao vivo no Instagram.">
+  <meta name="keywords" content="rifa, rifa online, ganhar dinheiro, sorteio, prêmio, rifa do brown, números da sorte, PIX, Instagram, sorteio ao vivo">
+  <meta name="author" content="Maycon Brown">
+  <meta property="og:title" content="Rifa do Brown - Ganhe R$ 1.000,00">
+  <meta property="og:description" content="Participe da rifa do Brown e tenha a chance de ganhar R$ 1.000,00. Escolha seus números e faça o pagamento via PIX. Confira o ranking e mais informações sobre o sorteio ao vivo no Instagram.">
+  <meta property="og:image" content="http://mayconbrown.com.br/img/rifa.jpg">
+  <meta property="og:url" content="http://mayconbrown.com.br/rifa">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rifa do Brown - Ganhe R$ 1.000,00">
+  <meta name="twitter:description" content="Participe da rifa do Brown e tenha a chance de ganhar R$ 1.000,00. Escolha seus números e faça o pagamento via PIX. Confira o ranking e mais informações sobre o sorteio ao vivo no Instagram.">
+  <meta name="twitter:image" content="http://mayconbrown.com.br/img/rifa.jpg">
   <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
   <style>
     body {
@@ -129,11 +140,9 @@
 
 
 
-    <!-- NUMEROS VENDIDOS -->
 
 
-
-
+    
 
     function atualizarNumerosDisponiveis() {
       const numerosDisponiveis = document.getElementById('numerosDisponiveis');
@@ -151,7 +160,7 @@
         numeros.push(numero);
         disponiveis = disponiveis.filter(n => n !== numero);
         atualizarTela();
-        falarNumero(numero); // Chama a função para falar o número escolhido
+        falarNumero(numero);
       } else {
         alert('Número inválido ou já escolhido!');
       }
@@ -173,7 +182,6 @@
       detalhes.textContent = `Você escolheu ${numeros.length} número(s): ${numeros.join(', ')}. Total a pagar: R$ ${(numeros.length * precoRifa).toFixed(2)}.`;
       detalhesPix.style.display = 'block';
 
-      // Fala a mensagem solicitada com o valor total
       falarMensagem("Agora copie a chave pix e faça o pagamento de valor, e envie o comprovante no uatizapi abaixo, Boa sorte no sorteio!");
     }
 
@@ -194,28 +202,26 @@
 
     function falarNumero(numero) {
       const speech = new SpeechSynthesisUtterance();
-      speech.lang = "pt-BR"; // Configura a linguagem para português
-      speech.text = `${numero}`; // Texto que será falado
-      speech.volume = 1; // Volume máximo
-      speech.rate = 2; // Velocidade normal
-      speech.pitch = 0; // Tom normal
-      window.speechSynthesis.speak(speech); // Executa a fala
-    }
-
-    // Nova função para falar a mensagem personalizada
-    function falarMensagem(mensagem) {
-      const total = (numeros.length * precoRifa).toFixed(2); // Calcula o total
-      const valorVerbalizado = converterParaExtenso(total); // Converte o total para extenso
-      const speech = new SpeechSynthesisUtterance();
       speech.lang = "pt-BR";
-      speech.text = mensagem.replace("valor", valorVerbalizado); // Substitui "valor" pelo total verbalizado
+      speech.text = `${numero}`;
       speech.volume = 1;
-      speech.rate = 1,7;
+      speech.rate = 2;
       speech.pitch = 0;
       window.speechSynthesis.speak(speech);
     }
 
-    // Função para converter o valor numérico em extenso
+    function falarMensagem(mensagem) {
+      const total = (numeros.length * precoRifa).toFixed(2);
+      const valorVerbalizado = converterParaExtenso(total);
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "pt-BR";
+      speech.text = mensagem.replace("valor", valorVerbalizado);
+      speech.volume = 1;
+      speech.rate = 1.7;
+      speech.pitch = 0;
+      window.speechSynthesis.speak(speech);
+    }
+
     function converterParaExtenso(valor) {
       const valorDecimal = valor.split('.');
       const reais = valorDecimal[0];
@@ -227,7 +233,6 @@
       return `${extensoReais} e ${extensoCentavos} centavos`;
     }
 
-    // Função para converter números em extenso
     function numeroParaExtenso(numero) {
       const unidades = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
       const dezenas = ['dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
@@ -248,7 +253,6 @@
       }
     }
 
-    // Inicializa a lista de números disponíveis ao carregar a página
     atualizarNumerosDisponiveis();
   </script>
 </body>
