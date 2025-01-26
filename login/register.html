@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <style>
+        /* Estilo de tema escuro */
         body {
             font-family: Arial, sans-serif;
             background-color: #121212;
@@ -139,7 +140,8 @@
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log('Usuário registrado:', user);
-                // Redirecionar ou fazer algo após o registro
+                // Redirecionar para o site após registro bem-sucedido
+                window.location.href = "http://mayconbrown.com.br/";
             })
             .catch((error) => {
                 const errorCode = error.code;
