@@ -78,6 +78,34 @@
         .link a:hover {
             text-decoration: underline;
         }
+
+        /* Carregando (bolinha) */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6200ea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mensagem de erro */
+        .error-message {
+            color: red;
+            text-align: center;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +125,10 @@
     </form>
     <div class="link">
         <p>Não tem uma conta? <a href="register.html">Cadastre-se aqui</a></p>
+    </div>
+    <div class="error-message" id="error-message">Senha incorreta. Tente novamente.</div>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
     </div>
 </div>
 
@@ -124,6 +156,9 @@
     document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
+        // Mostrar a bolinha de carregamento
+        document.getElementById('loading').style.display = 'block';
+
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
@@ -138,6 +173,15 @@
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.error('Erro de login:', errorCode, errorMessage);
+
+                // Se erro for de senha, mostrar a mensagem de erro
+                if (errorCode === 'auth/wrong-password') {
+                    document.getElementById('error-message').style.display = 'block';
+                }
+            })
+            .finally(() => {
+                // Esconder a bolinha de carregamento
+                document.getElementById('loading').style.display = 'none';
             });
     });
 </script>
