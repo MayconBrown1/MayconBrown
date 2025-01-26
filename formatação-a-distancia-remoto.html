@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
+    <!-- End Google Tag Manager -->
+
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'GT-KVJTHGPF');
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Formatação de computador à distância com praticidade, segurança e eficiência. Escolha entre Windows 10 ou 11, com licença vitalícia e instalação de programas essenciais.">
@@ -27,142 +45,199 @@
     <meta name="twitter:description" content="Formatação de computador à distância, escolha entre Windows 10 ou 11, com licença vitalícia e instalação de programas essenciais.">
     <meta name="twitter:image" content="https://mayconbrown.com.br/img/formatacao.jpg">
     
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Venda: Formatação Remota</title>
+    <link rel="icon" href="img/icone.ico" type="image/x-icon">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --background-color: #000000;
+            --text-color: #f4f4f4;
+            --button-color: #28a745;
+            --button-hover-color: #218838;
         }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            line-height: 1.6;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
-        }
-        header {
-            width: 100%;
-            background-color: #1f1f1f;
-            color: #e0e0e0;
-            padding: 10px 0;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        }
-        header img {
-            width: 100%;
-            height: auto;
-            margin: 0 auto;
-            border-radius: 8px;
-        }
-        @media (min-width: 768px) {
-            header img {
-                max-height: 200px;
-                object-fit: cover;
-            }
-        }
-        .container {
-            background: #1f1f1f;
-            padding: 20px;
-            margin: 20px;
-            max-width: 800px;
-            width: 90%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-        h1, h2 {
-            color: #4CAF50;
-            text-align: center;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            background: #2a2a2a;
-            margin: 10px 0;
-            padding: 10px;
-            border-left: 5px solid #4CAF50;
-            border-radius: 5px;
-        }
-        p {
-            margin: 15px 0;
-            text-align: justify;
-        }
-        .highlight-value {
-            color: #FFEB3B; /* Cor inicial amarela */
-            font-size: 1.5em;
-            font-weight: bold;
-            padding: 10px;
-            display: inline-block;
-            animation: blink-animation 0.2s infinite alternate; /* Animação de piscar */
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        @keyframes blink-animation {
+        .logo {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 400px;
+            height: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            background-color: #444;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+        }
+
+        .left-side {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right-side {
+            flex: 1;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 1px;
+        }
+
+        .old-price {
+            color: red;
+            font-size: 1.2em;
+            text-decoration: line-through;
+            margin: 10px 0;
+        }
+
+        .price {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
             0% {
-                color: #FFEB3B; /* Cor amarela */
+                background-color: #28a745;
+            }
+            50% {
+                background-color: #dc3545;
             }
             100% {
-                color: #FF1744; /* Cor vermelha */
+                background-color: #28a745;
             }
         }
 
-        .button {
-            display: block;
-            padding: 15px;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            text-decoration: none;
+        .buy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: var(--button-color);
             font-weight: bold;
+            text-decoration: none;
             border-radius: 5px;
-            margin: 20px auto;
-            max-width: 200px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            animation: pulse 1s infinite;
         }
-        .button:hover {
-            background-color: #45a049;
+
+        .buy-button:hover {
+            background-color: var(--button-hover-color);
+            animation: none;
         }
-        footer {
-            margin-top: auto;
-            background-color: #1f1f1f;
-            color: #e0e0e0;
-            padding: 10px;
-            text-align: center;
-            width: 100%;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+
+        .instructions, .requirements {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .right-side {
+                padding-left: 0;
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="https://mayconbrown.com.br/img/formatacao.jpg" alt="Banner de Formatação de Computador à Distância">
-    </header>
-    <div class="container">
-        <h1>Formatação de Computador à Distância</h1>
-        <p>Já pensou em formatar o seu computador sem sair de casa? Com a nossa solução de formatação à distância, você ganha praticidade, segurança e eficiência! Não precisa de pendrive, CD ou qualquer equipamento adicional para realizar o serviço.</p>
+     <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
-        <h2>O que está incluído:</h2>
-        <ul>
-            <li>Escolha entre Windows 10 ou Windows 11.</li>
-            <li>Instalação do Adobe Reader para visualização de PDFs.</li>
-            <li>Licença vitalícia do Windows.</li>
-            <li>Possibilidade de instalar outros programas (valor a ser combinado na hora).</li>
-        </ul>
-
-        <h2>Como funciona o backup?</h2>
-        <p>O cliente precisa ter espaço suficiente para guardar os arquivos importantes antes de iniciarmos a formatação. A segurança dos seus dados é prioridade!</p>
-
-        <h2>Valor</h2>
-        <p>A vista no Pix ou em até 12x no Cartão de Crédito.<strong class="highlight-value">R$99,99 ou 12 X de R$11,63</strong>.</p>
-
-        <a href="https://pay.cakto.com.br/BV4am49" class="button" target="_blank">Comprar Agora</a>
+    <!-- Logo -->
+    <div class="logo">
+        <a href="https://mayconbrown.com.br/">
+            <img src="https://mayconbrown.com.br/img/logobranca.png" alt="Logo">
+        </a>
     </div>
-    <footer>
-    &copy; 2025 Maycon Brown - Todos os direitos reservados.
-</footer>
+
+    <div class="container">
+        <div class="left-side">
+            <!-- Imagem do Produto -->
+            <img src="https://mayconbrown.com.br/img/formatacao-remota-windows-10-11.png" alt="Imagem de Formatação Remota" class="product-image">
+        </div>
+
+        <div class="right-side">
+            <!-- Título da Página -->
+            <h1 class="title">Formatação Remota: Windows 10 Pro e 11 Pro</h1>
+
+            <!-- Preço Antigo e Novo Preço do Produto -->
+            
+            <p class="price">12x de R$ 11,63</p>
+            <p class=>ou R$ 99,99 à vista</p>
+
+            <!-- Botão de Compra -->
+            <a href="https://pay.cakto.com.br/BV4am49" class="buy-button">Contratar Agora</a>
+
+            <!-- Instruções do Produto -->
+            <div class="instructions">
+                <h2>Como Funciona</h2>
+                <p>1. Após a contratação, entraremos em contato para agendar o serviço.</p>
+                <p>2. A formatação é realizada remotamente através do AnyDesk.</p>
+                <p>3. Backup de arquivos é feito com armazenamento do cliente, SSD separado ou criamos uma repartição.</p>
+            </div>
+
+            <!-- Requisitos Necessários -->
+            <div class="requirements">
+                <h2>Requisitos Necessários</h2>
+                <p><strong>Dispositivo:</strong> Computador ou notebook com Windows 7, 8, 8.1, 10 ou 11 instalado.</p>
+                <p><strong>Espaço em Disco:</strong> 20 GB livres para a instalação do sistema.</p>
+            </div>
+
+            <!-- O que está incluído -->
+            <div class="requirements">
+                <h2>O que está incluído:</h2>
+                <p><strong>Adobe Reader:</strong> para visualização de PDFs.</p>
+                <p><strong>Windows:</strong> Licença vitalícia e atualizações de drives.</p>
+                <p><strong>Softwares:</strong> Possibilidade de instalar outros programas (valor a ser combinado na hora).</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
