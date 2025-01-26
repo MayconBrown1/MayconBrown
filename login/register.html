@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Registrar</title>
     <style>
         /* Estilo de tema escuro */
         body {
@@ -34,6 +34,7 @@
 
         .input-group {
             margin-bottom: 15px;
+            position: relative;
         }
 
         label {
@@ -42,8 +43,8 @@
         }
 
         input[type="text"],
-        input[type="email"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="email"] {
             width: 100%;
             padding: 10px;
             background-color: #333;
@@ -66,6 +67,18 @@
             background-color: #3700b3;
         }
 
+        /* Tela de confirmação */
+        .confirmation {
+            display: none;
+            background-color: #6200ea;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+
+        /* Link de login */
         .link {
             text-align: center;
             margin-top: 15px;
@@ -84,12 +97,8 @@
 <body>
 
 <div class="container">
-    <h2>Registro</h2>
+    <h2>Registrar</h2>
     <form action="#" method="POST" id="register-form">
-        <div class="input-group">
-            <label for="fullname">Nome Completo</label>
-            <input type="text" id="fullname" name="fullname" required>
-        </div>
         <div class="input-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
@@ -104,8 +113,15 @@
         </div>
         <button type="submit">Registrar</button>
     </form>
+
+    <!-- Tela de confirmação -->
+    <div class="confirmation" id="confirmation-message">
+        <p>Conta criada com sucesso!</p>
+        <p>Agora você pode <a href="login.html" style="color: white;">entrar</a> com sua conta.</p>
+    </div>
+
     <div class="link">
-        <p>Já tem uma conta? <a href="login.html">Entre aqui</a></p>
+        <p>Já tem uma conta? <a href="login.html">Faça login aqui</a></p>
     </div>
 </div>
 
@@ -115,7 +131,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 
-    // Your web app's Firebase configuration
+    // Sua configuração do Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyD2_lYyRoxs5KQoVGjqtWjcVprOcD4hFeA",
         authDomain: "login-cursos-brown.firebaseapp.com",
@@ -125,28 +141,32 @@
         appId: "1:538925841859:web:1849d2fe4ab6749c8e9176"
     };
 
-    // Initialize Firebase
+    // Inicializando o Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
 
-    // Handle register form submission
+    // Lidar com o envio do formulário de registro
     document.getElementById('register-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
         const email = document.getElementById('email').value;
+        const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log('Usuário registrado:', user);
-                // Redirecionar para o site após registro bem-sucedido
-                window.location.href = "http://mayconbrown.com.br/";
+                // Exibir a tela de confirmação
+                document.getElementById('confirmation-message').style.display = 'block';
+                // Esconder o formulário
+                document.getElementById('register-form').style.display = 'none';
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.error('Erro de registro:', errorCode, errorMessage);
+                console.error('Erro no registro:', errorCode, errorMessage);
+                // Mostrar erro no console ou em uma mensagem
             });
     });
 </script>
