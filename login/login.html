@@ -34,6 +34,7 @@
 
         .input-group {
             margin-bottom: 15px;
+            position: relative;
         }
 
         label {
@@ -106,6 +107,19 @@
             text-align: center;
             display: none;
         }
+
+        /* Ícone de olho */
+        .eye-icon {
+            position: absolute;
+            right: -10px;
+            top: 70%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: white;
+            width: 24px;
+            height: 24px;
+        }
+
     </style>
 </head>
 <body>
@@ -120,6 +134,10 @@
         <div class="input-group">
             <label for="password">Senha</label>
             <input type="password" id="password" name="password" required>
+            <svg class="eye-icon" id="togglePassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s3-7 11-7 11 7 11 7-3 7-11 7-11-7-11-7z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
         </div>
         <button type="submit">Entrar</button>
     </form>
@@ -183,6 +201,13 @@
                 // Esconder a bolinha de carregamento
                 document.getElementById('loading').style.display = 'none';
             });
+    });
+
+    // Função para alternar a visibilidade da senha
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.type === 'password' ? 'text' : 'password';
+        passwordField.type = type;
     });
 </script>
 
