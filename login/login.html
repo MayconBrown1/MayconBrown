@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #6200ea;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .link a {
+            color: #bb86fc;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+    <form action="#" method="POST" id="login-form">
+        <div class="input-group">
+            <label for="username">Usuário</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Entrar</button>
+    </form>
+    <div class="link">
+        <p>Não tem uma conta? <a href="register.html">Cadastre-se aqui</a></p>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyD2_lYyRoxs5KQoVGjqtWjcVprOcD4hFeA",
+        authDomain: "login-cursos-brown.firebaseapp.com",
+        projectId: "login-cursos-brown",
+        storageBucket: "login-cursos-brown.firebasestorage.app",
+        messagingSenderId: "538925841859",
+        appId: "1:538925841859:web:1849d2fe4ab6749c8e9176"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    // Handle login form submission
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        signInWithEmailAndPassword(auth, username, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log('Usuário logado:', user);
+                // Redirecionar ou fazer algo após o login
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error('Erro de login:', errorCode, errorMessage);
+            });
+    });
+</script>
+
+</body>
+</html>
