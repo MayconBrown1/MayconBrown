@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reprodução de Vídeo - Google Drive</title>
+    <title>Brown Tutorial</title>
     <style>
         /* Tema escuro */
         body {
@@ -14,13 +14,16 @@
             background-color: #121212;
             color: white;
         }
-        h1, p {
-            color: #ffffff;
+        .logo-container {
+            margin: 20px 0;
+        }
+        .logo-container img {
+            width: 400px;
         }
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 100%;
+            max-width: 80%; /* Definido 80% da largura da tela para desktop */
             margin: 0 auto;
             background-color: #000000;
         }
@@ -38,11 +41,40 @@
             border: none;
             border-radius: 8px;
         }
+        /* Para telas pequenas, como celulares, o vídeo ocupará 100% da largura */
+        @media (max-width: 768px) {
+            .video-container {
+                max-width: 100%; /* Largura máxima de 100% na tela do celular */
+            }
+        }
+
+        /* Estilo dos botões */
+        .buttons-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .buttons-container a {
+            text-decoration: none;
+            padding: 15px 30px;
+            margin: 0 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .buttons-container a:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <h1>Reprodução de Vídeo</h1>
-    <p>Este vídeo está hospedado no Google Drive.</p>
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" />
+    </div>
+
     <div class="video-container">
         <iframe 
             id="videoPlayer" 
@@ -50,6 +82,12 @@
             allow="fullscreen" 
             allowfullscreen>
         </iframe>
+    </div>
+
+    <!-- Botões -->
+    <div class="buttons-container">
+        <a href="https://www.mediafire.com/file_premium/9ateq4ohdiyqpyq/Script_Ativador_W10_e_11.zip/file" target="_blank">Download</a>
+        <a href="https://wa.me/5584981770146?text=Ol%C3%A1%21%20Sou%20cliente%20e%20preciso%20de%20suporte%20para%20a%20licen%C3%A7a%20do%20Windows." target="_blank">Suporte</a>
     </div>
 
     <script>
