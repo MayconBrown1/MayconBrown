@@ -12,23 +12,60 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-        iframe {
-            width: 80%;
-            height: 450px;
+        .video-container {
+            position: relative;
+            width: 100%;
             max-width: 800px;
+            margin: 20px auto;
+        }
+        iframe {
+            width: 100%;
+            height: 450px;
             border: none;
             border-radius: 8px;
-            margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <h1>Reprodução de Vídeo</h1>
     <p>Este vídeo está hospedado no Google Drive.</p>
-    <iframe 
-        src="https://drive.google.com/file/d/1Q_Ln7Zqr0p6onvi5YH_R1m9nltfEnM1r/preview?autoplay=1" 
-        allow="autoplay; fullscreen" 
-        allowfullscreen>
-    </iframe>
+    <div class="video-container">
+        <iframe 
+            id="videoPlayer" 
+            src="https://drive.google.com/file/d/1Q_Ln7Zqr0p6onvi5YH_R1m9nltfEnM1r/preview?autoplay=1" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <button id="fullscreenBtn">Tela cheia (Paisagem)</button>
+
+    <script>
+        // Botão para alternar para tela cheia
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
+        const videoPlayer = document.getElementById("videoPlayer");
+
+        fullscreenBtn.addEventListener("click", () => {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.webkitRequestFullscreen) { // Suporte para Safari
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) { // Suporte para IE/Edge
+                videoPlayer.msRequestFullscreen();
+            }
+        });
+    </script>
 </body>
 </html>
