@@ -24,19 +24,6 @@
             border: none;
             border-radius: 8px;
         }
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
@@ -50,20 +37,12 @@
             allowfullscreen>
         </iframe>
     </div>
-    <button id="fullscreenBtn">Tela cheia (Paisagem)</button>
 
     <script>
-        // Botão para alternar para tela cheia
-        const fullscreenBtn = document.getElementById("fullscreenBtn");
-        const videoPlayer = document.getElementById("videoPlayer");
-
-        fullscreenBtn.addEventListener("click", () => {
-            if (videoPlayer.requestFullscreen) {
-                videoPlayer.requestFullscreen();
-            } else if (videoPlayer.webkitRequestFullscreen) { // Suporte para Safari
-                videoPlayer.webkitRequestFullscreen();
-            } else if (videoPlayer.msRequestFullscreen) { // Suporte para IE/Edge
-                videoPlayer.msRequestFullscreen();
+        // Remover a orientação de tela ao sair do modo tela cheia
+        document.addEventListener("fullscreenchange", () => {
+            if (!document.fullscreenElement && screen.orientation && screen.orientation.unlock) {
+                screen.orientation.unlock();
             }
         });
     </script>
