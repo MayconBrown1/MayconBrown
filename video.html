@@ -12,21 +12,19 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-        video {
+        iframe {
             width: 80%;
+            height: 450px;
             max-width: 800px;
-            margin: 20px auto;
-            border: 2px solid #333;
+            border: none;
             border-radius: 8px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Reprodução de Vídeo</h1>
     <p>Este vídeo está hospedado no Google Drive.</p>
-    <video controls>
-        <source src="https://drive.google.com/file/d/1Q_Ln7Zqr0p6onvi5YH_R1m9nltfEnM1r/view" type="video/mp4">
-        Seu navegador não suporta a reprodução de vídeos HTML5.
-    </video>
+    <iframe src="https://drive.google.com/file/d/1Q_Ln7Zqr0p6onvi5YH_R1m9nltfEnM1r/preview" allowfullscreen></iframe>
 </body>
 </html>
