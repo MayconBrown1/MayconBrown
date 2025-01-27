@@ -5,22 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reprodução de Vídeo - Google Drive</title>
     <style>
+        /* Tema escuro */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #121212;
+            color: white;
+        }
+        h1, p {
+            color: #ffffff;
         }
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: #000000;
+        }
+        .video-container::before {
+            content: '';
+            display: block;
+            padding-top: 56.25%; /* Proporção 16:9 */
         }
         iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 450px;
+            height: 100%;
             border: none;
             border-radius: 8px;
         }
@@ -32,7 +46,7 @@
     <div class="video-container">
         <iframe 
             id="videoPlayer" 
-            src="https://drive.google.com/file/d/1Q_Ln7Zqr0p6onvi5YH_R1m9nltfEnM1r/preview?" 
+            src="https://drive.google.com/file/d/1Q_Ln7Zqr0p6onvi5YH_R1m9nltfEnM1r/preview?autoplay=1" 
             allow="autoplay; fullscreen" 
             allowfullscreen>
         </iframe>
