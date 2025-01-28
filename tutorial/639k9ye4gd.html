@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Brown</title>
+    <style>
+        /* Tema escuro */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: white;
+        }
+        .logo-container {
+            margin: 20px 0;
+        }
+        .logo-container img {
+            width: 400px;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 80%; /* Definido 80% da largura da tela para desktop */
+            margin: 0 auto;
+            background-color: #000000;
+        }
+        .video-container::before {
+            content: '';
+            display: block;
+            padding-top: 56.25%; /* Proporção 16:9 */
+        }
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+        /* Para telas pequenas, como celulares, o vídeo ocupará 100% da largura */
+        @media (max-width: 768px) {
+            .video-container {
+                max-width: 100%; /* Largura máxima de 100% na tela do celular */
+            }
+        }
+
+        /* Estilo dos botões */
+        .buttons-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .buttons-container a {
+            text-decoration: none;
+            padding: 15px 30px;
+            margin: 0 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .buttons-container a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Logo redonda em cima do botão "Outra Janela" */
+        .overlay-logo {
+            position: absolute;
+            top: 10px; /* Ajuste a posição vertical */
+            right: 10px; /* Agora à direita */
+            width: 60px; /* Tamanho da logo */
+            height: 60px; /* Tamanho da logo */
+            border-radius: 50%;
+            background-image: url('https://yt3.googleusercontent.com/kdF47svNMOuFzTjHNZ4vdqSXlsaXbLt404H1uoSn8_2KqyC5OP2TI6s5PSFmzGbnzLQ2OO_qZg=s900-c-k-c0x00ffffff-no-rj');
+            background-size: cover;
+            background-position: center;
+            z-index: 10; /* Certifique-se de que a logo ficará acima do vídeo */
+        }
+
+        /* Título acima do vídeo */
+        .video-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo-container">
+       <a href="https://mayconbrown.com.br/">
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" />
+       </a>
+    </div>
+
+    <!-- Título -->
+    <div class="video-title">
+        AutoCAD 2023
+    </div>
+
+    <!-- Vídeo com a logo sobrepondo o botão "Outra Janela" -->
+    <div class="video-container">
+        <iframe 
+            id="videoPlayer" 
+            src="https://drive.google.com/file/d/O-ID-DO-VIDEO-FICA-AQUI/preview?autohide=1" 
+            allow="fullscreen" 
+            allowfullscreen>
+        </iframe>
+        
+        <!-- Logo sobre o botão "Outra Janela" -->
+        <div class="overlay-logo"></div>
+    </div>
+
+    <!-- Botões -->
+    <div class="buttons-container">
+        <a href="https://www.mediafire.com/file_premium/87nrum2w7d8s9xt/AutoCAD_2023_-_Maycon_Brown.zip/file" target="_blank">Download</a>
+        <a href="https://wa.me/5584981770146?text=Ol%C3%A1%21%20Sou%20cliente%20e%20preciso%20de%20suporte%20para%20AutoCAD%202023." target="_blank">Suporte</a>
+    </div> 
+
+    <script>
+        // Remover a orientação de tela ao sair do modo tela cheia
+        document.addEventListener("fullscreenchange", () => {
+            if (!document.fullscreenElement && screen.orientation && screen.orientation.unlock) {
+                screen.orientation.unlock();
+            }
+        });
+    </script>
+</body>
+</html>
