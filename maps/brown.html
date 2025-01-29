@@ -136,6 +136,15 @@
         document.getElementById("locate-btn").addEventListener("click", function() {
             getUserLocation();
         });
+
+        // Adicionar evento de clique na zona vermelha
+        areaAtendimento.on('click', function(e) {
+            // Verificar se o clique foi dentro da área
+            if (areaAtendimento.contains(e.latlng)) {
+                // Mostrar a taxa quando o usuário clicar na zona vermelha
+                document.getElementById('price').style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>
