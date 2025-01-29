@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Atendimento</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; }
+        #map { height: 100vh; width: 100%; }
+
+        .locate-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .locate-btn img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button class="locate-btn" id="locate-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Localização">
+    </button>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var initialLat = -5.949870;
+        var initialLon = -35.281601;
+
+        var map = L.map('map').setView([initialLat, initialLon], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        var customIcon = L.icon({
+            iconUrl: 'https://mayconbrown.com.br/img/svg/icone.svg',
+            iconSize: [40, 40],
+            iconAnchor: [20, 40],
+            popupAnchor: [0, -40]
+        });
+
+        L.marker([initialLat, initialLon], { icon: customIcon }).addTo(map)
+            .bindPopup("<b>Localização inicial</b>").openPopup();
+
+        var areaAtendimento = L.polygon([
+            [-5.951000, -35.286285],
+            [-5.950820, -35.283236],
+            [-5.952202, -35.283127],
+            [-5.952184, -35.284246],
+            [-5.952652, -35.284090],
+            [-5.952724, -35.283079],
+            [-5.953388, -35.283152],
+            [-5.953639, -35.282123],
+            [-5.954985, -35.282376],
+            [-5.955488, -35.274058],
+            [-5.950524, -35.274762],
+            [-5.947363, -35.274500],
+            [-5.937856, -35.275411],
+            [-5.938851, -35.288382],
+            [-5.950624, -35.287624]
+        ], {
+            color: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.2
+        }).addTo(map).bindPopup("Área de atendimento");
+
+        var userMarker = null;
+
+        function getUserLocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+
+                    if (userMarker) {
+                        map.removeLayer(userMarker);
+                    }
+
+                    userMarker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup("Você está aqui!")
+                        .openPopup();
+
+                    map.setView([lat, lon], 14);
+                }, function(error) {
+                    alert("Erro ao obter localização: " + error.message);
+                });
+            } else {
+                alert("Geolocalização não suportada pelo seu navegador.");
+            }
+        }
+
+        document.getElementById("locate-btn").addEventListener("click", function() {
+            getUserLocation();
+        });
+    </script>
+</body>
+</html>
