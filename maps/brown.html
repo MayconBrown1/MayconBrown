@@ -93,7 +93,7 @@
             color: 'red',
             fillColor: 'red',
             fillOpacity: 0.2
-        }).addTo(map).bindPopup("Área de atendimento");
+        }).addTo(map);
 
         var userMarker = null;
 
@@ -138,12 +138,9 @@
         });
 
         // Adicionar evento de clique na zona vermelha
-        areaAtendimento.on('click', function(e) {
-            // Verificar se o clique foi dentro da área
-            if (areaAtendimento.contains(e.latlng)) {
-                // Mostrar a taxa quando o usuário clicar na zona vermelha
-                document.getElementById('price').style.display = 'block';
-            }
+        areaAtendimento.on('click', function() {
+            // Exibir a taxa "Taxa: R$4,00" ao clicar na zona vermelha
+            areaAtendimento.bindPopup("Taxa: R$4,00").openPopup();
         });
     </script>
 </body>
