@@ -30,6 +30,18 @@
             width: 30px;
             height: 30px;
         }
+
+        #price {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: green;
+            font-weight: bold;
+            display: none;
+            z-index: 1001;
+        }
     </style>
 </head>
 <body>
@@ -37,6 +49,8 @@
     <button class="locate-btn" id="locate-btn">
         <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Localização">
     </button>
+
+    <div id="price">Taxa: R$4,00</div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -59,7 +73,7 @@
         L.marker([initialLat, initialLon], { icon: customIcon }).addTo(map)
             .bindPopup("<b>Localização inicial</b>").openPopup();
 
-        var areaAtendimento = L.polygon([
+        var areaAtendimento = L.polygon([ 
             [-5.951000, -35.286285],
             [-5.950820, -35.283236],
             [-5.952202, -35.283127],
@@ -89,15 +103,27 @@
                     var lat = position.coords.latitude;
                     var lon = position.coords.longitude;
 
+                    // Remover o marcador anterior, se houver
                     if (userMarker) {
                         map.removeLayer(userMarker);
                     }
 
+                    // Adicionar o novo marcador na localização do usuário
                     userMarker = L.marker([lat, lon]).addTo(map)
                         .bindPopup("Você está aqui!")
                         .openPopup();
 
+                    // Movimentar o mapa para a localização do usuário
                     map.setView([lat, lon], 14);
+
+                    // Verificar se a localização está dentro da área
+                    if (areaAtendimento.contains([lat, lon])) {
+                        // Mostrar a taxa
+                        document.getElementById('price').style.display = 'block'; 
+                    } else {
+                        // Ocultar a taxa
+                        document.getElementById('price').style.display = 'none'; 
+                    }
                 }, function(error) {
                     alert("Erro ao obter localização: " + error.message);
                 });
@@ -106,6 +132,7 @@
             }
         }
 
+        // Tornar o botão de localização mais sensível
         document.getElementById("locate-btn").addEventListener("click", function() {
             getUserLocation();
         });
