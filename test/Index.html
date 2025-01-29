@@ -1,14 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagem Clicável</title>
+    <title>Cardápio</title>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <h1>Clique na imagem para acessar o tutorial</h1>
-    <a href="redirect.php" target="_blank">
-        <img src="https://mayconbrown.com.br/img/svg/rifa.svg" alt="Imagem do Tutorial" style="max-width: 100%; height: auto;">
-    </a>
+    <header>
+        <h1>Cardápio</h1>
+        <div id="carrinho-icone" onclick="abrirCarrinho()">
+            🛒 <span id="contador-carrinho">0</span>
+        </div>
+    </header>
+
+    <main>
+        <div id="menu"></div>
+    </main>
+
+    <!-- Modal do Carrinho -->
+    <div id="modal-carrinho" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharCarrinho()">&times;</span>
+            <h2>Meu Carrinho</h2>
+            <ul id="carrinho-lista"></ul>
+            <p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
+            <button id="finalizar-compra">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <script src="scripts/scripts.js"></script>
 </body>
 </html>
