@@ -73,6 +73,7 @@
         L.marker([initialLat, initialLon], { icon: customIcon }).addTo(map)
             .bindPopup("<b>Localização inicial</b>").openPopup();
 
+        // Área vermelha (taxa R$4,00)
         var areaAtendimento = L.polygon([ 
             [-5.951000, -35.286285],
             [-5.950820, -35.283236],
@@ -92,6 +93,26 @@
         ], {
             color: 'red',
             fillColor: 'red',
+            fillOpacity: 0.2
+        }).addTo(map);
+
+        // Nova área azul (taxa R$5,00)
+        var areaAzul = L.polygon([
+            [-5.938851, -35.288382],
+            [-5.937856, -35.275411],
+            [-5.937010, -35.274863],
+            [-5.937871, -35.274525],
+            [-5.937855, -35.271630],
+            [-5.932724, -35.271815],
+            [-5.932084, -35.273103],
+            [-5.932863, -35.274895],
+            [-5.932340, -35.274959],
+            [-5.932447, -35.275822],
+            [-5.932243, -35.275847],
+            [-5.932419, -35.281662]
+        ], {
+            color: 'blue',
+            fillColor: 'blue',
             fillOpacity: 0.2
         }).addTo(map);
 
@@ -116,13 +137,24 @@
                     // Movimentar o mapa para a localização do usuário
                     map.setView([lat, lon], 14);
 
-                    // Verificar se a localização está dentro da área
+                    // Verificar se a localização está dentro da área vermelha
                     if (areaAtendimento.contains([lat, lon])) {
-                        // Mostrar a taxa
-                        document.getElementById('price').style.display = 'block'; 
+                        // Mostrar a taxa R$4,00
+                        document.getElementById('price').style.display = 'block';
+                        document.getElementById('price').innerHTML = 'Taxa: R$4,00'; 
                     } else {
                         // Ocultar a taxa
-                        document.getElementById('price').style.display = 'none'; 
+                        document.getElementById('price').style.display = 'none';
+                    }
+
+                    // Verificar se a localização está dentro da área azul
+                    if (areaAzul.contains([lat, lon])) {
+                        // Mostrar a taxa R$5,00
+                        document.getElementById('price').style.display = 'block';
+                        document.getElementById('price').innerHTML = 'Taxa: R$5,00'; 
+                    } else {
+                        // Ocultar a taxa
+                        document.getElementById('price').style.display = 'none';
                     }
                 }, function(error) {
                     alert("Erro ao obter localização: " + error.message);
@@ -141,6 +173,12 @@
         areaAtendimento.on('click', function() {
             // Exibir a taxa "Taxa: R$4,00" ao clicar na zona vermelha
             areaAtendimento.bindPopup("Taxa: R$4,00").openPopup();
+        });
+
+        // Adicionar evento de clique na zona azul
+        areaAzul.on('click', function() {
+            // Exibir a taxa "Taxa: R$5,00" ao clicar na zona azul
+            areaAzul.bindPopup("Taxa: R$5,00").openPopup();
         });
     </script>
 </body>
