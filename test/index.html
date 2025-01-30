@@ -7,28 +7,46 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
+
+    <!-- Cabeçalho com a logo -->
     <header>
-        <h1>Cardápio</h1>
-        <div id="carrinho-icone" onclick="abrirCarrinho()">
-            🛒 <span id="contador-carrinho">0</span>
-        </div>
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
     </header>
 
-    <main>
-        <div id="menu"></div>
-    </main>
+    <div class="container">
+        <h1>Cardápio</h1>
+
+        <!-- Lista de produtos -->
+        <div id="menu" class="lista-produtos"></div>
+    </div>
+
+    <!-- Ícone do carrinho -->
+    <div class="carrinho-icone" onclick="abrirCarrinho()">
+        🛒 <span id="contador-carrinho">0</span>
+    </div>
 
     <!-- Modal do Carrinho -->
     <div id="modal-carrinho" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="fecharCarrinho()">&times;</span>
-            <h2>Meu Carrinho</h2>
+            <h2>Carrinho</h2>
             <ul id="carrinho-lista"></ul>
-            <p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
+            <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
+
+            <!-- Escolha da forma de pagamento -->
+            <label for="forma-pagamento"><strong>Forma de Pagamento:</strong></label>
+            <select id="forma-pagamento">
+                <option value="Pix">Pix</option>
+                <option value="Crédito">Cartão de Crédito</option>
+                <option value="Débito">Cartão de Débito</option>
+                <option value="Espécie">Dinheiro (Espécie)</option>
+            </select>
+
             <button id="finalizar-compra">Finalizar Compra</button>
+            <button onclick="fecharCarrinho()">Fechar</button>
         </div>
     </div>
 
     <script src="scripts/scripts.js"></script>
+
 </body>
 </html>
