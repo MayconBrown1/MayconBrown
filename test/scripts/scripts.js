@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const produtos = [
-        { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://via.placeholder.com/150" },
-        { id: 2, nome: "Pizza", preco: 30.00, img: "https://via.placeholder.com/150" },
-        { id: 3, nome: "Hot Dog", preco: 12.00, img: "https://via.placeholder.com/150" },
-        { id: 4, nome: "Batata Frita", preco: 10.00, img: "https://via.placeholder.com/150" },
-        { id: 5, nome: "Refrigerante", preco: 7.00, img: "https://via.placeholder.com/150" },
-        { id: 6, nome: "Milkshake", preco: 14.00, img: "https://via.placeholder.com/150" },
-        { id: 7, nome: "Sorvete", preco: 9.00, img: "https://via.placeholder.com/150" },
-        { id: 8, nome: "Café", preco: 5.00, img: "https://via.placeholder.com/150" },
-        { id: 9, nome: "Sanduíche", preco: 18.00, img: "https://via.placeholder.com/150" },
-        { id: 10, nome: "Salada", preco: 20.00, img: "https://via.placeholder.com/150" }
+        { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 2, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 3, nome: "Hot Dog", preco: 12.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 4, nome: "Batata Frita", preco: 10.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 5, nome: "Refrigerante", preco: 7.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 6, nome: "Milkshake", preco: 14.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 7, nome: "Sorvete", preco: 9.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 8, nome: "Café", preco: 5.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 9, nome: "Sanduíche", preco: 18.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
+        { id: 10, nome: "Salada", preco: 20.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" }
     ];
 
     const menu = document.getElementById("menu");
@@ -24,8 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
             div.classList.add("produto");
             div.innerHTML = `
                 <img src="${produto.img}" alt="${produto.nome}">
-                <h3>${produto.nome}</h3>
-                <p>R$ ${produto.preco.toFixed(2)}</p>
+                <div>
+                    <h3>${produto.nome}</h3>
+                    <p>R$ ${produto.preco.toFixed(2)}</p>
+                </div>
                 <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar</button>
             `;
             menu.appendChild(div);
@@ -70,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.abrirCarrinho = function () {
-        document.getElementById("modal-carrinho").style.display = "block";
+        document.getElementById("modal-carrinho").style.display = "flex";
     };
 
     window.fecharCarrinho = function () {
@@ -89,13 +91,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         let total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+        let formaPagamento = document.getElementById("forma-pagamento").value;
+
         mensagem += `%0A💰 *Total: R$${total.toFixed(2)}*%0A`;
-        mensagem += `%0A📌 *Forma de Pagamento:* `;  // Pode adicionar opções depois
+        mensagem += `💳 *Forma de Pagamento: ${formaPagamento}*%0A`;
 
         let telefone = "5584996798304";
         let url = `https://api.whatsapp.com/send?phone=${telefone}&text=${mensagem}`;
-        window.open(url, "_blank");
+        window.open(url);
     });
 
-    renderizarProdutos();
+    renderizarProdutos(); // Carregar produtos ao carregar a página
 });
