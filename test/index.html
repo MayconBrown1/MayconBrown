@@ -32,24 +32,40 @@
             <ul id="carrinho-lista"></ul>
             <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
 
-            <!-- Campo para endereço de entrega -->
-            <label for="endereco"><strong>Endereço para Entrega:</strong></label>
-            <input type="text" id="endereco" placeholder="Digite seu endereço" class="input-endereco">
+            <!-- Escolha entre Retirada ou Entrega -->
+<label for="tipo-entrega"><strong>Escolha a forma de recebimento:</strong></label>
+<select id="tipo-entrega" onchange="mostrarCampoEndereco()">
+    <option value="Retirada">Retirada no Local</option>
+    <option value="Entrega">Entrega</option>
+</select>
 
-            <!-- Escolha da forma de pagamento -->
-            <label for="forma-pagamento"><strong>Forma de Pagamento:</strong></label>
-            <select id="forma-pagamento" onchange="mostrarCampoPagamentoEspecie()">
-                <option value="Pix">Pix</option>
-                <option value="Crédito">Cartão de Crédito</option>
-                <option value="Débito">Cartão de Débito</option>
-                <option value="Espécie">Dinheiro (Espécie)</option>
-            </select>
+<!-- Escolha da forma de pagamento -->
+<label for="forma-pagamento"><strong>Forma de Pagamento:</strong></label>
+<select id="forma-pagamento" onchange="mostrarCamposFormaPagamento()">
+    <option value="Pix">Pix</option>
+    <option value="Crédito">Cartão de Crédito</option>
+    <option value="Débito">Cartão de Débito</option>
+    <option value="Espécie">Dinheiro (Espécie)</option>
+</select>
 
-            <!-- Campo adicional para valor pago, visível apenas se "Espécie" for selecionado -->
-            <div id="campo-valor-pago" style="display:none;">
-                <label for="valor-pago"><strong>Valor em Espécie:</strong></label>
-                <input type="number" id="valor-pago" placeholder="Valor que vou pagar em espécie" class="input-endereco">
-            </div>
+<!-- Campo adicional para endereço de entrega -->
+<div id="campo-endereco" style="display:none;">
+    <label for="endereco"><strong>Endereço para Entrega:</strong></label>
+    <input  id="endereco" placeholder="Digite seu endereço" class="input-endereco">
+</div>
+
+<!-- Campo de Valor Pago -->
+<div class="campo-input" id="campo-valor-pago" style="display: none;">
+    <label for="valor-pago"><strong>Valor (Espécie):</strong></label>
+    <input type="number" id="valor-pago" placeholder="Digite o valor aqui" />
+</div>
+
+<!-- Campo de Observação -->
+<div class="campo-input">
+    <label for="observacao"><strong>Observações:</strong></label>
+    <input  id="observacao" placeholder="Digite aqui suas observações, se houver." rows="3"></textarea>
+</div>
+
 
             <button id="finalizar-compra">Finalizar Compra</button>
             <button onclick="fecharCarrinho()">Fechar</button>
