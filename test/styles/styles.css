@@ -119,3 +119,32 @@ select, .input-endereco {
 .input-endereco {
     margin-bottom: 15px;
 }
+
+/* Estilos gerais para os campos de input */
+.campo-input {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo-input label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.campo-input input,
+.campo-input textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.campo-input input:focus,
+.campo-input textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
