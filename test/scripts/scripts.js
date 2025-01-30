@@ -108,8 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         mensagem += `\nEndereço: ${endereco}\n`;
 
-        mensagem += `\nObservações: ${observacao}\n`;
-
         // Enviar a mensagem para o WhatsApp
         const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
         window.open(link, "_blank");
