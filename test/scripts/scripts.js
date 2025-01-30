@@ -81,25 +81,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("finalizar-compra").addEventListener("click", () => {
         if (carrinho.length === 0) {
-            alert("Seu carrinho está vazio!");
+            alert("Adicione produtos ao carrinho.");
             return;
         }
 
-        let mensagem = "*Pedido via Cardápio Online*%0A%0A";
+        const formaPagamento = document.getElementById("forma-pagamento").value;
+        const endereco = document.getElementById("endereco").value;
+
+        let valorPago = 0;
+        if (formaPagamento === "Espécie") {
+            valorPago = parseFloat(document.getElementById("valor-pago").value) || 0;
+        }
+
+        let mensagem = `Olá! Quero fazer um pedido.\n\nProdutos:\n`;
         carrinho.forEach(item => {
-            mensagem += `🍔 ${item.nome} - ${item.quantidade}x R$${(item.preco * item.quantidade).toFixed(2)}%0A`;
+            mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)}\n`;
         });
 
-        let total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
-        let formaPagamento = document.getElementById("forma-pagamento").value;
+        mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
-        mensagem += `%0A💰 *Total: R$${total.toFixed(2)}*%0A`;
-        mensagem += `💳 *Forma de Pagamento: ${formaPagamento}*%0A`;
+        if (formaPagamento === "Espécie") {
+            const troco = valorPago - parseFloat(totalElemento.textContent);
+            mensagem += `Pagamento em Espécie: R$ ${valorPago.toFixed(2)}\n`;
+            mensagem += `Troco: R$ ${troco.toFixed(2)}\n`;
+        }
 
-        let telefone = "5584996798304";
-        let url = `https://api.whatsapp.com/send?phone=${telefone}&text=${mensagem}`;
-        window.open(url);
+        mensagem += `\nEndereço: ${endereco}\n`;
+
+        const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
+        window.open(link, "_blank");
     });
 
-    renderizarProdutos(); // Carregar produtos ao carregar a página
+    window.mostrarCampoPagamentoEspecie = function () {
+        const formaPagamento = document.getElementById("forma-pagamento").value;
+        const campoValorPago = document.getElementById("campo-valor-pago");
+
+        if (formaPagamento === "Espécie") {
+            campoValorPago.style.display = "block";
+        } else {
+            campoValorPago.style.display = "none";
+        }
+    };
+
+    renderizarProdutos();
 });
