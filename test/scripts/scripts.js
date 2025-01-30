@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const produtos = [
-        { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 2, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 3, nome: "Hot Dog", preco: 12.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 4, nome: "Batata Frita", preco: 10.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 5, nome: "Refrigerante", preco: 7.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 6, nome: "Milkshake", preco: 14.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 7, nome: "Sorvete", preco: 9.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 8, nome: "Café", preco: 5.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 9, nome: "Sanduíche", preco: 18.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" },
-        { id: 10, nome: "Salada", preco: 20.00, img: "https://mayconbrown.com.br/img/svg/icone.svg" }
+        { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hambúrguer, Carne bovina, Queijo cheddar, Alface, Tomate, Molho especial." },
+        { id: 2, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Massa de pizza, Molho de tomate, Queijo mussarela, Orégano, Pepperoni (opcional)." },
+        { id: 3, nome: "Hot Dog", preco: 12.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hot dog, Salsicha, Ketchup, Mostarda, Maionese, Batata palha." },
+        { id: 4, nome: "Batata Frita", preco: 10.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Batata, Sal, Óleo para fritura." },
+        { id: 5, nome: "Refrigerante", preco: 7.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Água gaseificada, Açúcar, Corantes e aromatizantes." },
+        { id: 6, nome: "Milkshake", preco: 14.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Leite, Sorvete (chocolate, baunilha ou morango), Chantilly (opcional)." },
+        { id: 7, nome: "Sorvete", preco: 9.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Leite, Açúcar, Essência de baunilha, Cobertura (chocolate, morango, caramelo)." },
+        { id: 8, nome: "Café", preco: 5.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Café em pó, Água quente, Açúcar (opcional), Leite (opcional)." },
+        { id: 9, nome: "Sanduíche", preco: 18.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de forma, Presunto, Queijo, Alface, Tomate, Maionese." },
+        { id: 10, nome: "Salada", preco: 20.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Alface, Tomate, Cenoura ralada, Pepino, Molho de azeite e limão." }
     ];
 
     const menu = document.getElementById("menu");
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             div.innerHTML = `
                 <img src="${produto.img}" alt="${produto.nome}">
                 <div>
-                    <h3>${produto.nome}</h3>
+                    <h3>${produto.nome} <span class="info-icon" onclick="mostrarIngredientes(${produto.id})">ℹ️</span></h3>
                     <p>R$ ${produto.preco.toFixed(2)}</p>
                 </div>
                 <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar</button>
@@ -33,6 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
             menu.appendChild(div);
         });
     }
+
+    window.mostrarIngredientes = function (id) {
+        const produto = produtos.find(p => p.id === id);
+        alert(`Ingredientes de ${produto.nome}:\n${produto.ingredientes}`);
+    };
 
     window.adicionarAoCarrinho = function (id) {
         const produto = produtos.find(p => p.id === id);
