@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let mensagem = `Olá! Quero fazer um pedido.\n\nProdutos:\n`;
         carrinho.forEach(item => {
-            mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)}\n`;
+            mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)} x ${item.quantidade}\n`;
         });
 
         mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
@@ -108,14 +108,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         mensagem += `\nEndereço: ${endereco}\n`;
 
+        mensagem += `\nObservações: ${observacao}\n`;
+
+        // Enviar a mensagem para o WhatsApp
         const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
         window.open(link, "_blank");
     });
 
-    window.mostrarCampoPagamentoEspecie = function () {
+    // Função para mostrar ou esconder o campo de endereço baseado na opção de entrega
+    window.mostrarCampoEndereco = function () {
+        const tipoEntrega = document.getElementById("tipo-entrega").value;
+        const campoEndereco = document.getElementById("campo-endereco");
+
+        // Mostrar o campo de endereço somente se a opção for "Entrega"
+        if (tipoEntrega === "Entrega") {
+            campoEndereco.style.display = "block";
+        } else {
+            campoEndereco.style.display = "none";
+        }
+    };
+
+    // Função para mostrar ou esconder o campo de valor pago baseado na opção "Espécie"
+    window.mostrarCamposFormaPagamento = function () {
         const formaPagamento = document.getElementById("forma-pagamento").value;
         const campoValorPago = document.getElementById("campo-valor-pago");
 
+        // Mostrar o campo de valor pago somente se a opção for "Espécie"
         if (formaPagamento === "Espécie") {
             campoValorPago.style.display = "block";
         } else {
