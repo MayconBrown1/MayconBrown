@@ -115,42 +115,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const formaPagamento = document.getElementById("forma-pagamento").value;
-        const endereco = document.getElementById("endereco").value;
-        const nomeCliente = nomeClienteInput.value; // Nome do cliente
-        const telefone = telefoneInput.value; // Telefone do cliente
+    const endereco = document.getElementById("endereco").value;
+    const nomeCliente = nomeClienteInput.value; // Nome do cliente
+    const telefone = telefoneInput.value; // Telefone do cliente
 
-        let valorPago = 0;
+    let valorPago = 0;
     if (formaPagamento === "Espécie") {
         valorPago = parseFloat(document.getElementById("valor-pago").value) || 0;
     }
-
-        let mensagem = `Olá! Quero fazer um pedido.\n\nProdutos:\n`;
-        carrinho.forEach(item => {
-            mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)} x ${item.quantidade}\n`;
-        });
-
-        const taxaEntrega = calcularTaxaEntrega();
-        mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
-
-        mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
-
-        if (formaPagamento === "Espécie") {
-            const troco = valorPago - parseFloat(totalElemento.textContent);
-            mensagem += `Pagamento: R$ ${valorPago.toFixed(2)}\n`;
-            mensagem += `Troco: R$ ${troco.toFixed(2)}\n`;
-        }
-
-        mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
-
-        mensagem += `\nEndereço: ${endereco}\n`;
-
-        mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
-        mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
-
-        // Enviar a mensagem para o WhatsApp
-        const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
-        window.open(link, "_blank");
+    let mensagem = `Olá! Quero fazer um pedido.\n\nProdutos:\n`;
+    carrinho.forEach(item => {
+        mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)} x ${item.quantidade}\n`;
     });
+
+    const taxaEntrega = calcularTaxaEntrega();
+    mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+
+    mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
+
+    if (formaPagamento === "Espécie") {
+        const troco = valorPago - parseFloat(totalElemento.textContent);
+        mensagem += `Pagamento: R$ ${valorPago.toFixed(2)}\n`;
+        mensagem += `Troco: R$ ${troco.toFixed(2)}\n`;
+    }
+
+    mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
+
+    mensagem += `\nEndereço: ${endereco}\n`;
+
+    mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
+    mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
+
+    // Enviar a mensagem para o WhatsApp
+    const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
+    window.open(link, "_blank");
+});
 
     window.mostrarCampoEndereco = function () {
         const tipoEntrega = document.getElementById("tipo-entrega").value;
