@@ -55,6 +55,12 @@
                 </select>
             </div>
 
+            <!-- Mostrar taxa de entrega -->
+            <div id="taxa-entrega" class="campo-input">
+                <label for="taxa">Taxa de Entrega:</label>
+                <p id="valor-taxa">R$ 0,00</p>
+            </div>
+
             <div class="campo-input campo-input--inline">
                 <div class="campo-input">
                     <label for="nome">Nome</label>
@@ -66,32 +72,30 @@
                 </div>
             </div>            
 
-            <!-- Mostrar taxa de entrega -->
-            <div id="taxa-entrega" class="campo-input">
-                <label for="taxa">Taxa de Entrega:</label>
-                <p id="valor-taxa">R$ 0,00</p>
-            </div>
-
             <!-- Escolha entre Retirada ou Entrega -->
+            
             <label for="tipo-entrega"><strong>Escolha a forma de recebimento:</strong></label>
+            
             <select id="tipo-entrega" onchange="mostrarCampoEndereco()">
                 <option value="Retirada">Retirada no Local</option>
                 <option value="Entrega">Entrega</option>
             </select>
 
-            <!-- Escolha da forma de pagamento -->
-            <label for="forma-pagamento"><strong>Forma de Pagamento:</strong></label>
-            <select id="forma-pagamento" onchange="mostrarCamposFormaPagamento()">
-                <option value="Pix">Pix</option>
-                <option value="Crédito">Cartão de Crédito</option>
-                <option value="Débito">Cartão de Débito</option>
-                <option value="Espécie">Dinheiro (Espécie)</option>
-            </select>
 
             <!-- Campo adicional para endereço de entrega -->
             <div id="campo-endereco" style="display:none;">
                 <label for="endereco"><strong>Endereço para Entrega:</strong></label>
                 <input id="endereco" placeholder="Digite seu endereço" class="input-endereco">
+            </div>
+
+            <div class="campo-input-forma">
+                <label for="forma-recebimento">Forma de Recebimento:</label>
+                <select id="forma-pagamento" onchange="mostrarCamposFormaPagamento()">
+                    <option value="Pix">Pix</option>
+                    <option value="Crédito">Cartão de Crédito</option>
+                    <option value="Débito">Cartão de Débito</option>
+                    <option value="Espécie">Dinheiro (Espécie)</option>
+                </select>
             </div>
 
             <!-- Campo de Valor Pago -->
