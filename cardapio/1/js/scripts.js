@@ -75,8 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
             div.innerHTML = `
                 <img src="${produto.img}" alt="${produto.nome}">
                 <div>
-                    <h3>${produto.nome} <span class="info-icon" onclick="mostrarIngredientes(${produto.id})">ℹ️</span></h3>
+                    <h3>${produto.nome}</h3>
                     <p>R$ ${produto.preco.toFixed(2)}</p>
+                    <p>${produto.ingredientes}</p> <!-- Exibe somente os ingredientes aqui -->
                 </div>
                 <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar</button>
             `;
@@ -159,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const endereco = document.getElementById("endereco").value;
     const nomeCliente = nomeClienteInput.value; // Nome do cliente
     const telefone = telefoneInput.value; // Telefone do cliente
+    const observacao = document.getElementById("observacao").value; // Observação do cliente
 
     let valorPago = 0;
     if (formaPagamento === "Espécie") {
@@ -171,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const taxaEntrega = calcularTaxaEntrega();
     mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+    mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
     mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
@@ -181,11 +184,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
-
     mensagem += `\nEndereço: ${endereco}\n`;
-
     mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
     mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
+
+    if (observacao) {
+        mensagem += `\nObservação: ${observacao}\n`;  // Inclui a observação, caso haja
+    }
 
     // Enviar a mensagem para o WhatsApp
     const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
