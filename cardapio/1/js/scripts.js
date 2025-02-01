@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
     const produtos = [
         { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hambúrguer, Carne bovina, Queijo cheddar, Alface, Tomate, Molho especial." },
         { id: 2, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Massa de pizza, Molho de tomate, Queijo mussarela, Orégano, Pepperoni (opcional)." },
