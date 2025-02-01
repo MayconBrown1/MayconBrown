@@ -148,3 +148,89 @@ select, .input-endereco {
     border-color: #007bff;
     outline: none;
 }
+
+/* Estilo dos campos de Nome, Telefone e Endereço para Entrega no Carrinho */
+    #modal-carrinho .campo-input {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+
+    #modal-carrinho .campo-input label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+}
+    #modal-carrinho .campo-input input,
+    #modal-carrinho .campo-input select {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        background-color: #333;
+        color: white;
+    }
+
+    #modal-carrinho .campo-input input:focus,
+    #modal-carrinho .campo-input select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+/* Estilo para o botão de finalizar compra */
+#modal-carrinho button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#modal-carrinho button:hover {
+    background-color: #218838;
+}
+
+/* Estilo para o botão de fechar */
+#modal-carrinho button:last-child {
+    background-color: #dc3545;
+    margin-top: 10px;
+}
+
+#modal-carrinho button:last-child:hover {
+    background-color: #c82333;
+}
+
+/* Estilo para os campos de bairro, taxa de entrega e total */
+#modal-carrinho p {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+#modal-carrinho select {
+    margin-bottom: 10px;
+}
+
+#taxa-entrega, #total {
+    font-weight: bold;
+}
+
+/* Estilo para os inputs e selects */
+input[type="text"], input[type="number"], select {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+/* Ajuste no botão de enviar mensagem */
+#modal-carrinho button.enviar-msg {
+    background-color: #007bff;
+    color: white;
+    margin-top: 20px;
+}
+
+#modal-carrinho button.enviar-msg:hover {
+    background-color: #0056b3;
+}
