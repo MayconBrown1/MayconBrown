@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const produtos = [
         { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hambúrguer, Carne bovina, Queijo cheddar, Alface, Tomate, Molho especial." },
         { id: 2, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Massa de pizza, Molho de tomate, Queijo mussarela, Orégano, Pepperoni (opcional)." },
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (formaPagamento === "Espécie") {
             const troco = valorPago - parseFloat(totalElemento.textContent);
-            mensagem += `Pagamento em Espécie: R$ ${valorPago.toFixed(2)}\n`;
+            mensagem += `Pagamento: R$ ${valorPago.toFixed(2)}\n`;
             mensagem += `Troco: R$ ${troco.toFixed(2)}\n`;
         }
 
