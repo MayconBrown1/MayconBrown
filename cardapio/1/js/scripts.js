@@ -233,8 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const taxaEntrega = calcularTaxaEntrega();
-    mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
-    mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
+    mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
 
     mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
