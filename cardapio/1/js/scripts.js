@@ -1,16 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const produtos = [
-        { id: 1, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hambúrguer, Carne bovina, Queijo cheddar, Alface, Tomate, Molho especial." },
-        { id: 2, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Massa de pizza, Molho de tomate, Queijo mussarela, Orégano, Pepperoni (opcional)." },
-        { id: 3, nome: "Hot Dog", preco: 12.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hot dog, Salsicha, Ketchup, Mostarda, Maionese, Batata palha." },
-        { id: 4, nome: "Batata Frita", preco: 10.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Batata, Sal, Óleo para fritura." },
-        { id: 5, nome: "Refrigerante", preco: 7.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Água gaseificada, Açúcar, Corantes e aromatizantes." },
-        { id: 6, nome: "Milkshake", preco: 14.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Leite, Sorvete (chocolate, baunilha ou morango), Chantilly (opcional)." },
-        { id: 7, nome: "Sorvete", preco: 9.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Leite, Açúcar, Essência de baunilha, Cobertura (chocolate, morango, caramelo)." },
-        { id: 8, nome: "Café", preco: 5.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Café em pó, Água quente, Açúcar (opcional), Leite (opcional)." },
-        { id: 9, nome: "Sanduíche", preco: 18.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de forma, Presunto, Queijo, Alface, Tomate, Maionese." },
-        { id: 10, nome: "Salada", preco: 20.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Alface, Tomate, Cenoura ralada, Pepino, Molho de azeite e limão." }
-    ];
+    const produtos = {
+        Pasteis: [
+            { id: 1, nome: "Pastel de Carne", preco: 10.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Carne moída, Massa de pastel." },
+            { id: 2, nome: "Pastel de Frango", preco: 12.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Frango desfiado, Massa de pastel." }
+        ],
+        Hamburgues: [
+            { id: 3, nome: "Hambúrguer", preco: 15.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hambúrguer, Carne bovina, Queijo cheddar, Alface, Tomate, Molho especial." }
+        ],
+        Pizzas: [
+            { id: 4, nome: "Pizza", preco: 30.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Massa de pizza, Molho de tomate, Queijo mussarela, Orégano, Pepperoni (opcional)." }
+        ],
+        HotDog: [
+            { id: 5, nome: "Hot Dog", preco: 12.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Pão de hot dog, Salsicha, Ketchup, Mostarda, Maionese, Batata palha." }
+        ],
+        Acai: [
+            { id: 6, nome: "Açaí", preco: 20.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Açaí, Granola, Banana, Mel." }
+        ],
+        Petiscos: [
+            { id: 7, nome: "Batata Frita", preco: 10.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Batata, Sal, Óleo para fritura." }
+        ],
+        Bebidas: [
+            { id: 8, nome: "Refrigerante", preco: 7.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Água gaseificada, Açúcar, Corantes e aromatizantes." },
+            { id: 9, nome: "Milkshake", preco: 14.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Leite, Sorvete (chocolate, baunilha ou morango), Chantilly (opcional)." }
+        ]
+    };
 
     const bairrosTaxas = {
         "Bela Parnamirim": 5.00,
@@ -39,8 +52,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const telefoneInput = document.getElementById("telefone");
     let carrinho = [];
 
-    function renderizarProdutos() {
-        produtos.forEach(produto => {
+    // Função para renderizar as categorias
+    function renderizarCategorias() {
+        const categoriasContainer = document.getElementById("categorias");
+        Object.keys(produtos).forEach(categoria => {
+            const button = document.createElement("button");
+            button.textContent = categoria;
+            button.classList.add("categoria");
+            button.onclick = () => mostrarCategoria(categoria);
+            categoriasContainer.appendChild(button);
+        });
+    }
+
+    // Função para mostrar os produtos de uma categoria
+    function mostrarCategoria(categoria) {
+        const produtosContainer = document.getElementById("produtos");
+        produtosContainer.innerHTML = ""; // Limpa os produtos da tela
+
+        produtos[categoria].forEach(produto => {
             const div = document.createElement("div");
             div.classList.add("produto");
             div.innerHTML = `
@@ -51,8 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar</button>
             `;
-            menu.appendChild(div);
+            produtosContainer.appendChild(div);
         });
+    }
+
+    // Função para renderizar a primeira categoria
+    function renderizarProdutosIniciais() {
+        mostrarCategoria("Pasteis"); // Exibe a primeira categoria, "Pasteis", por padrão
     }
 
     window.mostrarIngredientes = function (id) {
@@ -61,14 +95,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.adicionarAoCarrinho = function (id) {
-        const produto = produtos.find(p => p.id === id);
-        const itemCarrinho = carrinho.find(p => p.id === id);
-
-        if (itemCarrinho) {
-            itemCarrinho.quantidade++;
-        } else {
-            carrinho.push({ ...produto, quantidade: 1 });
+        // Encontrar o produto com base no ID, passando pela chave das categorias
+        let produto;
+        for (const categoria in produtos) {
+            produto = produtos[categoria].find(p => p.id === id);
+            if (produto) break;  // Se encontrado, sai do loop
         }
+
+        // Se o produto foi encontrado, adiciona ao carrinho
+    const itemCarrinho = carrinho.find(p => p.id === id);
+
+    if (itemCarrinho) {
+        itemCarrinho.quantidade++;
+    } else {
+        carrinho.push({ ...produto, quantidade: 1 });
+    }
 
         atualizarCarrinho();
     };
@@ -188,5 +229,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Atualizar a taxa de entrega sempre que o bairro for alterado
     document.getElementById("bairro").addEventListener("change", atualizarCarrinho);
 
-    renderizarProdutos();
+    // Função para inicializar
+    function inicializar() {
+        renderizarCategorias();
+        renderizarProdutosIniciais();
+    }
+
+    inicializar();
 });
