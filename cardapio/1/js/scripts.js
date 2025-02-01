@@ -126,9 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let mensagem = `Olá! Quero fazer um pedido.\n\nProdutos:\n`;
         carrinho.forEach(item => {
-            mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
-            mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
-            mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
             mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)} x ${item.quantidade}\n`;
         });
 
@@ -143,7 +140,12 @@ document.addEventListener("DOMContentLoaded", () => {
             mensagem += `Troco: R$ ${troco.toFixed(2)}\n`;
         }
 
+        mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
+
         mensagem += `\nEndereço: ${endereco}\n`;
+
+        mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
+        mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
 
         // Enviar a mensagem para o WhatsApp
         const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
