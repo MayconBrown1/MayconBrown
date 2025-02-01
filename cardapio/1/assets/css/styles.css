@@ -120,9 +120,8 @@ button:hover {
     margin-bottom: 5px;
 }
 
-.campo-input input,
-.campo-input textarea,
-.campo-input select {
+.campo-input-forma input,
+.campo-input-forma select {
     padding: 15px; /* Aumentando o padding para dar mais espaço */
     font-size: 16px; /* Aumentando o tamanho da fonte */
     border: 1px solid #ccc;
@@ -133,9 +132,8 @@ button:hover {
     box-sizing: border-box;
 }
 
-.campo-input input:focus,
-.campo-input textarea:focus,
-.campo-input select:focus {
+.campo-input-forma input:focus,
+.campo-input-forma select:focus {
     border-color: #007bff;
     outline: none;
 }
