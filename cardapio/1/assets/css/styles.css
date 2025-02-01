@@ -148,17 +148,17 @@ button:hover {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
-    background-color: #333;
+    background-color: #28a745;
     color: white;
 }
 
 #modal-carrinho button:hover {
-    background-color: #218838;
+    background-color: #c82333;
 }
 
 /* Estilo para o botão de fechar */
 #modal-carrinho button:last-child {
-    background-color: #dc3545;
+    background-color: #28a745;
     margin-top: 10px;
 }
 
