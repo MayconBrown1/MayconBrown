@@ -64,17 +64,17 @@
             <div class="campo-input campo-input--inline">
                 <div class="campo-input">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome">
+                    <input type="text" id="nome-cliente" placeholder="Nome do Cliente">
                 </div>
                 <div class="campo-input">
                     <label for="telefone">Telefone</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="Digite seu telefone">
+                    <input type="tel" id="telefone" placeholder="Telefone">
                 </div>
             </div>            
 
             <!-- Escolha entre Retirada ou Entrega -->
             
-            <label for="tipo-entrega"><strong>Escolha a forma de recebimento:</strong></label>
+            <label for="tipo-entrega"><strong>Forma de Recebimento:</strong></label>
             
             <select id="tipo-entrega" onchange="mostrarCampoEndereco()">
                 <option value="Retirada">Retirada no Local</option>
@@ -84,12 +84,12 @@
 
             <!-- Campo adicional para endereço de entrega -->
             <div id="campo-endereco" style="display:none;">
-                <label for="endereco"><strong>Endereço para Entrega:</strong></label>
+                <label for="endereco">Endereço para Entrega:</label>
                 <input id="endereco" placeholder="Digite seu endereço" class="input-endereco">
             </div>
 
             <div class="campo-input-forma">
-                <label for="forma-recebimento">Forma de Recebimento:</label>
+                <label for="forma-recebimento"><strong>Forma de Pagamento:</strong></label>
                 <select id="forma-pagamento" onchange="mostrarCamposFormaPagamento()">
                     <option value="Pix">Pix</option>
                     <option value="Crédito">Cartão de Crédito</option>
@@ -100,7 +100,7 @@
 
             <!-- Campo de Valor Pago -->
             <div class="campo-input" id="campo-valor-pago" style="display: none;">
-                <label for="valor-pago"><strong>Valor (Espécie):</strong></label>
+                <label for="valor-pago"><strong>Troco para quanto?</strong></label>
                 <input type="number" id="valor-pago" placeholder="Digite o valor aqui" />
             </div>
 
