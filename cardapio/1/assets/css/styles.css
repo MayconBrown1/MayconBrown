@@ -57,7 +57,7 @@ h1 {
 }
 
 button {
-    background-color: #008106;
+    background-color: #006405;
     color: white;
     padding: 8px;
     border: none;
@@ -72,13 +72,13 @@ button:hover {
 /* Carrinho */
 .carrinho-icone {
     position: fixed;
-    top: 20px;
+    top: 120px;
     right: 20px;
-    font-size: 30px;
-    background-color: #00c90a;
+    font-size: 28px;
+    background-color: #006405;
     color: white;
-    border-radius: 50%;
-    padding: 10px;
+    border-radius: 100%;
+    padding: 6px;
     cursor: pointer;
 }
 
@@ -89,7 +89,7 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     justify-content: center;
     align-items: center;
 }
