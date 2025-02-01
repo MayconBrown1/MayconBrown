@@ -12,10 +12,31 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: 10, nome: "Salada", preco: 20.00, img: "https://mayconbrown.com.br/img/svg/icone.svg", ingredientes: "Alface, Tomate, Cenoura ralada, Pepino, Molho de azeite e limão." }
     ];
 
+    const bairrosTaxas = {
+        "Bela Parnamirim": 5.00,
+        "Boa Esperança": 7.50,
+        "Cajupiranga": 6.00,
+        "Centro": 4.00,
+        "Cohabinal": 8.00,
+        "Liberdade": 6.50,
+        "Monte Castelo": 5.50,
+        "Nova Esperança": 7.00,
+        "Parque de Exposições": 6.00,
+        "Passagem de Areia": 8.50,
+        "Rosa dos Ventos": 7.00,
+        "Santa Tereza": 5.00,
+        "Santos Reis": 6.00,
+        "Vale do Sol": 5.50,
+        "Vida Nova": 7.00
+    };
+
     const menu = document.getElementById("menu");
     const carrinhoLista = document.getElementById("carrinho-lista");
     const totalElemento = document.getElementById("total");
     const contadorCarrinho = document.getElementById("contador-carrinho");
+    const taxaEntregaElemento = document.getElementById("taxa-entrega");
+    const nomeClienteInput = document.getElementById("nome-cliente");
+    const telefoneInput = document.getElementById("telefone");
     let carrinho = [];
 
     function renderizarProdutos() {
@@ -67,6 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
             carrinhoLista.appendChild(li);
         });
 
+        const taxaEntrega = calcularTaxaEntrega();
+        total += taxaEntrega;
+        taxaEntregaElemento.textContent = `Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}`;
         totalElemento.textContent = total.toFixed(2);
         contadorCarrinho.textContent = quantidadeTotal;
     }
@@ -92,16 +116,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formaPagamento = document.getElementById("forma-pagamento").value;
         const endereco = document.getElementById("endereco").value;
+        const nomeCliente = nomeClienteInput.value; // Nome do cliente
+        const telefone = telefoneInput.value; // Telefone do cliente
 
         let valorPago = 0;
-        if (formaPagamento === "Espécie") {
-            valorPago = parseFloat(document.getElementById("valor-pago").value) || 0;
-        }
+    if (formaPagamento === "Espécie") {
+        valorPago = parseFloat(document.getElementById("valor-pago").value) || 0;
+    }
 
         let mensagem = `Olá! Quero fazer um pedido.\n\nProdutos:\n`;
         carrinho.forEach(item => {
+            mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
+            mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
+            mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
             mensagem += `${item.nome} - R$${(item.preco * item.quantidade).toFixed(2)} x ${item.quantidade}\n`;
         });
+
+        const taxaEntrega = calcularTaxaEntrega();
+        mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
 
         mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
@@ -118,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.open(link, "_blank");
     });
 
-    // Função para mostrar ou esconder o campo de endereço baseado na opção de entrega
     window.mostrarCampoEndereco = function () {
         const tipoEntrega = document.getElementById("tipo-entrega").value;
         const campoEndereco = document.getElementById("campo-endereco");
@@ -131,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Função para mostrar ou esconder o campo de valor pago baseado na opção "Espécie"
     window.mostrarCamposFormaPagamento = function () {
         const formaPagamento = document.getElementById("forma-pagamento").value;
         const campoValorPago = document.getElementById("campo-valor-pago");
@@ -143,6 +173,19 @@ document.addEventListener("DOMContentLoaded", () => {
             campoValorPago.style.display = "none";
         }
     };
+
+    // Função para calcular a taxa de entrega com base no bairro
+    function calcularTaxaEntrega() {
+        const bairro = document.getElementById("bairro").value;
+        if (bairrosTaxas[bairro]) {
+            return bairrosTaxas[bairro];
+        } else {
+            return 0;
+        }
+    }
+
+    // Atualizar a taxa de entrega sempre que o bairro for alterado
+    document.getElementById("bairro").addEventListener("change", atualizarCarrinho);
 
     renderizarProdutos();
 });
