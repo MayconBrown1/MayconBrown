@@ -32,6 +32,43 @@
             <ul id="carrinho-lista"></ul>
             <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
 
+            <!-- Campo para escolher o bairro -->
+<div class="campo-input">
+    <label for="bairro">Escolha o Bairro:</label>
+    <select id="bairro" onchange="atualizarTaxaEntrega()">
+        <option value="">Selecione o Bairro</option>
+        <option value="Bela Parnamirim">Bela Parnamirim</option>
+        <option value="Boa Esperança">Boa Esperança</option>
+        <option value="Cajupiranga">Cajupiranga</option>
+        <option value="Centro">Centro</option>
+        <option value="Cohabinal">Cohabinal</option>
+        <option value="Liberdade">Liberdade</option>
+        <option value="Monte Castelo">Monte Castelo</option>
+        <option value="Nova Esperança">Nova Esperança</option>
+        <option value="Parque de Exposições">Parque de Exposições</option>
+        <option value="Passagem de Areia">Passagem de Areia</option>
+        <option value="Rosa dos Ventos">Rosa dos Ventos</option>
+        <option value="Santa Tereza">Santa Tereza</option>
+        <option value="Santos Reis">Santos Reis</option>
+        <option value="Vale do Sol">Vale do Sol</option>
+        <option value="Vida Nova">Vida Nova</option>
+    </select>
+</div>
+
+<!-- Mostrar taxa de entrega -->
+<div id="taxa-entrega" class="campo-input">
+    <label for="taxa">Taxa de Entrega:</label>
+    <p id="valor-taxa">R$ 0,00</p>
+</div>
+
+      <!-- Campos para nome e telefone -->
+      <label for="nome-cliente">Nome:</label>
+      <input type="text" id="nome-cliente" placeholder="Digite seu nome" required>
+
+      <label for="telefone">Telefone:</label>
+      <input type="text" id="telefone" placeholder="Digite seu número de contato" required>
+
+
             <!-- Escolha entre Retirada ou Entrega -->
 <label for="tipo-entrega"><strong>Escolha a forma de recebimento:</strong></label>
 <select id="tipo-entrega" onchange="mostrarCampoEndereco()">
@@ -61,12 +98,12 @@
 </div>
 
 
-            <button id="finalizar-compra">Finalizar Compra</button>a
+            <button id="finalizar-compra">Finalizar Compra</button>
             <button onclick="fecharCarrinho()">Fechar</button>
         </div>
     </div>
 
-    <script src="js/scripts.js"></script>a
+    <script src="js/scripts.js"></script>
 
 </body>
 </html>
