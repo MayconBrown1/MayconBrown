@@ -82,8 +82,9 @@ button:hover {
     cursor: pointer;
 }
 
+/* Garante que o modal inicie oculto */
 .modal {
-    display: none;
+    display: none; /* Mantém o modal oculto ao carregar */
     position: fixed;
     top: 0;
     left: 0;
@@ -92,35 +93,21 @@ button:hover {
     background-color: rgba(255, 255, 255, 0.7);
     justify-content: center;
     align-items: center;
+    overflow-y: auto; /* Permite rolagem quando houver muitos produtos */
 }
 
+/* Conteúdo do Modal */
 .modal-content {
     background-color: #2e2e2e;
     padding: 20px;
     border-radius: 8px;
-    width: 400px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-label {
-    color: white;
-    margin-right: 10px;
-}
-
-select, .input-endereco {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.input-endereco {
-    margin-bottom: 15px;
-}
-
-/* Estilos gerais para os campos de input */
+/* Estilos dos campos de input */
 .campo-input {
     margin-bottom: 15px;
     display: flex;
@@ -134,50 +121,24 @@ select, .input-endereco {
 }
 
 .campo-input input,
-.campo-input textarea {
-    padding: 10px;
-    font-size: 14px;
+.campo-input textarea,
+.campo-input select {
+    padding: 15px; /* Aumentando o padding para dar mais espaço */
+    font-size: 16px; /* Aumentando o tamanho da fonte */
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
+    width: 100%; /* Garantindo que o campo ocupe toda a largura */
+    background-color: #333;
+    color: white;
     box-sizing: border-box;
 }
 
 .campo-input input:focus,
-.campo-input textarea:focus {
+.campo-input textarea:focus,
+.campo-input select:focus {
     border-color: #007bff;
     outline: none;
 }
-
-/* Estilo dos campos de Nome, Telefone e Endereço para Entrega no Carrinho */
-    #modal-carrinho .campo-input {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-
-    }
-    #modal-carrinho .campo-input input,
-    #modal-carrinho .campo-input select {
-        padding: 10px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 100%;
-        background-color: #333;
-        color: white;
-    }
-
-    #modal-carrinho .campo-input input:focus,
-    #modal-carrinho .campo-input select:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    
-    #modal-carrinho .campo-input label {
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 5px;
-        
 
 /* Estilo para o botão de finalizar compra */
 #modal-carrinho button {
@@ -189,6 +150,8 @@ select, .input-endereco {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    background-color: #333;
+    color: white;
 }
 
 #modal-carrinho button:hover {
@@ -211,28 +174,65 @@ select, .input-endereco {
     color: #ffffff;
 }
 
-#modal-carrinho select {
-    margin-bottom: 10px;
-}
-
-#taxa-entrega, #total {
-    font-weight: bold;
-}
-
-/* Estilo para os inputs e selects */
-input[type="text"], input[type="number"], select {
-    font-size: 16px;
-    color: #ffffff;
-}
-
-/* Ajuste no botão de enviar mensagem */
-#modal-carrinho button.enviar-msg {
-    background-color: #007bff;
+#modal-carrinho select,
+#modal-carrinho input {
+    background-color: #333;
     color: white;
-    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 15px; /* Aumentando o padding aqui também */
+    font-size: 16px; /* Aumentando o tamanho da fonte */
 }
 
-#modal-carrinho button.enviar-msg:hover {
-    background-color: #0056b3;
+/* Estilo das opções do carrinho (cada produto) */
+#carrinho-lista {
+    list-style-type: none;
+    padding: 0;
 }
+
+#carrinho-lista li {
+    background-color: #333;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#carrinho-lista li span {
+    font-size: 16px;
+    color: #fff;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
     }
+
+    .campo-input label {
+        font-size: 14px;
+    }
+
+    .campo-input input,
+    .campo-input select {
+        font-size: 16px; /* Garantindo que o tamanho da fonte seja maior */
+        padding: 15px; /* Garantindo que o campo fique com mais espaço */
+    }
+
+    #modal-carrinho button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* Ajustando a exibição das opções do carrinho em linhas separadas */
+    #carrinho-lista li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #carrinho-lista li span {
+        font-size: 14px;
+    }
+}
