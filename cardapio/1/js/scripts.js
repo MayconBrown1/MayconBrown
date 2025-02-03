@@ -233,8 +233,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const taxaEntrega = calcularTaxaEntrega();
-    mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
-
+    // Só inclui a taxa de entrega na mensagem se ela for maior que zero
+    if (taxaEntrega > 0) {
+        mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
+    }
     mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
     if (formaPagamento === "Espécie") {
@@ -244,7 +246,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     mensagem += `Forma de Pagamento: ${formaPagamento}\n\n`;  // Forma de pagamento
-    mensagem += `\nEndereço: ${endereco}\n`;
+    // Verificar se a entrega é retirada ou não
+    const tipoEntrega = document.getElementById("tipo-entrega").value;
+    if (tipoEntrega === "Retirada") {
+        mensagem += `Pedido para Retirada no Local\n`;
+    } else {
+        // Adiciona o endereço apenas se for preenchido
+        if (endereco) {
+            mensagem += `\nEndereço: ${endereco}\n`;
+        }
+    }
     mensagem += `Nome: ${nomeCliente}\n`;  // Nome do cliente
     mensagem += `Telefone: ${telefone}\n`;  // Telefone do cliente
 
