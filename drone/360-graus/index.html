@@ -69,6 +69,7 @@
 
         <!-- Miniaturas das imagens -->
         <div class="thumbnails">
+            <img src="https://mayconbrown.com.br/drone/360-graus/imagem3.jpg" alt="Panorama 2" class="thumbnail" onclick="trocarImagem('https://mayconbrown.com.br/drone/360-graus/imagem3.jpg')">
             <img src="https://mayconbrown.com.br/drone/360-graus/imagem1.jpg" alt="Panorama 1" class="thumbnail" onclick="trocarImagem('https://mayconbrown.com.br/drone/360-graus/imagem1.jpg')">
             <img src="https://mayconbrown.com.br/drone/360-graus/imagem2.jpg" alt="Panorama 2" class="thumbnail" onclick="trocarImagem('https://mayconbrown.com.br/drone/360-graus/imagem2.jpg')">
         </div>
@@ -78,7 +79,7 @@
         // Inicializa o Pannellum com uma imagem padrão
         let viewer = pannellum.viewer('panorama', {
             type: 'equirectangular',
-            panorama: 'https://mayconbrown.com.br/drone/360-graus/imagem1.jpg', // Imagem padrão ao carregar
+            panorama: 'https://mayconbrown.com.br/drone/360-graus/imagem3.jpg', // Imagem padrão ao carregar
             autoLoad: true
         });
 
