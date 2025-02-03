@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000000;
+            overflow: hidden;
+            margin: 0;
+        }
+        .logo {
+            animation: fadeIn 2s forwards, scaleUp 1s 2s forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @keyframes scaleUp {
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <img class="logo" src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" width="400">
+    <script>
+        // Redireciona para o index.html após 4 segundos
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 4000);
+    </script>
+</body>
+</html>
