@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja de Cardápios Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            padding: 20px;
+            background-color: #1e1e1e;
+        }
+        .logo {
+            width: 400px;
+        }
+        .produtos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .produto {
+            background: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            width: 250px;
+        }
+        .produto:hover {
+            transform: scale(1.05);
+        }
+        .produto a {
+            text-decoration: none;
+            color: #ffffff;
+            display: block;
+            padding: 15px;
+        }
+        .produto img {
+            width: 100%;
+            border-bottom: 2px solid #ff9800;
+        }
+        .produto h3 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
+    </header>
+    <main>
+        <section class="produtos">
+            <div class="produto">
+                <a href="#">
+                    <img src="cardapio1.jpg" alt="Cardápio Modelo 1">
+                    <h3>Cardápio Modelo 1</h3>
+                </a>
+            </div>
+            <div class="produto">
+                <a href="#">
+                    <img src="cardapio2.jpg" alt="Cardápio Modelo 2">
+                    <h3>Cardápio Modelo 2</h3>
+                </a>
+            </div>
+            <div class="produto">
+                <a href="#">
+                    <img src="cardapio3.jpg" alt="Cardápio Modelo 3">
+                    <h3>Cardápio Modelo 3</h3>
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
