@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .produto {
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            width: 200px;
+        }
+        .preco {
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cardápio</h1>
+
+    <div class="produto" data-id="hamburguer">
+        <h2>Hambúrguer</h2>
+        <p class="preco">R$ <span id="preco-hamburguer">15.00</span></p>
+    </div>
+
+    <div class="produto" data-id="pizza">
+        <h2>Pizza</h2>
+        <p class="preco">R$ <span id="preco-pizza">30.00</span></p>
+    </div>
+
+    <script>
+        // Lista de promoções (define o dia e horário da promoção)
+        const promocoes = {
+            "hamburguer": {
+                precoNormal: 15.00,
+                precoPromocional: 12.00,
+                dia: 3, // Quarta-feira (0 = Domingo, 6 = Sábado)
+                horaInicio: 18, // 18h00
+                horaFim: 22 // 22h00
+            },
+            "pizza": {
+                precoNormal: 30.00,
+                precoPromocional: 25.00,
+                dia: 3, // Segunda-feira
+                horaInicio: 22,
+                horaFim: 23,
+            }
+        };
+
+        function atualizarPrecos() {
+            const agora = new Date();
+            const diaAtual = agora.getDay();
+            const horaAtual = agora.getHours();
+
+            Object.keys(promocoes).forEach(produto => {
+                const promo = promocoes[produto];
+                const precoElemento = document.getElementById(`preco-${produto}`);
+
+                if (diaAtual === promo.dia && horaAtual >= promo.horaInicio && horaAtual < promo.horaFim) {
+                    precoElemento.textContent = promo.precoPromocional.toFixed(2);
+                } else {
+                    precoElemento.textContent = promo.precoNormal.toFixed(2);
+                }
+            });
+        }
+
+        // Atualiza os preços assim que a página carregar
+        atualizarPrecos();
+        
+        // Atualiza os preços a cada minuto (caso o usuário esteja com a página aberta)
+        setInterval(atualizarPrecos, 60000);
+    </script>
+
+</body>
+</html>
