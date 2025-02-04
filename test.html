@@ -15,11 +15,19 @@
             border: 1px solid #ccc;
             display: inline-block;
             width: 200px;
+            position: relative;
         }
         .preco {
             font-size: 20px;
             font-weight: bold;
             color: green;
+        }
+        .promocao {
+            font-size: 16px;
+            font-weight: bold;
+            color: red;
+            display: none; /* Começa escondido */
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -30,11 +38,13 @@
     <div class="produto" data-id="hamburguer">
         <h2>Hambúrguer</h2>
         <p class="preco">R$ <span id="preco-hamburguer">15.00</span></p>
+        <p class="promocao" id="promo-hamburguer">Promoção!</p>
     </div>
 
     <div class="produto" data-id="pizza">
         <h2>Pizza</h2>
         <p class="preco">R$ <span id="preco-pizza">30.00</span></p>
+        <p class="promocao" id="promo-pizza">Promoção!</p>
     </div>
 
     <script>
@@ -43,32 +53,39 @@
             "hamburguer": {
                 precoNormal: 15.00,
                 precoPromocional: 12.00,
-                dia: 1, // Quarta-feira (0 = Domingo, 6 = Sábado)
-                horaInicio: 22, // 22h00
+                dia: 1, // Segunda-feira (0 = Domingo, 6 = Sábado)
+                horaInicio: 23, // 23h00
                 horaFim: 00 // 00h00
             },
             "pizza": {
                 precoNormal: 30.00,
                 precoPromocional: 25.00,
                 dia: 1, // Segunda-feira
-                horaInicio: 22,
-                horaFim: 23,
+                horaInicio: 10,
+                horaFim: 23
             }
         };
 
         function atualizarPrecos() {
             const agora = new Date();
-            const diaAtual = agora.getDay();
-            const horaAtual = agora.getHours();
+            const diaAtual = agora.getDay(); // Dia da semana (0 = Domingo, 6 = Sábado)
+            const horaAtual = agora.getHours(); // Horário (0 - 23)
+
+            console.log(`Hoje é dia ${diaAtual} e agora são ${horaAtual}h`); // Debug
 
             Object.keys(promocoes).forEach(produto => {
                 const promo = promocoes[produto];
                 const precoElemento = document.getElementById(`preco-${produto}`);
+                const promoElemento = document.getElementById(`promo-${produto}`);
 
                 if (diaAtual === promo.dia && horaAtual >= promo.horaInicio && horaAtual < promo.horaFim) {
                     precoElemento.textContent = promo.precoPromocional.toFixed(2);
+                    precoElemento.style.color = "red"; // Destaca o preço promocional
+                    promoElemento.style.display = "block"; // Exibe "Promoção!"
                 } else {
                     precoElemento.textContent = promo.precoNormal.toFixed(2);
+                    precoElemento.style.color = "green"; // Volta à cor normal
+                    promoElemento.style.display = "none"; // Esconde "Promoção!"
                 }
             });
         }
@@ -76,7 +93,7 @@
         // Atualiza os preços assim que a página carregar
         atualizarPrecos();
         
-        // Atualiza os preços a cada minuto (caso o usuário esteja com a página aberta)
+        // Atualiza os preços a cada minuto
         setInterval(atualizarPrecos, 60000);
     </script>
 
