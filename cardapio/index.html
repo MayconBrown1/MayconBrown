@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Cardápios Online</title>
+    <title>Cardápios Online</title>
     <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
     <style>
         body {
@@ -20,6 +20,25 @@
         }
         .logo {
             width: 400px;
+        }
+        .slogan {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+        .whatsapp-button {
+            background-color: #25d366;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .whatsapp-button:hover {
+            background-color: #128c7e;
         }
         .produtos {
             display: flex;
@@ -65,9 +84,11 @@
 </head>
 <body>
     <header>
-    <a href="https://mayconbrown.com.br">
-        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
-    </a>
+        <a href="https://mayconbrown.com.br">
+            <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
+        </a>
+        <p class="slogan">Simplifique seu atendimento! Com nosso cardápio online, seus clientes fazem pedidos sem precisar conversar no WhatsApp. Menos tempo respondendo, mais tempo vendendo!</p>
+        <a href="https://wa.me/5584996798304?text=Olá!%20Tenho%20interesse%20no%20seu%20cardápio%20online,%20como%20funciona?" class="whatsapp-button">Entre em contato pelo WhatsApp</a>
     </header>
     <main>
         <section class="produtos">
@@ -100,7 +121,6 @@
                     <img src="https://mayconbrown.com.br/cardapio/img/cardapio5.webp" alt="Cardápio Modelo 5">
                     <h3>Cardápio Modelo 5</h3>
                 </a>
-            </div>
             </div>
         </section>
     </main>
