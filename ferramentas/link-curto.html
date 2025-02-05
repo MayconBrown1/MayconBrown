@@ -7,7 +7,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #181818;
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,37 +17,55 @@
             height: 100vh;
         }
         .container {
-            background-color: #fff;
+            background-color: #2c2c2c;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 400px;
             text-align: center;
+            border-radius: 8px;
         }
         input[type="text"] {
             width: 80%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #444;
+            color: #fff;
         }
         button {
             padding: 10px 15px;
-            background-color: #0078d4;
+            background-color: #28a745;
             color: #fff;
             border: none;
             cursor: pointer;
             width: 100%;
+            border-radius: 4px;
+            margin-top: 10px;
         }
         button:hover {
-            background-color: #005a8d;
+            background-color: #218838;
         }
         #result {
             margin-top: 20px;
+        }
+        .copy-button {
+            background-color: #17a2b8;
+            margin-top: 10px;
+        }
+        .copy-button:hover {
+            background-color: #138496;
+        }
+        .logo {
+            width: 400px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
         <h2>Encurtador de Link</h2>
         <input type="text" id="linkInput" placeholder="Cole seu link aqui">
         <button onclick="shortenLink()">Encurtar Link</button>
@@ -80,12 +99,21 @@
             .then(data => {
                 const shortUrl = data.link;
                 document.getElementById("result").innerHTML = `
-                    <p><strong>Link Encurtado:</strong> <a href="${shortUrl}" target="_blank">${shortUrl}</a></p>
+                    <p><strong>Link Encurtado:</strong> <a href="${shortUrl}" target="_blank" style="color: #28a745;">${shortUrl}</a></p>
+                    <button class="copy-button" onclick="copyLink('${shortUrl}')">Copiar Link</button>
                 `;
             })
             .catch(error => {
                 console.error('Erro:', error);
                 alert('Ocorreu um erro ao encurtar o link.');
+            });
+        }
+
+        function copyLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link copiado com sucesso!");
+            }).catch(err => {
+                console.error("Erro ao copiar o link: ", err);
             });
         }
     </script>
