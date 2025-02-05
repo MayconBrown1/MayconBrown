@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Link para WhatsApp</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1c1c1c;
+            padding: 15px;
+            text-align: center;
+        }
+        header img {
+            width: 100%;
+            max-width: 400px;
+        }
+        .container {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .input-container {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .input-container input, .input-container textarea, .input-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .input-container button {
+            background-color: #25D366;
+            cursor: pointer;
+        }
+        .input-container button:hover {
+            background-color: #128C7E;
+        }
+        .link-container {
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .link-container input {
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: white;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .link-container button {
+            margin-top: 10px;
+            background-color: #25D366;
+            padding: 12px;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            width: 100%;
+            cursor: pointer;
+        }
+        .link-container button:hover {
+            background-color: #128C7E;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            header img {
+                width: 80%;
+            }
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="http://mayconbrown.com.br/" target="_blank">
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo do Site">
+    </a>
+</header>
+
+<div class="container">
+    <h1>Gerador de Link para WhatsApp</h1>
+
+    <div class="input-container">
+        <input type="text" id="whatsappNumber" placeholder="Digite o número de telefone (com DDD)" />
+        <textarea id="messageText" rows="4" placeholder="Digite a mensagem"></textarea>
+        <button onclick="generateLink()">Gerar Link para WhatsApp</button>
+    </div>
+
+    <div class="link-container">
+        <input type="text" id="generatedLink" readonly placeholder="O link será gerado aqui" />
+        <button onclick="copyLink()">Copiar Link</button>
+    </div>
+</div>
+
+<script>
+    function generateLink() {
+        const number = document.getElementById("whatsappNumber").value;
+        const message = document.getElementById("messageText").value;
+        
+        if (!number || !message) {
+            alert("Por favor, preencha ambos os campos.");
+            return;
+        }
+
+        // Adicionar +55 ao número
+        const whatsappNumber = "+55" + number;
+
+        // Codificar a mensagem
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+        // Exibir o link gerado
+        document.getElementById("generatedLink").value = whatsappLink;
+    }
+
+    function copyLink() {
+        const linkField = document.getElementById("generatedLink");
+        linkField.select();
+        linkField.setSelectionRange(0, 99999); // Para dispositivos móveis
+        document.execCommand("copy");
+        alert("Link copiado com sucesso!");
+    }
+</script>
+
+</body>
+</html>
