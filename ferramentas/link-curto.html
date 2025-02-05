@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encurtador de Link - Bitly</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #005a8d;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Encurtador de Link</h2>
+        <input type="text" id="linkInput" placeholder="Cole seu link aqui">
+        <button onclick="shortenLink()">Encurtar Link</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function shortenLink() {
+            const longUrl = document.getElementById("linkInput").value;
+            if (longUrl === "") {
+                alert("Por favor, insira um link.");
+                return;
+            }
+
+            const token = "a27d07bc94c5a1c34556053d627c90fa5008d2f2";  // Coloque seu token aqui
+            const apiUrl = `https://api-ssl.bitly.com/v4/shorten`;
+
+            const data = {
+                "long_url": longUrl
+            };
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const shortUrl = data.link;
+                document.getElementById("result").innerHTML = `
+                    <p><strong>Link Encurtado:</strong> <a href="${shortUrl}" target="_blank">${shortUrl}</a></p>
+                `;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro ao encurtar o link.');
+            });
+        }
+    </script>
+
+</body>
+</html>
