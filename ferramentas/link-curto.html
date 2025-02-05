@@ -12,9 +12,19 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
+        }
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .logo {
+            width: 400px;
         }
         .container {
             background-color: #2c2c2c;
@@ -23,6 +33,7 @@
             width: 400px;
             text-align: center;
             border-radius: 8px;
+            margin-top: 100px; /* Adapta o espaçamento para não cobrir a logo */
         }
         input[type="text"] {
             width: 80%;
@@ -56,16 +67,15 @@
         .copy-button:hover {
             background-color: #138496;
         }
-        .logo {
-            width: 400px;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="logo-container">
         <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
+    </div>
+
+    <div class="container">
         <h2>Encurtador de Link</h2>
         <input type="text" id="linkInput" placeholder="Cole seu link aqui">
         <button onclick="shortenLink()">Encurtar Link</button>
