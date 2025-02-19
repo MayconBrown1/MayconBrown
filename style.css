@@ -1,0 +1,210 @@
+/* Geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    margin-top: 60px;
+    background-image: url('fundo-preto.avif');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Geral - Fundo de texto */
+p, h1, h2 {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    width: 150px;
+}
+
+.menu-btn {
+    background-color: transparent;
+    border: 1px solid white; /* Contorno branco de 1px */
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1010;
+    padding: 5px;
+}
+
+nav.menu {
+    display: flex;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    width: 200px;
+    z-index: 1005;
+}
+
+nav.menu.active {
+    display: flex;
+}
+
+nav.menu ul {
+    list-style: none;
+}
+
+nav.menu ul li {
+    margin: 10px;
+}
+
+nav.menu ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Seção sobre trabalho */
+.about-section {
+    padding: 50px;
+    text-align: center;
+    margin-top: 70px;
+}
+
+.about-section h1,
+.about-section p {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Depoimento de Cliente */
+.client-video {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.client-video h2 {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.client-video video {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Seção de serviços */
+.service-section {
+    padding: 50px;
+    text-align: center;
+}
+
+.service-section h2 {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.service-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.service-item {
+    position: relative; /* Para permitir a sobreposição da vinheta */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white; /* Garantir que o texto fique visível */
+    overflow: hidden; /* Para garantir que a vinheta não ultrapasse os limites */
+    text-decoration: none;
+    border: 1px solid white; /* Contorno branco de 1px */
+}
+
+.service-item::before {
+    content: ""; /* Cria o pseudo-elemento */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8); /* Vinheta preta com transparência */
+    z-index: 1; /* Faz a vinheta aparecer por cima da imagem, mas abaixo do texto */
+}
+
+.service-item h2, .service-item p {
+    position: relative;
+    z-index: 2; /* Garante que o texto apareça acima da vinheta */
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: #000;
+    text-align: center;
+}
+
+footer p,
+footer a {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+    }
+    
+    nav.menu {
+        width: 100%;
+        top: 60px;
+        left: 0;
+    }
+    
+    .service-list {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .client-video video {
+        max-width: 100%;
+    }
+}
