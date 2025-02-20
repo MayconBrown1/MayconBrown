@@ -4,20 +4,22 @@ function toggleMenu() {
     menu.classList.toggle('active');
 }
 
-// Função para ajustar o volume do vídeo para 50%
-window.onload = function() {
-    const clientVideo = document.getElementById('clientVideo');
-    if (clientVideo) {
-        clientVideo.volume = 0.5; // Ajusta o volume para 50%
-    }
-};
+// Função para ajustar o botão de instalação
+let deferredPrompt;
+const installButton = document.getElementById('install-button');
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-      console.log('ServiceWorker registrado com sucesso: ', registration);
-    }).catch((error) => {
-      console.log('Falha ao registrar o ServiceWorker: ', error);
-    });
-  });
-}
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    }
+});
