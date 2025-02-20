@@ -146,6 +146,59 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registrado com sucesso:', registration);
+            })
+            .catch((error) => {
+                console.log('Falha ao registrar o Service Worker:', error);
+            });
+    }    
+
+    let deferredPrompt;
+const installButton = document.createElement('button');
+installButton.textContent = 'Instalar App';
+installButton.style.position = 'fixed';
+installButton.style.bottom = '20px';
+installButton.style.right = '20px';
+installButton.style.padding = '10px 20px';
+installButton.style.backgroundColor = '#006405';
+installButton.style.color = 'white';
+installButton.style.border = 'none';
+installButton.style.borderRadius = '10px';
+installButton.style.cursor = 'pointer';
+installButton.style.display = 'none'; // Inicialmente escondido
+
+document.body.appendChild(installButton);
+
+// Evento de "beforeinstallprompt" para capturar o prompt de instalação
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    installButton.style.display = 'block';
+
+    installButton.addEventListener('click', () => {
+        installButton.style.display = 'none';
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Usuário aceitou o prompt de instalação');
+            } else {
+                console.log('Usuário rejeitou o prompt de instalação');
+            }
+            deferredPrompt = null;
+        });
+    });
+});
+
+// Event listener para o evento de "appinstalled"
+window.addEventListener('appinstalled', () => {
+    console.log('Aplicativo foi instalado');
+});
+
+
     // Função para renderizar a primeira categoria
     function renderizarProdutosIniciais() {
         mostrarCategoria("Pasteis"); // Exibe a primeira categoria, "Pasteis", por padrão
