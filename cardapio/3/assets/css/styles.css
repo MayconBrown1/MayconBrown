@@ -262,3 +262,24 @@ button:hover {
         display: inline-block;
     }    
 }
+
+/* Estilo para o botão de instalação */
+#install-button {
+    display: none;
+    position: fixed;
+    top: 70px; /* Posiciona abaixo da barra de menu */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: none;
+    z-index: 1100; /* Garante que o botão fique acima dos outros elementos */
+    cursor: pointer;
+}
+
+#install-button:hover {
+    background-color: #218838;
+}
