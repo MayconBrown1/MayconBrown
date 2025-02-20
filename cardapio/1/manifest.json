@@ -2,7 +2,7 @@
     "name": "Maycon Brown - Suporte Informática",
     "short_name": "Maycon Brown",
     "description": "Serviços de informática, formatação remota, cardápios online, matrizes de bordado e programas de afiliados.",
-    "start_url": "/",
+    "start_url": "https://mayconbrown.com.br/cardapio/1/",
     "display": "standalone",
     "background_color": "#121212",
     "theme_color": "#121212",
