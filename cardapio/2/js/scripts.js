@@ -313,3 +313,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     inicializar();
 });
+
+// Função para ajustar o botão de instalação
+let deferredPrompt;
+const installButton = document.getElementById('install-button');
+
+// Remove a mensagem de instalação para dispositivos móveis
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Exibe o botão de instalação logo abaixo da barra de menu
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    }
+});
