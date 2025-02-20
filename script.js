@@ -11,7 +11,10 @@ const installButton = document.getElementById('install-button');
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
+    
+    // Exibe o botão de instalação como um pop-up
     installButton.style.display = 'block';
+    installButton.classList.add('install-popup');  // Adiciona uma classe para garantir o estilo
 });
 
 installButton.addEventListener('click', () => {
