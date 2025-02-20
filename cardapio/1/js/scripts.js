@@ -146,59 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((registration) => {
-                console.log('Service Worker registrado com sucesso:', registration);
-            })
-            .catch((error) => {
-                console.log('Falha ao registrar o Service Worker:', error);
-            });
-    }    
-
-    let deferredPrompt;
-const installButton = document.createElement('button');
-installButton.textContent = 'Instalar App';
-installButton.style.position = 'fixed';
-installButton.style.bottom = '20px';
-installButton.style.right = '20px';
-installButton.style.padding = '10px 20px';
-installButton.style.backgroundColor = '#006405';
-installButton.style.color = 'white';
-installButton.style.border = 'none';
-installButton.style.borderRadius = '10px';
-installButton.style.cursor = 'pointer';
-installButton.style.display = 'none'; // Inicialmente escondido
-
-document.body.appendChild(installButton);
-
-// Evento de "beforeinstallprompt" para capturar o prompt de instalação
-window.addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    installButton.style.display = 'block';
-
-    installButton.addEventListener('click', () => {
-        installButton.style.display = 'none';
-        deferredPrompt.prompt();
-
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Usuário aceitou o prompt de instalação');
-            } else {
-                console.log('Usuário rejeitou o prompt de instalação');
-            }
-            deferredPrompt = null;
-        });
-    });
-});
-
-// Event listener para o evento de "appinstalled"
-window.addEventListener('appinstalled', () => {
-    console.log('Aplicativo foi instalado');
-});
-
-
     // Função para renderizar a primeira categoria
     function renderizarProdutosIniciais() {
         mostrarCategoria("Pasteis"); // Exibe a primeira categoria, "Pasteis", por padrão
@@ -290,7 +237,7 @@ window.addEventListener('appinstalled', () => {
     if (taxaEntrega > 0) {
         mensagem += `\nTaxa de entrega: R$ ${taxaEntrega.toFixed(2)}\n`;
     }
-    mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
+        mensagem += `\nTotal: R$ ${totalElemento.textContent}\n`;
 
     if (formaPagamento === "Espécie") {
         const troco = valorPago - parseFloat(totalElemento.textContent);
@@ -365,4 +312,27 @@ window.addEventListener('appinstalled', () => {
     }
 
     inicializar();
+});
+
+// Função para ajustar o botão de instalação
+let deferredPrompt;
+const installButton = document.getElementById('install-button');
+
+// Remove a mensagem de instalação para dispositivos móveis
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Exibe o botão de instalação logo abaixo da barra de menu
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    }
 });
