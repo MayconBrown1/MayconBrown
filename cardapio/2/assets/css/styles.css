@@ -282,7 +282,7 @@ button:hover {
 #install-button {
     display: none;
     position: fixed;
-    top: 70px; /* Posiciona abaixo da barra de menu */
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #28a745;
