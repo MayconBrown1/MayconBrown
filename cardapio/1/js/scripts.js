@@ -365,4 +365,18 @@ window.addEventListener('appinstalled', () => {
     }
 
     inicializar();
+    
+// Exibe o botão de instalação como um pop-up
+    installButton.style.display = 'block';
+    installButton.classList.add('install-popup');  // Adiciona uma classe para garantir o estilo
+});
+
+installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    }
 });
