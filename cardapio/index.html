@@ -82,6 +82,28 @@
                 width: 45%;
             }
         }
+
+        /* Estilo para o botão de instalação */
+#install-button {
+    display: none;
+    position: fixed;
+    top: 70px; /* Posiciona abaixo da barra de menu */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: none;
+    z-index: 1100; /* Garante que o botão fique acima dos outros elementos */
+    cursor: pointer;
+}
+
+#install-button:hover {
+    background-color: #218838;
+}
+        
     </style>
 </head>
 <body>
@@ -89,6 +111,13 @@
         <a href="https://mayconbrown.com.br">
             <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">
         </a>
+
+        <div id="install-popup" class="install-popup">
+        <div class="popup-content">
+            <button id="install-button">Instalar App</button>
+        </div>
+    </div>
+        
         <p class="slogan">Simplifique seu atendimento! Com nosso cardápio online, seus clientes fazem pedidos sem precisar conversar no WhatsApp. Menos tempo respondendo, mais tempo vendendo!</p>
         <a href="https://wa.me/5584996798304?text=Olá!%20Tenho%20interesse%20no%20seu%20cardápio%20online,%20como%20funciona?" class="whatsapp-button">Entre em contato pelo WhatsApp</a>
     </header>
@@ -126,5 +155,43 @@
             </div>
         </section>
     </main>
+    <script>
+        // Função para ajustar o botão de instalação
+let deferredPrompt;
+const installButton = document.getElementById('install-button');
+
+// Remove a mensagem de instalação para dispositivos móveis
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Exibe o botão de instalação logo abaixo da barra de menu
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    }
+});
+
+// Registro do Service Worker
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registrado com sucesso:', registration);
+            })
+            .catch((error) => {
+                console.log('Falha ao registrar o Service Worker:', error);
+            });
+    });
+}
+    </script>
 </body>
 </html>
