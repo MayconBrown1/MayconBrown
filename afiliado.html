@@ -11,6 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Softwares Vitalício</title>
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
     <style>
         /* Estilo da página */
@@ -121,6 +122,26 @@
             width: 100%;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
         }
+        /* Estilo para o botão de instalação */
+#install-button {
+    display: none;
+    position: fixed;
+    bottom: 150px; /* Ajusta para ficar no rodapé */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 50px;
+    border: none;
+    z-index: 1100; /* Mantém o botão acima dos outros elementos */
+    cursor: pointer;
+}
+
+#install-button:hover {
+    background-color: #218838;
+}
     </style>
 </head>
 <body>
@@ -130,6 +151,13 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- Topo com a logo -->
+
+    <div id="install-popup" class="install-popup">
+        <div class="popup-content">
+            <button id="install-button">Instalar App</button>
+        </div>
+    </div>
+    
     <div class="header">
         <a href="https://mayconbrown.com.br">
         <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo">
@@ -234,6 +262,45 @@
 
         // Carregar os primeiros produtos ao carregar a página
         renderProducts();
+    </script>
+
+    <script>
+        // Função para ajustar o botão de instalação
+let deferredPrompt;
+const installButton = document.getElementById('install-button');
+
+// Remove a mensagem de instalação para dispositivos móveis
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Exibe o botão de instalação logo abaixo da barra de menu
+    installButton.style.display = 'block';
+});
+
+installButton.addEventListener('click', () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    }
+});
+
+// Registro do Service Worker
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registrado com sucesso:', registration);
+            })
+            .catch((error) => {
+                console.log('Falha ao registrar o Service Worker:', error);
+            });
+    });
+}
     </script>
 
 <footer>
