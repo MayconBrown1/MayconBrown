@@ -269,7 +269,7 @@ button:hover {
 #install-button {
     display: none;
     position: fixed;
-    top: 70px; /* Posiciona abaixo da barra de menu */
+    bottom: 20px; /* Ajusta para ficar no rodapé */
     left: 50%;
     transform: translateX(-50%);
     background-color: #28a745;
@@ -278,7 +278,7 @@ button:hover {
     font-size: 16px;
     border-radius: 50px;
     border: none;
-    z-index: 1100; /* Garante que o botão fique acima dos outros elementos */
+    z-index: 1100; /* Mantém o botão acima dos outros elementos */
     cursor: pointer;
 }
 
