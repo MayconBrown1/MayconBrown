@@ -8,7 +8,7 @@
 /* Corpo da página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #000000;
+    background-image: url('https://mayconbrown.com.br/img/svg/fundo-site.svg');
     display: flex;
     justify-content: center;
     align-items: center;
