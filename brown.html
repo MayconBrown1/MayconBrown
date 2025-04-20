@@ -2,23 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
-<!-- End Google Tag Manager -->
-    
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'GT-KVJTHGPF');
-</script>
     
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2B6QKKXLDH"></script>
 <script>
@@ -72,13 +55,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             padding: 10px;
             background-color: #000000;
             display: flex;
-            flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
+            flex-direction: column;
             align-items: center;
         }
 
         .header-content {
             display: flex;
-            flex-direction: column; /* Alinhar logo e GIF verticalmente */
+            flex-direction: column;
             align-items: center;
         }
 
@@ -89,45 +72,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             border-radius: 0px;
         }
 
-        /* Botões sociais */
+        
 .social-buttons {
     display: flex;
-    flex-wrap: wrap; /* Permite que os botões se movam para a linha seguinte se não houver espaço suficiente */
-    justify-content: center; /* Alinha os botões no centro horizontalmente */
-    gap: 50px; /* Espaçamento entre os botões */
-    margin: 5px 0; /* Espaçamento entre a logo e os botões sociais */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 50px; 
+    margin: 5px 0; 
 }
 
 .social-buttons a {
-    display: flex; /* Alinha o ícone centralizado */
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px; /* Tamanho padrão dos ícones */
-    height: 50px; /* Manter a proporção dos ícones */
-    transition: transform 0.5s ease; /* Transição suave para o efeito de zoom */
+    width: 50px; 
+    height: 50px; 
+    transition: transform 0.5s ease; 
 }
 
 .social-buttons img {
     max-width: 100%;
     max-height: 100%;
-    border-radius: 0%; /* Deixa os ícones circulares */
+    border-radius: 0%; 
 }
 
-/* Efeito de zoom ao passar o mouse sobre os ícones sociais */
+
 .social-buttons a:hover img {
-    transform: scale(1.5); /* Efeito de zoom ao passar o mouse */
+    transform: scale(1.5); 
 }
 
 @media (max-width: 768px) {
     .social-buttons a {
-        width: 50px; /* Ajusta o tamanho dos ícones em telas menores */
+        width: 50px; 
         height: 50px;
     }
 }
 
 @media (max-width: 480px) {
     .social-buttons a {
-        width: 50px; /* Ajusta ainda mais o tamanho dos ícones em telas muito pequenas */
+        width: 50px; 
         height: 50px;
     }
 }
@@ -144,116 +127,73 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         .buttons {
     display: flex;
-    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha */
-    justify-content: center; /* Centraliza os botões */
-    gap: 10px; /* Espaçamento entre os botões */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 10px; 
     margin-top: 20px;
-    margin-bottom: 30px; /* Adiciona um espaço entre os botões e os vídeos */
-}
-
-.button {
-    width: 22%; /* Aproximadamente 4 botões por linha (com espaçamento) */
-    min-width: 150px; /* Garante que o botão tenha tamanho mínimo */
-    height: 150px;
-    background-image: url('https://mayconbrown.com.br/img/svg/botao-softwares.svg');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    text-align: center;
-    color: #fff;
-    font-size: 18px;
-    text-decoration: none;
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
-
-.button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
-    z-index: 1;
-}
-
-.button span {
-    position: relative;
-    z-index: 2;
-    font-weight: bold;
-}
-
-.button:hover {
-    transform: scale(1.05);
-    color: #ffdd57;
+    margin-bottom: 30px; 
 }
 
 @media (max-width: 1024px) {
     .button {
-        width: 45%; /* Aproximadamente 2 botões por linha em telas médias */
+        width: 45%; 
     }
 }
 
 @media (max-width: 480px) {
     .button {
-        width: 45%; /* Aproximadamente 2 botões por linha em celulares */
+        width: 45%; 
     }
 }
 
-        /* Estiliza os botões como quadrados com imagem de fundo */
+        
 .button {
-    width: 150px; /* Define o tamanho do botão como quadrado */
+    width: 150px; 
     height: 170px;
-    background-image: url('URL_DA_SUA_IMAGEM'); /* Substitua com a URL da imagem desejada */
-    background-size: cover; /* A imagem ocupa todo o botão */
-    background-position: center; /* Centraliza a imagem */
-    position: relative; /* Permite adicionar a vinheta */
+    background-image: url(''); 
+    background-size: cover; 
+    background-position: center; 
+    position: relative; 
     text-align: center;
-    color: #ffffff; /* Cor do texto */
+    color: #ffffff; 
     font-size: 18px;
     text-decoration: none;
-    border-radius: 0; /* Remove bordas arredondadas */
+    border-radius: 0; 
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Garante que a vinheta cobre tudo */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para realce */
+    overflow: hidden; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s ease;
 }
 
-/* Vinheta escura sobre a imagem */
+
 .button::before {
-    content: ''; /* Pseudo-elemento para a vinheta */
+    content: ''; 
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.8)); /* Gradiente escuro */
-    z-index: 1; /* Garante que está acima da imagem */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.8)); 
+    z-index: 1; 
 }
 
-/* Texto sobre a vinheta */
+
 .button span {
     position: relative;
-    z-index: 2; /* Texto fica acima da vinheta */
+    z-index: 2; 
     font-weight: bold;
 }
 
-/* Efeito hover */
+
 .button:hover {
-    transform: scale(1.10); /* Efeito de zoom */
-    color: #15ff00; /* Cor do texto ao passar o mouse */
+    transform: scale(1.10); 
+    color: #15ff00; 
 }
 
 
-        /* Animação do título */
+        
         @keyframes fadeInSlideUp {
             0% {
                 opacity: 0;
@@ -266,8 +206,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .title-animated {
-        animation: fadeInSlideUp 1s ease-out; /* Mantém a animação existente */
-        text-align: center; /* Centraliza o texto */
+        animation: fadeInSlideUp 1s ease-out; 
+        text-align: center; 
         }
 
         .form-container {
@@ -343,16 +283,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             }
 
             .video-container {
-    display: flex; /* Utiliza flexbox para o layout horizontal */
-    justify-content: space-between; /* Distribui o espaço entre os vídeos */
-    overflow-x: auto; /* Permite rolagem horizontal, se necessário */
-    gap: 1px; /* Espaçamento entre os vídeos */
+    display: flex; 
+    justify-content: space-between; 
+    overflow-x: auto; 
+    gap: 1px; 
 }
 
 .video-container video {
-    flex: 1; /* Faz com que os vídeos cresçam para ocupar o espaço disponível */
-    max-width: 30%; /* Limita a largura máxima para que três vídeos caibam na linha */
-    height: auto; /* Mantém a proporção dos vídeos */
+    flex: 1; 
+    max-width: 30%; 
+    height: auto; 
 }
 
         footer {
@@ -394,6 +334,26 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 width: 25px;
             }
         }
+
+        /* Estilo para telas pequenas (iPhone 12 Pro em retrato) */
+@media only screen and (max-width: 390px) {
+    /* Estilos específicos para o iPhone 12 Pro */
+    body {
+        font-size: 16px; /* Tamanho de fonte ajustado */
+    }
+    .container {
+        padding: 10px;
+    }
+}
+
+/* Estilo para telas médias (iPhone 12 Pro em paisagem) */
+@media only screen and (max-width: 844px) {
+    /* Estilos específicos para iPhone 12 Pro em paisagem */
+    .container {
+        padding: 15px;
+    }
+}
+
     </style>
     <script type="application/ld+json">
         {
@@ -408,16 +368,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.?id=GTM-WHDTPBXW"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
     <header>
         <div class="header-content">
             <!-- Logo existente -->
             <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown - Recursos e Softwares para Designers" class="header-image">
-            <!-- Novo GIF -->
-        <!--    <img src="https://mayconbrown.com.br/img/promoção.gif" alt="GIF Animado" class="header-gif"> -->
+
         </div>
 
     </header>
