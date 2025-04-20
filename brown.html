@@ -1,86 +1,593 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="Maycon Brown">
-        <meta name="description" content="Suporte completo em informática: formatação remota, instalação de softwares, matrizes de bordado, cardápios online e programas de afiliados.">
-        <meta name="keywords" content="suporte técnico, formatação remota, instalação de softwares, matriz de bordado, cardápio online, afiliado, renda extra">
-        <meta name="robots" content="index, follow">
-        <meta name="theme-color" content="#121212">
-        <title>Maycon Brown - Suporte Informática</title>
-        <link rel="manifest" href="/manifest.json">
-        <link rel="icon" href="https://mayconbrown.com.br/img/svg/icone.svg" type="image/x-icon">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header>
-            <a href="http://mayconbrown.com.br/">
-                <img class="logo" src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown" width="150">
-            </a>
-            <button class="menu-btn" onclick="toggleMenu()">☰</button>
-            <nav class="menu">
-                <ul>
-                    <li><a href="#about">Sobre</a></li>
-                    <li><a href="#services">Serviços</a></li>
-                    <li><a href="#contact">Contato</a></li>
-                </ul>
-            </nav>
-        </header>
 
-        <div id="install-popup" class="install-popup">
-            <div class="popup-content">
-                <button id="install-button">Instalar App</button>
-            </div>
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
+<!-- End Google Tag Manager -->
+    
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVJTHGPF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'GT-KVJTHGPF');
+</script>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2B6QKKXLDH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2B6QKKXLDH');
+</script>
+    <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://*.cakto.io;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  font-src 'self' https:;
+  frame-src https://*.mediafire.com https://drive.google.com https://*.cakto.io;
+  connect-src 'self' https://*.mediafire.com https://drive.google.com https://*.cakto.io;
+  object-src 'none';
+">
+    <meta name="google-site-verification" content="XP9zbwIdhIVw9Oekpa23LZJBMoatYjb20mHZzQoEPlY" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Maycon Brown Informática oferece serviços e recursos para design gráfico, incluindo CorelDraw, Photoshop, Adobe Illustrator, Premiere, e outros programas essenciais para designers. Explore softwares vitais, formatação remota, packs de artes e muito mais.">
+    <meta name="keywords" content="CorelDraw, Photoshop, Adobe Illustrator, Premiere, Adobe, Pacote Office, Design Gráfico, Softwares de Design, Ferramentas de Design, Maycon Brown Informática">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Licença Corel Draw 2024 Vitalício + Vídeo Tutorial + Suporte Pós Venda - Maycon Brown Softwares">
+    <meta property="og:description" content="CorelDRAW, Corel, Corel Draw 2024, Licença Corel Draw, Corel DRW, corel 2024, Corel Draw 2023, versão 25.1.0, versão 25.0.0, versão 24.5.0, corel draw crackeado.">
+    <meta property="og:url" content="https://mayconbrown.com.br/softwares">
+    <meta property="og:site_name" content="Maycon Brown Softwares">
+    <meta property="og:image" content="https://mayconbrown.com.br/img/svg/corel-draw-2024-vitalicio.svg">
+    <meta property="og:image:width" content="954">
+    <meta property="og:image:height" content="1280">
+    <meta property="og:image:type" content="image/svg">
+    <title>Maycon Brown - Softwares Vitalícios para Designers.</title>
+    <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            background-color: #000;
+            color: #ffffff;
+        }
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column; /* Mudou para coluna para exibir o GIF abaixo da logo */
+            align-items: center;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column; /* Alinhar logo e GIF verticalmente */
+            align-items: center;
+        }
+
+        .header-image {
+            max-width: 100%;
+            height: auto;
+            border: 5px none #636363;
+            border-radius: 0px;
+        }
+
+        /* Botões sociais */
+.social-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões se movam para a linha seguinte se não houver espaço suficiente */
+    justify-content: center; /* Alinha os botões no centro horizontalmente */
+    gap: 50px; /* Espaçamento entre os botões */
+    margin: 5px 0; /* Espaçamento entre a logo e os botões sociais */
+}
+
+.social-buttons a {
+    display: flex; /* Alinha o ícone centralizado */
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Tamanho padrão dos ícones */
+    height: 50px; /* Manter a proporção dos ícones */
+    transition: transform 0.5s ease; /* Transição suave para o efeito de zoom */
+}
+
+.social-buttons img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0%; /* Deixa os ícones circulares */
+}
+
+/* Efeito de zoom ao passar o mouse sobre os ícones sociais */
+.social-buttons a:hover img {
+    transform: scale(1.5); /* Efeito de zoom ao passar o mouse */
+}
+
+@media (max-width: 768px) {
+    .social-buttons a {
+        width: 50px; /* Ajusta o tamanho dos ícones em telas menores */
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-buttons a {
+        width: 50px; /* Ajusta ainda mais o tamanho dos ícones em telas muito pequenas */
+        height: 50px;
+    }
+}
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #000000;
+            border-radius: 10px;
+        }
+
+        .buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem para a próxima linha */
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 20px;
+    margin-bottom: 30px; /* Adiciona um espaço entre os botões e os vídeos */
+}
+
+.button {
+    width: 22%; /* Aproximadamente 4 botões por linha (com espaçamento) */
+    min-width: 150px; /* Garante que o botão tenha tamanho mínimo */
+    height: 150px;
+    background-image: url('https://mayconbrown.com.br/img/svg/botao-softwares.svg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    z-index: 1;
+}
+
+.button span {
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    color: #ffdd57;
+}
+
+@media (max-width: 1024px) {
+    .button {
+        width: 45%; /* Aproximadamente 2 botões por linha em telas médias */
+    }
+}
+
+@media (max-width: 480px) {
+    .button {
+        width: 45%; /* Aproximadamente 2 botões por linha em celulares */
+    }
+}
+
+        /* Estiliza os botões como quadrados com imagem de fundo */
+.button {
+    width: 150px; /* Define o tamanho do botão como quadrado */
+    height: 170px;
+    background-image: url('URL_DA_SUA_IMAGEM'); /* Substitua com a URL da imagem desejada */
+    background-size: cover; /* A imagem ocupa todo o botão */
+    background-position: center; /* Centraliza a imagem */
+    position: relative; /* Permite adicionar a vinheta */
+    text-align: center;
+    color: #ffffff; /* Cor do texto */
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 0; /* Remove bordas arredondadas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Garante que a vinheta cobre tudo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para realce */
+    transition: transform 0.3s ease;
+}
+
+/* Vinheta escura sobre a imagem */
+.button::before {
+    content: ''; /* Pseudo-elemento para a vinheta */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.8)); /* Gradiente escuro */
+    z-index: 1; /* Garante que está acima da imagem */
+}
+
+/* Texto sobre a vinheta */
+.button span {
+    position: relative;
+    z-index: 2; /* Texto fica acima da vinheta */
+    font-weight: bold;
+}
+
+/* Efeito hover */
+.button:hover {
+    transform: scale(1.10); /* Efeito de zoom */
+    color: #15ff00; /* Cor do texto ao passar o mouse */
+}
+
+
+        /* Animação do título */
+        @keyframes fadeInSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title-animated {
+        animation: fadeInSlideUp 1s ease-out; /* Mantém a animação existente */
+        text-align: center; /* Centraliza o texto */
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            margin-top: 30px;
+        }
+
+            .button {
+                font-size: 20px;
+                padding: 16px 32px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 14px;
+            }
+
+            .form-group button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            .header-image {
+                border: 3px none #636363;
+            }
+
+            .video-container {
+    display: flex; /* Utiliza flexbox para o layout horizontal */
+    justify-content: space-between; /* Distribui o espaço entre os vídeos */
+    overflow-x: auto; /* Permite rolagem horizontal, se necessário */
+    gap: 1px; /* Espaçamento entre os vídeos */
+}
+
+.video-container video {
+    flex: 1; /* Faz com que os vídeos cresçam para ocupar o espaço disponível */
+    max-width: 30%; /* Limita a largura máxima para que três vídeos caibam na linha */
+    height: auto; /* Mantém a proporção dos vídeos */
+}
+
+        footer {
+            margin-top: auto;
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 5px;
+            }
+
+            .button {
+                font-size: 18px;
+                padding: 12px 24px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 12px;
+            }
+
+            .form-group button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .header-image {
+                max-width: 90%;
+                border: 2px none #636363;
+            }
+
+            .social-buttons img {
+                width: 25px;
+            }
+        }
+    </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Maycon Brown Informática",
+            "url": "https://www.mayconbrown.com.br",
+            "logo": "https://www.mayconbrown.com.br/img/svg/logobranca.svg",
+            "description": "Especializado em suporte remoto e fornecimento de ferramentas, atendendo grandes e pequenas empresas com eficiência e excelência."
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.?id=GTM-WHDTPBXW"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <header>
+        <div class="header-content">
+            <!-- Logo existente -->
+            <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown - Recursos e Softwares para Designers" class="header-image">
+            <!-- Novo GIF -->
+        <!--    <img src="https://mayconbrown.com.br/img/promoção.gif" alt="GIF Animado" class="header-gif"> -->
         </div>
 
-        <section id="about" class="about-section">
-            <h1>Sobre Meu Trabalho</h1>
-            <p>Ofereço serviços especializados em formatação remota, criação de cardápios online, <br>instalação de softwares, desenvolvimento de matrizes de bordado e programa de afiliados. <br>Meu objetivo é proporcionar soluções rápidas, seguras e eficientes para os meus clientes, <br>com total comprometimento e qualidade.</p>
+    </header>
+
+    <div class="container">
+                <!-- Botões sociais -->
+                <div class="social-buttons">
+                    <a href="https://www.instagram.com/maycon.brown/" target="_blank">
+                        <img src="https://mayconbrown.com.br/img/svg/instagram.svg" alt="Instagram">
+                    </a>
+                    <a href="https://www.youtube.com/@MayconBrown" target="_blank" class="social-button-youtube">
+                        <img src="https://mayconbrown.com.br/img/svg/youtube.svg" alt="YouTube">
+                    </a>
+                    <!-- Novo botão WhatsApp -->
+                    <a href="https://wa.me/5584981770146?text=Olá%2C%20vim%20pelo%20site%20mayconbrown.com.br.%20Gostaria%20de%20mais%20informações%20sobre%20os%20seus%20serviços.%20Obrigado%21
+                    " target="_blank">
+                        <img src="https://mayconbrown.com.br/img/svg/whatsapp.svg" alt="WhatsApp">
+                    </a>
+                 <!--   <a href="https://www.mediafire.com/file_premium/aveb3wlexm5lpxt/MAYCON_BROWN.apk/file">
+                        <img src="https://mayconbrown.com.br/img/apk_gif.gif" alt="Apk">
+                    </a>  -->
+                </div>
+        <h1 class="title-animated">Maycon Brown - Softwares e Produtos Digitais</h1>
+        <p class="description">
+            Especializado em suporte remoto e fornecimento de ferramentas, atendendo grandes e pequenas empresas com eficiência e excelência.
+        </p>
+
+        <div class="buttons">
+            <a href="https://www.mayconbrown.com.br/softwares" class="button"
+                style="background-image: url('https://mayconbrown.com.br/img/svg/botao-softwares.svg');">
+                <span>Softwares Vitalícios</span>
+            </a>
             
-            <div class="client-video">
-                <h2>Depoimento de Cliente</h2>
-                <video id="clientVideo" controls>
-                    <source src="https://mayconbrown.com.br/video/cliente-softwares-3.mp4" type="video/mp4">
-                    Seu navegador não suporta o elemento de vídeo.
-                </video>
-            </div>
-        </section>
+            <a href="https://mayconbrown.com.br/matriz" class="button"
+            style="background-image: url('https://mayconbrown.com.br/img/svg/matriz-bordado.svg');">
+                <span>Matriz de Bordado</span>
+            </a>
+            
+            <a href="https://www.mayconbrown.com.br/formatação-a-distancia-remoto" class="button" 
+            style="background-image: url('https://mayconbrown.com.br/img/svg/formatacao.svg');">
+                <span>Formatação a Distância</span>
+            </a>
 
-        <section id="services" class="service-section">
-            <h2>Serviços</h2>
-            <div class="service-list">
-                <a href="https://mayconbrown.com.br/formatação-a-distancia-remoto" class="service-item">
-                    <h2>Formatação Remota</h2>
-                    <p>Realizo formatação de computadores remotamente com total segurança.</p>
-                </a>
-                <a href="https://mayconbrown.com.br/cardapio/" class="service-item">
-                    <h2>Cardápio Online</h2>
-                    <p>Criação de cardápios digitais para restaurantes, com fácil acesso e visualização.</p>
-                </a>
-                <a href="https://mayconbrown.com.br/softwares" class="service-item">
-                    <h2>Softwares</h2>
-                    <p>Instalação de softwares essenciais, como CorelDRAW, Photoshop, Office e mais.</p>
-                </a>
-                <a href="https://mayconbrown.com.br/matriz/" class="service-item">
-                    <h2>Matrizes de Bordado</h2>
-                    <p>Matrizes de bordado para diferentes tipos de máquinas e tecidos.</p>
-                </a>
-                <a href="https://mayconbrown.com.br/afiliado" class="service-item">
-                    <h2>Afiliado</h2>
-                    <p>Trabalhe como afiliado para ter uma renda extra online.</p>
-                </a>
-            </div>
-        </section>
+            <a href="https://www.mayconbrown.com.br/cardapio" class="button" 
+            style="background-image: url('https://mayconbrown.com.br/cardapio/img/cardapio-online.svg');">
+                <span>Cardápio Online</span>
+            </a>
+            
+            <a href="https://www.mayconbrown.com.br/afiliado" class="button" 
+            style="background-image: url('https://mayconbrown.com.br/img/svg/seja-afiliado.svg');">
+                <span>Seja Afiliado</span>
+            </a>
+            
+       <!--      <a href="https://www.mayconbrown.com.br/rifa" class="button" 
+            style="background-image: url('https://mayconbrown.com.br/img/svg/rifa.svg');">
+                <span>Rifa do Brown</span> 
+            </a> -->
+            
+       <!--     <a href="https://www.mayconbrown.com.br/drone/360-graus" class="button" 
+            style="background-image: url('https://mayconbrown.com.br/img/svg/la-do-sertao-producoes-logo-sem-nome.svg');">
+                <span>Lá do Sertão - Produções</span>
+            </a>  -->
+        </div>        
 
-        <footer id="contact">
-            <p>Contato: <a href="mailto:mayconbrown083@gmail.com">mayconbrown083@gmail.com</a></p>
-            <div>
-                <a href="https://wa.me/+5584981770146?text=Ola!%20Vim%20la%20do%20seu%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank">Whatsapp</a> | 
-                <a href="https://www.instagram.com/maycon.brown/" target="_blank">Instagram</a> | 
-                <a href="https://www.youtube.com/@mayconbrown" target="_blank">YouTube</a>
-            </div>
-        </footer>
-        <script src="script.js"></script>
-    </body>
+        <h1 class="title-animated">CLIENTES</h1>
+
+        <!-- Video Section -->
+        <div class="video-container">
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-3.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-5.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-8.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-9.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-10.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-12.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-14.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-15.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-16.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-1.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-2.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-4.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-6.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-7.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-11.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            <video controls>
+                <source src="https://mayconbrown.com.br/video/cliente-softwares-13.mp4" type="video/mp4">
+                Seu navegador não suporta o vídeo.
+            </video>
+            
+        </div>                      
+
+
+</body>
+
+</>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const title = document.querySelector('.title-animated');
+        title.classList.add('title-animated');
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.button');
+        let currentIndex = 0;
+
+        function activateButton() {
+            // Remove a classe active de todos os botões
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Adiciona a classe active ao botão atual
+            buttons[currentIndex].classList.add('active');
+
+            // Atualiza o índice para o próximo botão
+            currentIndex = (currentIndex + 1) % buttons.length;
+        }
+
+        // Ativa o primeiro botão imediatamente e depois em intervalos
+        activateButton();
+        setInterval(activateButton, 1000); // 1000 ms = 1 segundos, ajuste conforme necessário
+    });
+</script>
+<footer>
+    &copy; 2025 Maycon Brown - Todos os direitos reservados.
+</footer>
+</body>
 </html>
