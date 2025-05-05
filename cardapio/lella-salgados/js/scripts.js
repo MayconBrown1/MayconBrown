@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Enviar a mensagem para o WhatsApp
-    const link = `https://wa.me/5584996798304?text=${encodeURIComponent(mensagem)}`;
+    const link = `https://wa.me/5584986977302?text=${encodeURIComponent(mensagem)}`;
     window.open(link, "_blank");
 });
 
