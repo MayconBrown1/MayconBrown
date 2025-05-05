@@ -133,5 +133,16 @@
 
     <script src="js/scripts.js"></script>
 
+<script>
+  const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+  const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+
+  if (isIOS && !isInStandaloneMode) {
+    // Aqui você pode usar um modal, toast, ou alerta simples
+    alert("Para instalar o app Lella Salgados, toque no botão 'Compartilhar' do Safari e escolha 'Adicionar à Tela de Início'.");
+  }
+</script>
+
+
 </body>
 </html>
