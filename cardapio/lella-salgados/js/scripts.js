@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 3, nome: "Enroladinho de Salsicha 60g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Enroladinho-de-Salsicha.webp", ingredientes: "" },
             { id: 4, nome: "Bolinha de Queijo Mussarela 40g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Bolinha-de-Queijo-Mussarela.webp", ingredientes: "" },
             { id: 5, nome: "Pastel de Queijo com Presunto 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Pastel-de-Queijo-com-Presunto.webp", ingredientes: "" },
-            { id: 5, nome: "Pastel de Queijo 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Pastel-de-Queijo-Mussarela.webp", ingredientes: "" },
         ],
         Bebidas: [
             { id: 26, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
