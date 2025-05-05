@@ -10,16 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 5, nome: "Pastel de Queijo 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Pastel-de-Queijo-Mussarela.webp", ingredientes: "" },
         ],
         Bebidas: [
-            { id: 26, nome: "Refrigerante Dore Guaraná 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
             { id: 26, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
-            { id: 26, nome: "Refrigerante Dore Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
-            { id: 26, nome: "Refrigerante Dore Uva 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
-            { id: 26, nome: "Refrigerante Indaiá Guaraná 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
-            { id: 26, nome: "Refrigerante Indaiá Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
             { id: 26, nome: "Refrigerante Indaiá Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
-            { id: 26, nome: "Refrigerante Indaiá Uva 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
-            { id: 27, nome: "Suco da Fruta de Goiaba", preco: 3.00, img: "https://mayconbrown.com.br/cardapio/img/Suco-da-Fruta.webp", ingredientes: "" },
-            { id: 27, nome: "Suco da Fruta de Acerola", preco: 3.00, img: "https://mayconbrown.com.br/cardapio/img/Suco-da-Fruta.webp", ingredientes: "" },
         ],
         Guloseimas: [
             { id: 26, nome: "Pastilha Halls Melancia", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Pastilha-Halls-Melancia.webp", ingredientes: "" },
