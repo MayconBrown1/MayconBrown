@@ -1,0 +1,16 @@
+{
+    "name": "Cardápio Online 3",
+    "short_name": "Cardápio 3",
+    "description": "Simplifique seu atendimento! Com nosso cardápio online, seus clientes fazem pedidos sem precisar conversar no WhatsApp. Menos tempo respondendo, mais tempo vendendo!",
+    "start_url": "https://mayconbrown.com.br/cardapio/3/",
+    "display": "standalone",
+    "background_color": "#121212",
+    "theme_color": "#121212",
+    "icons": [
+      {
+        "src": "https://mayconbrown.com.br/cardapio/img/cardapio3.webp",
+        "sizes": "192x192",
+        "type": "image/webp"
+      }
+    ]
+  }
