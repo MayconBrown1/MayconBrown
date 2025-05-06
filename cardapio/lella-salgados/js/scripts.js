@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 1, nome: "Coxinha de Carne de Sol 40g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Coxinha-de-Carne-de-Sol.webp", ingredientes: "" },
             { id: 2, nome: "Coxinha de Frango Desfiado 40g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
             { id: 3, nome: "Enroladinho de Salsicha 60g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Enroladinho-de-Salsicha.webp", ingredientes: "" },
-            { id: 4, nome: "Bolinha de Queijo Mussarela 40g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Bolinha-de-Queijo-Mussarela.webp", ingredientes: "" },
+            { id: 4, nome: "Bolinha de Queijo 40g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Bolinha-de-Queijo-Mussarela.webp", ingredientes: "" },
             { id: 5, nome: "Pastel de Queijo 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Pastel-de-Queijo-Mussarela.webp", ingredientes: "" },
             { id: 5, nome: "Pastel de Queijo com Presunto 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
         ],
