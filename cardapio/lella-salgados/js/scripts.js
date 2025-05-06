@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 5, nome: "Pastel de Queijo com Presunto 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
         ],
         Bebidas: [
-            { id: 26, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
-            { id: 26, nome: "Refrigerante Indaiá Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
+            { id: 26, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Dore-Cola-250ml.webp", ingredientes: "" },
+            { id: 26, nome: "Refrigerante Indaiá Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Indaia-Laranja-250ml.webp", ingredientes: " " },
             { id: 26, nome: "Refrigerante Guaraná 1L", preco: 7.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
             { id: 27, nome: "Achocolatado Pirakids 200ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/pirakids.webp", ingredientes: "" },
         ],
