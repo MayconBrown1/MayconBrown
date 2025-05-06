@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 26, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
             { id: 26, nome: "Refrigerante Indaiá Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: " " },
             { id: 26, nome: "Refrigerante Guaraná 1L", preco: 7.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
-            { id: 27, nome: "Achocolatado Pirakids 200ml", preco: 3.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
+            { id: 27, nome: "Achocolatado Pirakids 200ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/1/img/bebidas.webp", ingredientes: "" },
         ],
         Guloseimas: [
             { id: 26, nome: "Pastilha Halls Melancia", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Pastilha-Halls-Melancia.webp", ingredientes: "" },
