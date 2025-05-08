@@ -29,15 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
         "Centro": 7.00,
         "Cohabinal": 7.00,
         "Liberdade": 15.00,
-        "Monte Castelo": 13.00,
-        "Nova Esperança": 6.00,
-        "Parque de Exposições": 15.00,
+        "Monte Castelo": 10.00,
+        "Nova Esperança": 5.00,
+        "Parque de Exposições": 14.00,
         "Passagem de Areia": 10.00,
         "Rosa dos Ventos": 7.00,
         "Santa Tereza": 8.00,
-        "Santos Reis": 11.00,
-        "Vale do Sol": 8.00,
-        "Vida Nova": 13.00
+        "Santos Reis": 10.00,
+        "Vale do Sol": 6.00,
+        "Vida Nova": 15.00
     };
 
     const menu = document.getElementById("menu");
