@@ -7,17 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 3, nome: "Enroladinho de Salsicha 60g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Enroladinho-de-Salsicha.webp", ingredientes: "" },
             { id: 4, nome: "Bolinha de Queijo 40g", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Bolinha-de-Queijo-Mussarela.webp", ingredientes: "" },
             { id: 5, nome: "Pastel de Queijo 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/Pastel-de-Queijo-Mussarela.webp", ingredientes: "" },
-            { id: 5, nome: "Pastel de Queijo com Presunto 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
+            { id: 6, nome: "Pastel de Queijo com Presunto 10x5cm", preco: 1.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
         ],
         Bebidas: [
-            { id: 26, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Dore-Cola-250ml.webp", ingredientes: "" },
-            { id: 26, nome: "Refrigerante Indaiá Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Indaia-Laranja-250ml.webp", ingredientes: " " },
-            { id: 26, nome: "Refrigerante Guaraná 1L", preco: 7.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
-            { id: 27, nome: "Achocolatado Pirakids 200ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/pirakids.webp", ingredientes: "" },
+            { id: 7, nome: "Refrigerante Dore Cola 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Dore-Cola-250ml.webp", ingredientes: "" },
+            { id: 8, nome: "Refrigerante Indaiá Laranja 250ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Indaia-Laranja-250ml.webp", ingredientes: " " },
+            { id: 9, nome: "Refrigerante Guaraná 1L", preco: 7.00, img: "https://mayconbrown.com.br/cardapio/img/acabou.png", ingredientes: "" },
+            { id: 10, nome: "Achocolatado Pirakids 200ml", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/pirakids.webp", ingredientes: "" },
         ],
         Guloseimas: [
-            { id: 26, nome: "Pastilha Halls Melancia", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Pastilha-Halls-Melancia.webp", ingredientes: "" },
-            { id: 26, nome: "Pastilha Halls Menta", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Pastilha-Halls-Menta.webp", ingredientes: "" },
+            { id: 11, nome: "Pastilha Halls Melancia", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Pastilha-Halls-Melancia.webp", ingredientes: "" },
+            { id: 12, nome: "Pastilha Halls Menta", preco: 2.00, img: "https://mayconbrown.com.br/cardapio/img/Pastilha-Halls-Menta.webp", ingredientes: "" },
         ],
 
     };
