@@ -9,6 +9,7 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
   />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="manifest" href="manifest.json">
   <style>
     body {
       background-color: #121212;
@@ -29,7 +30,7 @@
       border: none;
     }
     .form-control::placeholder {
-      color: #aaa;
+      color: #aaaaaa;
     }
     canvas {
       background-color: white;
@@ -89,12 +90,52 @@
   #btnInstalarApp:hover {
     background-color: #0056b3;
   }
+  input, button, select {
+      margin: 5px;
+      padding: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .edit-btn {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .backup-btn, .restore-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
   <button id="btnInstalarApp">INSTALAR APP</button>
-  
+
   <div class="container py-4">
     <div class="text-center mb-4">
       <a href="http://mayconbrown.com.br/">
@@ -156,6 +197,9 @@
             Saldo Atual: R$ <span id="saldo">0.00</span>
           </p>
           <button class="btn btn-secondary" onclick="baixarBackup()">📁 Fazer Backup</button>
+          <input type="file" id="inputBackup" accept=".json" style="display: none" />
+<button class="btn btn-warning" onclick="document.getElementById('inputBackup').click()">🔁 Restaurar Backup</button>
+
         </div>
         <div class="card p-3">
           <h5>Gráfico de Transações</h5>
@@ -215,6 +259,22 @@
       document.getElementById("totalSaidas").innerText = saidas.toFixed(2);
       document.getElementById("saldo").innerText = saldo.toFixed(2);
     }
+
+    function popularFiltroMeses() {
+  const select = document.getElementById("filtroMes");
+  const mesesUnicos = [...new Set(transacoes.map(t => obterMes(t.data)))];
+  select.innerHTML = "";
+  mesesUnicos.forEach(mes => {
+    const option = document.createElement("option");
+    option.value = mes;
+    option.textContent = mes;
+    select.appendChild(option);
+  });
+  mesSelecionado = select.value || new Date().toISOString().slice(0, 7);
+  atualizarResumo();
+  renderizarLista();
+}
+
 
     function renderizarLista() {
       const mostrarEntradas =
@@ -288,6 +348,32 @@
         lista.appendChild(div);
       });
     }
+
+    document.getElementById('inputBackup').addEventListener('change', function (event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data)) {
+        transacoes = data;
+        localStorage.setItem("transacoes", JSON.stringify(transacoes));
+        atualizarResumo();
+        renderizarLista();
+        popularFiltroMeses();
+        alert("Backup restaurado com sucesso!");
+      } else {
+        alert("O arquivo selecionado não é válido.");
+      }
+    } catch (error) {
+      alert("Erro ao ler o arquivo: " + error.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
 
     function adicionarTransacao() {
       const descricao = document.getElementById("descricao").value.trim();
@@ -482,6 +568,108 @@
     console.log('App instalado com sucesso!');
     btnInstalar.style.display = 'none';
   });
+
+  let registros = JSON.parse(localStorage.getItem("registros")) || [];
+
+    function atualizarTabela() {
+      const tabela = document.querySelector("#tabela tbody");
+      tabela.innerHTML = "";
+      let saldo = 0;
+
+      registros.forEach((registro, index) => {
+        if (registro.tipo === "entrada") {
+          saldo += parseFloat(registro.valor);
+        } else {
+          saldo -= parseFloat(registro.valor);
+        }
+
+        tabela.innerHTML += `
+          <tr>
+            <td>${registro.descricao}</td>
+            <td>R$ ${parseFloat(registro.valor).toFixed(2)}</td>
+            <td>${registro.tipo}</td>
+            <td>
+              <button class="edit-btn" onclick="editarRegistro(${index})">Editar</button>
+              <button class="delete-btn" onclick="excluirRegistro(${index})">Excluir</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("saldo").innerText = `Saldo: R$ ${saldo.toFixed(2)}`;
+      localStorage.setItem("registros", JSON.stringify(registros));
+    }
+
+    function adicionarRegistro() {
+      const descricao = document.getElementById("descricao").value;
+      const valor = parseFloat(document.getElementById("valor").value);
+      const tipo = document.getElementById("tipo").value;
+
+      if (!descricao || isNaN(valor)) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+      }
+
+      registros.push({ descricao, valor, tipo });
+      atualizarTabela();
+
+      document.getElementById("descricao").value = "";
+      document.getElementById("valor").value = "";
+    }
+
+    function editarRegistro(index) {
+      const novoDescricao = prompt("Nova descrição:", registros[index].descricao);
+      const novoValor = parseFloat(prompt("Novo valor:", registros[index].valor));
+      const novoTipo = prompt("Novo tipo (entrada/saida):", registros[index].tipo);
+
+      if (novoDescricao && !isNaN(novoValor) && (novoTipo === "entrada" || novoTipo === "saida")) {
+        registros[index] = { descricao: novoDescricao, valor: novoValor, tipo: novoTipo };
+        atualizarTabela();
+      } else {
+        alert("Dados inválidos.");
+      }
+    }
+
+    function excluirRegistro(index) {
+      if (confirm("Deseja realmente excluir este registro?")) {
+        registros.splice(index, 1);
+        atualizarTabela();
+      }
+    }
+
+    function fazerBackup() {
+      const blob = new Blob([JSON.stringify(registros)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "backup_financeiro.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function restaurarBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const dados = JSON.parse(e.target.result);
+          if (Array.isArray(dados)) {
+            registros = dados;
+            atualizarTabela();
+            alert("Backup restaurado com sucesso!");
+          } else {
+            alert("Arquivo de backup inválido.");
+          }
+        } catch (error) {
+          alert("Erro ao ler o arquivo: " + error.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    atualizarTabela();
 
   </script>
 </body>
