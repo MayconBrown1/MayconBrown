@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Controle Financeiro</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
@@ -40,22 +43,63 @@
     .transacao-item {
       padding: 0.5rem;
       border-bottom: 1px solid #444;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
-    .transacao-item span {
-      display: inline-block;
+    .transacao-info {
+      flex-grow: 1;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .transacao-info span,
+    .transacao-info input,
+    .transacao-info select {
       min-width: 80px;
+      background-color: #2c2c2c !important;
+      color: white !important;
+      border: none;
+      padding: 2px 6px;
+      border-radius: 4px;
     }
-    .btn-editar, .btn-apagar {
+    .btn-editar, .btn-apagar, .btn-salvar, .btn-cancelar {
       font-size: 0.8rem;
       margin-left: 0.5rem;
+      min-width: 60px;
     }
+    #btnInstalarApp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    display: none; /* começa oculto */
+    z-index: 1000;
+  }
+  #btnInstalarApp:hover {
+    background-color: #0056b3;
+  }
   </style>
 </head>
 <body>
   <div class="container py-4">
     <div class="text-center mb-4">
       <a href="http://mayconbrown.com.br/">
-        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" width="400">
+        <img
+          src="https://mayconbrown.com.br/img/svg/logobranca.svg"
+          alt="Logo"
+          width="400"
+        />
       </a>
     </div>
     <h2 class="text-center mb-4">Controle Financeiro</h2>
@@ -70,8 +114,8 @@
       <div class="col-md-4">
         <div class="card p-3">
           <h5>Nova Transação</h5>
-          <input type="text" id="descricao" class="form-control mb-2" placeholder="Descrição">
-          <input type="number" id="valor" class="form-control mb-2" placeholder="Valor">
+          <input type="text" id="descricao" class="form-control mb-2" placeholder="Descrição" />
+          <input type="number" id="valor" class="form-control mb-2" placeholder="Valor" />
           <select id="categoria" class="form-control mb-2">
             <optgroup label="Entradas">
               <option>Salário</option>
@@ -105,7 +149,9 @@
           <h5>Resumo</h5>
           <p>Entradas: R$ <span id="totalEntradas">0.00</span></p>
           <p>Saídas: R$ <span id="totalSaidas">0.00</span></p>
-          <p class="saldo-display">Saldo Atual: R$ <span id="saldo">0.00</span></p>
+          <p class="saldo-display">
+            Saldo Atual: R$ <span id="saldo">0.00</span>
+          </p>
           <button class="btn btn-secondary" onclick="baixarBackup()">📁 Fazer Backup</button>
         </div>
         <div class="card p-3">
@@ -116,10 +162,22 @@
           <h5>Lista de Transações</h5>
           <div class="mb-2">
             <label class="me-2">
-              <input type="checkbox" id="mostrarEntradas" checked onchange="renderizarLista()"> Mostrar Entradas
+              <input
+                type="checkbox"
+                id="mostrarEntradas"
+                checked
+                onchange="renderizarLista()"
+              />
+              Mostrar Entradas
             </label>
             <label>
-              <input type="checkbox" id="mostrarSaidas" checked onchange="renderizarLista()"> Mostrar Saídas
+              <input
+                type="checkbox"
+                id="mostrarSaidas"
+                checked
+                onchange="renderizarLista()"
+              />
+              Mostrar Saídas
             </label>
           </div>
           <div id="listaTransacoes"></div>
@@ -131,19 +189,24 @@
   <script>
     let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
     let mesSelecionado = new Date().toISOString().slice(0, 7);
+    let editandoIndex = null; // índice da transação que está sendo editada
 
     function obterMes(isoDate) {
       return isoDate.slice(0, 7);
     }
 
     function filtrarTransacoesPorMes(mes) {
-      return transacoes.filter(t => obterMes(t.data) === mes);
+      return transacoes.filter((t) => obterMes(t.data) === mes);
     }
 
     function atualizarResumo() {
       const transacoesFiltradas = filtrarTransacoesPorMes(mesSelecionado);
-      let entradas = transacoesFiltradas.filter(t => t.tipo === 'entrada').reduce((acc, t) => acc + t.valor, 0);
-      let saidas = transacoesFiltradas.filter(t => t.tipo === 'saida').reduce((acc, t) => acc + t.valor, 0);
+      let entradas = transacoesFiltradas
+        .filter((t) => t.tipo === "entrada")
+        .reduce((acc, t) => acc + t.valor, 0);
+      let saidas = transacoesFiltradas
+        .filter((t) => t.tipo === "saida")
+        .reduce((acc, t) => acc + t.valor, 0);
       let saldo = entradas - saidas;
       document.getElementById("totalEntradas").innerText = entradas.toFixed(2);
       document.getElementById("totalSaidas").innerText = saidas.toFixed(2);
@@ -151,90 +214,272 @@
     }
 
     function renderizarLista() {
-      const mostrarEntradas = document.getElementById("mostrarEntradas")?.checked ?? true;
-      const mostrarSaidas = document.getElementById("mostrarSaidas")?.checked ?? true;
+      const mostrarEntradas =
+        document.getElementById("mostrarEntradas")?.checked ?? true;
+      const mostrarSaidas =
+        document.getElementById("mostrarSaidas")?.checked ?? true;
       const lista = document.getElementById("listaTransacoes");
       lista.innerHTML = "";
       const transacoesFiltradas = filtrarTransacoesPorMes(mesSelecionado);
 
       transacoesFiltradas.forEach((t, i) => {
-        if ((t.tipo === 'entrada' && !mostrarEntradas) || (t.tipo === 'saida' && !mostrarSaidas)) return;
+        if (
+          (t.tipo === "entrada" && !mostrarEntradas) ||
+          (t.tipo === "saida" && !mostrarSaidas)
+        )
+          return;
 
         const div = document.createElement("div");
         div.className = "transacao-item";
-        div.innerHTML = `
-          <strong>${t.descricao}</strong> <span>R$ ${t.valor.toFixed(2)}</span>
-          <span>${t.categoria}</span> <span>${t.tipo}</span>
-        `;
+
+        if (editandoIndex === i) {
+          // modo edição
+          div.innerHTML = `
+            <div class="transacao-info">
+              <input type="text" id="editDescricao" value="${t.descricao}" />
+              <input type="number" id="editValor" value="${t.valor.toFixed(2)}" />
+              <select id="editCategoria">
+                <optgroup label="Entradas">
+                  <option ${t.categoria === "Salário" ? "selected" : ""}>Salário</option>
+                  <option ${t.categoria === "Bicos/Freelancer" ? "selected" : ""}>Bicos/Freelancer</option>
+                  <option ${t.categoria === "Presente" ? "selected" : ""}>Presente</option>
+                  <option ${t.categoria === "Investimentos" ? "selected" : ""}>Investimentos</option>
+                  <option ${t.categoria === "Vendas" ? "selected" : ""}>Vendas</option>
+                  <option ${t.categoria === "Outros" ? "selected" : ""}>Outros</option>
+                </optgroup>
+                <optgroup label="Saídas">
+                  <option ${t.categoria === "Alimentação" ? "selected" : ""}>Alimentação</option>
+                  <option ${t.categoria === "Transporte" ? "selected" : ""}>Transporte</option>
+                  <option ${t.categoria === "Saúde" ? "selected" : ""}>Saúde</option>
+                  <option ${t.categoria === "Lazer" ? "selected" : ""}>Lazer</option>
+                  <option ${t.categoria === "Compras" ? "selected" : ""}>Compras</option>
+                  <option ${t.categoria === "Moradia" ? "selected" : ""}>Moradia</option>
+                  <option ${t.categoria === "Assinaturas" ? "selected" : ""}>Assinaturas</option>
+                  <option ${t.categoria === "Outros" ? "selected" : ""}>Outros</option>
+                </optgroup>
+              </select>
+              <select id="editTipo">
+                <option value="entrada" ${t.tipo === "entrada" ? "selected" : ""}>Entrada</option>
+                <option value="saida" ${t.tipo === "saida" ? "selected" : ""}>Saída</option>
+              </select>
+            </div>
+            <div>
+              <button class="btn btn-success btn-salvar" onclick="salvarEdicao(${i})">Salvar</button>
+              <button class="btn btn-danger btn-cancelar" onclick="cancelarEdicao()">Cancelar</button>
+            </div>
+          `;
+        } else {
+          div.innerHTML = `
+            <div class="transacao-info">
+              <strong>${t.descricao}</strong>
+              <span>R$ ${t.valor.toFixed(2)}</span>
+              <span>${t.categoria}</span>
+              <span>${t.tipo}</span>
+            </div>
+            <div>
+              <button class="btn btn-primary btn-editar" onclick="editarTransacao(${i})">Editar</button>
+              <button class="btn btn-danger btn-apagar" onclick="excluirTransacao(${i})">Apagar</button>
+            </div>
+          `;
+        }
         lista.appendChild(div);
       });
     }
 
     function adicionarTransacao() {
-      const descricao = document.getElementById("descricao").value;
+      const descricao = document.getElementById("descricao").value.trim();
       const valor = parseFloat(document.getElementById("valor").value);
       const categoria = document.getElementById("categoria").value;
       const tipo = document.getElementById("tipo").value;
-      if (!descricao || !valor || isNaN(valor)) return;
-      const nova = { descricao, valor, categoria, tipo, data: new Date().toISOString() };
+      if (!descricao || !valor || isNaN(valor)) return alert("Preencha todos os campos corretamente!");
+      const nova = {
+        descricao,
+        valor,
+        categoria,
+        tipo,
+        data: new Date().toISOString(),
+      };
       transacoes.push(nova);
       salvarTransacoes();
       document.getElementById("descricao").value = "";
       document.getElementById("valor").value = "";
+      document.getElementById("categoria").selectedIndex = 0;
+      document.getElementById("tipo").value = "entrada";
+      renderizarLista();
+      atualizarResumo();
+      atualizarGrafico();
     }
 
     function salvarTransacoes() {
       localStorage.setItem("transacoes", JSON.stringify(transacoes));
-      popularFiltroMes();
-      atualizarResumo();
-      atualizarGrafico();
+    }
+
+    function editarTransacao(index) {
+      editandoIndex = index;
       renderizarLista();
     }
 
-    function baixarBackup() {
-      const blob = new Blob([JSON.stringify(transacoes, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "backup_financeiro.json";
-      a.click();
+    function cancelarEdicao() {
+      editandoIndex = null;
+      renderizarLista();
     }
 
-    function atualizarGrafico() {
-      const transacoesFiltradas = filtrarTransacoesPorMes(mesSelecionado);
-      const categorias = {};
-      transacoesFiltradas.forEach(t => {
-        if (!categorias[t.categoria]) categorias[t.categoria] = 0;
-        categorias[t.categoria] += t.tipo === 'entrada' ? t.valor : -t.valor;
-      });
-      const ctx = document.getElementById("grafico").getContext("2d");
-      if (window.graficoFinanceiro) window.graficoFinanceiro.destroy();
-      window.graficoFinanceiro = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: Object.keys(categorias),
-          datasets: [{
-            label: 'Valor por Categoria',
-            data: Object.values(categorias),
-            backgroundColor: '#0d6efd'
-          }]
-        }
-      });
+    function salvarEdicao(index) {
+      const descricao = document.getElementById("editDescricao").value.trim();
+      const valor = parseFloat(document.getElementById("editValor").value);
+      const categoria = document.getElementById("editCategoria").value;
+      const tipo = document.getElementById("editTipo").value;
+      if (!descricao || !valor || isNaN(valor)) return alert("Preencha todos os campos corretamente!");
+      transacoes[index].descricao = descricao;
+      transacoes[index].valor = valor;
+      transacoes[index].categoria = categoria;
+      transacoes[index].tipo = tipo;
+      // Atualizar data para data atual para manter coerência ou manter antiga?
+      // Vamos manter antiga para histórico:
+      // transacoes[index].data = new Date().toISOString();
+      salvarTransacoes();
+      editandoIndex = null;
+      renderizarLista();
+      atualizarResumo();
+      atualizarGrafico();
     }
 
-    function popularFiltroMes() {
+    function excluirTransacao(index) {
+      if (confirm("Tem certeza que deseja apagar esta transação?")) {
+        transacoes.splice(index, 1);
+        salvarTransacoes();
+        renderizarLista();
+        atualizarResumo();
+        atualizarGrafico();
+      }
+    }
+
+    function carregarFiltroMes() {
       const filtro = document.getElementById("filtroMes");
-      const meses = [...new Set(transacoes.map(t => obterMes(t.data)))].sort().reverse();
-      filtro.innerHTML = meses.map(m => `<option value="${m}">${m}</option>`).join("");
-      filtro.value = mesSelecionado;
+      const meses = [...new Set(transacoes.map((t) => obterMes(t.data)))];
+      meses.sort((a, b) => b.localeCompare(a)); // ordem decrescente
+      filtro.innerHTML = "";
+      meses.forEach((m) => {
+        const opt = document.createElement("option");
+        opt.value = m;
+        opt.textContent = m;
+        filtro.appendChild(opt);
+      });
+      if (meses.includes(mesSelecionado)) {
+        filtro.value = mesSelecionado;
+      } else if (meses.length > 0) {
+        mesSelecionado = meses[0];
+        filtro.value = mesSelecionado;
+      }
     }
 
     function filtrarPorMes() {
       mesSelecionado = document.getElementById("filtroMes").value;
-      salvarTransacoes();
+      renderizarLista();
+      atualizarResumo();
+      atualizarGrafico();
     }
 
-    salvarTransacoes();
+    // Gráfico
+    let graficoInstance;
+    function atualizarGrafico() {
+      const ctx = document.getElementById("grafico").getContext("2d");
+      const transacoesMes = filtrarTransacoesPorMes(mesSelecionado);
+      const categorias = [...new Set(transacoesMes.map((t) => t.categoria))];
+      const valoresPorCategoria = categorias.map((cat) =>
+        transacoesMes
+          .filter((t) => t.categoria === cat)
+          .reduce((acc, t) => acc + (t.tipo === "saida" ? -t.valor : t.valor), 0)
+      );
+
+      if (graficoInstance) graficoInstance.destroy();
+
+      graficoInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: categorias,
+          datasets: [
+            {
+              label: "Valor por Categoria",
+              data: valoresPorCategoria,
+              backgroundColor: valoresPorCategoria.map((v) =>
+                v >= 0 ? "rgba(54, 162, 235, 0.7)" : "rgba(255, 99, 132, 0.7)"
+              ),
+              borderColor: valoresPorCategoria.map((v) =>
+                v >= 0 ? "rgba(54, 162, 235, 1)" : "rgba(255, 99, 132, 1)"
+              ),
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true },
+          },
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: "black" } },
+          },
+        },
+      });
+    }
+
+    function baixarBackup() {
+      const dataStr = JSON.stringify(transacoes, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "backup_transacoes.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function inicializar() {
+      carregarFiltroMes();
+      renderizarLista();
+      atualizarResumo();
+      atualizarGrafico();
+    }
+
+    inicializar();
+ 
+  let deferredPrompt;
+  const btnInstalar = document.getElementById('btnInstalarApp');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Previne que o navegador mostre o prompt automaticamente
+    e.preventDefault();
+    // Guarda o evento para disparar depois
+    deferredPrompt = e;
+    // Mostra o botão para o usuário
+    btnInstalar.style.display = 'block';
+  });
+
+  btnInstalar.addEventListener('click', async () => {
+    if (!deferredPrompt) {
+      return;
+    }
+    // Mostra o prompt de instalação
+    deferredPrompt.prompt();
+    // Espera a resposta do usuário
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      console.log('Usuário aceitou instalar o app');
+    } else {
+      console.log('Usuário rejeitou a instalação');
+    }
+    // Esconde o botão após o uso
+    btnInstalar.style.display = 'none';
+    deferredPrompt = null;
+  });
+
+  // Opcional: escuta se o app já foi instalado para esconder o botão
+  window.addEventListener('appinstalled', () => {
+    console.log('App instalado com sucesso!');
+    btnInstalar.style.display = 'none';
+  });
+
   </script>
 </body>
 </html>
