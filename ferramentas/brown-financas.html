@@ -10,15 +10,19 @@
     body {
       background-color: #121212;
       color: white;
+      font-family: Arial, sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6, p, span, label, input, select, button, strong, option, optgroup {
+      color: white !important;
     }
     .card {
       background-color: #1e1e1e;
       border: none;
       margin-bottom: 1rem;
     }
-    .form-control, .btn {
-      background-color: #2c2c2c;
-      color: white;
+    .form-control, .btn, select, option {
+      background-color: #2c2c2c !important;
+      color: white !important;
       border: none;
     }
     .form-control::placeholder {
@@ -33,11 +37,34 @@
       font-weight: bold;
       color: #0d6efd;
     }
+    .transacao-item {
+      padding: 0.5rem;
+      border-bottom: 1px solid #444;
+    }
+    .transacao-item span {
+      display: inline-block;
+      min-width: 80px;
+    }
+    .btn-editar, .btn-apagar {
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
   </style>
 </head>
 <body>
   <div class="container py-4">
+    <div class="text-center mb-4">
+      <a href="http://mayconbrown.com.br/">
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" width="400">
+      </a>
+    </div>
     <h2 class="text-center mb-4">Controle Financeiro</h2>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <select id="filtroMes" class="form-control" onchange="filtrarPorMes()"></select>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-md-4">
@@ -85,20 +112,62 @@
           <h5>Gráfico de Transações</h5>
           <canvas id="grafico"></canvas>
         </div>
+        <div class="card p-3">
+          <h5>Lista de Transações</h5>
+          <div class="mb-2">
+            <label class="me-2">
+              <input type="checkbox" id="mostrarEntradas" checked onchange="renderizarLista()"> Mostrar Entradas
+            </label>
+            <label>
+              <input type="checkbox" id="mostrarSaidas" checked onchange="renderizarLista()"> Mostrar Saídas
+            </label>
+          </div>
+          <div id="listaTransacoes"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
     let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [];
+    let mesSelecionado = new Date().toISOString().slice(0, 7);
+
+    function obterMes(isoDate) {
+      return isoDate.slice(0, 7);
+    }
+
+    function filtrarTransacoesPorMes(mes) {
+      return transacoes.filter(t => obterMes(t.data) === mes);
+    }
 
     function atualizarResumo() {
-      let entradas = transacoes.filter(t => t.tipo === 'entrada').reduce((acc, t) => acc + t.valor, 0);
-      let saidas = transacoes.filter(t => t.tipo === 'saida').reduce((acc, t) => acc + t.valor, 0);
+      const transacoesFiltradas = filtrarTransacoesPorMes(mesSelecionado);
+      let entradas = transacoesFiltradas.filter(t => t.tipo === 'entrada').reduce((acc, t) => acc + t.valor, 0);
+      let saidas = transacoesFiltradas.filter(t => t.tipo === 'saida').reduce((acc, t) => acc + t.valor, 0);
       let saldo = entradas - saidas;
       document.getElementById("totalEntradas").innerText = entradas.toFixed(2);
       document.getElementById("totalSaidas").innerText = saidas.toFixed(2);
       document.getElementById("saldo").innerText = saldo.toFixed(2);
+    }
+
+    function renderizarLista() {
+      const mostrarEntradas = document.getElementById("mostrarEntradas")?.checked ?? true;
+      const mostrarSaidas = document.getElementById("mostrarSaidas")?.checked ?? true;
+      const lista = document.getElementById("listaTransacoes");
+      lista.innerHTML = "";
+      const transacoesFiltradas = filtrarTransacoesPorMes(mesSelecionado);
+
+      transacoesFiltradas.forEach((t, i) => {
+        if ((t.tipo === 'entrada' && !mostrarEntradas) || (t.tipo === 'saida' && !mostrarSaidas)) return;
+
+        const div = document.createElement("div");
+        div.className = "transacao-item";
+        div.innerHTML = `
+          <strong>${t.descricao}</strong> <span>R$ ${t.valor.toFixed(2)}</span>
+          <span>${t.categoria}</span> <span>${t.tipo}</span>
+        `;
+        lista.appendChild(div);
+      });
     }
 
     function adicionarTransacao() {
@@ -107,12 +176,19 @@
       const categoria = document.getElementById("categoria").value;
       const tipo = document.getElementById("tipo").value;
       if (!descricao || !valor || isNaN(valor)) return;
-
       const nova = { descricao, valor, categoria, tipo, data: new Date().toISOString() };
       transacoes.push(nova);
+      salvarTransacoes();
+      document.getElementById("descricao").value = "";
+      document.getElementById("valor").value = "";
+    }
+
+    function salvarTransacoes() {
       localStorage.setItem("transacoes", JSON.stringify(transacoes));
+      popularFiltroMes();
       atualizarResumo();
       atualizarGrafico();
+      renderizarLista();
     }
 
     function baixarBackup() {
@@ -125,12 +201,12 @@
     }
 
     function atualizarGrafico() {
+      const transacoesFiltradas = filtrarTransacoesPorMes(mesSelecionado);
       const categorias = {};
-      transacoes.forEach(t => {
+      transacoesFiltradas.forEach(t => {
         if (!categorias[t.categoria]) categorias[t.categoria] = 0;
         categorias[t.categoria] += t.tipo === 'entrada' ? t.valor : -t.valor;
       });
-
       const ctx = document.getElementById("grafico").getContext("2d");
       if (window.graficoFinanceiro) window.graficoFinanceiro.destroy();
       window.graficoFinanceiro = new Chart(ctx, {
@@ -146,8 +222,19 @@
       });
     }
 
-    atualizarResumo();
-    atualizarGrafico();
+    function popularFiltroMes() {
+      const filtro = document.getElementById("filtroMes");
+      const meses = [...new Set(transacoes.map(t => obterMes(t.data)))].sort().reverse();
+      filtro.innerHTML = meses.map(m => `<option value="${m}">${m}</option>`).join("");
+      filtro.value = mesSelecionado;
+    }
+
+    function filtrarPorMes() {
+      mesSelecionado = document.getElementById("filtroMes").value;
+      salvarTransacoes();
+    }
+
+    salvarTransacoes();
   </script>
 </body>
 </html>
