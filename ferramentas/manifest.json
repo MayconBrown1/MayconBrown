@@ -2,7 +2,7 @@
     "name": "Cardápio Online 5",
     "short_name": "Cardápio 5",
     "description": "Tenha o controle das suas finanças na palma da mão.",
-    "start_url": "https://mayconbrown.com.br/ferramentas/brown-financas.html",
+    "start_url": "https://mayconbrown.com.br/ferramentas/brown-financas",
     "display": "standalone",
     "background_color": "#121212",
     "theme_color": "#121212",
