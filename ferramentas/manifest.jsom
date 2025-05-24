@@ -1,0 +1,16 @@
+{
+    "name": "Cardápio Online 5",
+    "short_name": "Cardápio 5",
+    "description": "Simplifique seu atendimento! Com nosso cardápio online, seus clientes fazem pedidos sem precisar conversar no WhatsApp. Menos tempo respondendo, mais tempo vendendo!",
+    "start_url": "https://mayconbrown.com.br/ferramentas/brown-financas.html",
+    "display": "standalone",
+    "background_color": "#121212",
+    "theme_color": "#121212",
+    "icons": [
+      {
+        "src": "https://mayconbrown.com.br/img/brown-financas.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
