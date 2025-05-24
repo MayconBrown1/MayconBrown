@@ -160,13 +160,18 @@
           <h5>Nova Transação</h5>
           <input type="text" id="descricao" class="form-control mb-2" placeholder="Descrição" />
           <input type="number" id="valor" class="form-control mb-2" placeholder="Valor" />
+          <select id="tipo" class="form-control mb-3">
+            <option value="entrada">Entrada</option>
+            <option value="saida">Saída</option>
+          </select>
           <select id="categoria" class="form-control mb-2">
             <optgroup label="Entradas">
               <option>Salário</option>
               <option>Bicos/Freelancer</option>
               <option>Presente</option>
-              <option>Investimentos</option>
-              <option>Vendas</option>
+              <option>Investimento</option>
+              <option>Venda</option>
+              <option>Serviço</option>
               <option>Outros</option>
             </optgroup>
             <optgroup label="Saídas">
@@ -179,10 +184,6 @@
               <option>Assinaturas</option>
               <option>Outros</option>
             </optgroup>
-          </select>
-          <select id="tipo" class="form-control mb-3">
-            <option value="entrada">Entrada</option>
-            <option value="saida">Saída</option>
           </select>
           <button class="btn btn-success w-100" onclick="adicionarTransacao()">Salvar</button>
         </div>
@@ -532,7 +533,7 @@
     }
 
     inicializar();
- 
+
   let deferredPrompt;
   const btnInstalar = document.getElementById('btnInstalarApp');
 
