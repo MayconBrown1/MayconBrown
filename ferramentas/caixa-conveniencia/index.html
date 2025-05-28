@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Caixa Conveniência</title>
+  <title>Sistema de Caixa</title>
   <script src="https://unpkg.com/@zxing/browser@latest"></script>
   <style>
     body {
@@ -141,7 +141,7 @@
     <button onclick="alternarProdutosCadastrados()">📋 Produtos Cadastrados</button>
   </div>
 
-  <h1>Sistema de Caixa para Conveniência</h1>
+  <h1>Sistema de Caixa</h1>
 
   <section id="cadastro" style="display:none">
     <h2>Cadastro de Produtos</h2>
@@ -153,13 +153,6 @@
     <button onclick="fazerBackup()">📦 Fazer Backup</button>
     <button onclick="document.getElementById('inputBackup').click()">🔁 Restaurar Backup</button>
     <input type="file" id="inputBackup" accept=".json" style="display: none" onchange="restaurarBackup(event)" />
-  </section>
-
-  <section id="scanner">
-    <h2>Leitor de Códigos</h2>
-    <button id="btnScanner" onclick="iniciarScanner()">📷 Ler com a Câmera</button>
-    <p>Clique para usar a câmera e escanear o código de barras</p>
-    <video id="video" width="300" height="200" style="border:1px solid #fff; display:none;"></video>
   </section>
 
   <section id="vendas">
