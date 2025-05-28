@@ -48,10 +48,23 @@
       margin: 0 auto;
       max-width: 400px;
     }
+    #menu {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+    .remover-btn {
+      background: #c00;
+      color: #fff;
+      margin-left: auto;
+    }
   </style>
 </head>
 <body>
   <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" class="logo" alt="Logo" />
+  <div id="menu">
+    <button onclick="alternarProdutosCadastrados()">📋 Produtos Cadastrados</button>
+  </div>
   <h1>Sistema de Caixa para Conveniência</h1>
 
   <section id="cadastro">
@@ -61,13 +74,16 @@
     <input id="preco" type="number" placeholder="Preço (R$)" />
     <input id="imagem" type="text" placeholder="URL da Imagem" />
     <button onclick="cadastrarProduto()">Cadastrar</button>
-    <button onclick="fazerBackup()">Fazer Backup</button>
-    <button onclick="restaurarBackup()">Restaurar Backup</button>
+    <button onclick="fazerBackup()">📦 Fazer Backup</button>
+    <button onclick="document.getElementById('inputBackup').click()">🔁 Restaurar Backup</button>
+    <input type="file" id="inputBackup" accept=".json" style="display: none" onchange="restaurarBackup(event)" />
   </section>
 
   <section id="scanner">
     <h2>Leitor de Códigos</h2>
-    <video id="video" width="300" height="200"></video>
+    <button onclick="iniciarScanner()">📷 Ler com a Câmera</button>
+    <p>Clique para usar a câmera e escanear o código de barras</p>
+    <video id="video" width="300" height="200" style="border:1px solid #fff" onclick="iniciarScanner()"></video>
   </section>
 
   <section id="vendas">
@@ -82,9 +98,15 @@
     <button onclick="finalizarVenda()">Finalizar</button>
   </section>
 
+  <div id="produtosCadastrados" style="display:none">
+    <h2>Produtos Cadastrados</h2>
+    <div id="listaCadastro"></div>
+  </div>
+
   <script>
     let produtos = JSON.parse(localStorage.getItem('produtos') || '{}');
     let vendaAtual = [];
+    let produtosVisiveis = false;
 
     function cadastrarProduto() {
       const codigo = document.getElementById('codigo').value;
@@ -98,40 +120,15 @@
       alert('Produto cadastrado!');
     }
 
-    function fazerBackup() {
-      const blob = new Blob([JSON.stringify(produtos, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'backup_produtos.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function restaurarBackup() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'application/json';
-      input.onchange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          try {
-            produtos = JSON.parse(reader.result);
-            localStorage.setItem('produtos', JSON.stringify(produtos));
-            alert('Backup restaurado com sucesso!');
-          } catch (e) {
-            alert('Erro ao restaurar o backup.');
-          }
-        };
-        reader.readAsText(file);
-      };
-      input.click();
-    }
-
     function adicionarProduto(codigo) {
       if (!produtos[codigo]) return alert('Produto não encontrado');
-      vendaAtual.push(produtos[codigo]);
+      const qtd = prompt("Quantas unidades?");
+      const quantidade = parseInt(qtd);
+      if (isNaN(quantidade) || quantidade < 1) return alert('Quantidade inválida');
+
+      for (let i = 0; i < quantidade; i++) {
+        vendaAtual.push({ ...produtos[codigo], codigo });
+      }
       atualizarLista();
     }
 
@@ -139,16 +136,22 @@
       const lista = document.getElementById('listaProdutos');
       lista.innerHTML = '';
       let total = 0;
-      vendaAtual.forEach(prod => {
+      vendaAtual.forEach((prod, index) => {
         total += prod.preco;
         lista.innerHTML += `
           <div class="produto">
             <img src="${prod.imagem}" alt="img" />
             <span>${prod.nome} - R$ ${prod.preco.toFixed(2)}</span>
+            <button class="remover-btn" onclick="removerProduto(${index})">Remover</button>
           </div>
         `;
       });
       document.getElementById('total').innerText = total.toFixed(2);
+    }
+
+    function removerProduto(index) {
+      vendaAtual.splice(index, 1);
+      atualizarLista();
     }
 
     function finalizarVenda() {
@@ -174,7 +177,87 @@
       });
     }
 
-    iniciarScanner();
+    function fazerBackup() {
+      const blob = new Blob([JSON.stringify(produtos, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "produtos_backup.json";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function restaurarBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return alert('Nenhum arquivo selecionado.');
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (typeof data !== 'object' || Array.isArray(data)) {
+            alert('Arquivo inválido.');
+            return;
+          }
+
+          produtos = data;
+          localStorage.setItem('produtos', JSON.stringify(produtos));
+          alert('Backup restaurado com sucesso!');
+        } catch (err) {
+          alert('Erro ao ler o backup. Verifique o arquivo.');
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function alternarProdutosCadastrados() {
+      const secao = document.getElementById('produtosCadastrados');
+      if (produtosVisiveis) {
+        secao.style.display = 'none';
+        produtosVisiveis = false;
+      } else {
+        mostrarProdutosCadastrados();
+        secao.style.display = 'block';
+        produtosVisiveis = true;
+      }
+    }
+
+    function mostrarProdutosCadastrados() {
+      const lista = document.getElementById('listaCadastro');
+      lista.innerHTML = '';
+      for (const codigo in produtos) {
+        const p = produtos[codigo];
+        lista.innerHTML += `
+          <div class="produto">
+            <img src="${p.imagem}" />
+            <span>${p.nome} - R$ ${p.preco.toFixed(2)}</span>
+            <button onclick="editarProduto('${codigo}')">Editar</button>
+            <button onclick="apagarProduto('${codigo}')">Apagar</button>
+          </div>
+        `;
+      }
+    }
+
+    function editarProduto(codigo) {
+      const p = produtos[codigo];
+      const novoNome = prompt('Novo nome:', p.nome);
+      const novoPreco = parseFloat(prompt('Novo preço:', p.preco));
+      const novaImagem = prompt('Nova imagem:', p.imagem);
+      if (novoNome && !isNaN(novoPreco)) {
+        produtos[codigo] = { nome: novoNome, preco: novoPreco, imagem: novaImagem };
+        localStorage.setItem('produtos', JSON.stringify(produtos));
+        mostrarProdutosCadastrados();
+      }
+    }
+
+    function apagarProduto(codigo) {
+      if (confirm('Deseja apagar este produto?')) {
+        delete produtos[codigo];
+        localStorage.setItem('produtos', JSON.stringify(produtos));
+        mostrarProdutosCadastrados();
+      }
+    }
   </script>
 </body>
 </html>
