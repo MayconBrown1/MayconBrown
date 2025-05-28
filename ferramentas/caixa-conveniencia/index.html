@@ -52,11 +52,11 @@
       position: fixed;
       top: 1rem;
       right: 1rem;
-    }
-    .remover-btn {
-      background: #c00;
-      color: #fff;
-      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      z-index: 999;
     }
   </style>
 </head>
@@ -64,10 +64,11 @@
   <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" class="logo" alt="Logo" />
   <div id="menu">
     <button onclick="alternarProdutosCadastrados()">📋 Produtos Cadastrados</button>
+    <button onclick="alternarCadastro()">✏️ Cadastrar Produtos</button>
   </div>
   <h1>Sistema de Caixa para Conveniência</h1>
 
-  <section id="cadastro">
+  <section id="cadastro" style="display:none">
     <h2>Cadastro de Produtos</h2>
     <input id="codigo" placeholder="Código de Barras" />
     <input id="nome" placeholder="Nome do Produto" />
@@ -107,17 +108,30 @@
     let produtos = JSON.parse(localStorage.getItem('produtos') || '{}');
     let vendaAtual = [];
     let produtosVisiveis = false;
+    let cadastroVisivel = false;
 
     function cadastrarProduto() {
-      const codigo = document.getElementById('codigo').value;
-      const nome = document.getElementById('nome').value;
+      const codigo = document.getElementById('codigo').value.trim();
+      const nome = document.getElementById('nome').value.trim();
       const preco = parseFloat(document.getElementById('preco').value);
-      const imagem = document.getElementById('imagem').value;
+      const imagem = document.getElementById('imagem').value.trim();
 
-      if (!codigo || !nome || isNaN(preco)) return alert('Preencha os campos corretamente');
+      if (!codigo || !nome || isNaN(preco)) {
+        alert('Preencha os campos corretamente');
+        return;
+      }
+
       produtos[codigo] = { nome, preco, imagem };
       localStorage.setItem('produtos', JSON.stringify(produtos));
       alert('Produto cadastrado!');
+
+      // Limpar campos
+      document.getElementById('codigo').value = '';
+      document.getElementById('nome').value = '';
+      document.getElementById('preco').value = '';
+      document.getElementById('imagem').value = '';
+
+      if (produtosVisiveis) mostrarProdutosCadastrados();
     }
 
     function adicionarProduto(codigo) {
@@ -127,7 +141,7 @@
       if (isNaN(quantidade) || quantidade < 1) return alert('Quantidade inválida');
 
       for (let i = 0; i < quantidade; i++) {
-        vendaAtual.push({ ...produtos[codigo], codigo });
+        vendaAtual.push(produtos[codigo]);
       }
       atualizarLista();
     }
@@ -136,22 +150,16 @@
       const lista = document.getElementById('listaProdutos');
       lista.innerHTML = '';
       let total = 0;
-      vendaAtual.forEach((prod, index) => {
+      vendaAtual.forEach(prod => {
         total += prod.preco;
         lista.innerHTML += `
           <div class="produto">
             <img src="${prod.imagem}" alt="img" />
             <span>${prod.nome} - R$ ${prod.preco.toFixed(2)}</span>
-            <button class="remover-btn" onclick="removerProduto(${index})">Remover</button>
           </div>
         `;
       });
       document.getElementById('total').innerText = total.toFixed(2);
-    }
-
-    function removerProduto(index) {
-      vendaAtual.splice(index, 1);
-      atualizarLista();
     }
 
     function finalizarVenda() {
@@ -173,6 +181,7 @@
       codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
         if (result) {
           adicionarProduto(result.text);
+          codeReader.reset(); // Para o scanner após ler o código
         }
       });
     }
@@ -203,6 +212,7 @@
           produtos = data;
           localStorage.setItem('produtos', JSON.stringify(produtos));
           alert('Backup restaurado com sucesso!');
+          if (produtosVisiveis) mostrarProdutosCadastrados();
         } catch (err) {
           alert('Erro ao ler o backup. Verifique o arquivo.');
           console.error(err);
@@ -227,35 +237,28 @@
       const lista = document.getElementById('listaCadastro');
       lista.innerHTML = '';
       for (const codigo in produtos) {
-        const p = produtos[codigo];
+        const prod = produtos[codigo];
         lista.innerHTML += `
           <div class="produto">
-            <img src="${p.imagem}" />
-            <span>${p.nome} - R$ ${p.preco.toFixed(2)}</span>
-            <button onclick="editarProduto('${codigo}')">Editar</button>
-            <button onclick="apagarProduto('${codigo}')">Apagar</button>
+            <img src="${prod.imagem}" alt="${prod.nome}" />
+            <div>
+              <strong>${prod.nome}</strong><br/>
+              Código: ${codigo}<br/>
+              Preço: R$ ${prod.preco.toFixed(2)}
+            </div>
           </div>
         `;
       }
     }
 
-    function editarProduto(codigo) {
-      const p = produtos[codigo];
-      const novoNome = prompt('Novo nome:', p.nome);
-      const novoPreco = parseFloat(prompt('Novo preço:', p.preco));
-      const novaImagem = prompt('Nova imagem:', p.imagem);
-      if (novoNome && !isNaN(novoPreco)) {
-        produtos[codigo] = { nome: novoNome, preco: novoPreco, imagem: novaImagem };
-        localStorage.setItem('produtos', JSON.stringify(produtos));
-        mostrarProdutosCadastrados();
-      }
-    }
-
-    function apagarProduto(codigo) {
-      if (confirm('Deseja apagar este produto?')) {
-        delete produtos[codigo];
-        localStorage.setItem('produtos', JSON.stringify(produtos));
-        mostrarProdutosCadastrados();
+    function alternarCadastro() {
+      const secao = document.getElementById('cadastro');
+      if (cadastroVisivel) {
+        secao.style.display = 'none';
+        cadastroVisivel = false;
+      } else {
+        secao.style.display = 'block';
+        cadastroVisivel = true;
       }
     }
   </script>
