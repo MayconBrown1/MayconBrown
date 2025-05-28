@@ -137,8 +137,8 @@
   <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" class="logo" alt="Logo" />
 
   <div id="menu">
-    <button onclick="alternarProdutosCadastrados()">📋 Produtos Cadastrados</button>
     <button onclick="alternarCadastro()">✏️ Cadastrar Produtos</button>
+    <button onclick="alternarProdutosCadastrados()">📋 Produtos Cadastrados</button>
   </div>
 
   <h1>Sistema de Caixa para Conveniência</h1>
@@ -367,146 +367,140 @@ function mostrarProdutosCadastrados() {
     }
 
     // Alterna visibilidade dos produtos cadastrados
-    function alternarProdutosCadastrados() {
-      produtosVisiveis = !produtosVisiveis;
-      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
-      if (produtosVisiveis) {
-        mostrarProdutosCadastrados();
-        cadastroVisivel = false;
-        document.getElementById('cadastro').style.display = 'none';
-      }
-    }
+function alternarProdutosCadastrados() {
+  produtosVisiveis = !produtosVisiveis;
+  document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
+  document.getElementById('pesquisaProdutos').style.display = produtosVisiveis ? 'block' : 'none';
+
+  if (produtosVisiveis) {
+    mostrarProdutosCadastrados();
+    cadastroVisivel = false;
+    document.getElementById('cadastro').style.display = 'none';
+  }
+}
+
 
     // Alterna visibilidade do cadastro de produtos
-    function alternarCadastro() {
-      cadastroVisivel = !cadastroVisivel;
-      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
-      if (cadastroVisivel) {
-        produtosVisiveis = false;
-        document.getElementById('produtosCadastrados').style.display = 'none';
-      }
-    }
+function alternarCadastro() {
+  cadastroVisivel = !cadastroVisivel;
+  document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
+
+  if (cadastroVisivel) {
+    // Se o cadastro abriu, fecha a lista de produtos cadastrados
+    produtosVisiveis = false;
+    document.getElementById('produtosCadastrados').style.display = 'none';
+    document.getElementById('pesquisaProdutos').style.display = 'none';
+  }
+}
+
+
 
     // Abre modal para editar produto
     function abrirModalEditar(codigo) {
-      codigoEditando = codigo;
-      const prod = produtos[codigo];
-      if (!prod) return alert('Produto não encontrado');
+  codigoEditando = codigo;
+  const prod = produtos[codigo];
+  if (!prod) return alert('Produto não encontrado');
 
-      document.getElementById('editarCodigo').value = codigo;
-      document.getElementById('editarNome').value = prod.nome;
-      document.getElementById('editarPreco').value = prod.preco;
-      document.getElementById('editarImagem').value = prod.imagem;
+  document.getElementById('editarCodigo').value = codigo;
+  document.getElementById('editarNome').value = prod.nome;
+  document.getElementById('editarPreco').value = prod.preco;
+  document.getElementById('editarImagem').value = prod.imagem;
 
-      document.getElementById('modalEditar').classList.remove('hidden');
-    }
+  document.getElementById('modalEditar').classList.remove('hidden');
+}
 
-    // Fecha modal
-    function fecharModal() {
-      document.getElementById('modalEditar').classList.add('hidden');
-      codigoEditando = null;
-    }
+function fecharModal() {
+  codigoEditando = null;
+  document.getElementById('modalEditar').classList.add('hidden');
+}
 
-    // Salva edição do produto
-    function salvarEdicao() {
-      if (!codigoEditando) return;
+function salvarEdicao() {
+  if (!codigoEditando) return;
 
-      const nome = document.getElementById('editarNome').value.trim();
-      const preco = parseFloat(document.getElementById('editarPreco').value);
-      const imagem = document.getElementById('editarImagem').value.trim();
+  const nome = document.getElementById('editarNome').value.trim();
+  const preco = parseFloat(document.getElementById('editarPreco').value);
+  const imagem = document.getElementById('editarImagem').value.trim();
 
-      if (!nome || isNaN(preco)) {
-        alert('Preencha os campos corretamente');
-        return;
-      }
+  if (!nome || isNaN(preco)) {
+    alert('Preencha os campos corretamente');
+    return;
+  }
 
-      produtos[codigoEditando] = { nome, preco, imagem };
-      salvarProdutos();
-      mostrarProdutosCadastrados();
-      fecharModal();
-      alert('Produto atualizado!');
-    }
+  produtos[codigoEditando] = { nome, preco, imagem };
+  salvarProdutos();
+  mostrarProdutosCadastrados();
+  fecharModal();
+  alert('Produto atualizado!');
+}
+
 
     // Backup dos produtos para arquivo JSON
     function fazerBackup() {
-      const dataStr = JSON.stringify(produtos, null, 2);
-      const blob = new Blob([dataStr], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
+  const dataStr = JSON.stringify(produtos, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'backup_produtos.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = "backup_produtos.json";
-      a.click();
+function restaurarBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
 
-      URL.revokeObjectURL(url);
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (typeof data === 'object' && data !== null) {
+        produtos = data;
+        salvarProdutos();
+        alert('Backup restaurado com sucesso!');
+        if (produtosVisiveis) mostrarProdutosCadastrados();
+      } else {
+        alert('Arquivo inválido');
+      }
+    } catch (error) {
+      alert('Erro ao ler o arquivo: ' + error);
     }
+  };
+  reader.readAsText(file);
+}
 
-    // Restaurar backup
-    function restaurarBackup(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const dados = JSON.parse(e.target.result);
-          if (typeof dados === 'object') {
-            produtos = dados;
-            salvarProdutos();
-            alert('Backup restaurado com sucesso!');
-            if (produtosVisiveis) mostrarProdutosCadastrados();
-          } else {
-            alert('Arquivo inválido.');
-          }
-        } catch {
-          alert('Erro ao ler arquivo JSON.');
-        }
-      };
-      reader.readAsText(file);
-      event.target.value = ''; // Limpar input para poder carregar o mesmo arquivo novamente
-    }
 
     // Inicia o scanner de código de barras
     async function iniciarScanner() {
-      const video = document.getElementById('video');
-      const btnScanner = document.getElementById('btnScanner');
+  const video = document.getElementById('video');
+  if (!codeReader) {
+    codeReader = new ZXing.BrowserBarcodeReader();
+  }
+  
+  document.getElementById('btnScanner').disabled = true;
+  video.style.display = 'block';
 
-      if (codeReader) {
-        // Já está rodando, então para
-        pararScanner();
-        return;
-      }
+  try {
+    const result = await codeReader.decodeOnceFromVideoDevice(undefined, 'video');
+    alert(`Código escaneado: ${result.text}`);
+    video.style.display = 'none';
+    document.getElementById('btnScanner').disabled = false;
 
-      codeReader = new ZXing.BrowserBarcodeReader();
-      video.style.display = 'block';
-
-      try {
-        const result = await codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
-          if (result) {
-            pararScanner();
-            const codigoLido = result.text;
-            alert('Código lido: ' + codigoLido);
-
-            // Se produto cadastrado, adicionar na venda
-            if (produtos[codigoLido]) {
-              adicionarProduto(codigoLido);
-            } else {
-              if (confirm('Produto não cadastrado. Deseja cadastrar agora?')) {
-                alternarCadastro();
-                document.getElementById('codigo').value = codigoLido;
-              }
-            }
-          }
-          if (err && !(err instanceof ZXing.NotFoundException)) {
-            console.error(err);
-          }
-        });
-        btnScanner.innerText = '⏹️ Parar Leitura';
-      } catch (e) {
-        alert('Permissão de câmera negada ou erro ao acessar a câmera.');
-        pararScanner();
-      }
+    // Caso queira adicionar automaticamente o produto escaneado:
+    if (produtos[result.text]) {
+      adicionarProduto(result.text);
+    } else {
+      alert('Produto não cadastrado para este código.');
     }
+  } catch (err) {
+    alert('Erro ao escanear o código: ' + err);
+    video.style.display = 'none';
+    document.getElementById('btnScanner').disabled = false;
+  }
+}
+
 
     // Para o scanner
     function pararScanner() {
