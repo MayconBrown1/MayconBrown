@@ -293,144 +293,136 @@
             video.style.display = 'none';
           });
       } else {
-        // Parar scanner e esconder vídeo
-        pararScanner();
+                // Parar scanner e esconder vídeo
+                pararScanner();
       }
     }
 
     function pararScanner() {
+      const video = document.getElementById('video');
+      const btnScanner = document.getElementById('btnScanner');
+
       if (codeReader) {
         codeReader.reset();
       }
-      const video = document.getElementById('video');
-      const btnScanner = document.getElementById('btnScanner');
+
       video.style.display = 'none';
       btnScanner.innerText = '📷 Ler com a Câmera';
     }
 
+
     // Backup e restauração
     function fazerBackup() {
-      const blob = new Blob([JSON.stringify(produtos, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "produtos_backup.json";
-      link.click();
-      URL.revokeObjectURL(url);
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(produtos));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "backup_produtos.json");
+      dlAnchor.click();
     }
 
     function restaurarBackup(event) {
       const file = event.target.files[0];
       if (!file) return;
+
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         try {
-          const dados = JSON.parse(e.target.result);
-          produtos = dados;
+          produtos = JSON.parse(e.target.result);
           salvarProdutos();
-          alert('Backup restaurado!');
+          alert('Backup restaurado com sucesso!');
           if (produtosVisiveis) mostrarProdutosCadastrados();
-        } catch {
-          alert('Arquivo inválido.');
+        } catch (err) {
+          alert('Erro ao restaurar backup: ' + err);
         }
       };
       reader.readAsText(file);
     }
 
+
     // Mostrar/ocultar cadastro
     function alternarCadastro() {
-      const secao = document.getElementById('cadastro');
-      if (cadastroVisivel) {
-        secao.style.display = 'none';
-        cadastroVisivel = false;
-      } else {
-        secao.style.display = 'block';
-        cadastroVisivel = true;
-      }
+      cadastroVisivel = !cadastroVisivel;
+      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
     }
+
 
     // Mostrar/ocultar produtos cadastrados
     function alternarProdutosCadastrados() {
-      const secao = document.getElementById('produtosCadastrados');
-      if (produtosVisiveis) {
-        secao.style.display = 'none';
-        produtosVisiveis = false;
-      } else {
-        secao.style.display = 'block';
-        produtosVisiveis = true;
-        mostrarProdutosCadastrados();
-      }
+      produtosVisiveis = !produtosVisiveis;
+      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
+      if (produtosVisiveis) mostrarProdutosCadastrados();
     }
 
-    // Mostrar produtos cadastrados com botões editar e excluir
     function mostrarProdutosCadastrados() {
       const lista = document.getElementById('listaCadastro');
       lista.innerHTML = '';
-      for (const codigo in produtos) {
-        const prod = produtos[codigo];
+
+      for (let codigo in produtos) {
+        const p = produtos[codigo];
         lista.innerHTML += `
           <div class="produto">
             <div class="produto-info">
-              <img src="${prod.imagem}" alt="${prod.nome}" />
+              <img src="${p.imagem}" alt="img" />
               <div class="produto-detalhes">
-                <strong>${prod.nome}</strong><br/>
-                Código: ${codigo}<br/>
-                Preço: R$ ${prod.preco.toFixed(2)}
+                <strong>${p.nome}</strong><br />
+                <small>Código: ${codigo}</small><br />
+                <small>R$ ${p.preco.toFixed(2)}</small>
               </div>
             </div>
             <div>
-              <button onclick="abrirEdicao('${codigo}')">✏️ Editar</button>
-              <button onclick="excluirProduto('${codigo}')">🗑️ Excluir</button>
-              <button onclick="adicionarProduto('${codigo}')">➕ Vender</button>
+              <button onclick="abrirModalEditar('${codigo}')">✏️</button>
+              <button onclick="excluirProduto('${codigo}')">🗑️</button>
             </div>
           </div>
         `;
       }
     }
 
+
     // Abrir modal de edição
-    function abrirEdicao(codigo) {
+    function abrirModalEditar(codigo) {
+      const p = produtos[codigo];
+      if (!p) return;
+
       codigoEditando = codigo;
-      const prod = produtos[codigo];
       document.getElementById('editarCodigo').value = codigo;
-      document.getElementById('editarNome').value = prod.nome;
-      document.getElementById('editarPreco').value = prod.preco;
-      document.getElementById('editarImagem').value = prod.imagem;
+      document.getElementById('editarNome').value = p.nome;
+      document.getElementById('editarPreco').value = p.preco;
+      document.getElementById('editarImagem').value = p.imagem;
+
       document.getElementById('modalEditar').style.display = 'flex';
     }
 
-    // Salvar edição
-    function salvarEdicao() {
-      const nome = document.getElementById('editarNome').value.trim();
-      const preco = parseFloat(document.getElementById('editarPreco').value);
-      const imagem = document.getElementById('editarImagem').value.trim();
-
-      if (!nome || isNaN(preco)) {
-        alert('Preencha os campos corretamente');
-        return;
-      }
-
-      produtos[codigoEditando] = { nome, preco, imagem };
-      salvarProdutos();
-      mostrarProdutosCadastrados();
-      fecharModal();
-    }
-
-    // Fechar modal
     function fecharModal() {
       document.getElementById('modalEditar').style.display = 'none';
       codigoEditando = null;
     }
 
-    // Excluir produto
+    function salvarEdicao() {
+      if (!codigoEditando) return;
+
+      const nome = document.getElementById('editarNome').value.trim();
+      const preco = parseFloat(document.getElementById('editarPreco').value);
+      const imagem = document.getElementById('editarImagem').value.trim();
+
+      if (!nome || isNaN(preco)) {
+        alert('Preencha os campos corretamente.');
+        return;
+      }
+
+      produtos[codigoEditando] = { nome, preco, imagem };
+      salvarProdutos();
+      fecharModal();
+      mostrarProdutosCadastrados();
+    }
+
     function excluirProduto(codigo) {
-      if (confirm(`Deseja realmente excluir o produto ${produtos[codigo].nome}?`)) {
+      if (confirm('Tem certeza que deseja excluir este produto?')) {
         delete produtos[codigo];
         salvarProdutos();
         mostrarProdutosCadastrados();
       }
     }
-
   </script>
 </body>
 </html>
