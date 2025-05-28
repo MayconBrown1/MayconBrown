@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Remover Fundo da Imagem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .logo {
+      width: 400px;
+      margin-bottom: 30px;
+    }
+    .box {
+      background-color: #111;
+      padding: 30px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    input[type="file"] {
+      margin-top: 20px;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #1db954;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown" class="logo">
+
+  <div class="box">
+    <h2>Remover Fundo de Imagem</h2>
+    <p>Envie uma imagem, remova o fundo automaticamente e baixe com fundo transparente.</p>
+    <input type="file" id="upload" accept="image/*" />
+    <br>
+    <button class="btn" onclick="removerFundo()">Remover Fundo</button>
+    <br>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    async function removerFundo() {
+      const fileInput = document.getElementById('upload');
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = "Processando imagem...";
+
+      if (fileInput.files.length === 0) {
+        alert('Por favor, selecione uma imagem.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image_file", fileInput.files[0]);
+      formData.append("format", "png");
+
+      try {
+        const res = await fetch("https://api.pixian.ai/remove-background", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.processed_url) {
+          resultado.innerHTML = `
+            <p>Imagem com fundo removido:</p>
+            <img src="${data.processed_url}" alt="Imagem Sem Fundo">
+            <br><br>
+            <a href="${data.processed_url}" class="btn" download="sem-fundo.png">Baixar Imagem</a>
+          `;
+        } else {
+          resultado.innerHTML = "Erro ao processar imagem.";
+        }
+
+      } catch (error) {
+        console.error(error);
+        resultado.innerHTML = "Erro ao conectar com o serviço Pixian.";
+      }
+    }
+  </script>
+
+</body>
+</html>
