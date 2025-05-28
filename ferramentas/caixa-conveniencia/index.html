@@ -83,6 +83,10 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
+      display: flex;
+    }
+    #modalEditar.hidden {
+      display: none;
     }
     #modalEditar .modal-content {
       background: #222;
@@ -97,21 +101,28 @@
     }
     #modalEditar input {
       width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+      border-radius: 4px;
+      border: none;
+      font-size: 1rem;
     }
     #modalEditar button {
       margin-top: 15px;
       width: 100%;
+      padding: 10px;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
   <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" class="logo" alt="Logo" />
-  
+
   <div id="menu">
     <button onclick="alternarProdutosCadastrados()">📋 Produtos Cadastrados</button>
     <button onclick="alternarCadastro()">✏️ Cadastrar Produtos</button>
   </div>
-  
+
   <h1>Sistema de Caixa para Conveniência</h1>
 
   <section id="cadastro" style="display:none">
@@ -151,7 +162,7 @@
   </div>
 
   <!-- Modal para editar produto -->
-  <div id="modalEditar">
+  <div id="modalEditar" class="hidden">
     <div class="modal-content">
       <h3>Editar Produto</h3>
       <label>Código (não pode ser alterado):</label>
@@ -175,6 +186,9 @@
 
     // Para o modal de edição
     let codigoEditando = null;
+
+    // Variável global para o scanner
+    let codeReader = null;
 
     // Cadastrar novo produto
     function cadastrarProduto() {
@@ -242,95 +256,17 @@
 
     // Finaliza a venda atual
     function finalizarVenda() {
-      if (vendaAtual.length === 0) return alert('Nenhum produto na venda.');
-      const forma = document.getElementById('pagamento').value;
-      const total = document.getElementById('total').innerText;
-      alert(`Venda finalizada!\nTotal: R$ ${total}\nPagamento: ${forma}`);
+      if (vendaAtual.length === 0) {
+        alert('Nenhum produto na venda.');
+        return;
+      }
+      const pagamento = document.getElementById('pagamento').value;
+      alert(`Venda finalizada!\nTotal: R$ ${document.getElementById('total').innerText}\nPagamento: ${pagamento}`);
       vendaAtual = [];
       atualizarLista();
     }
 
-    // Scanner usando ZXing
-    async function iniciarScanner() {
-  const video = document.getElementById('video');
-  const btnScanner = document.getElementById('btnScanner');
-
-  // Se o vídeo já estiver visível, parar scanner
-  if (video.style.display !== 'none') {
-    pararScanner();
-    return;
-  }
-
-  try {
-    // Solicita permissão da câmera primeiro
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-    // Libera vídeo para visualização
-    video.srcObject = stream;
-    video.play();
-    video.style.display = 'block';
-    btnScanner.innerText = '🛑 Parar Scanner';
-
-    // Inicializa o ZXing se ainda não tiver sido feito
-    if (!codeReader) {
-      codeReader = new ZXing.BrowserBarcodeReader();
-    }
-
-    const devices = await codeReader.listVideoInputDevices();
-    if (devices.length === 0) {
-      alert('Nenhuma câmera encontrada.');
-      pararScanner();
-      return;
-    }
-
-    const selectedDeviceId = devices[0].deviceId;
-
-    // Começa a leitura do código de barras
-    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-      if (result) {
-        adicionarProduto(result.text);
-        pararScanner(); // para após ler
-      }
-      if (err && !(err instanceof ZXing.NotFoundException)) {
-        console.error(err);
-      }
-    });
-  } catch (error) {
-    alert('Permissão de câmera negada ou erro ao acessar: ' + error.message);
-    video.style.display = 'none';
-    btnScanner.innerText = '📷 Ler com a Câmera';
-  }
-}
-
-
-function pararScanner() {
-  const video = document.getElementById('video');
-  const btnScanner = document.getElementById('btnScanner');
-  video.pause();
-  video.srcObject?.getTracks().forEach(track => track.stop());
-  video.srcObject = null;
-  video.style.display = 'none';
-  btnScanner.innerText = '📷 Ler com a Câmera';
-  if (codeReader) {
-    codeReader.reset();
-  }
-}
-
-
-    // Alternar visibilidade da área de cadastro
-    function alternarCadastro() {
-      cadastroVisivel = !cadastroVisivel;
-      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
-    }
-
-    // Alternar visibilidade da lista de produtos cadastrados
-    function alternarProdutosCadastrados() {
-      produtosVisiveis = !produtosVisiveis;
-      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
-      if (produtosVisiveis) mostrarProdutosCadastrados();
-    }
-
-    // Mostrar todos os produtos cadastrados
+    // Mostra lista de produtos cadastrados
     function mostrarProdutosCadastrados() {
       const lista = document.getElementById('listaCadastro');
       lista.innerHTML = '';
@@ -341,15 +277,13 @@ function pararScanner() {
             <div class="produto-info">
               <img src="${prod.imagem}" alt="img" />
               <div class="produto-detalhes">
-                <strong>${prod.nome}</strong><br />
-                R$ ${prod.preco.toFixed(2)}<br />
-                <small>Código: ${codigo}</small>
+                <b>${prod.nome}</b><br>
+                Código: ${codigo}<br>
+                Preço: R$ ${prod.preco.toFixed(2)}
               </div>
             </div>
-            <div>
-              <button onclick="abrirModalEditar('${codigo}')">✏️</button>
-              <button onclick="excluirProduto('${codigo}')">🗑️</button>
-            </div>
+            <button onclick="abrirModalEditar('${codigo}')">Editar</button>
+            <button onclick="excluirProduto('${codigo}')">Excluir</button>
           </div>
         `;
       }
@@ -357,76 +291,170 @@ function pararScanner() {
 
     // Excluir produto
     function excluirProduto(codigo) {
-      if (confirm('Deseja excluir este produto?')) {
+      if (confirm('Deseja realmente excluir este produto?')) {
         delete produtos[codigo];
         salvarProdutos();
         mostrarProdutosCadastrados();
       }
     }
 
-    // Abrir modal de edição
+    // Alterna visibilidade dos produtos cadastrados
+    function alternarProdutosCadastrados() {
+      produtosVisiveis = !produtosVisiveis;
+      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
+      if (produtosVisiveis) {
+        mostrarProdutosCadastrados();
+        cadastroVisivel = false;
+        document.getElementById('cadastro').style.display = 'none';
+      }
+    }
+
+    // Alterna visibilidade do cadastro de produtos
+    function alternarCadastro() {
+      cadastroVisivel = !cadastroVisivel;
+      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
+      if (cadastroVisivel) {
+        produtosVisiveis = false;
+        document.getElementById('produtosCadastrados').style.display = 'none';
+      }
+    }
+
+    // Abre modal para editar produto
     function abrirModalEditar(codigo) {
       codigoEditando = codigo;
       const prod = produtos[codigo];
+      if (!prod) return alert('Produto não encontrado');
+
       document.getElementById('editarCodigo').value = codigo;
       document.getElementById('editarNome').value = prod.nome;
       document.getElementById('editarPreco').value = prod.preco;
       document.getElementById('editarImagem').value = prod.imagem;
-      document.getElementById('modalEditar').style.display = 'flex';
+
+      document.getElementById('modalEditar').classList.remove('hidden');
     }
 
-    // Fechar modal
+    // Fecha modal
     function fecharModal() {
-      document.getElementById('modalEditar').style.display = 'none';
+      document.getElementById('modalEditar').classList.add('hidden');
       codigoEditando = null;
     }
 
-    // Salvar edição do produto
+    // Salva edição do produto
     function salvarEdicao() {
+      if (!codigoEditando) return;
+
       const nome = document.getElementById('editarNome').value.trim();
       const preco = parseFloat(document.getElementById('editarPreco').value);
       const imagem = document.getElementById('editarImagem').value.trim();
 
       if (!nome || isNaN(preco)) {
-        alert('Preencha corretamente');
+        alert('Preencha os campos corretamente');
         return;
       }
 
       produtos[codigoEditando] = { nome, preco, imagem };
       salvarProdutos();
-      fecharModal();
       mostrarProdutosCadastrados();
+      fecharModal();
+      alert('Produto atualizado!');
     }
 
-    // Fazer backup (baixar JSON dos produtos)
+    // Backup dos produtos para arquivo JSON
     function fazerBackup() {
-      const blob = new Blob([JSON.stringify(produtos)], { type: 'application/json' });
+      const dataStr = JSON.stringify(produtos, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
       const url = URL.createObjectURL(blob);
+
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'produtos_backup.json';
+      a.download = "backup_produtos.json";
       a.click();
+
       URL.revokeObjectURL(url);
     }
 
-    // Restaurar backup de um arquivo JSON
+    // Restaurar backup
     function restaurarBackup(event) {
       const file = event.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = function(e) {
         try {
-          produtos = JSON.parse(e.target.result);
-          salvarProdutos();
-          alert('Backup restaurado com sucesso!');
-          if (produtosVisiveis) mostrarProdutosCadastrados();
-        } catch (err) {
-          alert('Erro ao restaurar o backup.');
+          const dados = JSON.parse(e.target.result);
+          if (typeof dados === 'object') {
+            produtos = dados;
+            salvarProdutos();
+            alert('Backup restaurado com sucesso!');
+            if (produtosVisiveis) mostrarProdutosCadastrados();
+          } else {
+            alert('Arquivo inválido.');
+          }
+        } catch {
+          alert('Erro ao ler arquivo JSON.');
         }
       };
       reader.readAsText(file);
+      event.target.value = ''; // Limpar input para poder carregar o mesmo arquivo novamente
     }
+
+    // Inicia o scanner de código de barras
+    async function iniciarScanner() {
+      const video = document.getElementById('video');
+      const btnScanner = document.getElementById('btnScanner');
+
+      if (codeReader) {
+        // Já está rodando, então para
+        pararScanner();
+        return;
+      }
+
+      codeReader = new ZXing.BrowserBarcodeReader();
+      video.style.display = 'block';
+
+      try {
+        const result = await codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
+          if (result) {
+            pararScanner();
+            const codigoLido = result.text;
+            alert('Código lido: ' + codigoLido);
+
+            // Se produto cadastrado, adicionar na venda
+            if (produtos[codigoLido]) {
+              adicionarProduto(codigoLido);
+            } else {
+              if (confirm('Produto não cadastrado. Deseja cadastrar agora?')) {
+                alternarCadastro();
+                document.getElementById('codigo').value = codigoLido;
+              }
+            }
+          }
+          if (err && !(err instanceof ZXing.NotFoundException)) {
+            console.error(err);
+          }
+        });
+        btnScanner.innerText = '⏹️ Parar Leitura';
+      } catch (e) {
+        alert('Permissão de câmera negada ou erro ao acessar a câmera.');
+        pararScanner();
+      }
+    }
+
+    // Para o scanner
+    function pararScanner() {
+      const video = document.getElementById('video');
+      const btnScanner = document.getElementById('btnScanner');
+      if (codeReader) {
+        codeReader.reset();
+        codeReader = null;
+      }
+      if (video.srcObject) {
+        video.srcObject.getTracks().forEach(track => track.stop());
+      }
+      video.style.display = 'none';
+      btnScanner.innerText = '📷 Ler com a Câmera';
+    }
+
   </script>
 </body>
 </html>
