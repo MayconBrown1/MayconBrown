@@ -113,6 +113,24 @@
       padding: 10px;
       font-size: 1rem;
     }
+    .btn-adicionar {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  margin-right: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-adicionar:hover {
+  background-color: #218838;
+}
+
   </style>
 </head>
 <body>
@@ -155,6 +173,15 @@
     </select>
     <button onclick="finalizarVenda()">Finalizar</button>
   </section>
+
+  <input
+  type="text"
+  id="pesquisaProdutos"
+  placeholder="Pesquisar produtos..."
+  oninput="filtrarProdutos()"
+  style="display:none;"
+/>
+
 
   <div id="produtosCadastrados" style="display:none">
     <h2>Produtos Cadastrados</h2>
@@ -211,6 +238,44 @@
       if (produtosVisiveis) mostrarProdutosCadastrados();
     }
 
+    function filtrarProdutos() {
+  const filtro = document.getElementById('pesquisaProdutos').value.toLowerCase();
+  const lista = document.getElementById('listaCadastro');
+  lista.innerHTML = '';
+
+  for (const codigo in produtos) {
+    const prod = produtos[codigo];
+    // Checa se nome ou código contém o texto da busca
+    if (
+      prod.nome.toLowerCase().includes(filtro) ||
+      codigo.toLowerCase().includes(filtro)
+    ) {
+      lista.innerHTML += `
+        <div class="produto">
+          <div class="produto-info">
+            <img src="${prod.imagem}" alt="img" />
+            <div class="produto-detalhes">
+              <b>${prod.nome}</b><br>
+              Código: ${codigo}<br>
+              Preço: R$ ${prod.preco.toFixed(2)}
+            </div>
+          </div>
+          <button onclick="adicionarProduto('${codigo}')" title="Adicionar à venda" class="btn-adicionar">+</button>
+          <button onclick="abrirModalEditar('${codigo}')">Editar</button>
+          <button onclick="excluirProduto('${codigo}')">Excluir</button>
+        </div>
+      `;
+    }
+  }
+}
+
+
+function mostrarProdutosCadastrados() {
+  // Chama a função de filtro, que mostra todos se não tiver filtro
+  filtrarProdutos();
+}
+
+
     // Salva no localStorage
     function salvarProdutos() {
       localStorage.setItem('produtos', JSON.stringify(produtos));
@@ -266,28 +331,31 @@
       atualizarLista();
     }
 
-    // Mostra lista de produtos cadastrados
-    function mostrarProdutosCadastrados() {
-      const lista = document.getElementById('listaCadastro');
-      lista.innerHTML = '';
-      for (const codigo in produtos) {
-        const prod = produtos[codigo];
-        lista.innerHTML += `
-          <div class="produto">
-            <div class="produto-info">
-              <img src="${prod.imagem}" alt="img" />
-              <div class="produto-detalhes">
-                <b>${prod.nome}</b><br>
-                Código: ${codigo}<br>
-                Preço: R$ ${prod.preco.toFixed(2)}
-              </div>
-            </div>
-            <button onclick="abrirModalEditar('${codigo}')">Editar</button>
-            <button onclick="excluirProduto('${codigo}')">Excluir</button>
+    // Mostrar lista de produtos cadastrados (função atualizada)
+function mostrarProdutosCadastrados() {
+  document.getElementById('pesquisaProdutos').style.display = 'block';
+  const lista = document.getElementById('listaCadastro');
+  lista.innerHTML = '';
+  for (const codigo in produtos) {
+    const prod = produtos[codigo];
+    lista.innerHTML += `
+      <div class="produto">
+        <div class="produto-info">
+          <img src="${prod.imagem}" alt="img" />
+          <div class="produto-detalhes">
+            <b>${prod.nome}</b><br>
+            Código: ${codigo}<br>
+            Preço: R$ ${prod.preco.toFixed(2)}
           </div>
-        `;
-      }
-    }
+        </div>
+        <button onclick="adicionarProduto('${codigo}')" title="Adicionar à venda" class="btn-adicionar">+</button>
+        <button onclick="abrirModalEditar('${codigo}')">Editar</button>
+        <button onclick="excluirProduto('${codigo}')">Excluir</button>
+      </div>
+    `;
+  }
+}
+
 
     // Excluir produto
     function excluirProduto(codigo) {
