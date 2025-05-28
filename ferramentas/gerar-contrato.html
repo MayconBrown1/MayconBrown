@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Contratos</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .logo {
+      width: 400px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    select, input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+    }
+    select, input, textarea {
+      background: #1e1e1e;
+      color: white;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">  <h1>Gerador de Contratos</h1><label for="tipoContrato">Escolha o tipo de contrato:</label> <select id="tipoContrato" onchange="carregarFormulario()"> <option value="">-- Selecione --</option> <option value="prestacao">Prestação de Serviço</option> <option value="venda">Venda de Produto</option> <option value="locacao">Locação de Equipamento</option> <option value="freelancer">Freelancer</option> <option value="software">Licença de Software</option> <option value="parceria">Parceria Comercial</option> <option value="confidencialidade">Confidencialidade (NDA)</option> <option value="emprestimo">Empréstimo de Dinheiro</option> <option value="residencial">Aluguel Residencial</option> <option value="comercial">Aluguel Comercial</option> <option value="comissao">Comissão de Vendas</option> <option value="manutencao">Manutenção Técnica</option> <option value="estagio">Estágio</option> </select>
+
+  <div id="formularioContainer"></div><button onclick="gerarContrato()">Gerar Contrato em PDF</button>
+
+  <script>
+    const formularios = {
+      prestacao: ["Nome do cliente", "CPF/CNPJ", "Descrição do serviço", "Valor", "Prazo"],
+      venda: ["Produto", "Nome do comprador", "Preço", "Garantia", "Forma de pagamento"],
+      locacao: ["Item alugado", "Dias de locação", "Caução", "Multa por atraso"],
+      freelancer: ["Nome do cliente", "Projeto", "Valor", "Deadline", "Termos adicionais"],
+      software: ["Nome da empresa", "Software", "Licença válida até", "Usuários permitidos"],
+      parceria: ["Empresa 1", "Empresa 2", "Objetivo da parceria", "Percentual de lucro", "Duração"],
+      confidencialidade: ["Partes envolvidas", "Informações protegidas", "Validade do NDA"],
+      emprestimo: ["Nome do mutuário", "Valor emprestado", "Data de devolução", "Juros (se houver)"],
+      residencial: ["Locador", "Locatário", "Valor do aluguel", "Endereço do imóvel", "Prazo"],
+      comercial: ["Locador", "Empresa locatária", "Valor mensal", "Endereço comercial", "Multa por rescisão"],
+      comissao: ["Nome do vendedor", "Percentual de comissão", "Produto/serviço vendido"],
+      manutencao: ["Cliente", "Equipamento", "Serviço a realizar", "Garantia do serviço"],
+      estagio: ["Nome do estagiário", "Empresa contratante", "Curso", "Carga horária semanal", "Bolsa auxílio"]
+    };
+
+    function carregarFormulario() {
+      const tipo = document.getElementById("tipoContrato").value;
+      const container = document.getElementById("formularioContainer");
+      container.innerHTML = "";
+      if (!formularios[tipo]) return;
+      formularios[tipo].forEach((campo, i) => {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = `campo${i}`;
+        input.placeholder = campo;
+        container.appendChild(input);
+      });
+    }
+
+    function gerarContrato() {
+      const tipo = document.getElementById("tipoContrato").value;
+      if (!formularios[tipo]) return;
+
+      let conteudo = `Contrato de ${document.querySelector(`#tipoContrato option:checked`).text}\n\n`;
+      formularios[tipo].forEach((campo, i) => {
+        const valor = document.getElementById(`campo${i}`).value;
+        conteudo += `${campo}: ${valor}\n`;
+      });
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(12);
+      const linhas = conteudo.split("\n");
+      linhas.forEach((linha, i) => doc.text(linha, 10, 10 + i * 10));
+      doc.save(`contrato-${tipo}.pdf`);
+    }
+  </script></body>
+</html>
