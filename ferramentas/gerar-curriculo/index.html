@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Currículo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+    header img {
+      width: 200px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: white;
+    }
+    #foto {
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #2d89ef;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #1b5dbf;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown">
+  </header>
+  <h2>Crie seu Currículo Simples e Rápido</h2>
+  <form id="curriculoForm">
+    <label>Digite seu nome completo:</label>
+    <input type="text" id="nome" required><label>Seu e-mail para contato:</label>
+<input type="email" id="email" required>
+
+<label>Seu número de telefone (com DDD):</label>
+<input type="text" id="telefone" required>
+
+<label>Endereço onde você mora:</label>
+<input type="text" id="endereco" required>
+
+<label>Fale um pouco sobre você e sua experiência:</label>
+<textarea id="resumo" rows="4" required></textarea>
+
+<label>Onde você já trabalhou? E o que fazia?</label>
+<textarea id="experiencia" rows="4" required></textarea>
+
+<label>Qual a sua escolaridade ou cursos feitos?</label>
+<textarea id="formacao" rows="3" required></textarea>
+
+<label>Envie sua foto 3x4:</label>
+<input type="file" id="foto" accept="image/*">
+
+<button type="button" onclick="gerarPDF()">Baixar Currículo em PDF</button>
+
+  </form>  <script>
+    async function gerarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const telefone = document.getElementById("telefone").value;
+      const endereco = document.getElementById("endereco").value;
+      const resumo = document.getElementById("resumo").value;
+      const experiencia = document.getElementById("experiencia").value;
+      const formacao = document.getElementById("formacao").value;
+      const foto = document.getElementById("foto").files[0];
+
+      if (foto) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const imgData = e.target.result;
+          doc.addImage(imgData, 'JPEG', 150, 10, 40, 50);
+          montarTexto();
+        };
+        reader.readAsDataURL(foto);
+      } else {
+        montarTexto();
+      }
+
+      function montarTexto() {
+        let y = 20;
+        doc.setFontSize(12);
+        doc.text(`Nome: ${nome}`, 10, y); y += 10;
+        doc.text(`Email: ${email}`, 10, y); y += 10;
+        doc.text(`Telefone: ${telefone}`, 10, y); y += 10;
+        doc.text(`Endereço: ${endereco}`, 10, y); y += 10;
+
+        y += 10;
+        doc.text("Resumo Profissional:", 10, y); y += 10;
+        doc.text(doc.splitTextToSize(resumo, 180), 10, y); y += doc.getTextDimensions(resumo).h + 10;
+
+        doc.text("Experiência Profissional:", 10, y); y += 10;
+        doc.text(doc.splitTextToSize(experiencia, 180), 10, y); y += doc.getTextDimensions(experiencia).h + 10;
+
+        doc.text("Formação Acadêmica:", 10, y); y += 10;
+        doc.text(doc.splitTextToSize(formacao, 180), 10, y);
+
+        doc.save("curriculo.pdf");
+      }
+    }
+  </script></body>
+</html>
