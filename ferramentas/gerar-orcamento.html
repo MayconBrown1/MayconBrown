@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Orçamento</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #00c853;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      width: 100%;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #resumo {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <h2>Gerador de Orçamento</h2>
+
+  <label for="logoUpload">📷 Escolha sua logo (PNG ou JPG):</label>
+  <input type="file" id="logoUpload" accept="image/png, image/jpeg">
+
+  <label>👤 Nome do Cliente:</label>
+  <input type="text" id="nome" placeholder="Ex: João Silva">
+
+  <label>📱 WhatsApp do Cliente:</label>
+  <input type="tel" id="telefone" placeholder="Ex: (84) 99999-9999">
+
+  <div id="servicos">
+    <label>📝 Serviço:</label>
+    <input type="text" class="servico" placeholder="Ex: Instalação de software">
+    <label>💰 Valor:</label>
+    <input type="number" class="valor" placeholder="Ex: 30">
+  </div>
+
+  <button onclick="adicionarServico()">➕ Adicionar outro serviço</button>
+  <button id="gerar">Gerar Orçamento</button>
+
+  <div id="resumo" style="display: none;"></div>
+  <button id="baixarPDF" style="display: none;">📥 Baixar como PDF</button>
+
+  <script>
+    const servicosDiv = document.getElementById("servicos");
+
+    function adicionarServico() {
+      const label1 = document.createElement("label");
+      label1.textContent = "📝 Serviço:";
+      const input1 = document.createElement("input");
+      input1.type = "text";
+      input1.className = "servico";
+      input1.placeholder = "Ex: Instalação de programa";
+
+      const label2 = document.createElement("label");
+      label2.textContent = "💰 Valor:";
+      const input2 = document.createElement("input");
+      input2.type = "number";
+      input2.className = "valor";
+      input2.placeholder = "Ex: 50";
+
+      servicosDiv.appendChild(label1);
+      servicosDiv.appendChild(input1);
+      servicosDiv.appendChild(label2);
+      servicosDiv.appendChild(input2);
+    }
+
+    document.getElementById("gerar").addEventListener("click", function () {
+      const nome = document.getElementById("nome").value.trim();
+      const telefone = document.getElementById("telefone").value.trim();
+      const servicoInputs = document.querySelectorAll(".servico");
+      const valorInputs = document.querySelectorAll(".valor");
+
+      let total = 0;
+      let lista = "";
+
+      for (let i = 0; i < servicoInputs.length; i++) {
+        const servico = servicoInputs[i].value.trim();
+        const valor = parseFloat(valorInputs[i].value.trim());
+
+        if (servico && !isNaN(valor)) {
+          total += valor;
+          lista += `✅ ${servico} - R$ ${valor.toFixed(2)}\n`;
+        }
+      }
+
+      const texto = `📄 ORÇAMENTO\n\n👤 Cliente: ${nome}\n📱 Contato: ${telefone}\n\n${lista}\n💰 Total: R$ ${total.toFixed(2)}`;
+
+      document.getElementById("resumo").style.display = "block";
+      document.getElementById("resumo").textContent = texto;
+      document.getElementById("baixarPDF").style.display = "block";
+
+      // salvar dados
+      window.orcamentoInfo = { nome, telefone, lista, total };
+    });
+
+    document.getElementById("baixarPDF").addEventListener("click", async function () {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const dados = window.orcamentoInfo;
+      const logoFile = document.getElementById("logoUpload").files[0];
+
+      if (logoFile) {
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          const base64Logo = reader.result;
+          doc.addImage(base64Logo, 'PNG', 15, 10, 50, 20);
+          gerarPDF();
+        };
+        reader.readAsDataURL(logoFile);
+      } else {
+        gerarPDF();
+      }
+
+      function gerarPDF() {
+        let y = 40;
+        doc.setFontSize(12);
+        doc.text(`Cliente: ${dados.nome}`, 15, y);
+        doc.text(`Contato: ${dados.telefone}`, 15, y + 8);
+        y += 20;
+
+        const servicos = dados.lista.split('\n');
+        servicos.forEach((linha) => {
+          if (linha) {
+            doc.text(linha, 15, y);
+            y += 8;
+          }
+        });
+
+        doc.setFontSize(14);
+        doc.text(`Total: R$ ${dados.total.toFixed(2)}`, 15, y + 10);
+        doc.save(`Orcamento_${dados.nome}.pdf`);
+      }
+    });
+  </script>
+</body>
+</html>
