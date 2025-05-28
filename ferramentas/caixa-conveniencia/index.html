@@ -251,60 +251,71 @@
     }
 
     // Scanner usando ZXing
-    let codeReader = null;
-    function iniciarScanner() {
-      const video = document.getElementById('video');
-      const btnScanner = document.getElementById('btnScanner');
+    async function iniciarScanner() {
+  const video = document.getElementById('video');
+  const btnScanner = document.getElementById('btnScanner');
 
-      if (!codeReader) {
-        codeReader = new ZXing.BrowserBarcodeReader();
-      }
+  // Se o vídeo já estiver visível, parar scanner
+  if (video.style.display !== 'none') {
+    pararScanner();
+    return;
+  }
 
-      if (video.style.display === 'none' || video.style.display === '') {
-        // Mostrar vídeo e iniciar scanner
-        video.style.display = 'block';
-        btnScanner.innerText = '🛑 Parar Scanner';
+  try {
+    // Solicita permissão da câmera primeiro
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
-        codeReader
-          .listVideoInputDevices()
-          .then((videoInputDevices) => {
-            if (videoInputDevices.length === 0) {
-              alert('Nenhuma câmera encontrada.');
-              btnScanner.innerText = '📷 Ler com a Câmera';
-              video.style.display = 'none';
-              return;
-            }
-            const selectedDeviceId = videoInputDevices[0].deviceId;
+    // Libera vídeo para visualização
+    video.srcObject = stream;
+    video.play();
+    video.style.display = 'block';
+    btnScanner.innerText = '🛑 Parar Scanner';
 
-            codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-              if (result) {
-                adicionarProduto(result.text);
-                // Parar scanner depois da leitura
-                pararScanner();
-              }
-              if (err && !(err instanceof ZXing.NotFoundException)) {
-                console.error(err);
-              }
-            });
-          })
-          .catch((err) => {
-            alert('Erro ao acessar câmera: ' + err);
-            btnScanner.innerText = '📷 Ler com a Câmera';
-            video.style.display = 'none';
-          });
-      } else {
-                       // Parar scanner e esconder vídeo
-        pararScanner();
-      }
+    // Inicializa o ZXing se ainda não tiver sido feito
+    if (!codeReader) {
+      codeReader = new ZXing.BrowserBarcodeReader();
     }
 
-    function pararScanner() {
-      if (codeReader) {
-        codeReader.reset();
-        document.getElementById('video').style.display = 'none';
-        document.getElementById('btnScanner').innerText = '📷 Ler com a Câmera';
-      }
+    const devices = await codeReader.listVideoInputDevices();
+    if (devices.length === 0) {
+      alert('Nenhuma câmera encontrada.');
+      pararScanner();
+      return;
     }
+
+    const selectedDeviceId = devices[0].deviceId;
+
+    // Começa a leitura do código de barras
+    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+      if (result) {
+        adicionarProduto(result.text);
+        pararScanner(); // para após ler
+      }
+      if (err && !(err instanceof ZXing.NotFoundException)) {
+        console.error(err);
+      }
+    });
+  } catch (error) {
+    alert('Permissão de câmera negada ou erro ao acessar: ' + error.message);
+    video.style.display = 'none';
+    btnScanner.innerText = '📷 Ler com a Câmera';
+  }
+}
+
+
+function pararScanner() {
+  const video = document.getElementById('video');
+  const btnScanner = document.getElementById('btnScanner');
+  video.pause();
+  video.srcObject?.getTracks().forEach(track => track.stop());
+  video.srcObject = null;
+  video.style.display = 'none';
+  btnScanner.innerText = '📷 Ler com a Câmera';
+  if (codeReader) {
+    codeReader.reset();
+  }
+}
+
 
     // Alternar visibilidade da área de cadastro
     function alternarCadastro() {
