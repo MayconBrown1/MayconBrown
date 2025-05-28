@@ -83,10 +83,9 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
-      display: flex;
     }
-    #modalEditar.hidden {
-      display: none;
+    #modalEditar.flex {
+      display: flex;
     }
     #modalEditar .modal-content {
       background: #222;
@@ -106,6 +105,7 @@
       border-radius: 4px;
       border: none;
       font-size: 1rem;
+      color: #000;
     }
     #modalEditar button {
       margin-top: 15px;
@@ -114,23 +114,21 @@
       font-size: 1rem;
     }
     .btn-adicionar {
-  background-color: #28a745;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  border: none;
-  border-radius: 4px;
-  width: 32px;
-  height: 32px;
-  margin-right: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-adicionar:hover {
-  background-color: #218838;
-}
-
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      border: none;
+      border-radius: 4px;
+      width: 32px;
+      height: 32px;
+      margin-right: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn-adicionar:hover {
+      background-color: #218838;
+    }
   </style>
 </head>
 <body>
@@ -168,13 +166,12 @@
   </section>
 
   <input
-  type="text"
-  id="pesquisaProdutos"
-  placeholder="Pesquisar produtos..."
-  oninput="filtrarProdutos()"
-  style="display:none;"
-/>
-
+    type="text"
+    id="pesquisaProdutos"
+    placeholder="Pesquisar produtos..."
+    oninput="filtrarProdutos()"
+    style="display:none;"
+  />
 
   <div id="produtosCadastrados" style="display:none">
     <h2>Produtos Cadastrados</h2>
@@ -207,9 +204,6 @@
     // Para o modal de edição
     let codigoEditando = null;
 
-    // Variável global para o scanner
-    let codeReader = null;
-
     // Cadastrar novo produto
     function cadastrarProduto() {
       const codigo = document.getElementById('codigo').value.trim();
@@ -232,49 +226,45 @@
     }
 
     function filtrarProdutos() {
-  const filtro = document.getElementById('pesquisaProdutos').value.toLowerCase();
-  const lista = document.getElementById('listaCadastro');
-  lista.innerHTML = '';
+      const filtro = document.getElementById('pesquisaProdutos').value.toLowerCase();
+      const lista = document.getElementById('listaCadastro');
+      lista.innerHTML = '';
 
-  for (const codigo in produtos) {
-    const prod = produtos[codigo];
-    // Checa se nome ou código contém o texto da busca
-    if (
-      prod.nome.toLowerCase().includes(filtro) ||
-      codigo.toLowerCase().includes(filtro)
-    ) {
-      lista.innerHTML += `
-        <div class="produto">
-          <div class="produto-info">
-            <img src="${prod.imagem}" alt="img" />
-            <div class="produto-detalhes">
-              <b>${prod.nome}</b><br>
-              Código: ${codigo}<br>
-              Preço: R$ ${prod.preco.toFixed(2)}
+      for (const codigo in produtos) {
+        const prod = produtos[codigo];
+        if (
+          prod.nome.toLowerCase().includes(filtro) ||
+          codigo.toLowerCase().includes(filtro)
+        ) {
+          lista.innerHTML += `
+            <div class="produto">
+              <div class="produto-info">
+                <img src="${prod.imagem}" alt="img" />
+                <div class="produto-detalhes">
+                  <b>${prod.nome}</b><br>
+                  Código: ${codigo}<br>
+                  Preço: R$ ${prod.preco.toFixed(2)}
+                </div>
+              </div>
+              <button onclick="adicionarProduto('${codigo}')" title="Adicionar à venda" class="btn-adicionar">+</button>
+              <button onclick="abrirModalEditar('${codigo}')">Editar</button>
+              <button onclick="excluirProduto('${codigo}')">Excluir</button>
             </div>
-          </div>
-          <button onclick="adicionarProduto('${codigo}')" title="Adicionar à venda" class="btn-adicionar">+</button>
-          <button onclick="abrirModalEditar('${codigo}')">Editar</button>
-          <button onclick="excluirProduto('${codigo}')">Excluir</button>
-        </div>
-      `;
+          `;
+        }
+      }
     }
-  }
-}
 
-
-function mostrarProdutosCadastrados() {
-  // Chama a função de filtro, que mostra todos se não tiver filtro
-  filtrarProdutos();
-}
-
+    function mostrarProdutosCadastrados() {
+      document.getElementById('pesquisaProdutos').style.display = 'block';
+      filtrarProdutos();
+    }
 
     // Salva no localStorage
     function salvarProdutos() {
       localStorage.setItem('produtos', JSON.stringify(produtos));
     }
 
-    // Limpa campos do cadastro
     function limparCamposCadastro() {
       document.getElementById('codigo').value = '';
       document.getElementById('nome').value = '';
@@ -282,233 +272,199 @@ function mostrarProdutosCadastrados() {
       document.getElementById('imagem').value = '';
     }
 
-    // Adiciona produto à venda atual
+    // Adicionar produto na venda
     function adicionarProduto(codigo) {
-      if (!produtos[codigo]) return alert('Produto não encontrado');
-      const qtd = prompt("Quantas unidades?");
-      const quantidade = parseInt(qtd);
-      if (isNaN(quantidade) || quantidade < 1) return alert('Quantidade inválida');
+      const produto = produtos[codigo];
+      if (!produto) return alert('Produto não encontrado');
 
-      for (let i = 0; i < quantidade; i++) {
-        vendaAtual.push(produtos[codigo]);
+      // Verifica se já está na venda atual
+      const idx = vendaAtual.findIndex(item => item.codigo === codigo);
+      if (idx >= 0) {
+        vendaAtual[idx].quantidade++;
+      } else {
+        vendaAtual.push({ codigo, quantidade: 1 });
       }
-      atualizarLista();
+      mostrarVendaAtual();
     }
 
-    // Atualiza lista da venda atual
-    function atualizarLista() {
+    function mostrarVendaAtual() {
       const lista = document.getElementById('listaProdutos');
       lista.innerHTML = '';
       let total = 0;
-      vendaAtual.forEach(prod => {
-        total += prod.preco;
+
+      vendaAtual.forEach(item => {
+        const prod = produtos[item.codigo];
+        const subtotal = prod.preco * item.quantidade;
+        total += subtotal;
+
         lista.innerHTML += `
           <div class="produto">
-            <img src="${prod.imagem}" alt="img" />
-            <span>${prod.nome} - R$ ${prod.preco.toFixed(2)}</span>
+            <div class="produto-info">
+              <img src="${prod.imagem}" alt="img" />
+              <div class="produto-detalhes">
+                <b>${prod.nome}</b><br>
+                Quantidade: ${item.quantidade} | Preço unitário: R$ ${prod.preco.toFixed(2)}<br>
+                Subtotal: R$ ${subtotal.toFixed(2)}
+              </div>
+            </div>
+            <button onclick="removerProdutoVenda('${item.codigo}')">-</button>
           </div>
         `;
       });
-      document.getElementById('total').innerText = total.toFixed(2);
+
+      document.getElementById('total').textContent = total.toFixed(2);
     }
 
-    // Finaliza a venda atual
+    // Remover produto da venda (reduzir quantidade)
+    function removerProdutoVenda(codigo) {
+      const idx = vendaAtual.findIndex(item => item.codigo === codigo);
+      if (idx < 0) return;
+      if (vendaAtual[idx].quantidade > 1) {
+        vendaAtual[idx].quantidade--;
+      } else {
+        vendaAtual.splice(idx, 1);
+      }
+      mostrarVendaAtual();
+    }
+
+    // Finalizar venda
     function finalizarVenda() {
-      if (vendaAtual.length === 0) {
-        alert('Nenhum produto na venda.');
+      if (vendaAtual.length === 0) return alert('Nenhum produto na venda');
+
+      const pagamento = document.getElementById('pagamento').value;
+      const total = vendaAtual.reduce((acc, item) => {
+        return acc + produtos[item.codigo].preco * item.quantidade;
+      }, 0);
+
+      alert(`Venda finalizada!\nPagamento: ${pagamento}\nTotal: R$ ${total.toFixed(2)}`);
+
+      vendaAtual = [];
+      mostrarVendaAtual();
+    }
+
+    // Alternar visibilidade do cadastro
+    function alternarCadastro() {
+      cadastroVisivel = !cadastroVisivel;
+      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
+      if (cadastroVisivel) {
+        produtosVisiveis = false;
+        document.getElementById('produtosCadastrados').style.display = 'none';
+        document.getElementById('pesquisaProdutos').style.display = 'none';
+      }
+    }
+
+    // Alternar visibilidade dos produtos cadastrados
+    function alternarProdutosCadastrados() {
+      produtosVisiveis = !produtosVisiveis;
+      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
+      if (produtosVisiveis) {
+        cadastroVisivel = false;
+        document.getElementById('cadastro').style.display = 'none';
+        document.getElementById('pesquisaProdutos').style.display = 'block';
+        filtrarProdutos();
+      } else {
+        document.getElementById('pesquisaProdutos').style.display = 'none';
+      }
+    }
+
+    // Modal para editar produto
+    function abrirModalEditar(codigo) {
+      const prod = produtos[codigo];
+      if (!prod) return alert('Produto não encontrado para edição');
+
+      codigoEditando = codigo;
+      document.getElementById('editarCodigo').value = codigo;
+      document.getElementById('editarNome').value = prod.nome;
+      document.getElementById('editarPreco').value = prod.preco;
+      document.getElementById('editarImagem').value = prod.imagem;
+
+      document.getElementById('modalEditar').classList.add('flex');
+      document.getElementById('modalEditar').classList.remove('hidden');
+    }
+
+    function fecharModal() {
+      document.getElementById('modalEditar').classList.remove('flex');
+      document.getElementById('modalEditar').classList.add('hidden');
+      codigoEditando = null;
+    }
+
+    function salvarEdicao() {
+      if (!codigoEditando) return;
+
+      const nome = document.getElementById('editarNome').value.trim();
+      const preco = parseFloat(document.getElementById('editarPreco').value);
+      const imagem = document.getElementById('editarImagem').value.trim();
+
+      if (!nome || isNaN(preco)) {
+        alert('Preencha os campos corretamente');
         return;
       }
-      const pagamento = document.getElementById('pagamento').value;
-      alert(`Venda finalizada!\nTotal: R$ ${document.getElementById('total').innerText}\nPagamento: ${pagamento}`);
-      vendaAtual = [];
-      atualizarLista();
+
+      produtos[codigoEditando] = { nome, preco, imagem };
+      salvarProdutos();
+      alert('Produto atualizado!');
+
+      fecharModal();
+
+      if (produtosVisiveis) filtrarProdutos();
+      mostrarVendaAtual();
     }
-
-    // Mostrar lista de produtos cadastrados (função atualizada)
-function mostrarProdutosCadastrados() {
-  document.getElementById('pesquisaProdutos').style.display = 'block';
-  const lista = document.getElementById('listaCadastro');
-  lista.innerHTML = '';
-  for (const codigo in produtos) {
-    const prod = produtos[codigo];
-    lista.innerHTML += `
-      <div class="produto">
-        <div class="produto-info">
-          <img src="${prod.imagem}" alt="img" />
-          <div class="produto-detalhes">
-            <b>${prod.nome}</b><br>
-            Código: ${codigo}<br>
-            Preço: R$ ${prod.preco.toFixed(2)}
-          </div>
-        </div>
-        <button onclick="adicionarProduto('${codigo}')" title="Adicionar à venda" class="btn-adicionar">+</button>
-        <button onclick="abrirModalEditar('${codigo}')">Editar</button>
-        <button onclick="excluirProduto('${codigo}')">Excluir</button>
-      </div>
-    `;
-  }
-}
-
 
     // Excluir produto
     function excluirProduto(codigo) {
-      if (confirm('Deseja realmente excluir este produto?')) {
-        delete produtos[codigo];
-        salvarProdutos();
-        mostrarProdutosCadastrados();
-      }
+      if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+      delete produtos[codigo];
+      salvarProdutos();
+
+      if (produtosVisiveis) filtrarProdutos();
+
+      // Remove também da venda atual, se existir
+      vendaAtual = vendaAtual.filter(item => item.codigo !== codigo);
+      mostrarVendaAtual();
     }
 
-    // Alterna visibilidade dos produtos cadastrados
-function alternarProdutosCadastrados() {
-  produtosVisiveis = !produtosVisiveis;
-  document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
-  document.getElementById('pesquisaProdutos').style.display = produtosVisiveis ? 'block' : 'none';
-
-  if (produtosVisiveis) {
-    mostrarProdutosCadastrados();
-    cadastroVisivel = false;
-    document.getElementById('cadastro').style.display = 'none';
-  }
-}
-
-
-    // Alterna visibilidade do cadastro de produtos
-function alternarCadastro() {
-  cadastroVisivel = !cadastroVisivel;
-  document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
-
-  if (cadastroVisivel) {
-    // Se o cadastro abriu, fecha a lista de produtos cadastrados
-    produtosVisiveis = false;
-    document.getElementById('produtosCadastrados').style.display = 'none';
-    document.getElementById('pesquisaProdutos').style.display = 'none';
-  }
-}
-
-
-
-    // Abre modal para editar produto
-    function abrirModalEditar(codigo) {
-  codigoEditando = codigo;
-  const prod = produtos[codigo];
-  if (!prod) return alert('Produto não encontrado');
-
-  document.getElementById('editarCodigo').value = codigo;
-  document.getElementById('editarNome').value = prod.nome;
-  document.getElementById('editarPreco').value = prod.preco;
-  document.getElementById('editarImagem').value = prod.imagem;
-
-  document.getElementById('modalEditar').classList.remove('hidden');
-}
-
-function fecharModal() {
-  codigoEditando = null;
-  document.getElementById('modalEditar').classList.add('hidden');
-}
-
-function salvarEdicao() {
-  if (!codigoEditando) return;
-
-  const nome = document.getElementById('editarNome').value.trim();
-  const preco = parseFloat(document.getElementById('editarPreco').value);
-  const imagem = document.getElementById('editarImagem').value.trim();
-
-  if (!nome || isNaN(preco)) {
-    alert('Preencha os campos corretamente');
-    return;
-  }
-
-  produtos[codigoEditando] = { nome, preco, imagem };
-  salvarProdutos();
-  mostrarProdutosCadastrados();
-  fecharModal();
-  alert('Produto atualizado!');
-}
-
-
-    // Backup dos produtos para arquivo JSON
+    // Backup do banco de dados
     function fazerBackup() {
-  const dataStr = JSON.stringify(produtos, null, 2);
-  const blob = new Blob([dataStr], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'backup_produtos.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-function restaurarBackup(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (typeof data === 'object' && data !== null) {
-        produtos = data;
-        salvarProdutos();
-        alert('Backup restaurado com sucesso!');
-        if (produtosVisiveis) mostrarProdutosCadastrados();
-      } else {
-        alert('Arquivo inválido');
-      }
-    } catch (error) {
-      alert('Erro ao ler o arquivo: ' + error);
+      const dataStr = JSON.stringify(produtos, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `backup_produtos_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
     }
-  };
-  reader.readAsText(file);
-}
 
+    // Restaurar backup
+    function restaurarBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
 
-    // Inicia o scanner de código de barras
-    async function iniciarScanner() {
-  const video = document.getElementById('video');
-  if (!codeReader) {
-    codeReader = new ZXing.BrowserBarcodeReader();
-  }
-  
-  document.getElementById('btnScanner').disabled = true;
-  video.style.display = 'block';
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const dados = JSON.parse(e.target.result);
+          if (typeof dados === 'object' && dados !== null) {
+            produtos = dados;
+            salvarProdutos();
+            alert('Backup restaurado com sucesso!');
+            if (produtosVisiveis) filtrarProdutos();
+            mostrarVendaAtual();
+          } else {
+            alert('Arquivo inválido');
+          }
+        } catch {
+          alert('Erro ao ler o arquivo');
+        }
+      };
+      reader.readAsText(file);
 
-  try {
-    const result = await codeReader.decodeOnceFromVideoDevice(undefined, 'video');
-    alert(`Código escaneado: ${result.text}`);
-    video.style.display = 'none';
-    document.getElementById('btnScanner').disabled = false;
-
-    // Caso queira adicionar automaticamente o produto escaneado:
-    if (produtos[result.text]) {
-      adicionarProduto(result.text);
-    } else {
-      alert('Produto não cadastrado para este código.');
+      // Limpa o input para permitir restaurar o mesmo arquivo novamente se quiser
+      event.target.value = '';
     }
-  } catch (err) {
-    alert('Erro ao escanear o código: ' + err);
-    video.style.display = 'none';
-    document.getElementById('btnScanner').disabled = false;
-  }
-}
 
-
-    // Para o scanner
-    function pararScanner() {
-      const video = document.getElementById('video');
-      const btnScanner = document.getElementById('btnScanner');
-      if (codeReader) {
-        codeReader.reset();
-        codeReader = null;
-      }
-      if (video.srcObject) {
-        video.srcObject.getTracks().forEach(track => track.stop());
-      }
-      video.style.display = 'none';
-      btnScanner.innerText = '📷 Ler com a Câmera';
-    }
+    // Inicialização da tela
+    mostrarVendaAtual();
 
   </script>
 </body>
