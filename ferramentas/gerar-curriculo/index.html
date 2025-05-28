@@ -88,6 +88,12 @@
 <label>Qual a sua escolaridade ou cursos feitos?</label>
 <textarea id="formacao" rows="3" required></textarea>
 
+<label>Liste suas habilidades (Ex: Informática, Vendas, Atendimento):</label>
+<textarea id="habilidades" rows="2"></textarea>
+
+<label>Idiomas que você fala (Ex: Português, Inglês):</label>
+<textarea id="idiomas" rows="2"></textarea>
+
 <label>Envie sua foto 3x4:</label>
 <input type="file" id="foto" accept="image/*">
 
@@ -105,6 +111,8 @@
       const resumo = document.getElementById("resumo").value;
       const experiencia = document.getElementById("experiencia").value;
       const formacao = document.getElementById("formacao").value;
+      const habilidades = document.getElementById("habilidades").value;
+      const idiomas = document.getElementById("idiomas").value;
       const foto = document.getElementById("foto").files[0];
 
       if (foto) {
@@ -121,8 +129,12 @@
 
       function montarTexto() {
         let y = 20;
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.text(nome, 10, y); y += 10;
         doc.setFontSize(12);
-        doc.text(`Nome: ${nome}`, 10, y); y += 10;
+        doc.setFont(undefined, 'normal');
+
         doc.text(`Email: ${email}`, 10, y); y += 10;
         doc.text(`Telefone: ${telefone}`, 10, y); y += 10;
         doc.text(`Endereço: ${endereco}`, 10, y); y += 10;
@@ -135,7 +147,17 @@
         doc.text(doc.splitTextToSize(experiencia, 180), 10, y); y += doc.getTextDimensions(experiencia).h + 10;
 
         doc.text("Formação Acadêmica:", 10, y); y += 10;
-        doc.text(doc.splitTextToSize(formacao, 180), 10, y);
+        doc.text(doc.splitTextToSize(formacao, 180), 10, y); y += doc.getTextDimensions(formacao).h + 10;
+
+        if (habilidades.trim() !== "") {
+          doc.text("Habilidades:", 10, y); y += 10;
+          doc.text(doc.splitTextToSize(habilidades, 180), 10, y); y += doc.getTextDimensions(habilidades).h + 10;
+        }
+
+        if (idiomas.trim() !== "") {
+          doc.text("Idiomas:", 10, y); y += 10;
+          doc.text(doc.splitTextToSize(idiomas, 180), 10, y);
+        }
 
         doc.save("curriculo.pdf");
       }
