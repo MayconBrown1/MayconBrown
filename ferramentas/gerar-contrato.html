@@ -1,92 +1,156 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerador de Contratos</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Contrato de Aluguel</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
       background-color: #121212;
-      color: white;
+      color: #fff;
       font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
     }
-    .logo {
+    header img {
       width: 400px;
       display: block;
-      margin: 0 auto 20px;
+      margin: 0 auto 20px auto;
     }
-    select, input, textarea, button {
+    form {
+      max-width: 700px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea, select {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
+      margin-top: 5px;
+      border-radius: 5px;
       border: none;
-      border-radius: 8px;
-    }
-    select, input, textarea {
-      background: #1e1e1e;
-      color: white;
+      background-color: #1e1e1e;
+      color: #fff;
     }
     button {
-      background-color: #4caf50;
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background-color: #0d6efd;
       color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0b5ed7;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="logo">  <h1>Gerador de Contratos</h1><label for="tipoContrato">Escolha o tipo de contrato:</label> <select id="tipoContrato" onchange="carregarFormulario()"> <option value="">-- Selecione --</option> <option value="prestacao">Prestação de Serviço</option> <option value="venda">Venda de Produto</option> <option value="locacao">Locação de Equipamento</option> <option value="freelancer">Freelancer</option> <option value="software">Licença de Software</option> <option value="parceria">Parceria Comercial</option> <option value="confidencialidade">Confidencialidade (NDA)</option> <option value="emprestimo">Empréstimo de Dinheiro</option> <option value="residencial">Aluguel Residencial</option> <option value="comercial">Aluguel Comercial</option> <option value="comissao">Comissão de Vendas</option> <option value="manutencao">Manutenção Técnica</option> <option value="estagio">Estágio</option> </select>
 
-  <div id="formularioContainer"></div><button onclick="gerarContrato()">Gerar Contrato em PDF</button>
+<header>
+  <a href="https://mayconbrown.com.br/" target="_blank">
+    <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown">
+  </a>
+</header>
 
-  <script>
-    const formularios = {
-      prestacao: ["Nome do cliente", "CPF/CNPJ", "Descrição do serviço", "Valor", "Prazo"],
-      venda: ["Produto", "Nome do comprador", "Preço", "Garantia", "Forma de pagamento"],
-      locacao: ["Item alugado", "Dias de locação", "Caução", "Multa por atraso"],
-      freelancer: ["Nome do cliente", "Projeto", "Valor", "Deadline", "Termos adicionais"],
-      software: ["Nome da empresa", "Software", "Licença válida até", "Usuários permitidos"],
-      parceria: ["Empresa 1", "Empresa 2", "Objetivo da parceria", "Percentual de lucro", "Duração"],
-      confidencialidade: ["Partes envolvidas", "Informações protegidas", "Validade do NDA"],
-      emprestimo: ["Nome do mutuário", "Valor emprestado", "Data de devolução", "Juros (se houver)"],
-      residencial: ["Locador", "Locatário", "Valor do aluguel", "Endereço do imóvel", "Prazo"],
-      comercial: ["Locador", "Empresa locatária", "Valor mensal", "Endereço comercial", "Multa por rescisão"],
-      comissao: ["Nome do vendedor", "Percentual de comissão", "Produto/serviço vendido"],
-      manutencao: ["Cliente", "Equipamento", "Serviço a realizar", "Garantia do serviço"],
-      estagio: ["Nome do estagiário", "Empresa contratante", "Curso", "Carga horária semanal", "Bolsa auxílio"]
-    };
+<form id="contratoForm">
+  <h2>Gerador de Contrato de Aluguel</h2>
 
-    function carregarFormulario() {
-      const tipo = document.getElementById("tipoContrato").value;
-      const container = document.getElementById("formularioContainer");
-      container.innerHTML = "";
-      if (!formularios[tipo]) return;
-      formularios[tipo].forEach((campo, i) => {
-        const input = document.createElement("input");
-        input.type = "text";
-        input.id = `campo${i}`;
-        input.placeholder = campo;
-        container.appendChild(input);
-      });
-    }
+  <label>Nome do Locador</label>
+  <input type="text" name="locador" required>
 
-    function gerarContrato() {
-      const tipo = document.getElementById("tipoContrato").value;
-      if (!formularios[tipo]) return;
+  <label>RG do Locador</label>
+  <input type="text" name="rg_locador" required>
 
-      let conteudo = `Contrato de ${document.querySelector(`#tipoContrato option:checked`).text}\n\n`;
-      formularios[tipo].forEach((campo, i) => {
-        const valor = document.getElementById(`campo${i}`).value;
-        conteudo += `${campo}: ${valor}\n`;
-      });
+  <label>CPF do Locador</label>
+  <input type="text" name="cpf_locador" required>
 
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(12);
-      const linhas = conteudo.split("\n");
-      linhas.forEach((linha, i) => doc.text(linha, 10, 10 + i * 10));
-      doc.save(`contrato-${tipo}.pdf`);
-    }
-  </script></body>
+  <label>Endereço do Locador</label>
+  <textarea name="endereco_locador" required></textarea>
+
+  <label>Nome do Locatário</label>
+  <input type="text" name="locatario" required>
+
+  <label>RG do Locatário</label>
+  <input type="text" name="rg_locatario" required>
+
+  <label>CPF do Locatário</label>
+  <input type="text" name="cpf_locatario" required>
+
+  <label>Endereço do Locatário</label>
+  <textarea name="endereco_locatario" required></textarea>
+
+  <label>Endereço do Imóvel</label>
+  <textarea name="endereco_imovel" required></textarea>
+
+  <label>Valor do Aluguel (R$)</label>
+  <input type="text" name="valor_aluguel" required>
+
+  <label>Forma de Pagamento</label>
+  <input type="text" name="forma_pagamento" required>
+
+  <label>Data de Vencimento</label>
+  <input type="text" name="vencimento" required>
+
+  <label>Duração do Contrato (meses)</label>
+  <input type="number" name="duracao" required>
+
+  <button type="button" onclick="gerarPDF()">Gerar Contrato em PDF</button>
+</form>
+
+<script>
+  async function gerarPDF() {
+    const form = document.forms['contratoForm'];
+    const {
+      locador, rg_locador, cpf_locador, endereco_locador,
+      locatario, rg_locatario, cpf_locatario, endereco_locatario,
+      endereco_imovel, valor_aluguel, forma_pagamento, vencimento, duracao
+    } = Object.fromEntries(new FormData(form).entries());
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    let texto = `
+CONTRATO DE LOCAÇÃO DE IMÓVEL RESIDENCIAL
+
+LOCADOR: ${locador}, RG: ${rg_locador}, CPF: ${cpf_locador}, Endereço: ${endereco_locador}
+
+LOCATÁRIO: ${locatario}, RG: ${rg_locatario}, CPF: ${cpf_locatario}, Endereço: ${endereco_locatario}
+
+Objeto do Contrato: Locação do imóvel situado em ${endereco_imovel}
+
+Valor do Aluguel: R$ ${valor_aluguel} mensais
+Forma de Pagamento: ${forma_pagamento}
+Data de Vencimento: Todo dia ${vencimento} de cada mês
+Duração: ${duracao} meses a contar da data da assinatura
+
+CLÁUSULAS GERAIS:
+1. O imóvel deve ser devolvido nas mesmas condições em que foi entregue.
+2. Despesas com água, luz, IPTU e demais taxas são de responsabilidade do locatário.
+3. Em caso de rescisão antecipada, deve-se comunicar com 30 dias de antecedência.
+4. O não pagamento implica em multa de 10% sobre o valor do aluguel, juros e atualização monetária.
+
+Assinaturas:
+
+___________________________     ___________________________
+Locador                               Locatário
+
+Data: ____ / ____ / ______
+    `;
+
+    doc.setFont("times", "normal");
+    doc.setFontSize(12);
+    doc.text(texto, 10, 10, { maxWidth: 190 });
+
+    doc.save("Contrato-Aluguel.pdf");
+  }
+</script>
+
+</body>
 </html>
