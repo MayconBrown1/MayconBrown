@@ -293,33 +293,112 @@
             video.style.display = 'none';
           });
       } else {
-                // Parar scanner e esconder vídeo
-                pararScanner();
+                       // Parar scanner e esconder vídeo
+        pararScanner();
       }
     }
 
     function pararScanner() {
-      const video = document.getElementById('video');
-      const btnScanner = document.getElementById('btnScanner');
-
       if (codeReader) {
         codeReader.reset();
+        document.getElementById('video').style.display = 'none';
+        document.getElementById('btnScanner').innerText = '📷 Ler com a Câmera';
+      }
+    }
+
+    // Alternar visibilidade da área de cadastro
+    function alternarCadastro() {
+      cadastroVisivel = !cadastroVisivel;
+      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
+    }
+
+    // Alternar visibilidade da lista de produtos cadastrados
+    function alternarProdutosCadastrados() {
+      produtosVisiveis = !produtosVisiveis;
+      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
+      if (produtosVisiveis) mostrarProdutosCadastrados();
+    }
+
+    // Mostrar todos os produtos cadastrados
+    function mostrarProdutosCadastrados() {
+      const lista = document.getElementById('listaCadastro');
+      lista.innerHTML = '';
+      for (const codigo in produtos) {
+        const prod = produtos[codigo];
+        lista.innerHTML += `
+          <div class="produto">
+            <div class="produto-info">
+              <img src="${prod.imagem}" alt="img" />
+              <div class="produto-detalhes">
+                <strong>${prod.nome}</strong><br />
+                R$ ${prod.preco.toFixed(2)}<br />
+                <small>Código: ${codigo}</small>
+              </div>
+            </div>
+            <div>
+              <button onclick="abrirModalEditar('${codigo}')">✏️</button>
+              <button onclick="excluirProduto('${codigo}')">🗑️</button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Excluir produto
+    function excluirProduto(codigo) {
+      if (confirm('Deseja excluir este produto?')) {
+        delete produtos[codigo];
+        salvarProdutos();
+        mostrarProdutosCadastrados();
+      }
+    }
+
+    // Abrir modal de edição
+    function abrirModalEditar(codigo) {
+      codigoEditando = codigo;
+      const prod = produtos[codigo];
+      document.getElementById('editarCodigo').value = codigo;
+      document.getElementById('editarNome').value = prod.nome;
+      document.getElementById('editarPreco').value = prod.preco;
+      document.getElementById('editarImagem').value = prod.imagem;
+      document.getElementById('modalEditar').style.display = 'flex';
+    }
+
+    // Fechar modal
+    function fecharModal() {
+      document.getElementById('modalEditar').style.display = 'none';
+      codigoEditando = null;
+    }
+
+    // Salvar edição do produto
+    function salvarEdicao() {
+      const nome = document.getElementById('editarNome').value.trim();
+      const preco = parseFloat(document.getElementById('editarPreco').value);
+      const imagem = document.getElementById('editarImagem').value.trim();
+
+      if (!nome || isNaN(preco)) {
+        alert('Preencha corretamente');
+        return;
       }
 
-      video.style.display = 'none';
-      btnScanner.innerText = '📷 Ler com a Câmera';
+      produtos[codigoEditando] = { nome, preco, imagem };
+      salvarProdutos();
+      fecharModal();
+      mostrarProdutosCadastrados();
     }
 
-
-    // Backup e restauração
+    // Fazer backup (baixar JSON dos produtos)
     function fazerBackup() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(produtos));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "backup_produtos.json");
-      dlAnchor.click();
+      const blob = new Blob([JSON.stringify(produtos)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'produtos_backup.json';
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
+    // Restaurar backup de um arquivo JSON
     function restaurarBackup(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -332,96 +411,10 @@
           alert('Backup restaurado com sucesso!');
           if (produtosVisiveis) mostrarProdutosCadastrados();
         } catch (err) {
-          alert('Erro ao restaurar backup: ' + err);
+          alert('Erro ao restaurar o backup.');
         }
       };
       reader.readAsText(file);
-    }
-
-
-    // Mostrar/ocultar cadastro
-    function alternarCadastro() {
-      cadastroVisivel = !cadastroVisivel;
-      document.getElementById('cadastro').style.display = cadastroVisivel ? 'block' : 'none';
-    }
-
-
-    // Mostrar/ocultar produtos cadastrados
-    function alternarProdutosCadastrados() {
-      produtosVisiveis = !produtosVisiveis;
-      document.getElementById('produtosCadastrados').style.display = produtosVisiveis ? 'block' : 'none';
-      if (produtosVisiveis) mostrarProdutosCadastrados();
-    }
-
-    function mostrarProdutosCadastrados() {
-      const lista = document.getElementById('listaCadastro');
-      lista.innerHTML = '';
-
-      for (let codigo in produtos) {
-        const p = produtos[codigo];
-        lista.innerHTML += `
-          <div class="produto">
-            <div class="produto-info">
-              <img src="${p.imagem}" alt="img" />
-              <div class="produto-detalhes">
-                <strong>${p.nome}</strong><br />
-                <small>Código: ${codigo}</small><br />
-                <small>R$ ${p.preco.toFixed(2)}</small>
-              </div>
-            </div>
-            <div>
-              <button onclick="abrirModalEditar('${codigo}')">✏️</button>
-              <button onclick="excluirProduto('${codigo}')">🗑️</button>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-
-    // Abrir modal de edição
-    function abrirModalEditar(codigo) {
-      const p = produtos[codigo];
-      if (!p) return;
-
-      codigoEditando = codigo;
-      document.getElementById('editarCodigo').value = codigo;
-      document.getElementById('editarNome').value = p.nome;
-      document.getElementById('editarPreco').value = p.preco;
-      document.getElementById('editarImagem').value = p.imagem;
-
-      document.getElementById('modalEditar').style.display = 'flex';
-    }
-
-    function fecharModal() {
-      document.getElementById('modalEditar').style.display = 'none';
-      codigoEditando = null;
-    }
-
-    function salvarEdicao() {
-      if (!codigoEditando) return;
-
-      const nome = document.getElementById('editarNome').value.trim();
-      const preco = parseFloat(document.getElementById('editarPreco').value);
-      const imagem = document.getElementById('editarImagem').value.trim();
-
-      if (!nome || isNaN(preco)) {
-        alert('Preencha os campos corretamente.');
-        return;
-      }
-
-      produtos[codigoEditando] = { nome, preco, imagem };
-      salvarProdutos();
-      fecharModal();
-      mostrarProdutosCadastrados();
-    }
-
-    function excluirProduto(codigo) {
-      if (confirm('Tem certeza que deseja excluir este produto?')) {
-        delete produtos[codigo];
-        salvarProdutos();
-        mostrarProdutosCadastrados();
-      }
     }
   </script>
 </body>
