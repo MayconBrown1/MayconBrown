@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerador de QR Code</title>
+  <title>Gerador de QR Code Personalizado</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
@@ -17,7 +17,7 @@
     h1 {
       color: #00e676;
     }
-    input, button {
+    input, button, label {
       width: 90%;
       max-width: 500px;
       padding: 12px;
@@ -26,7 +26,15 @@
       border-radius: 10px;
       font-size: 16px;
     }
-    input {
+    input[type="color"] {
+      width: 50px;
+      padding: 0;
+    }
+    input[type="file"] {
+      background: #222;
+      color: white;
+    }
+    input[type="text"] {
       background: #222;
       color: white;
     }
@@ -42,15 +50,36 @@
       margin: 5px;
       background-color: #00796b;
     }
+    .logo {
+      margin-bottom: 20px;
+    }
+    .logo img {
+      width: 400px;
+      max-width: 90%;
+    }
   </style>
 </head>
 <body>
-  <h1>Transformar Link em QR Code</h1>
+  <!-- LOGO -->
+  <div class="logo">
+    <a href="http://mayconbrown.com.br/" target="_blank">
+      <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo Maycon Brown">
+    </a>
+  </div>
+
+  <h1>Gerador de QR Code Personalizado</h1>
 
   <input type="text" id="link" placeholder="Cole aqui o link ou texto..." />
   <br>
+  <label>Cor do QR Code: </label>
+  <input type="color" id="cor" value="#000000" />
+  <br>
+  <label>Logo no centro (opcional):</label>
+  <input type="file" id="logoInput" accept="image/*" />
+  <br>
   <button onclick="gerarQRCode()">Gerar QR Code</button>
 
+  <canvas id="canvas" style="display: none;"></canvas>
   <div id="qr"></div>
   <div id="downloadButtons"></div>
 
@@ -59,6 +88,9 @@
 
     function gerarQRCode() {
       const link = document.getElementById("link").value.trim();
+      const cor = document.getElementById("cor").value;
+      const logoInput = document.getElementById("logoInput");
+      const canvas = document.getElementById("canvas");
       const qrDiv = document.getElementById("qr");
       const downloadDiv = document.getElementById("downloadButtons");
 
@@ -70,21 +102,51 @@
       qrDiv.innerHTML = "";
       downloadDiv.innerHTML = "";
 
-      QRCode.toDataURL(link, { width: 256 }, function (err, url) {
+      QRCode.toCanvas(canvas, link, {
+        width: 256,
+        color: {
+          dark: cor,
+          light: "#ffffff"
+        }
+      }, function (err) {
         if (err) {
           console.error(err);
           return;
         }
 
-        qrDataURL = url;
+        const ctx = canvas.getContext("2d");
 
-        qrDiv.innerHTML = `<img src="${url}" alt="QR Code" id="qrImage">`;
+        // Se tiver logo, desenha no centro
+        if (logoInput.files[0]) {
+          const logo = new Image();
+          logo.onload = () => {
+            const size = 64; // tamanho da logo
+            const x = (canvas.width - size) / 2;
+            const y = (canvas.height - size) / 2;
+            ctx.drawImage(logo, x, y, size, size);
 
-        downloadDiv.innerHTML = `
-          <button onclick="baixarPNG()">Baixar PNG</button>
-          <button onclick="baixarPDF()">Baixar PDF</button>
-        `;
+            const url = canvas.toDataURL();
+            qrDataURL = url;
+            mostrarQR(url);
+          };
+          const reader = new FileReader();
+          reader.onload = e => logo.src = e.target.result;
+          reader.readAsDataURL(logoInput.files[0]);
+        } else {
+          // sem logo
+          const url = canvas.toDataURL();
+          qrDataURL = url;
+          mostrarQR(url);
+        }
       });
+    }
+
+    function mostrarQR(url) {
+      document.getElementById("qr").innerHTML = `<img src="${url}" alt="QR Code">`;
+      document.getElementById("downloadButtons").innerHTML = `
+        <button onclick="baixarPNG()">Baixar PNG</button>
+        <button onclick="baixarPDF()">Baixar PDF</button>
+      `;
     }
 
     function baixarPNG() {
