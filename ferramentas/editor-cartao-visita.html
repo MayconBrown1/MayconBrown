@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Cartão de Visita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: #0f0f0f;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #0ff;
+      margin-bottom: 30px;
+    }
+    .editor {
+      margin-top: 40px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .form-section, .preview-section {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid #333;
+      width: 100%;
+      max-width: 500px;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #111;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+    }
+    .card-preview {
+      width: 100%;
+      height: 250px;
+      background: #000;
+      color: #0ff;
+      padding: 15px;
+      border-radius: 10px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .card-preview h3, .card-preview p {
+      position: relative;
+      z-index: 2;
+    }
+    .card-preview #overlay {
+      z-index: 1;
+    }
+    .back-preview {
+      margin-top: 20px;
+    }
+    .btn-download {
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn-download:hover {
+      background: #f0f;
+    }
+    #logoPreview {
+      max-height: 80px;
+      cursor: move;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      touch-action: none;
+    }
+    #overlay, #overlayVerso {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editor de Cartão de Visita</h1>
+  <div class="editor">
+    <div class="form-section">
+      <h2>Editar Informações</h2>
+      <input type="text" id="nomeNegocio" placeholder="Nome do Negócio">
+      <input type="text" id="telefone" placeholder="Telefone">
+      <input type="text" id="endereco" placeholder="Endereço">
+      <input type="text" id="email" placeholder="Email">
+      <textarea id="descricao" placeholder="Descrição"></textarea>
+      <input type="text" id="website" placeholder="Website">
+      <label>Imagem de Fundo (URL):</label>
+      <input type="text" id="bgUrl" placeholder="Cole o link da imagem">
+      <label>Ou envie uma imagem:</label>
+      <input type="file" id="bgUpload" accept="image/*">
+      <label>Logo da Empresa:</label>
+      <input type="file" id="logoUpload" accept="image/*">
+      <label>Cor da Fonte:</label>
+      <input type="color" id="fontColor" value="#00ffff">
+      <label>Cor chapada sobre a imagem:</label>
+      <input type="color" id="overlayColor" value="#000000">
+      <label>Opacidade da cor chapada:</label>
+      <input type="range" id="overlayOpacity" min="0" max="1" step="0.1" value="0.5">
+      <button class="btn-download" onclick="baixarPDF()">Baixar PDF</button>
+    </div>
+    <div class="preview-section">
+      <h2>Prévia do Cartão</h2>
+      <div class="card-preview" id="frente">
+        <div id="overlay" style="background-color: rgba(0,0,0,0.5);"></div>
+        <img id="logoPreview" src="" alt="" style="display:none;">
+        <h3 id="previewNome">Nome do Negócio</h3>
+      </div>
+      <div class="card-preview back-preview" id="verso">
+        <div id="overlayVerso" style="background-color: rgba(0,0,0,0.5);"></div>
+        <p id="previewTelefone">Telefone</p>
+        <p id="previewEndereco">Endereço</p>
+        <p id="previewEmail">Email</p>
+        <p id="previewDescricao">Descrição</p>
+        <p id="previewWebsite">Website</p>
+      </div>
+    </div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    const frente = document.getElementById('frente');
+    const verso = document.getElementById('verso');
+    const overlay = document.getElementById('overlay');
+    const overlayVerso = document.getElementById('overlayVerso');
+    const logoPreview = document.getElementById('logoPreview');
+
+    document.getElementById('overlayColor').addEventListener('input', atualizarOverlay);
+    document.getElementById('overlayOpacity').addEventListener('input', atualizarOverlay);
+
+    function atualizarOverlay() {
+      const color = document.getElementById('overlayColor').value;
+      const opacity = document.getElementById('overlayOpacity').value;
+      overlay.style.backgroundColor = `${hexToRGBA(color, opacity)}`;
+      overlayVerso.style.backgroundColor = `${hexToRGBA(color, opacity)}`;
+    }
+
+    function hexToRGBA(hex, alpha) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    logoPreview.addEventListener('mousedown', startDrag);
+    logoPreview.addEventListener('touchstart', startDrag, { passive: false });
+
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag, { passive: false });
+
+    document.addEventListener('mouseup', endDrag);
+    document.addEventListener('touchend', endDrag);
+
+    function startDrag(e) {
+      isDragging = true;
+      const rect = logoPreview.getBoundingClientRect();
+      if (e.touches) {
+        offsetX = e.touches[0].clientX - rect.left;
+        offsetY = e.touches[0].clientY - rect.top;
+      } else {
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+      }
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const container = frente.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - container.left - offsetX;
+      const y = (e.touches ? e.touches[0].clientY : e.clientY) - container.top - offsetY;
+      logoPreview.style.left = `${x}px`;
+      logoPreview.style.top = `${y}px`;
+    }
+
+    function endDrag() {
+      isDragging = false;
+    }
+
+    document.getElementById('fontColor').addEventListener('input', (e) => {
+      frente.style.color = e.target.value;
+      verso.style.color = e.target.value;
+    });
+
+    ['nomeNegocio', 'telefone', 'endereco', 'email', 'descricao', 'website'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', atualizarPreview);
+    });
+
+    document.getElementById('bgUrl').addEventListener('input', () => {
+      const url = document.getElementById('bgUrl').value;
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        frente.style.backgroundImage = `url(${url})`;
+        verso.style.backgroundImage = `url(${url})`;
+      };
+      img.src = url;
+    });
+
+    document.getElementById('bgUpload').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          frente.style.backgroundImage = `url(${e.target.result})`;
+          verso.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('logoUpload').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          logoPreview.src = e.target.result;
+          logoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function atualizarPreview() {
+      document.getElementById('previewNome').innerText = document.getElementById('nomeNegocio').value || 'Nome do Negócio';
+      document.getElementById('previewTelefone').innerText = document.getElementById('telefone').value || 'Telefone';
+      document.getElementById('previewEndereco').innerText = document.getElementById('endereco').value || 'Endereço';
+      document.getElementById('previewEmail').innerText = document.getElementById('email').value || 'Email';
+      document.getElementById('previewDescricao').innerText = document.getElementById('descricao').value || 'Descrição';
+      document.getElementById('previewWebsite').innerText = document.getElementById('website').value || 'Website';
+    }
+
+    async function baixarPDF() {
+      const { jsPDF } = window.jspdf;
+      const scale = 4;
+
+      const frenteCanvas = await html2canvas(frente, { scale, useCORS: true });
+      const versoCanvas = await html2canvas(verso, { scale, useCORS: true });
+
+      const frenteImg = frenteCanvas.toDataURL('image/png');
+      const versoImg = versoCanvas.toDataURL('image/png');
+
+      const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: [180, 50] });
+      doc.addImage(frenteImg, 'PNG', 0, 0, 90, 50);
+      doc.addImage(versoImg, 'PNG', 90, 0, 90, 50);
+
+      doc.save('cartao-visita.pdf');
+    }
+
+    atualizarPreview();
+  </script>
+</body>
+</html>
