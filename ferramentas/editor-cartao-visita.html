@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Editor de Cartão de Visita</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -15,39 +15,63 @@
     body {
       background: #0f0f0f;
       color: #fff;
-      padding: 20px;
+      padding: 15px;
+      overflow-y: auto;
+      -webkit-font-smoothing: antialiased;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     h1 {
       text-align: center;
       color: #0ff;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
     }
     .editor {
-      margin-top: 40px;
+      margin-top: 20px;
       display: flex;
-      gap: 20px;
       flex-wrap: wrap;
+      gap: 15px;
       justify-content: center;
     }
     .form-section, .preview-section {
       background: #1c1c1c;
-      padding: 20px;
+      padding: 15px;
       border-radius: 12px;
       border: 2px solid #333;
       width: 100%;
-      max-width: 500px;
+      max-width: 480px;
+      -webkit-overflow-scrolling: touch;
     }
     input, textarea, select, button {
       width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
+      margin-bottom: 12px;
+      padding: 12px;
       background: #111;
       color: #0ff;
       border: 1px solid #0ff;
       border-radius: 8px;
+      font-size: 1.1rem;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    button.btn-download {
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 1.2rem;
+    }
+    button.btn-download:hover {
+      background: #f0f;
     }
     .card-preview {
       width: 100%;
+      max-width: 480px;
       height: 250px;
       background: #000;
       color: #0ff;
@@ -61,35 +85,28 @@
       background-size: cover;
       background-position: center;
       overflow: hidden;
+      touch-action: none;
+      user-select: none;
     }
     .card-preview h3, .card-preview p {
       position: relative;
       z-index: 2;
-    }
-    .card-preview #overlay {
-      z-index: 1;
+      font-size: 1.3rem;
+      text-align: center;
+      word-break: break-word;
     }
     .back-preview {
-      margin-top: 20px;
-    }
-    .btn-download {
-      background: #0ff;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn-download:hover {
-      background: #f0f;
+      margin-top: 15px;
     }
     #logoPreview {
       max-height: 80px;
-      cursor: move;
+      cursor: grab;
       position: absolute;
       top: 10px;
       left: 10px;
       z-index: 3;
       touch-action: none;
+      user-select: none;
     }
     #overlay, #overlayVerso {
       position: absolute;
@@ -100,41 +117,60 @@
       pointer-events: none;
       z-index: 1;
     }
+
+    /* Scroll no textarea só no mobile */
+    @media (max-width: 600px) {
+      textarea {
+        font-size: 1rem;
+      }
+      input, button {
+        font-size: 1rem;
+      }
+      .card-preview h3, .card-preview p {
+        font-size: 1.1rem;
+      }
+      .editor {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>Editor de Cartão de Visita</h1>
+
   <div class="editor">
-    <div class="form-section">
+    <div class="form-section" role="form" aria-label="Formulário de edição do cartão">
       <h2>Editar Informações</h2>
-      <input type="text" id="nomeNegocio" placeholder="Nome do Negócio">
-      <input type="text" id="telefone" placeholder="Telefone">
-      <input type="text" id="endereco" placeholder="Endereço">
-      <input type="text" id="email" placeholder="Email">
-      <textarea id="descricao" placeholder="Descrição"></textarea>
-      <input type="text" id="website" placeholder="Website">
-      <label>Imagem de Fundo (URL):</label>
-      <input type="text" id="bgUrl" placeholder="Cole o link da imagem">
-      <label>Ou envie uma imagem:</label>
-      <input type="file" id="bgUpload" accept="image/*">
-      <label>Logo da Empresa:</label>
-      <input type="file" id="logoUpload" accept="image/*">
-      <label>Cor da Fonte:</label>
-      <input type="color" id="fontColor" value="#00ffff">
-      <label>Cor chapada sobre a imagem:</label>
-      <input type="color" id="overlayColor" value="#000000">
-      <label>Opacidade da cor chapada:</label>
-      <input type="range" id="overlayOpacity" min="0" max="1" step="0.1" value="0.5">
+      <input type="text" id="nomeNegocio" placeholder="Nome do Negócio" aria-label="Nome do Negócio" />
+      <input type="text" id="telefone" placeholder="Telefone" aria-label="Telefone" />
+      <input type="text" id="endereco" placeholder="Endereço" aria-label="Endereço" />
+      <input type="text" id="email" placeholder="Email" aria-label="Email" />
+      <textarea id="descricao" placeholder="Descrição" aria-label="Descrição"></textarea>
+      <input type="text" id="website" placeholder="Website" aria-label="Website" />
+      <label for="bgUrl">Imagem de Fundo (URL):</label>
+      <input type="text" id="bgUrl" placeholder="Cole o link da imagem" aria-label="Imagem de fundo URL" />
+      <label for="bgUpload">Ou envie uma imagem:</label>
+      <input type="file" id="bgUpload" accept="image/*" aria-label="Enviar imagem de fundo" />
+      <label for="logoUpload">Logo da Empresa:</label>
+      <input type="file" id="logoUpload" accept="image/*" aria-label="Enviar logo da empresa" />
+      <label for="fontColor">Cor da Fonte:</label>
+      <input type="color" id="fontColor" value="#00ffff" aria-label="Cor da fonte" />
+      <label for="overlayColor">Cor chapada sobre a imagem:</label>
+      <input type="color" id="overlayColor" value="#000000" aria-label="Cor chapada" />
+      <label for="overlayOpacity">Opacidade da cor chapada:</label>
+      <input type="range" id="overlayOpacity" min="0" max="1" step="0.1" value="0.5" aria-label="Opacidade da cor chapada" />
       <button class="btn-download" onclick="baixarPDF()">Baixar PDF</button>
     </div>
-    <div class="preview-section">
+
+    <div class="preview-section" aria-label="Visualização do cartão">
       <h2>Prévia do Cartão</h2>
-      <div class="card-preview" id="frente">
+      <div class="card-preview" id="frente" role="region" aria-live="polite" aria-label="Prévia da frente do cartão">
         <div id="overlay" style="background-color: rgba(0,0,0,0.5);"></div>
-        <img id="logoPreview" src="" alt="" style="display:none;">
+        <img id="logoPreview" src="" alt="Logo do negócio" style="display:none;" />
         <h3 id="previewNome">Nome do Negócio</h3>
       </div>
-      <div class="card-preview back-preview" id="verso">
+      <div class="card-preview back-preview" id="verso" role="region" aria-live="polite" aria-label="Prévia do verso do cartão">
         <div id="overlayVerso" style="background-color: rgba(0,0,0,0.5);"></div>
         <p id="previewTelefone">Telefone</p>
         <p id="previewEndereco">Endereço</p>
@@ -144,9 +180,10 @@
       </div>
     </div>
   </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
     const frente = document.getElementById('frente');
     const verso = document.getElementById('verso');
     const overlay = document.getElementById('overlay');
@@ -192,6 +229,7 @@
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
       }
+      logoPreview.style.cursor = 'grabbing';
     }
 
     function drag(e) {
@@ -206,6 +244,7 @@
 
     function endDrag() {
       isDragging = false;
+      logoPreview.style.cursor = 'grab';
     }
 
     document.getElementById('fontColor').addEventListener('input', (e) => {
@@ -248,6 +287,8 @@
         reader.onload = e => {
           logoPreview.src = e.target.result;
           logoPreview.style.display = 'block';
+          logoPreview.style.left = '10px';
+          logoPreview.style.top = '10px';
         };
         reader.readAsDataURL(file);
       }
@@ -280,6 +321,7 @@
     }
 
     atualizarPreview();
+    atualizarOverlay();
   </script>
 </body>
 </html>
