@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -70,36 +71,39 @@
   <h2>Crie seu Currículo Simples e Rápido</h2>
   <form id="curriculoForm">
     <label>Digite seu nome completo:</label>
-    <input type="text" id="nome" required><label>Seu e-mail para contato:</label>
-<input type="email" id="email" required>
+    <input type="text" id="nome" required>
 
-<label>Seu número de telefone (com DDD):</label>
-<input type="text" id="telefone" required>
+    <label>Seu e-mail para contato:</label>
+    <input type="email" id="email" required>
 
-<label>Endereço onde você mora:</label>
-<input type="text" id="endereco" required>
+    <label>Seu número de telefone (com DDD):</label>
+    <input type="text" id="telefone" required>
 
-<label>Fale um pouco sobre você e sua experiência:</label>
-<textarea id="resumo" rows="4" required></textarea>
+    <label>Endereço onde você mora:</label>
+    <input type="text" id="endereco" required>
 
-<label>Onde você já trabalhou? E o que fazia?</label>
-<textarea id="experiencia" rows="4" required></textarea>
+    <label>Fale um pouco sobre você e sua experiência:</label>
+    <textarea id="resumo" rows="4" required></textarea>
 
-<label>Qual a sua escolaridade ou cursos feitos?</label>
-<textarea id="formacao" rows="3" required></textarea>
+    <label>Onde você já trabalhou? E o que fazia?</label>
+    <textarea id="experiencia" rows="4" required></textarea>
 
-<label>Liste suas habilidades (Ex: Informática, Vendas, Atendimento):</label>
-<textarea id="habilidades" rows="2"></textarea>
+    <label>Qual a sua escolaridade ou cursos feitos?</label>
+    <textarea id="formacao" rows="3" required></textarea>
 
-<label>Idiomas que você fala (Ex: Português, Inglês):</label>
-<textarea id="idiomas" rows="2"></textarea>
+    <label>Liste suas habilidades (Ex: Informática, Vendas, Atendimento):</label>
+    <textarea id="habilidades" rows="2"></textarea>
 
-<label>Envie sua foto 3x4:</label>
-<input type="file" id="foto" accept="image/*">
+    <label>Idiomas que você fala (Ex: Português, Inglês):</label>
+    <textarea id="idiomas" rows="2"></textarea>
 
-<button type="button" onclick="gerarPDF()">Baixar Currículo em PDF</button>
+    <label>Envie sua foto 3x4:</label>
+    <input type="file" id="foto" accept="image/*">
 
-  </form>  <script>
+    <button type="button" onclick="gerarPDF()">Baixar Currículo em PDF</button>
+  </form>
+
+  <script>
     async function gerarPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -137,30 +141,28 @@
 
         doc.text(`Email: ${email}`, 10, y); y += 10;
         doc.text(`Telefone: ${telefone}`, 10, y); y += 10;
-        doc.text(`Endereço: ${endereco}`, 10, y); y += 10;
+        doc.text(`Endereço: ${endereco}`, 10, y); y += 15;
 
-        y += 10;
-        doc.text("Resumo Profissional:", 10, y); y += 10;
-        doc.text(doc.splitTextToSize(resumo, 180), 10, y); y += doc.getTextDimensions(resumo).h + 10;
-
-        doc.text("Experiência Profissional:", 10, y); y += 10;
-        doc.text(doc.splitTextToSize(experiencia, 180), 10, y); y += doc.getTextDimensions(experiencia).h + 10;
-
-        doc.text("Formação Acadêmica:", 10, y); y += 10;
-        doc.text(doc.splitTextToSize(formacao, 180), 10, y); y += doc.getTextDimensions(formacao).h + 10;
-
-        if (habilidades.trim() !== "") {
-          doc.text("Habilidades:", 10, y); y += 10;
-          doc.text(doc.splitTextToSize(habilidades, 180), 10, y); y += doc.getTextDimensions(habilidades).h + 10;
+        function adicionarBloco(titulo, conteudo) {
+          if (conteudo.trim() !== "") {
+            doc.setFont(undefined, 'bold');
+            doc.text(`${titulo}`, 10, y); y += 7;
+            doc.setFont(undefined, 'normal');
+            const texto = doc.splitTextToSize(conteudo, 180);
+            doc.text(texto, 10, y);
+            y += texto.length * 7 + 5;
+          }
         }
 
-        if (idiomas.trim() !== "") {
-          doc.text("Idiomas:", 10, y); y += 10;
-          doc.text(doc.splitTextToSize(idiomas, 180), 10, y);
-        }
+        adicionarBloco("Resumo Profissional:", resumo);
+        adicionarBloco("Experiência Profissional:", experiencia);
+        adicionarBloco("Formação Acadêmica:", formacao);
+        adicionarBloco("Habilidades:", habilidades);
+        adicionarBloco("Idiomas:", idiomas);
 
         doc.save("curriculo.pdf");
       }
     }
-  </script></body>
+  </script>
+</body>
 </html>
