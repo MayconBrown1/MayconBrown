@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controle de Clientes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 text-white p-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex justify-center mb-6">
+      <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="w-[400px]">
+    </div>
+    <h1 class="text-3xl font-bold text-center mb-6">Controle de Clientes</h1>
+
+    <div class="bg-gray-800 rounded-xl shadow-md p-6 mb-6 fade-in">
+      <form id="clientForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+        <input type="hidden" id="idOriginal">
+        <input type="text" id="nome" placeholder="Nome do Cliente" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white" required>
+        <input type="text" id="whatsapp" placeholder="WhatsApp" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white">
+        <input type="email" id="email" placeholder="Email" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white">
+        <input type="text" id="endereco" placeholder="Endereço (opcional)" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white">
+        <input type="text" id="produto" placeholder="Produto ou Serviço" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white">
+        <input type="number" id="valor" placeholder="Valor Pago (ex: 19,99)" step="0.01" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white">
+        <input type="date" id="data" class="p-3 rounded-xl border border-gray-600 bg-gray-900 text-white">
+        <button type="submit" class="col-span-1 md:col-span-2 bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition">Salvar Cliente</button>
+        <div id="mensagemSucesso" class="absolute top-full mt-2 left-0 col-span-2 text-green-400 font-medium hidden fade-in">Cliente salvo com sucesso!</div>
+      </form>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl shadow-md p-6 mb-6 fade-in">
+      <input type="text" id="pesquisa" placeholder="Pesquisar por nome, WhatsApp ou e-mail" class="p-3 w-full rounded-xl border border-gray-600 bg-gray-900 text-white mb-4">
+      <div id="resultado" class="fade-in"></div>
+    </div>
+
+    <div class="bg-gray-800 rounded-xl shadow-md p-6 fade-in flex flex-col md:flex-row gap-4 justify-between items-center">
+      <button onclick="fazerBackup()" class="bg-green-600 text-white p-3 rounded-xl hover:bg-green-700 transition w-full md:w-auto">Fazer Backup</button>
+      <input type="file" id="uploadBackup" accept="application/json" class="hidden" />
+      <button onclick="document.getElementById('uploadBackup').click()" class="bg-yellow-600 text-white p-3 rounded-xl hover:bg-yellow-700 transition w-full md:w-auto">Restaurar Backup</button>
+    </div>
+
+    <button onclick="limparTudo()" class="bg-red-500 text-white p-3 rounded-xl hover:bg-red-600 transition w-full md:w-auto mt-4">Limpar Todos os Dados</button>
+  </div>
+
+  <script>
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || {};
+
+    const form = document.getElementById('clientForm');
+    const pesquisa = document.getElementById('pesquisa');
+    const resultado = document.getElementById('resultado');
+    const uploadBackup = document.getElementById('uploadBackup');
+    const mensagemSucesso = document.getElementById('mensagemSucesso');
+
+    function salvarLocalmente() {
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const idOriginal = form.idOriginal.value;
+      const nome = form.nome.value.trim();
+      const whatsapp = form.whatsapp.value.trim();
+      const email = form.email.value.trim();
+      const endereco = form.endereco.value.trim();
+      const produto = form.produto.value.trim();
+      const valor = form.valor.value.trim();
+      const data = form.data.value;
+
+      if (!nome) return alert('O nome do cliente é obrigatório.');
+
+let id = idOriginal || crypto.randomUUID();
+
+if (!clientes[id]) {
+  clientes[id] = {
+    id,
+    nome,
+    whatsapp,
+    email,
+    endereco,
+    historico: []
+  };
+} else {
+  clientes[id].nome = nome;
+  clientes[id].whatsapp = whatsapp;
+  clientes[id].email = email;
+  clientes[id].endereco = endereco;
+}
+
+// Se os 3 campos de histórico estiverem preenchidos, adiciona
+if (produto && valor && data) {
+  clientes[id].historico.push({ produto, valor, data });
+  clientes[id].historico.sort((a, b) => new Date(b.data) - new Date(a.data));
+} else if (produto || valor || data) {
+  // Se apenas alguns dos campos forem preenchidos, alerta o usuário
+  return alert('Para adicionar ao histórico, preencha produto, valor e data.');
+}
+
+salvarLocalmente();
+
+mensagemSucesso.classList.remove('hidden');
+setTimeout(() => mensagemSucesso.classList.add('hidden'), 3000);
+
+form.reset();
+form.idOriginal.value = '';
+atualizarClientes();
+
+    });
+
+    function atualizarClientes() {
+      const termo = pesquisa.value.toLowerCase();
+      resultado.innerHTML = '';
+
+      const listaClientes = Object.values(clientes).sort((a, b) => a.nome.localeCompare(b.nome));
+
+      let encontrou = false;
+
+      for (const c of listaClientes) {
+        if (
+          termo === '' ||
+          c.nome.toLowerCase().includes(termo) ||
+          (c.whatsapp && c.whatsapp.includes(termo)) ||
+          (c.email && c.email.toLowerCase().includes(termo))
+        ) {
+          exibirCliente(c);
+          encontrou = true;
+        }
+      }
+
+      if (!encontrou) {
+        resultado.innerHTML = `<p class="text-red-400">Nenhum cliente encontrado.</p>`;
+      }
+    }
+
+    function exibirCliente(c) {
+      const historicoHTML = c.historico.map(h => `
+        <li class="mb-1">📦 ${h.produto} - 💰 R$ ${h.valor} - 📅 ${h.data}</li>
+      `).join('');
+
+      const clienteHTML = document.createElement('div');
+      clienteHTML.className = 'p-4 bg-gray-700 rounded-xl border border-gray-600 mb-4';
+      clienteHTML.innerHTML = `
+        <h2 class="text-xl font-semibold">${c.nome} <span class="text-green-400">(Cliente cadastrado)</span></h2>
+        <p>📱 WhatsApp: <a href="https://wa.me/55${c.whatsapp}" target="_blank" class="text-blue-400 underline">${c.whatsapp || 'Não informado'}</a></p>
+        <p>✉️ Email: ${c.email || 'Não informado'}</p>
+        <p>🏠 Endereço: ${c.endereco || 'Não informado'}</p>
+        <p class="mt-2 font-medium">Histórico de compras:</p>
+        <ul class="list-disc list-inside text-gray-200">${historicoHTML}</ul>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <button onclick="removerCliente('${c.id}')" class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition">Remover Cliente</button>
+          <button onclick="copiarDadosCliente('${c.id}')" class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition">Copiar Dados</button>
+          <button onclick="editarCliente('${c.id}')" class="bg-yellow-600 text-white px-4 py-2 rounded-xl hover:bg-yellow-700 transition">Editar</button>
+        </div>
+      `;
+      resultado.appendChild(clienteHTML);
+    }
+
+    function removerCliente(id) {
+      if (confirm(`Tem certeza que deseja remover este cliente?`)) {
+        delete clientes[id];
+        salvarLocalmente();
+        alert('Cliente removido com sucesso!');
+        atualizarClientes();
+      }
+    }
+
+    function copiarDadosCliente(id) {
+      const c = clientes[id];
+      if (!c) return alert('Cliente não encontrado.');
+
+      let dados = `Cliente: ${c.nome}\n`;
+      dados += `WhatsApp: ${c.whatsapp || 'Não informado'}\n`;
+      dados += `Email: ${c.email || 'Não informado'}\n`;
+      dados += `Endereço: ${c.endereco || 'Não informado'}\n\n`;
+      dados += `Histórico de compras:\n`;
+      c.historico.forEach(h => {
+        dados += `- ${h.produto}, R$ ${h.valor}, em ${h.data}\n`;
+      });
+
+      navigator.clipboard.writeText(dados)
+        .then(() => alert('Dados copiados para a área de transferência!'))
+        .catch(() => alert('Erro ao copiar os dados.'));
+    }
+
+    function editarCliente(id) {
+      const c = clientes[id];
+      if (!c) return alert('Cliente não encontrado.');
+      form.idOriginal.value = id;
+      form.nome.value = c.nome;
+      form.whatsapp.value = c.whatsapp || '';
+      form.email.value = c.email || '';
+      form.endereco.value = c.endereco || '';
+      form.produto.value = '';
+      form.valor.value = '';
+      form.data.value = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function fazerBackup() {
+  const json = JSON.stringify(clientes, null, 2);
+
+  if ('showSaveFilePicker' in window) {
+    // Navegadores modernos
+    (async () => {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: 'backup_clientes.json',
+          types: [{
+            description: 'Arquivo JSON',
+            accept: { 'application/json': ['.json'] }
+          }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(json);
+        await writable.close();
+        alert('Backup salvo com sucesso!');
+      } catch (error) {
+        alert('Backup cancelado ou falhou.');
+        console.error(error);
+      }
+    })();
+  } else {
+    // Fallback para navegadores mais antigos
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'backup_clientes.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+}
+
+    uploadBackup.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          clientes = JSON.parse(event.target.result);
+          salvarLocalmente();
+          alert('Backup restaurado com sucesso!');
+          atualizarClientes();
+        } catch (error) {
+          alert('Erro ao restaurar backup. Verifique o arquivo.');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    function limparTudo() {
+      if (confirm('Tem certeza que deseja apagar TODOS os clientes?')) {
+        localStorage.removeItem('clientes');
+        clientes = {};
+        resultado.innerHTML = '';
+        alert('Todos os dados foram apagados.');
+      }
+    }
+
+    // Exibir clientes ao carregar
+    window.addEventListener('DOMContentLoaded', () => {
+      atualizarClientes();
+    });
+  </script>
+</body>
+
+</html>
