@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contato | Maycon Brown</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -22,12 +22,23 @@
     <header class="bg-white shadow-md sticky top-0 z-50">
       <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <a href="index.html">
-            <img src="img/logo-brown-preto.png" alt="Maycon Brown" class="h-10" />
+          <img src="img/logo-brown-preto.png" alt="Maycon Brown" class="h-10" />
         </a>
         <!-- Botão para mobile -->
         <button class="md:hidden focus:outline-none" onclick="toggleMenu()">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
           </svg>
         </button>
 
@@ -63,35 +74,128 @@
           Entre em contato para dúvidas, orçamentos ou informações.
         </p>
 
-        <form action="https://formsubmit.co/mayconbrown083@gmail.com" method="POST" class="bg-white shadow-lg rounded-xl p-6 space-y-6">
+        <form
+          action="https://formsubmit.co/mayconbrown083@gmail.com"
+          method="POST"
+          class="bg-white shadow-lg rounded-xl p-6 space-y-6"
+        >
+          <!-- Campo para redirecionar após envio -->
+          <input type="hidden" name="_next" value="obrigado.html" />
+          <input type="hidden" name="_captcha" value="false" />
+
           <div>
             <label for="nome" class="block mb-1 font-semibold">Nome</label>
-            <input type="text" id="nome" name="name" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <input
+              type="text"
+              id="nome"
+              name="name"
+              required
+              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
           </div>
 
           <div>
             <label for="email" class="block mb-1 font-semibold">Email</label>
-            <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
           </div>
 
           <div>
             <label for="mensagem" class="block mb-1 font-semibold">Mensagem</label>
-            <textarea id="mensagem" name="message" rows="5" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            <textarea
+              id="mensagem"
+              name="message"
+              rows="5"
+              required
+              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            ></textarea>
           </div>
 
-          <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-full hover:bg-indigo-700 transition">Enviar Mensagem</button>
+          <button
+            type="submit"
+            class="cursor-pointer w-full bg-indigo-600 text-white py-3 rounded-full hover:bg-indigo-700 transition"
+          >
+            Enviar Mensagem
+          </button>
         </form>
 
-        <div class="mt-12 text-center text-gray-600 space-y-2">
-          <p><strong>WhatsApp:</strong> <a href="https://wa.me/5584981770146" class="text-indigo-600 hover:underline">+55 (84) 98177-0146</a></p>
-          <p><strong>Email:</strong> <a href="mailto:mayconbrown083@gmail.com" class="text-indigo-600 hover:underline">mayconbrown083@gmail.com</a></p>
-          <p><strong>Localização:</strong> Parnamirim, RN</p>
+        <div class="mt-12 text-center text-gray-600 space-y-4">
+          <p class="flex justify-center items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-green-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-2m-4-4v6m0 0v-6m0 0H9m4 0h4"
+              />
+            </svg>
+            <strong>WhatsApp:</strong>
+            <a
+              href="https://wa.me/5584981770146?text=Olá%20Maycon,%20gostaria%20de%20mais%20informações."
+              class="text-indigo-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+              >+55 (84) 98177-0146</a
+            >
+          </p>
+          <p class="flex justify-center items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-blue-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 12H8m0 0l4 4m-4-4l4-4"
+              />
+            </svg>
+            <strong>Email:</strong>
+            <a
+              href="mailto:mayconbrown083@gmail.com"
+              class="text-indigo-600 hover:underline"
+              >mayconbrown083@gmail.com</a
+            >
+          </p>
+          <p class="flex justify-center items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2zM12 14a3 3 0 100-6 3 3 0 000 6z"
+              />
+            </svg>
+            <strong>Localização:</strong> Parnamirim, RN
+          </p>
         </div>
       </div>
     </main>
 
     <!-- Rodapé -->
-    <footer class="bg-white border-t py-6 mt-16 text-center text-sm text-gray-500">
+    <footer
+      class="bg-white border-t py-6 mt-16 text-center text-sm text-gray-500"
+    >
       <p>&copy; 2025 Maycon Brown. Todos os direitos reservados.</p>
     </footer>
   </body>
