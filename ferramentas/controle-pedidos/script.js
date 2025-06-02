@@ -1,11 +1,12 @@
 // 🔥 Firebase config - substitua pelos seus dados
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_DOMINIO.firebaseapp.com",
-    projectId: "SEU_PROJECT_ID",
-    storageBucket: "SEU_BUCKET.appspot.com",
-    messagingSenderId: "SEU_MESSAGING_ID",
-    appId: "SEU_APP_ID"
+    apiKey: "AIzaSyDhq3Slj9tR5tZbGsISTC3YgBF3CMFBTm4",
+    authDomain: "gestor-de-pedidos-638d0.firebaseapp.com",
+    projectId: "gestor-de-pedidos-638d0",
+    storageBucket: "gestor-de-pedidos-638d0.firebasestorage.app",
+    messagingSenderId: "278380207122",
+    appId: "1:278380207122:web:ecf1923669c7f8a2824ccb",
+    measurementId: "G-DSRE0NQB7Y"
   };
   
   firebase.initializeApp(firebaseConfig);
