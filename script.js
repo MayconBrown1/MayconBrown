@@ -26,26 +26,3 @@ installButton.addEventListener('click', () => {
         });
     }
 });
-/ Botão para instalar PWA
-  let deferredPrompt;
-  
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = "inline-block";
-  });
-  
-  installBtn.addEventListener("click", async () => {
-    installBtn.style.display = "none";
-  
-    if (!deferredPrompt) return;
-  
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-  });
-  
-  // Ocultar botão instalar se já instalado
-  window.addEventListener("appinstalled", () => {
-    installBtn.style.display = "none";
-  });
