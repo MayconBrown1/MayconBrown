@@ -4,7 +4,7 @@
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#FFCC00",
-    "theme_color": "##FFCC00",
+    "theme_color": "#FFCC00",
     "description": "Aplicativo para gerenciar pedidos com login e controle de status.",
     "icons": [
       {
