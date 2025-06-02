@@ -84,13 +84,14 @@ logoutBtn.addEventListener("click", () => {
       if (editId) {
         // Atualiza pedido existente, não muda o status nem criadoEm
         await pedidosRef.doc(editId).update({
-          cliente: pedido.cliente,
-          whatsapp: pedido.whatsapp,
-          descricao: pedido.descricao,
-          endereco: pedido.endereco,
-          valor: pedido.valor,
-          pago: pedido.pago,
-        });
+            cliente: pedido.cliente,
+            whatsapp: pedido.whatsapp,
+            descricao: pedido.descricao,
+            endereco: pedido.endereco,
+            valorPedido: pedido.valorPedido,
+            valorPago: pedido.valorPago,
+          });
+          
         form.removeAttribute("data-edit-id");
         form.querySelector("button[type='submit']").textContent = "Adicionar pedido";
       } else {
@@ -134,11 +135,6 @@ logoutBtn.addEventListener("click", () => {
 
                       
                       // Atualizar status
-li.querySelector(".producao-btn").onclick = () =>
-    pedidosRef.doc(doc.id).update({ status: "em_producao" });
-  
-  li.querySelector(".entregue-btn").onclick = () =>
-    pedidosRef.doc(doc.id).update({ status: "entregue" });
   
   // Botão Editar
   li.querySelector(".editar-btn").onclick = () => editarPedido(doc);
@@ -167,8 +163,9 @@ li.querySelector(".producao-btn").onclick = () =>
       form.retirada.checked = false;
       form.endereco.value = data.endereco;
     }
-    form.valor.value = data.valor;
-    form.pago.value = data.pago;
+    form.valorPedido.value = data.valorPedido;
+form.valorPago.value = data.valorPago;
+
   
     // Adiciona um atributo para salvar o id do pedido que está sendo editado
     form.setAttribute("data-edit-id", doc.id);
@@ -217,9 +214,9 @@ installBtn.addEventListener("click", async () => {
   function atualizarPedidos(snapshot) {
     pedidosContainer.innerHTML = "";
     snapshot.forEach((doc) => {
-      const pedidoEl = renderPedido(doc);
-      pedidosContainer.appendChild(pedidoEl);
-    });
+        const pedidoEl = renderPedido(doc);
+        pedidosContainer.appendChild(pedidoEl);
+      });      
   }
   
   // Listener de atualização em tempo real
