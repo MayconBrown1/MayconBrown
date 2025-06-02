@@ -65,15 +65,18 @@ logoutBtn.addEventListener("click", () => {
     e.preventDefault();
   
     const pedido = {
-      cliente: form.cliente.value,
-      whatsapp: form.whatsapp.value,
-      descricao: form.descricao.value,
-      endereco: form.retirada.checked ? "Retirada" : form.endereco.value,
-      valor: parseFloat(form.valor.value),
-      pago: form.pago.value,
-      status: "novo",
-      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-    };
+        cliente: form.cliente.value,
+        whatsapp: form.whatsapp.value,
+        descricao: form.descricao.value,
+        endereco: form.retirada.checked ? "Retirada" : form.endereco.value,
+        dataHoraEntrega: form.dataHoraEntrega.value,
+        valorPedido: parseFloat(form.valorPedido.value),
+        valorPago: parseFloat(form.valorPago.value),
+        status: "novo",
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      
   
     const editId = form.getAttribute("data-edit-id");
   
@@ -113,23 +116,22 @@ logoutBtn.addEventListener("click", () => {
                         data.status === "entregue" ? "verde" : "";
   
                         li.innerHTML = `
-                        <div><strong>${data.cliente}</strong> (${data.whatsapp})</div>
-                        <div>${data.descricao}</div>
-                        <div><strong>Entrega:</strong> ${data.endereco}</div>
-                        <div><strong>Valor:</strong> R$ ${data.valor.toFixed(2)}</div>
-                        <div><strong>Pagamento:</strong> ${
-                          data.pago === "nao" ? "Não pago" :
-                          data.pago === "50" ? "Pago 50%" : "Pago 100%"
-                        }</div>
-                        <div><span class="status ${statusClass}"></span> ${data.status.replace("_", " ")}</div>
-                      
-                        <div class="botoes">
-                          <button class="producao-btn">Em produção</button>
-                          <button class="entregue-btn">Finalizado</button>
-                          <button class="editar-btn">Editar</button>
-                          <button class="apagar-btn">Apagar</button>
-                        </div>
-                      `;
+  <div><strong>${data.cliente}</strong> (${data.whatsapp})</div>
+  <div>${data.descricao}</div>
+  <div><strong>Entrega:</strong> ${data.endereco}</div>
+  <div><strong>Data/hora entrega:</strong> ${data.dataHoraEntrega || 'Não definido'}</div>
+  <div><strong>Valor do pedido:</strong> R$ ${data.valorPedido?.toFixed(2) || '0.00'}</div>
+  <div><strong>Valor pago:</strong> R$ ${data.valorPago?.toFixed(2) || '0.00'}</div>
+  <div><span class="status ${statusClass}"></span> ${data.status.replace("_", " ")}</div>
+
+  <div class="botoes">
+    <button class="producao-btn">Em produção</button>
+    <button class="entregue-btn">Finalizado</button>
+    <button class="editar-btn">Editar</button>
+    <button class="apagar-btn">Apagar</button>
+  </div>
+`;
+
                       
                       // Atualizar status
 li.querySelector(".producao-btn").onclick = () =>
@@ -221,5 +223,6 @@ installBtn.addEventListener("click", async () => {
   }
   
   // Listener de atualização em tempo real
-  pedidosRef.orderBy("criadoEm", "desc").onSnapshot(atualizarPedidos);
+  pedidosRef.orderBy("dataHoraEntrega").onSnapshot(atualizarPedidos);
+
   

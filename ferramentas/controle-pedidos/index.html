@@ -35,7 +35,15 @@
       <input type="text" id="endereco" placeholder="Endereço de entrega" />
       <label><input type="checkbox" id="retirada" /> Retirada</label>
 
-      <input type="number" id="valor" placeholder="Valor do pedido" required />
+      <label for="dataHoraEntrega">Data e hora da entrega:</label>
+<input type="datetime-local" id="dataHoraEntrega" name="dataHoraEntrega" required>
+
+<label for="valorPedido">Valor do pedido:</label>
+<input type="number" id="valorPedido" name="valorPedido" step="0.01" required>
+
+<label for="valorPago">Valor pago:</label>
+<input type="number" id="valorPago" name="valorPago" step="0.01" required>
+
 
       <label for="pago">Status de Pagamento:</label>
       <select id="pago" required>
