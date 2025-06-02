@@ -14,33 +14,46 @@ const firebaseConfig = {
   const db = firebase.firestore();
   const pedidosRef = db.collection("pedidos");
   const auth = firebase.auth();
-const loginBtn = document.getElementById("loginBtn");
+const loginForm = document.getElementById("loginForm");
 const logoutBtn = document.getElementById("logoutBtn");
 const conteudo = document.getElementById("conteudo");
 const userInfo = document.getElementById("userInfo");
 
-loginBtn.addEventListener("click", () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
-});
+// Login com email e senha
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+  
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+  
+    auth.signInWithEmailAndPassword(email, senha)
+      .then(() => {
+        loginForm.reset();
+      })
+      .catch((error) => {
+        alert("Erro ao entrar: " + error.message);
+      });
+  });
 
+  // Logout
 logoutBtn.addEventListener("click", () => {
-  auth.signOut();
-});
-
-auth.onAuthStateChanged(user => {
-  if (user) {
-    conteudo.style.display = "block";
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    userInfo.innerHTML = `👤 ${user.displayName}`;
-  } else {
-    conteudo.style.display = "none";
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-    userInfo.innerHTML = "";
-  }
-});
+    auth.signOut();
+  });
+  
+  // Controle do estado de autenticação
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      conteudo.style.display = "block";
+      loginForm.style.display = "none";
+      logoutBtn.style.display = "inline-block";
+      userInfo.innerHTML = `👤 ${user.email}`;
+    } else {
+      conteudo.style.display = "none";
+      loginForm.style.display = "inline-block";
+      logoutBtn.style.display = "none";
+      userInfo.innerHTML = "";
+    }
+  });
 
   
   // Referências ao DOM
@@ -62,14 +75,32 @@ auth.onAuthStateChanged(user => {
       criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     };
   
+    const editId = form.getAttribute("data-edit-id");
+  
     try {
-      await pedidosRef.add(pedido);
+      if (editId) {
+        // Atualiza pedido existente, não muda o status nem criadoEm
+        await pedidosRef.doc(editId).update({
+          cliente: pedido.cliente,
+          whatsapp: pedido.whatsapp,
+          descricao: pedido.descricao,
+          endereco: pedido.endereco,
+          valor: pedido.valor,
+          pago: pedido.pago,
+        });
+        form.removeAttribute("data-edit-id");
+        form.querySelector("button[type='submit']").textContent = "Adicionar pedido";
+      } else {
+        // Cria pedido novo
+        await pedidosRef.add(pedido);
+      }
       form.reset();
     } catch (error) {
       alert("Erro ao registrar pedido: " + error.message);
       console.error(error);
     }
   });
+  
   
   // Renderiza cada pedido
   function renderPedido(doc) {
@@ -81,22 +112,95 @@ auth.onAuthStateChanged(user => {
     const statusClass = data.status === "em_producao" ? "vermelho" :
                         data.status === "entregue" ? "verde" : "";
   
-    li.innerHTML = `
-      <div><strong>${data.cliente}</strong> (${data.whatsapp})</div>
-      <div>${data.descricao}</div>
-      <div><strong>Entrega:</strong> ${data.endereco}</div>
-      <div><strong>Valor:</strong> R$ ${data.valor.toFixed(2)}</div>
-      <div><strong>Pagamento:</strong> ${
-        data.pago === "nao" ? "Não pago" :
-        data.pago === "50" ? "Pago 50%" : "Pago 100%"
-      }</div>
-      <div><span class="status ${statusClass}"></span> ${data.status.replace("_", " ")}</div>
+                        li.innerHTML = `
+                        <div><strong>${data.cliente}</strong> (${data.whatsapp})</div>
+                        <div>${data.descricao}</div>
+                        <div><strong>Entrega:</strong> ${data.endereco}</div>
+                        <div><strong>Valor:</strong> R$ ${data.valor.toFixed(2)}</div>
+                        <div><strong>Pagamento:</strong> ${
+                          data.pago === "nao" ? "Não pago" :
+                          data.pago === "50" ? "Pago 50%" : "Pago 100%"
+                        }</div>
+                        <div><span class="status ${statusClass}"></span> ${data.status.replace("_", " ")}</div>
+                      
+                        <div class="botoes">
+                          <button class="producao-btn">Em produção</button>
+                          <button class="entregue-btn">Finalizado</button>
+                          <button class="editar-btn">Editar</button>
+                          <button class="apagar-btn">Apagar</button>
+                        </div>
+                      `;
+                      
+                      // Atualizar status
+li.querySelector(".producao-btn").onclick = () =>
+    pedidosRef.doc(doc.id).update({ status: "em_producao" });
   
-      <div class="botoes">
-        <button class="producao-btn">Em produção</button>
-        <button class="entregue-btn">Finalizado</button>
-      </div>
-    `;
+  li.querySelector(".entregue-btn").onclick = () =>
+    pedidosRef.doc(doc.id).update({ status: "entregue" });
+  
+  // Botão Editar
+  li.querySelector(".editar-btn").onclick = () => editarPedido(doc);
+  
+  // Botão Apagar
+  li.querySelector(".apagar-btn").onclick = async () => {
+    if (confirm("Quer mesmo apagar esse pedido?")) {
+      try {
+        await pedidosRef.doc(doc.id).delete();
+      } catch (error) {
+        alert("Erro ao apagar: " + error.message);
+      }
+    }
+  };
+
+  function editarPedido(doc) {
+    const data = doc.data();
+    
+    form.cliente.value = data.cliente;
+    form.whatsapp.value = data.whatsapp;
+    form.descricao.value = data.descricao;
+    if (data.endereco === "Retirada") {
+      form.retirada.checked = true;
+      form.endereco.value = "";
+    } else {
+      form.retirada.checked = false;
+      form.endereco.value = data.endereco;
+    }
+    form.valor.value = data.valor;
+    form.pago.value = data.pago;
+  
+    // Adiciona um atributo para salvar o id do pedido que está sendo editado
+    form.setAttribute("data-edit-id", doc.id);
+  
+    // Muda o texto do botão para indicar que está em modo edição
+    form.querySelector("button[type='submit']").textContent = "Salvar alterações";
+  }
+  
+  let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  // Previne o popup automático
+  e.preventDefault();
+  deferredPrompt = e;
+  // Mostra o botão instalar
+  installBtn.style.display = "inline-block";
+});
+
+installBtn.addEventListener("click", async () => {
+  // Esconde o botão
+  installBtn.style.display = "none";
+  // Mostra o prompt de instalação
+  deferredPrompt.prompt();
+  // Espera a resposta do usuário
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    console.log("Usuário aceitou a instalação");
+  } else {
+    console.log("Usuário rejeitou a instalação");
+  }
+  deferredPrompt = null;
+});
+
   
     li.querySelector(".producao-btn").onclick = () =>
       pedidosRef.doc(doc.id).update({ status: "em_producao" });

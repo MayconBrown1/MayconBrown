@@ -5,14 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gestor de Pedidos - Fábrica de Salgados</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#007bff" />
 </head>
 <body>
   <header>
     <h1>📦 Pedidos de Salgados</h1>
     <div id="userInfo" style="text-align: right; margin-right: 1rem;"></div>
-    <button id="loginBtn">Entrar com Google</button>
+    
+    <!-- Formulário de login com email e senha -->
+    <form id="loginForm" style="display: inline-block; margin-right: 1rem;">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="senha" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+  
     <button id="logoutBtn" style="display: none;">Sair</button>
   </header>
+
+  <button id="installBtn" style="display:none;">Instalar app</button>
+  
 
   <main id="conteudo" style="display: none;">
     <form id="pedidoForm">
