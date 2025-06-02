@@ -61,7 +61,23 @@ const firebaseConfig = {
     const li = document.createElement("li");
     li.classList.add("pedido");
   
-    const statusClass = data.status === "em_producao" ? "vermelho" :
+    // Verificar se a data do pedido é igual à data atual (só data, sem hora)
+    const hoje = new Date();
+    const dataPedido = data.dataHoraEntrega ? new Date(data.dataHoraEntrega) : null;
+    
+    // Função para comparar só dia, mês e ano
+    function mesmaData(d1, d2) {
+      return d1 && d2 &&
+        d1.getDate() === d2.getDate() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getFullYear() === d2.getFullYear();
+    }
+    
+    if (mesmaData(hoje, dataPedido)) {
+      li.classList.add("piscando-fundo"); // piscar fundo verde se o pedido é hoje
+    }
+  
+    const statusClass = data.status === "em_producao" ? "vermelho piscando" : 
                         data.status === "entregue" ? "verde" : "";
   
     li.innerHTML = `
@@ -103,13 +119,33 @@ const firebaseConfig = {
     return li;
   }
   
-  // Atualiza pedidos em tempo real
-  pedidosRef.orderBy("dataHoraEntrega").onSnapshot(snapshot => {
-    pedidosContainer.innerHTML = "";
-    snapshot.forEach(doc => {
-      pedidosContainer.appendChild(renderPedido(doc));
-    });
+  // Atualiza pedidos em tempo real, movendo os antigos para o final
+pedidosRef.orderBy("dataHoraEntrega").onSnapshot(snapshot => {
+  pedidosContainer.innerHTML = "";
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // Zera hora para comparar só a data
+
+  const pedidosAtuaisEFuturos = [];
+  const pedidosAntigos = [];
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const dataEntrega = data.dataHoraEntrega ? new Date(data.dataHoraEntrega) : null;
+
+    if (dataEntrega && dataEntrega < hoje) {
+      pedidosAntigos.push(doc); // Data anterior a hoje
+    } else {
+      pedidosAtuaisEFuturos.push(doc); // Data de hoje ou futura, ou sem data
+    }
   });
+
+  [...pedidosAtuaisEFuturos, ...pedidosAntigos].forEach(doc => {
+    pedidosContainer.appendChild(renderPedido(doc));
+  });
+});
+
+  
   
   // Adicionar ou editar pedido
   form.addEventListener("submit", async (e) => {
@@ -136,9 +172,11 @@ const firebaseConfig = {
           whatsapp: pedido.whatsapp,
           descricao: pedido.descricao,
           endereco: pedido.endereco,
+          dataHoraEntrega: pedido.dataHoraEntrega,
           valorPedido: pedido.valorPedido,
           valorPago: pedido.valorPago,
         });
+        
   
         form.removeAttribute("data-edit-id");
         form.querySelector("button[type='submit']").textContent = "Adicionar pedido";
@@ -151,29 +189,32 @@ const firebaseConfig = {
     }
   });
   
+  
   // Preenche formulário para edição
   function editarPedido(doc) {
-    const data = doc.data();
-  
-    form.cliente.value = data.cliente;
-    form.whatsapp.value = data.whatsapp;
-    form.descricao.value = data.descricao;
-  
-    if (data.endereco === "Retirada") {
-      form.retirada.checked = true;
-      form.endereco.value = "";
-    } else {
-      form.retirada.checked = false;
-      form.endereco.value = data.endereco;
-    }
-  
-    form.dataHoraEntrega.value = data.dataHoraEntrega || "";
-    form.valorPedido.value = data.valorPedido || "";
-    form.valorPago.value = data.valorPago || "";
-  
-    form.setAttribute("data-edit-id", doc.id);
-    form.querySelector("button[type='submit']").textContent = "Salvar alterações";
+    console.log("Editando pedido:", doc.id);
+  const data = doc.data();
+
+  form.cliente.value = data.cliente;
+  form.whatsapp.value = data.whatsapp;
+  form.descricao.value = data.descricao;
+
+  if (data.endereco === "Retirada") {
+    form.retirada.checked = true;
+    form.endereco.value = "";
+  } else {
+    form.retirada.checked = false;
+    form.endereco.value = data.endereco;
   }
+
+  form.dataHoraEntrega.value = data.dataHoraEntrega || "";
+  form.valorPedido.value = data.valorPedido || "";
+  form.valorPago.value = data.valorPago || "";
+
+  form.setAttribute("data-edit-id", doc.id);
+  form.querySelector("button[type='submit']").textContent = "Salvar alterações";
+}
+
   
   // Botão para instalar PWA
   let deferredPrompt;

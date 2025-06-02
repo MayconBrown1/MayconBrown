@@ -123,7 +123,7 @@
   }
   
   .verde {
-    background-color: #03dac6; /* verde água para escuro */
+    background-color: #00da00; /* verde água para escuro */
   }
   
   /* Botões dentro dos pedidos */
@@ -171,7 +171,7 @@
     position: fixed;
     bottom: 1.2rem;
     right: 1.2rem;
-    background-color: #03dac6;
+    background-color: #00d41c;
     border-radius: 50%;
     border: none;
     width: 60px;
@@ -186,7 +186,7 @@
   }
   
   #installBtn:hover {
-    background-color: #018786;
+    background-color: #01873d;
   }
   @keyframes piscar {
     0%, 100% { opacity: 1; }
