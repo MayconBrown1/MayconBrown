@@ -1,20 +1,53 @@
-// 🔥 Firebase config - substitua pelos seus dados
+// 🔥 Firebase config - substitua pelos seus dados se mudar
 const firebaseConfig = {
     apiKey: "AIzaSyDhq3Slj9tR5tZbGsISTC3YgBF3CMFBTm4",
     authDomain: "gestor-de-pedidos-638d0.firebaseapp.com",
-    projectId: "SEU_PROJECT_IDgestor-de-pedidos-638d0",
-    storageBucket: "gestor-de-pedidos-638d0.firebasestorage.app",
+    projectId: "gestor-de-pedidos-638d0",
+    storageBucket: "gestor-de-pedidos-638d0.appspot.com",
     messagingSenderId: "278380207122",
-    appId: "1:278380207122:web:ecf1923669c7f8a2824ccb"
+    appId: "1:278380207122:web:ecf1923669c7f8a2824ccb",
+    measurementId: "G-DSRE0NQB7Y"
   };
   
+  // Inicialização do Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   const pedidosRef = db.collection("pedidos");
+  const auth = firebase.auth();
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const conteudo = document.getElementById("conteudo");
+const userInfo = document.getElementById("userInfo");
+
+loginBtn.addEventListener("click", () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider);
+});
+
+logoutBtn.addEventListener("click", () => {
+  auth.signOut();
+});
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    conteudo.style.display = "block";
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+    userInfo.innerHTML = `👤 ${user.displayName}`;
+  } else {
+    conteudo.style.display = "none";
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+    userInfo.innerHTML = "";
+  }
+});
+
   
+  // Referências ao DOM
   const form = document.getElementById("pedidoForm");
   const pedidosContainer = document.getElementById("pedidosContainer");
   
+  // Submissão do formulário
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
   
@@ -29,10 +62,16 @@ const firebaseConfig = {
       criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     };
   
-    await pedidosRef.add(pedido);
-    form.reset();
+    try {
+      await pedidosRef.add(pedido);
+      form.reset();
+    } catch (error) {
+      alert("Erro ao registrar pedido: " + error.message);
+      console.error(error);
+    }
   });
   
+  // Renderiza cada pedido
   function renderPedido(doc) {
     const data = doc.data();
   
@@ -68,6 +107,7 @@ const firebaseConfig = {
     return li;
   }
   
+  // Atualiza os pedidos em tempo real
   function atualizarPedidos(snapshot) {
     pedidosContainer.innerHTML = "";
     snapshot.forEach((doc) => {
@@ -76,5 +116,6 @@ const firebaseConfig = {
     });
   }
   
+  // Listener de atualização em tempo real
   pedidosRef.orderBy("criadoEm", "desc").onSnapshot(atualizarPedidos);
   

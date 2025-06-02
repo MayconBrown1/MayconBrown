@@ -9,22 +9,29 @@
 <body>
   <header>
     <h1>📦 Pedidos de Salgados</h1>
+    <div id="userInfo" style="text-align: right; margin-right: 1rem;"></div>
+    <button id="loginBtn">Entrar com Google</button>
+    <button id="logoutBtn" style="display: none;">Sair</button>
   </header>
 
-  <main>
+  <main id="conteudo" style="display: none;">
     <form id="pedidoForm">
       <input type="text" id="cliente" placeholder="Nome do cliente" required />
       <input type="text" id="whatsapp" placeholder="WhatsApp" required />
       <textarea id="descricao" placeholder="Descrição do pedido" required></textarea>
+
       <input type="text" id="endereco" placeholder="Endereço de entrega" />
       <label><input type="checkbox" id="retirada" /> Retirada</label>
+
       <input type="number" id="valor" placeholder="Valor do pedido" required />
-      <label>Status de Pagamento:</label>
-      <select id="pago">
+
+      <label for="pago">Status de Pagamento:</label>
+      <select id="pago" required>
         <option value="nao">Não pago</option>
         <option value="50">Pago 50%</option>
         <option value="100">Pago 100%</option>
       </select>
+
       <button type="submit">Registrar Pedido</button>
     </form>
 
@@ -36,6 +43,7 @@
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="script.js"></script>
 </body>
