@@ -177,28 +177,56 @@ form.valorPago.value = data.valorPago;
   let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
+// Evento que dispara quando o app pode ser instalado
 window.addEventListener("beforeinstallprompt", (e) => {
-  // Previne o popup automático
   e.preventDefault();
   deferredPrompt = e;
-  // Mostra o botão instalar
+  // Mostra o botão para instalar
   installBtn.style.display = "inline-block";
 });
 
+// Quando o usuário clica no botão
 installBtn.addEventListener("click", async () => {
   // Esconde o botão
   installBtn.style.display = "none";
-  // Mostra o prompt de instalação
+
+  if (!deferredPrompt) {
+    // Se não tiver o evento, não tenta instalar
+    return;
+  }
+
   deferredPrompt.prompt();
-  // Espera a resposta do usuário
+
   const { outcome } = await deferredPrompt.userChoice;
+
   if (outcome === "accepted") {
     console.log("Usuário aceitou a instalação");
   } else {
     console.log("Usuário rejeitou a instalação");
   }
+
   deferredPrompt = null;
 });
+
+// Evento que detecta se o app já está instalado (no Windows, Mac e mobile)
+window.addEventListener("appinstalled", () => {
+  console.log("App foi instalado");
+  // Esconde o botão
+  installBtn.style.display = "none";
+});
+
+// Além disso, para detectar se o app já está rodando em modo PWA ou instalado, 
+// para esconder o botão direto ao carregar a página
+function checkIfAppInstalled() {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true; // para iOS
+  if (isStandalone) {
+    installBtn.style.display = "none";
+  }
+}
+
+checkIfAppInstalled();
+
 
   
     li.querySelector(".producao-btn").onclick = () =>
