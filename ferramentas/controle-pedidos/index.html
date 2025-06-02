@@ -1,29 +1,38 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gestor de Pedidos - Fábrica de Salgados</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#007bff" />
-</head>
-<body>
-  <header>
-    <h1>📦 Pedidos de Salgados</h1>
-    <div id="userInfo" style="text-align: right; margin-right: 1rem;"></div>
-    
-    <!-- Formulário de login com email e senha -->
-    <form id="loginForm" style="display: inline-block; margin-right: 1rem;">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="senha" placeholder="Senha" required />
-      <button type="submit">Entrar</button>
-    </form>
-  
-    <button id="logoutBtn" style="display: none;">Sair</button>
-  </header>
+<header>
+  <a href="http://mayconbrown.com.br/" target="_blank" style="display:inline-block;">
+    <img src="https://mayconbrown.com.br/cardapio/img/lella-salgados01.webp" alt="Logo Maycon Brown" style="width: 400px; max-width: 90vw;">
+  </a>
+  <div id="userInfo" style="margin-top: 0.5rem;"></div>
+  <button id="logoutBtn" style="display:none; margin-top: 0.5rem;">Sair</button>
+</header>
 
-  <button id="installBtn" style="display:none;">Instalar app</button>
+<main>
+  <form id="loginForm" style="max-width: 400px; margin: 2rem auto;">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="senha" placeholder="Senha" required />
+    <button type="submit">Entrar</button>
+  </form>
+
+  <section id="conteudo" style="display:none; width: 100%; max-width: 700px; margin: 2rem auto;">
+    <form id="pedidoForm">
+      <input name="cliente" placeholder="Nome do Cliente" required />
+      <input name="whatsapp" placeholder="WhatsApp" required />
+      <textarea name="descricao" placeholder="Descrição do pedido" required></textarea>
+      <label><input type="checkbox" name="retirada" /> Retirada no local</label>
+      <input name="endereco" placeholder="Endereço de entrega" />
+      <input type="datetime-local" name="dataHoraEntrega" />
+      <input type="number" step="0.01" name="valorPedido" placeholder="Valor do pedido (R$)" required />
+      <input type="number" step="0.01" name="valorPago" placeholder="Valor pago (R$)" required />
+      <button type="submit">Adicionar pedido</button>
+      <link rel="stylesheet" href="style.css" />
+    </form>
+
+    <ul id="pedidosContainer"></ul>
+  </section>
+</main>
+
+<button id="installBtn" title="Instalar aplicativo">Instalar App</button>
+
 
   <button id="installBtn" style="display:none; position: fixed; bottom: 20px; right: 20px; z-index: 1000; padding: 12px 20px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold;">
     Instalar App

@@ -1,156 +1,191 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset básico */
+* {
     margin: 0;
     padding: 0;
-    background: #f8f9fa;
-    color: #333;
+    box-sizing: border-box;
   }
   
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffee00; /* fundo escuro */
+    color: #eee; /* texto claro */
+    min-height: 100vh;
+    padding: 1rem;
+  }
+  
+  /* Logo no topo */
   header {
-    background: #007bff;
-    color: #fff;
-    padding: 1rem;
     text-align: center;
+    margin-bottom: 1.5rem;
   }
   
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  form, #listaPedidos {
-    width: 100%;
-    max-width: 600px;
-    padding: 1rem;
-    margin: 1rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #ddd;
-  }
-  
+  /* Formulários */
   form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    background: #1e1e1e;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #000000bb;
+    max-width: 450px;
+    margin: 0 auto 2rem;
   }
   
   form input,
-  form textarea,
-  form select,
-  form button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+  form textarea {
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: #eee;
     font-size: 1rem;
+    transition: background-color 0.3s ease;
   }
   
   form input:focus,
-  form textarea:focus,
-  form select:focus {
+  form textarea:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 3px #007bff44;
+    background-color: #444;
   }
   
-  form button {
-    background: #28a745;
-    color: white;
-    font-weight: bold;
+  form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  /* Checkbox label */
+  form label {
+    color: #bbbbbb;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
     cursor: pointer;
-    transition: background 0.3s;
   }
   
-  form button:hover {
-    background: #218838;
+  form label input[type="checkbox"] {
+    margin-right: 0.5rem;
   }
   
-  ul#pedidosContainer {
+  /* Botões */
+  button {
+    background-color: #6200ee;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  
+  button:hover {
+    background-color: #3700b3;
+  }
+  
+  button:disabled {
+    background-color: #555;
+    cursor: default;
+  }
+  
+  /* Container de pedidos */
+  #pedidosContainer {
     list-style: none;
+    max-width: 700px;
+    margin: 0 auto;
     padding: 0;
   }
   
   .pedido {
-    background: #ffffff;
+    background: #222;
+    border: 1px solid #333;
     border-radius: 8px;
+    padding: 1rem 1.5rem;
     margin-bottom: 1rem;
-    padding: 1rem;
-    box-shadow: 0 0 10px #ddd;
+    color: #ddd;
+    box-shadow: 0 0 8px #0008 inset;
   }
   
+  /* Status indicadores */
   .status {
     display: inline-block;
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    margin-right: 6px;
+    margin-right: 0.4rem;
+    vertical-align: middle;
   }
   
   .vermelho {
-    background-color: red;
-    animation: piscar 1s infinite;
+    background-color: #ff002f; /* vermelho suave para escuro */
   }
   
   .verde {
-    background-color: green;
+    background-color: #03dac6; /* verde água para escuro */
   }
   
-  @keyframes piscar {
-    0% { opacity: 1; }
-    50% { opacity: 0.2; }
-    100% { opacity: 1; }
-  }
-  
-  .botoes {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  
+  /* Botões dentro dos pedidos */
   .botoes button {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+    margin-right: 0.7rem;
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    background-color: #333;
+    color: #ddd;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .botoes button:hover {
+    background-color: #555;
+    border-color: #6200ee;
+    color: #fff;
+  }
+  
+  /* Cabeçalho de usuário e logout */
+  #userInfo {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: #bbb;
+  }
+  
+  #logoutBtn {
+    display: block;
+    margin: 0.8rem auto 2rem;
+    background-color: #bb86fc;
+    color: #121212;
     font-weight: bold;
   }
   
-  .producao-btn {
-    background: #ffc107;
+  #logoutBtn:hover {
+    background-color: #9a67ea;
+    color: #fff;
   }
   
-  .entregue-btn {
-    background: #28a745;
-    color: white;
-  }
-  
-  @media (max-width: 600px) {
-    form, #listaPedidos {
-      margin: 0.5rem;
-      padding: 0.8rem;
-    }
-  
-    form input,
-    form textarea,
-    form select,
-    form button {
-      font-size: 1.1rem;
-    }
-  }
+  /* Botão instalar app */
   #installBtn {
-    display: none;
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    background-color: #03dac6;
+    border-radius: 50%;
     border: none;
-    border-radius: 8px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    font-weight: bold;
+    box-shadow: 0 4px 8px #0008;
+    color: #121212;
+    display: none; /* só aparece quando disponível */
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  #installBtn:hover {
+    background-color: #018786;
   }
   

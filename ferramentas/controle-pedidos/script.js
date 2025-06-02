@@ -1,4 +1,4 @@
-// 🔥 Firebase config - substitua pelos seus dados se mudar
+// Config Firebase - use seus dados
 const firebaseConfig = {
     apiKey: "AIzaSyDhq3Slj9tR5tZbGsISTC3YgBF3CMFBTm4",
     authDomain: "gestor-de-pedidos-638d0.firebaseapp.com",
@@ -9,104 +9,52 @@ const firebaseConfig = {
     measurementId: "G-DSRE0NQB7Y"
   };
   
-  // Inicialização do Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   const pedidosRef = db.collection("pedidos");
   const auth = firebase.auth();
-const loginForm = document.getElementById("loginForm");
-const logoutBtn = document.getElementById("logoutBtn");
-const conteudo = document.getElementById("conteudo");
-const userInfo = document.getElementById("userInfo");
-
-// Login com email e senha
-loginForm.addEventListener("submit", (e) => {
+  
+  const loginForm = document.getElementById("loginForm");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const conteudo = document.getElementById("conteudo");
+  const userInfo = document.getElementById("userInfo");
+  const form = document.getElementById("pedidoForm");
+  const pedidosContainer = document.getElementById("pedidosContainer");
+  const installBtn = document.getElementById("installBtn");
+  
+  // Login
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value.trim();
   
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
-  
-    auth.signInWithEmailAndPassword(email, senha)
-      .then(() => {
-        loginForm.reset();
-      })
-      .catch((error) => {
-        alert("Erro ao entrar: " + error.message);
-      });
+    try {
+      await auth.signInWithEmailAndPassword(email, senha);
+      loginForm.reset();
+    } catch (error) {
+      alert("Erro ao entrar: " + error.message);
+    }
   });
-
+  
   // Logout
-logoutBtn.addEventListener("click", () => {
-    auth.signOut();
-  });
+  logoutBtn.addEventListener("click", () => auth.signOut());
   
-  // Controle do estado de autenticação
+  // Controle de autenticação
   auth.onAuthStateChanged(user => {
     if (user) {
       conteudo.style.display = "block";
       loginForm.style.display = "none";
       logoutBtn.style.display = "inline-block";
-      userInfo.innerHTML = `👤 ${user.email}`;
+      userInfo.textContent = `👤 ${user.email}`;
     } else {
       conteudo.style.display = "none";
-      loginForm.style.display = "inline-block";
+      loginForm.style.display = "block";
       logoutBtn.style.display = "none";
-      userInfo.innerHTML = "";
-    }
-  });
-
-  
-  // Referências ao DOM
-  const form = document.getElementById("pedidoForm");
-  const pedidosContainer = document.getElementById("pedidosContainer");
-  
-  // Submissão do formulário
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-  
-    const pedido = {
-        cliente: form.cliente.value,
-        whatsapp: form.whatsapp.value,
-        descricao: form.descricao.value,
-        endereco: form.retirada.checked ? "Retirada" : form.endereco.value,
-        dataHoraEntrega: form.dataHoraEntrega.value,
-        valorPedido: parseFloat(form.valorPedido.value),
-        valorPago: parseFloat(form.valorPago.value),
-        status: "novo",
-        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      
-  
-    const editId = form.getAttribute("data-edit-id");
-  
-    try {
-      if (editId) {
-        // Atualiza pedido existente, não muda o status nem criadoEm
-        await pedidosRef.doc(editId).update({
-            cliente: pedido.cliente,
-            whatsapp: pedido.whatsapp,
-            descricao: pedido.descricao,
-            endereco: pedido.endereco,
-            valorPedido: pedido.valorPedido,
-            valorPago: pedido.valorPago,
-          });
-          
-        form.removeAttribute("data-edit-id");
-        form.querySelector("button[type='submit']").textContent = "Adicionar pedido";
-      } else {
-        // Cria pedido novo
-        await pedidosRef.add(pedido);
-      }
-      form.reset();
-    } catch (error) {
-      alert("Erro ao registrar pedido: " + error.message);
-      console.error(error);
+      userInfo.textContent = "";
     }
   });
   
-  
-  // Renderiza cada pedido
+  // Função para renderizar pedido
   function renderPedido(doc) {
     const data = doc.data();
   
@@ -116,46 +64,101 @@ logoutBtn.addEventListener("click", () => {
     const statusClass = data.status === "em_producao" ? "vermelho" :
                         data.status === "entregue" ? "verde" : "";
   
-                        li.innerHTML = `
-  <div><strong>${data.cliente}</strong> (${data.whatsapp})</div>
-  <div>${data.descricao}</div>
-  <div><strong>Entrega:</strong> ${data.endereco}</div>
-  <div><strong>Data/hora entrega:</strong> ${data.dataHoraEntrega || 'Não definido'}</div>
-  <div><strong>Valor do pedido:</strong> R$ ${data.valorPedido?.toFixed(2) || '0.00'}</div>
-  <div><strong>Valor pago:</strong> R$ ${data.valorPago?.toFixed(2) || '0.00'}</div>
-  <div><span class="status ${statusClass}"></span> ${data.status.replace("_", " ")}</div>
-
-  <div class="botoes">
-    <button class="producao-btn">Em produção</button>
-    <button class="entregue-btn">Finalizado</button>
-    <button class="editar-btn">Editar</button>
-    <button class="apagar-btn">Apagar</button>
-  </div>
-`;
-
-                      
-                      // Atualizar status
+    li.innerHTML = `
+      <div><strong>${data.cliente}</strong> (${data.whatsapp})</div>
+      <div>${data.descricao}</div>
+      <div><strong>Entrega:</strong> ${data.endereco}</div>
+      <div><strong>Data/hora entrega:</strong> ${data.dataHoraEntrega || 'Não definido'}</div>
+      <div><strong>Valor do pedido:</strong> R$ ${data.valorPedido?.toFixed(2) || '0.00'}</div>
+      <div><strong>Valor pago:</strong> R$ ${data.valorPago?.toFixed(2) || '0.00'}</div>
+      <div><span class="status ${statusClass}"></span> ${data.status.replace(/_/g, " ")}</div>
   
-  // Botão Editar
-  li.querySelector(".editar-btn").onclick = () => editarPedido(doc);
+      <div class="botoes">
+        <button class="producao-btn">Em produção</button>
+        <button class="entregue-btn">Finalizado</button>
+        <button class="editar-btn">Editar</button>
+        <button class="apagar-btn">Apagar</button>
+      </div>
+    `;
   
-  // Botão Apagar
-  li.querySelector(".apagar-btn").onclick = async () => {
-    if (confirm("Quer mesmo apagar esse pedido?")) {
-      try {
-        await pedidosRef.doc(doc.id).delete();
-      } catch (error) {
-        alert("Erro ao apagar: " + error.message);
+    // Botões de ação
+    li.querySelector(".producao-btn").onclick = () =>
+      pedidosRef.doc(doc.id).update({ status: "em_producao" });
+  
+    li.querySelector(".entregue-btn").onclick = () =>
+      pedidosRef.doc(doc.id).update({ status: "entregue" });
+  
+    li.querySelector(".editar-btn").onclick = () => editarPedido(doc);
+  
+    li.querySelector(".apagar-btn").onclick = async () => {
+      if (confirm("Quer mesmo apagar esse pedido?")) {
+        try {
+          await pedidosRef.doc(doc.id).delete();
+        } catch (error) {
+          alert("Erro ao apagar: " + error.message);
+        }
       }
+    };
+  
+    return li;
+  }
+  
+  // Atualiza pedidos em tempo real
+  pedidosRef.orderBy("dataHoraEntrega").onSnapshot(snapshot => {
+    pedidosContainer.innerHTML = "";
+    snapshot.forEach(doc => {
+      pedidosContainer.appendChild(renderPedido(doc));
+    });
+  });
+  
+  // Adicionar ou editar pedido
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+  
+    const pedido = {
+      cliente: form.cliente.value.trim(),
+      whatsapp: form.whatsapp.value.trim(),
+      descricao: form.descricao.value.trim(),
+      endereco: form.retirada.checked ? "Retirada" : form.endereco.value.trim(),
+      dataHoraEntrega: form.dataHoraEntrega.value,
+      valorPedido: parseFloat(form.valorPedido.value) || 0,
+      valorPago: parseFloat(form.valorPago.value) || 0,
+      status: "novo",
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+    };
+  
+    const editId = form.getAttribute("data-edit-id");
+  
+    try {
+      if (editId) {
+        await pedidosRef.doc(editId).update({
+          cliente: pedido.cliente,
+          whatsapp: pedido.whatsapp,
+          descricao: pedido.descricao,
+          endereco: pedido.endereco,
+          valorPedido: pedido.valorPedido,
+          valorPago: pedido.valorPago,
+        });
+  
+        form.removeAttribute("data-edit-id");
+        form.querySelector("button[type='submit']").textContent = "Adicionar pedido";
+      } else {
+        await pedidosRef.add(pedido);
+      }
+      form.reset();
+    } catch (error) {
+      alert("Erro ao registrar pedido: " + error.message);
     }
-  };
-
+  });
+  
+  // Preenche formulário para edição
   function editarPedido(doc) {
     const data = doc.data();
-    
+  
     form.cliente.value = data.cliente;
     form.whatsapp.value = data.whatsapp;
     form.descricao.value = data.descricao;
+  
     if (data.endereco === "Retirada") {
       form.retirada.checked = true;
       form.endereco.value = "";
@@ -163,91 +166,36 @@ logoutBtn.addEventListener("click", () => {
       form.retirada.checked = false;
       form.endereco.value = data.endereco;
     }
-    form.valorPedido.value = data.valorPedido;
-form.valorPago.value = data.valorPago;
-
   
-    // Adiciona um atributo para salvar o id do pedido que está sendo editado
+    form.dataHoraEntrega.value = data.dataHoraEntrega || "";
+    form.valorPedido.value = data.valorPedido || "";
+    form.valorPago.value = data.valorPago || "";
+  
     form.setAttribute("data-edit-id", doc.id);
-  
-    // Muda o texto do botão para indicar que está em modo edição
     form.querySelector("button[type='submit']").textContent = "Salvar alterações";
   }
   
+  // Botão para instalar PWA
   let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-// Evento que dispara quando o app pode ser instalado
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Mostra o botão para instalar
-  installBtn.style.display = "inline-block";
-});
-
-// Quando o usuário clica no botão
-installBtn.addEventListener("click", async () => {
-  // Esconde o botão
-  installBtn.style.display = "none";
-
-  if (!deferredPrompt) {
-    // Se não tiver o evento, não tenta instalar
-    return;
-  }
-
-  deferredPrompt.prompt();
-
-  const { outcome } = await deferredPrompt.userChoice;
-
-  if (outcome === "accepted") {
-    console.log("Usuário aceitou a instalação");
-  } else {
-    console.log("Usuário rejeitou a instalação");
-  }
-
-  deferredPrompt = null;
-});
-
-// Evento que detecta se o app já está instalado (no Windows, Mac e mobile)
-window.addEventListener("appinstalled", () => {
-  console.log("App foi instalado");
-  // Esconde o botão
-  installBtn.style.display = "none";
-});
-
-// Além disso, para detectar se o app já está rodando em modo PWA ou instalado, 
-// para esconder o botão direto ao carregar a página
-function checkIfAppInstalled() {
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-    || window.navigator.standalone === true; // para iOS
-  if (isStandalone) {
+  
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "inline-block";
+  });
+  
+  installBtn.addEventListener("click", async () => {
     installBtn.style.display = "none";
-  }
-}
-
-checkIfAppInstalled();
-
-
   
-    li.querySelector(".producao-btn").onclick = () =>
-      pedidosRef.doc(doc.id).update({ status: "em_producao" });
+    if (!deferredPrompt) return;
   
-    li.querySelector(".entregue-btn").onclick = () =>
-      pedidosRef.doc(doc.id).update({ status: "entregue" });
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
   
-    return li;
-  }
-  
-  // Atualiza os pedidos em tempo real
-  function atualizarPedidos(snapshot) {
-    pedidosContainer.innerHTML = "";
-    snapshot.forEach((doc) => {
-        const pedidoEl = renderPedido(doc);
-        pedidosContainer.appendChild(pedidoEl);
-      });      
-  }
-  
-  // Listener de atualização em tempo real
-  pedidosRef.orderBy("dataHoraEntrega").onSnapshot(atualizarPedidos);
-
+  // Ocultar botão instalar se já instalado
+  window.addEventListener("appinstalled", () => {
+    installBtn.style.display = "none";
+  });
   
