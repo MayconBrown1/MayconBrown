@@ -1,7 +1,7 @@
 {
     "name": "Vendas Lella Salgados",
     "short_name": "Vendas Lella Salgados",
-    "start_url": "https://mayconbrown.com.br/ferramentas/vendas-dia/index.html",
+    "start_url": "https://mayconbrown.com.br/ferramentas/vendas-dia",
     "display": "standalone",
     "background_color": "#FFCC00",
     "theme_color": "#FFCC00",
