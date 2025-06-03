@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Controle de Vendas do Dia</title>
+  <link rel="manifest" href="/manifest.json" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 15px 20px;
+      background: #FFCC00;
+      color: #333;
+      transition: background-color 0.5s ease;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #222;
+      transition: color 0.4s ease;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #111;
+    }
+    input[type="number"],
+    select,
+    input[type="date"] {
+      width: 100%;
+      padding: 12px 10px;
+      margin-top: 8px;
+      box-sizing: border-box;
+      font-size: 1.2rem;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="number"]:focus,
+    select:focus,
+    input[type="date"]:focus {
+      border-color: #2d89ef;
+      box-shadow: 0 0 8px rgba(45, 137, 239, 0.5);
+      outline: none;
+    }
+    button {
+      margin-top: 20px;
+      padding: 14px 20px;
+      background: #2d89ef;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.3rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+    }
+    button:hover {
+      background: #1b5fbd;
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+    .resumo {
+      background: white;
+      margin-top: 30px;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.12);
+      font-size: 1.2rem;
+      color: #222;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards ease-in-out;
+    }
+    .resumo h2, .resumo h3 {
+      margin-bottom: 15px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .resumo p {
+      margin: 7px 0;
+      font-weight: 600;
+    }
+    hr {
+      border: none;
+      border-top: 2px solid #eee;
+      margin: 20px 0;
+    }
+    .vendas-lista {
+      margin-top: 30px;
+      background: white;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.12);
+      font-size: 1.15rem;
+      color: #222;
+      opacity: 0;
+      animation: fadeIn 1.2s forwards ease-in-out;
+    }
+    .vendas-lista h2 {
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    .venda-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid #ddd;
+      padding: 10px 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      opacity: 0;
+      animation: fadeInItem 0.6s forwards ease forwards;
+    }
+    .venda-item:last-child {
+      border-bottom: none;
+    }
+    .btn-editar, .btn-excluir {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-left: 15px;
+      transition: color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+    }
+    .btn-editar {
+      color: #2d89ef;
+    }
+    .btn-editar:hover {
+      color: #1b5fbd;
+      transform: scale(1.15);
+    }
+    .btn-excluir {
+      color: #e84545;
+    }
+    .btn-excluir:hover {
+      color: #b03030;
+      transform: scale(1.15);
+    }
+    .filtro-data {
+      margin-bottom: 25px;
+    }
+    .loading {
+      text-align: center;
+      font-style: italic;
+      color: #555;
+      margin-top: 15px;
+      font-size: 1.1rem;
+    }
+
+    /* Animações */
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes fadeInItem {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 480px) {
+      body {
+        padding: 15px 10px;
+        max-width: 100%;
+        margin: 10px auto;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      label {
+        font-size: 1rem;
+      }
+      input[type="number"],
+      select,
+      input[type="date"] {
+        font-size: 1.4rem;
+        padding: 14px 12px;
+      }
+      button {
+        font-size: 1.4rem;
+        padding: 16px 25px;
+      }
+      .resumo, .vendas-lista {
+        font-size: 1.3rem;
+        padding: 20px 18px;
+      }
+      .venda-item {
+        font-size: 1.3rem;
+        padding: 14px 0;
+      }
+      .btn-editar, .btn-excluir {
+        font-size: 1.3rem;
+        margin-left: 10px;
+      }
+      img {
+        max-height: 100px !important;
+      }
+    }
+    .venda-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #ddd;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  /* Remove opacity 0 aqui */
+  /* opacity: 0; */
+  animation: fadeInItem 0.6s forwards ease;
+}
+  </style>
+</head>
+<body>
+
+  <button id="btnInstalarApp" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2d89ef;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  display: none; /* Inicialmente escondido */
+  z-index: 9999;
+">
+  Instalar app
+</button>
+
+  <div style="text-align: center; margin-bottom: 15px;">
+    <img src="https://mayconbrown.com.br/cardapio/img/lella-salgados01.webp" alt="Logo Lella Salgados" style="max-width: 100%; height: auto; max-height: 120px;" />
+  </div>
+
+  <h1>Controle de Vendas do Dia</h1>
+
+  <div class="filtro-data">
+    <label for="inputData">Selecione a Data:</label>
+    <input type="date" id="inputData" />
+  </div>
+
+  <form id="formVenda">
+    <label for="inputValor">Valor da Venda:</label>
+    <input type="number" step="0.01" min="0" id="inputValor" required />
+
+    <label for="selectTipo">Tipo de Pagamento:</label>
+    <select id="selectTipo" required>
+      <option value="" disabled selected>Selecione</option>
+      <option value="PIX">PIX</option>
+      <option value="Cartão">Cartão</option>
+      <option value="Espécie">Espécie</option>
+      <option value="Entrega">Entrega (Desconto)</option>
+    </select>
+
+    <button type="submit" id="btnRegistrar">Registrar Venda</button>
+  </form>
+
+  <div class="resumo" id="resumoVendas">
+    <h2>Resumo do Dia</h2>
+    <p>Total via PIX: R$ <span id="totalPix">0.00</span></p>
+    <p>Total via Cartão: R$ <span id="totalCartao">0.00</span></p>
+    <p>Total via Espécie: R$ <span id="totalEspecie">0.00</span></p>
+    <p>Total de Entregas (Descontos): R$ <span id="totalEntrega">0.00</span></p>
+    <hr />
+    <h3>Valor Total do Dia: R$ <span id="totalDia">0.00</span></h3>
+  </div>
+
+  <div class="vendas-lista" id="listaVendas">
+    <h2>Vendas Registradas</h2>
+    <div id="vendasContainer">
+      <!-- Vendas aparecerão aqui -->
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { 
+      getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc, deleteDoc 
+    } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCLm5c_SHMQMEBdipdSjBa7ITOwVNrbMLA",
+      authDomain: "vendas-do-dia.firebaseapp.com",
+      projectId: "vendas-do-dia",
+      storageBucket: "vendas-do-dia.firebasestorage.app",
+      messagingSenderId: "13884510180",
+      appId: "1:13884510180:web:4ca17867ea29bf936301f1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const formVenda = document.getElementById("formVenda");
+    const inputValor = document.getElementById("inputValor");
+    const selectTipo = document.getElementById("selectTipo");
+    const inputData = document.getElementById("inputData");
+
+    const totalPixEl = document.getElementById("totalPix");
+    const totalCartaoEl = document.getElementById("totalCartao");
+    const totalEspecieEl = document.getElementById("totalEspecie");
+    const totalEntregaEl = document.getElementById("totalEntrega");
+    const totalDiaEl = document.getElementById("totalDia");
+
+    const vendasContainer = document.getElementById("vendasContainer");
+
+    // Data inicial = hoje
+    const hoje = new Date().toISOString().slice(0, 10);
+    inputData.value = hoje;
+
+    let vendasHoje = []; // array para armazenar vendas carregadas da data atual
+
+    // Função para formatar número em moeda BRL
+    function formatarValor(valor) {
+      return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Função para carregar vendas do Firestore pela data
+    async function carregarVendasPorData(data) {
+      vendasContainer.innerHTML = "<p class='loading'>Carregando vendas...</p>";
+      vendasHoje = [];
+      try {
+        const vendasRef = collection(db, "vendas");
+        const q = query(vendasRef, where("data", "==", data));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((docSnap) => {
+          vendasHoje.push({ id: docSnap.id, ...docSnap.data() });
+        });
+        atualizarInterfaceComVendas();
+      } catch (error) {
+        vendasContainer.innerHTML = `<p style="color:red;">Erro ao carregar vendas: ${error}</p>`;
+      }
+    }
+
+    // Função para atualizar a interface com vendas carregadas
+    function atualizarInterfaceComVendas() {
+      // Atualizar resumo
+      let totalPix = 0;
+      let totalCartao = 0;
+      let totalEspecie = 0;
+      let totalEntrega = 0;
+
+      vendasContainer.innerHTML = "";
+      vendasHoje.forEach((venda) => {
+        // Somar totais de acordo com tipo
+        const val = parseFloat(venda.valor);
+        if (venda.tipoPagamento === "PIX") totalPix += val;
+        else if (venda.tipoPagamento === "Cartão") totalCartao += val;
+        else if (venda.tipoPagamento === "Espécie") totalEspecie += val;
+        else if (venda.tipoPagamento === "Entrega") totalEntrega += val;
+
+        // Mostrar cada venda na lista
+        const vendaEl = document.createElement("div");
+        vendaEl.classList.add("venda-item");
+        vendaEl.innerHTML = `
+          <span>${formatarValor(val)} - ${venda.tipoPagamento}</span>
+          <span>
+            <button class="btn-editar" data-id="${venda.id}">Editar</button>
+            <button class="btn-excluir" data-id="${venda.id}">Excluir</button>
+          </span>
+        `;
+        vendasContainer.appendChild(vendaEl);
+      });
+
+      // Atualizar resumo na tela
+      totalPixEl.textContent = totalPix.toFixed(2);
+      totalCartaoEl.textContent = totalCartao.toFixed(2);
+      totalEspecieEl.textContent = totalEspecie.toFixed(2);
+      totalEntregaEl.textContent = totalEntrega.toFixed(2);
+
+      const totalDia = (totalPix + totalCartao + totalEspecie) - totalEntrega;
+      totalDiaEl.textContent = totalDia.toFixed(2);
+
+      if (vendasHoje.length === 0) {
+        vendasContainer.innerHTML = "<p>Nenhuma venda registrada para essa data.</p>";
+      }
+    }
+
+    // Função para registrar venda no Firestore
+    async function registrarVendaFirestore(venda) {
+      try {
+        await addDoc(collection(db, "vendas"), venda);
+        carregarVendasPorData(venda.data);
+      } catch (error) {
+        alert("Erro ao registrar venda: " + error);
+      }
+    }
+
+    // Função para excluir venda
+    async function excluirVendaFirestore(id) {
+      try {
+        await deleteDoc(doc(db, "vendas", id));
+        carregarVendasPorData(inputData.value);
+      } catch (error) {
+        alert("Erro ao excluir venda: " + error);
+      }
+    }
+
+    // Função para editar venda
+    async function editarVendaFirestore(id, dadosAtualizados) {
+      try {
+        const vendaDocRef = doc(db, "vendas", id);
+        await updateDoc(vendaDocRef, dadosAtualizados);
+        carregarVendasPorData(dadosAtualizados.data);
+      } catch (error) {
+        alert("Erro ao editar venda: " + error);
+      }
+    }
+
+    // Evento do formulário para registrar venda
+    formVenda.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const valor = parseFloat(inputValor.value);
+      const tipoPagamento = selectTipo.value;
+      const data = inputData.value;
+
+      if (isNaN(valor) || valor <= 0) {
+        alert("Informe um valor válido.");
+        return;
+      }
+      if (!tipoPagamento) {
+        alert("Selecione um tipo de pagamento.");
+        return;
+      }
+      if (!data) {
+        alert("Selecione uma data.");
+        return;
+      }
+
+      // Venda a salvar
+      const venda = {
+        valor,
+        tipoPagamento,
+        data
+      };
+
+      await registrarVendaFirestore(venda);
+
+      formVenda.reset();
+      selectTipo.selectedIndex = 0;
+    });
+
+    // Evento para filtro de data
+    inputData.addEventListener("change", () => {
+      carregarVendasPorData(inputData.value);
+    });
+
+    // Delegação de evento para botões Editar e Excluir na lista
+    vendasContainer.addEventListener("click", async (e) => {
+      const target = e.target;
+      if (target.classList.contains("btn-excluir")) {
+        const vendaId = target.dataset.id;
+        if (confirm("Deseja realmente excluir esta venda?")) {
+          await excluirVendaFirestore(vendaId);
+        }
+      }
+      else if (target.classList.contains("btn-editar")) {
+        const vendaId = target.dataset.id;
+        const venda = vendasHoje.find(v => v.id === vendaId);
+        if (!venda) return alert("Venda não encontrada");
+
+        // Prompt para editar valor e tipo
+        const novoValorStr = prompt("Informe o novo valor:", venda.valor);
+        if (novoValorStr === null) return; // Cancelou
+        const novoValor = parseFloat(novoValorStr);
+        if (isNaN(novoValor) || novoValor <= 0) return alert("Valor inválido.");
+
+        const novoTipo = prompt("Informe o novo tipo de pagamento (PIX, Cartão, Espécie, Entrega):", venda.tipoPagamento);
+        if (!["PIX", "Cartão", "Espécie", "Entrega"].includes(novoTipo)) {
+          return alert("Tipo de pagamento inválido.");
+        }
+
+        await editarVendaFirestore(vendaId, {
+          valor: novoValor,
+          tipoPagamento: novoTipo,
+          data: inputData.value
+        });
+      }
+    });
+
+    // Carregar vendas do dia inicial
+    carregarVendasPorData(hoje);
+
+  </script>
+
+<script>
+  let deferredPrompt; // Evento armazenado
+
+  const btnInstalar = document.getElementById('btnInstalarApp');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); // Previne o prompt automático
+    deferredPrompt = e;  // Guarda o evento para disparar depois
+    btnInstalar.style.display = 'block'; // Mostra o botão
+  });
+
+  btnInstalar.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt(); // Mostra o prompt de instalação
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      console.log('Usuário aceitou a instalação!');
+    } else {
+      console.log('Usuário recusou a instalação.');
+    }
+    deferredPrompt = null;
+    btnInstalar.style.display = 'none'; // Esconde o botão após uso
+  });
+
+  // Opcional: esconder o botão após a instalação
+  window.addEventListener('appinstalled', () => {
+    btnInstalar.style.display = 'none';
+    console.log('App instalado com sucesso!');
+  });
+</script>
+
+</body>
+</html>
