@@ -287,6 +287,8 @@
     </div>
   </div>
 
+  <audio id="somMoedas" src="moedas.mp3" preload="auto"></audio>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
     import { 
@@ -395,6 +397,8 @@
     async function registrarVendaFirestore(venda) {
       try {
         await addDoc(collection(db, "vendas"), venda);
+        const som = document.getElementById("somMoedas");
+som.play();
         carregarVendasPorData(venda.data);
       } catch (error) {
         alert("Erro ao registrar venda: " + error);
