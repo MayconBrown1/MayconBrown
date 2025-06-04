@@ -349,6 +349,25 @@
       }
     }
 
+    import { onSnapshot } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+const vendasRef = collection(db, "vendas");
+onSnapshot(vendasRef, (snapshot) => {
+  // Reage sempre que algo muda
+  snapshot.docChanges().forEach((change) => {
+    if (change.type === "added") {
+      const novaVenda = change.doc.data();
+      
+      // Atualize o DOM com a nova venda (exibir na lista, atualizar totais etc.)
+      atualizarInterface(novaVenda); // crie essa função se ainda não tiver
+
+      // Toca som de moedas
+      document.getElementById("somMoedas").play();
+    }
+  });
+});
+
+
     // Função para atualizar a interface com vendas carregadas
     function atualizarInterfaceComVendas() {
       // Atualizar resumo
