@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Esportes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyBtUQnBTwm8nscOodZE0PVYkDRydr8RYlI",
+    authDomain: "matriz-esportes.firebaseapp.com",
+    projectId: "matriz-esportes",
+    storageBucket: "matriz-esportes.firebasestorage.app",
+    messagingSenderId: "657094279299",
+    appId: "1:657094279299:web:9ebfb4c0e1224df111dbb6"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    let editarId = null; // Guarda ID do produto que está sendo editado
+  
+    async function adicionarProduto() {
+      const nome = document.getElementById("nome").value;
+      const descricao = document.getElementById("descricao").value;
+      const valor = document.getElementById("valor").value;
+      const link = document.getElementById("link").value;
+      const imagemURL = document.getElementById("imagem").value;
+  
+      if (!nome || !descricao || !valor || !link || !imagemURL) {
+        return alert("Preencha todos os campos!");
+      }
+  
+      if (editarId) {
+        // Atualizar produto existente
+        const produtoRef = doc(db, "produtos", editarId);
+        await updateDoc(produtoRef, {
+          nome,
+          descricao,
+          valor,
+          link,
+          imagem: imagemURL
+        });
+        editarId = null;
+        document.getElementById("btn-submit").textContent = "Adicionar Produto";
+      } else {
+        // Adicionar produto novo
+        await addDoc(collection(db, "produtos"), {
+          nome,
+          descricao,
+          valor,
+          link,
+          imagem: imagemURL,
+          promocao: false // campo novo
+});
+      }
+  
+      document.getElementById("form-produto").reset();
+      carregarProdutos();
+    }
+  
+    async function carregarProdutos() {
+  const lista = document.getElementById("lista-produtos");
+  lista.innerHTML = "";
+  const querySnapshot = await getDocs(collection(db, "produtos"));
+  querySnapshot.forEach(docSnap => {
+    const produto = docSnap.data();
+    const id = docSnap.id;
+
+    lista.innerHTML += `
+      <div id="produto-${id}" class="bg-[url('https://mayconbrown.com.br/test-site/img/fundo.png')] shadow-lg rounded-xl p-6 relative">
+        <div id="selo-promo-${id}" class="${produto.promocao ? '' : 'hidden'} animar-promocao absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded font-bold z-10">
+        PROMOÇÃO
+      </div>
+        <img src="${produto.imagem}" alt="${produto.nome}" class="rounded-lg mb-4 w-full h-auto object-contain" />
+        <h3 class="text-white font-semibold mb-2">${produto.nome}</h3>
+        <p class="text-gray-400 mb-4 whitespace-pre-line max-h-32 overflow-y-auto">${produto.descricao}</p>
+        <p class="font-bold text-indigo-600 mb-4">R$ ${produto.valor}</p>
+        <a href="${produto.link}" target="_blank" class="block bg-indigo-600 text-white text-center py-2 rounded-full hover:bg-indigo-700 mb-2">Comprar</a>
+        <button onclick="editarProduto('${id}')" class="absolute top-4 right-4 bg-yellow-400 text-black px-3 py-1 rounded hover:bg-yellow-500">Editar</button>
+
+        <div class="flex gap-2 mt-2">
+          <button onclick="marcarPromocao('${id}')" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Promoção</button>
+          <button onclick="removerPromocao('${id}')" class="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700">Sem promoção</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+async function marcarPromocao(id) {
+  const selo = document.getElementById(`selo-promo-${id}`);
+  if (selo) {
+    selo.classList.remove("hidden");
+  }
+
+  const produtoRef = doc(db, "produtos", id);
+  await updateDoc(produtoRef, {
+    promocao: true
+  });
+}
+
+async function removerPromocao(id) {
+  const selo = document.getElementById(`selo-promo-${id}`);
+  if (selo) {
+    selo.classList.add("hidden");
+  }
+
+  const produtoRef = doc(db, "produtos", id);
+  await updateDoc(produtoRef, {
+    promocao: false
+  });
+}
+
+window.marcarPromocao = marcarPromocao;
+window.removerPromocao = removerPromocao;
+
+    async function editarProduto(id) {
+      const produtoRef = doc(db, "produtos", id);
+      const produtoSnap = await getDocs(collection(db, "produtos"));
+      // Buscando produto por id
+      const docSnap = await (await import("https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js")).getDoc(produtoRef);
+  
+      if (docSnap.exists()) {
+        const produto = docSnap.data();
+        document.getElementById("nome").value = produto.nome;
+        document.getElementById("descricao").value = produto.descricao;
+        document.getElementById("valor").value = produto.valor;
+        document.getElementById("link").value = produto.link;
+        document.getElementById("imagem").value = produto.imagem;
+  
+        editarId = id;
+        document.getElementById("btn-submit").textContent = "Salvar Alterações";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert("Produto não encontrado!");
+      }
+    }
+  
+    window.adicionarProduto = adicionarProduto;
+    window.carregarProdutos = carregarProdutos;
+    window.editarProduto = editarProduto;
+  
+    window.onload = carregarProdutos;
+  </script>
+  
+  <style>
+    @keyframes piscarPromo {
+      0%, 100% { background-color: #dc2626; } /* vermelho */
+      50% { background-color: #f97316; }      /* laranja */
+    }
+  
+    .animar-promocao {
+      animation: piscarPromo 1s infinite;
+    }
+  </style>
+  
+  
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="https://mayconbrown.com.br/test-site/">
+        <img src="https://mayconbrown.com.br/test-site/img/logo-brown-preto.png" alt="Maycon Brown" class="h-10" />
+      </a>
+      <button class="md:hidden" onclick="toggleMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="hidden md:flex space-x-4">
+        <a href="https://mayconbrown.com.br/test-site" class="hover:text-indigo-600">Início</a>
+        <a href="https://mayconbrown.com.br/test-site/softwares" class="hover:text-indigo-600">Softwares</a>
+        <a href="https://mayconbrown.com.br/test-site/matrizes" class="text-indigo-600 font-semibold">Matrizes</a>
+        <a href="https://mayconbrown.com.br/test-site/formatacao" class="hover:text-indigo-600">Formatação</a>
+        <a href="https://mayconbrown.com.br/test-site/cardapios" class="hover:text-indigo-600">Cardápios</a>
+        <a href="https://mayconbrown.com.br/test-site/contato" class="hover:text-indigo-600">Contato</a>
+      </nav>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+      <nav class="flex flex-col space-y-2">
+        <a href="https://mayconbrown.com.br/test-site" class="hover:text-indigo-600">Início</a>
+        <a href="https://mayconbrown.com.br/test-site/softwares" class="hover:text-indigo-600">Softwares</a>
+        <a href="https://mayconbrown.com.br/test-site/matrizes" class="text-indigo-600 font-semibold">Matrizes</a>
+        <a href="https://mayconbrown.com.br/test-site/formatacao" class="hover:text-indigo-600">Formatação</a>
+        <a href="https://mayconbrown.com.br/test-site/cardapios" class="hover:text-indigo-600">Cardápios</a>
+        <a href="https://mayconbrown.com.br/test-site/contato" class="hover:text-indigo-600">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <main class="py-16">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl font-bold mb-6 text-center">🏅 Esportes</h2>
+
+      <form id="form-produto" class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input id="nome" type="text" placeholder="Nome do Produto" class="p-2 rounded border border-gray-300" />
+        <textarea id="descricao" placeholder="Descrição do Produto" class="p-2 rounded border border-gray-300 resize-none" rows="3"></textarea>
+        <input id="valor" type="text" placeholder="Valor do Produto" class="p-2 rounded border border-gray-300" />
+        <input type="text" id="link" placeholder="Link personalizado para o botão" class="border p-2 rounded w-full mb-4" />
+        <input type="text" id="imagem" placeholder="URL da Imagem" class="p-2 rounded border border-gray-300 mb-4" />
+        <button type="button" onclick="adicionarProduto()" id="btn-submit" class="bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 col-span-1 md:col-span-3">
+          Adicionar Produto
+        </button>        
+      </form>
+
+      <div id="lista-produtos" class="grid md:grid-cols-2 gap-8"></div>
+    </div>
+  </main>
+</body>
+</html>
