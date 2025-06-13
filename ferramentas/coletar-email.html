@@ -32,12 +32,6 @@
       color: white;
       cursor: pointer;
     }
-    #success-message {
-      display: none;
-      color: green;
-      font-size: 18px;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
@@ -49,8 +43,6 @@
     <input type="tel" name="whatsapp" placeholder="WhatsApp" required />
     <button type="submit">Enviar Solicitação</button>
   </form>
-
-  <div id="success-message">✅ Solicitação enviada com sucesso!</div>
 
   <!-- SDK Atualizada do EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -68,8 +60,8 @@
 
       emailjs.send("service_g5hjgst", "template_az2uo9h", templateParams)
         .then(function(response) {
-          document.getElementById('formulario').style.display = 'none';
-          document.getElementById('success-message').style.display = 'block';
+          // Redireciona para o site após envio bem-sucedido
+          window.location.href = "https://mayconbrown.com.br";
         }, function(error) {
           alert("❌ Erro ao enviar: " + JSON.stringify(error));
         });
