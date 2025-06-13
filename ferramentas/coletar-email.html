@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulário de Solicitação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+      text-align: center;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 10px #ccc;
+    }
+    input, button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 90%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    #success-message {
+      display: none;
+      color: green;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="formulario">
+    <h2>Solicitação de Contato</h2>
+    <input type="text" name="nome" placeholder="Seu nome" required />
+    <input type="email" name="email" placeholder="Seu e-mail" required />
+    <input type="tel" name="whatsapp" placeholder="WhatsApp" required />
+    <button type="submit">Enviar Solicitação</button>
+  </form>
+
+  <div id="success-message">✅ Solicitação enviada com sucesso!</div>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Inicializa o EmailJS com sua chave pública
+    (function() {
+      emailjs.init("68X1T7bbwPEsrlkZG");
+    })();
+
+    // Envia o formulário
+    document.getElementById('formulario').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const templateParams = {
+        nome: this.nome.value,
+        email: this.email.value,
+        whatsapp: this.whatsapp.value
+      };
+
+      emailjs.send("service_g5hjgst", "__ejs-test-mail-service__", templateParams)
+        .then(function(response) {
+          document.getElementById('formulario').style.display = 'none';
+          document.getElementById('success-message').style.display = 'block';
+        }, function(error) {
+          alert("❌ Erro ao enviar: " + JSON.stringify(error));
+        });
+    });
+  </script>
+
+</body>
+</html>
