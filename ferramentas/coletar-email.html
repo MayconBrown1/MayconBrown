@@ -52,15 +52,11 @@
 
   <div id="success-message">✅ Solicitação enviada com sucesso!</div>
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <!-- SDK Atualizada do EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
-    // Inicializa o EmailJS com sua chave pública
-    (function() {
-      emailjs.init("68X1T7bbwPEsrlkZG");
-    })();
+    emailjs.init("6-eSpIcJuBJCHG7yF"); // Sua public key
 
-    // Envia o formulário
     document.getElementById('formulario').addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -70,7 +66,7 @@
         whatsapp: this.whatsapp.value
       };
 
-      emailjs.send("service_g5hjgst", "__ejs-test-mail-service__", templateParams)
+      emailjs.send("service_g5hjgst", "template_az2uo9h", templateParams)
         .then(function(response) {
           document.getElementById('formulario').style.display = 'none';
           document.getElementById('success-message').style.display = 'block';
