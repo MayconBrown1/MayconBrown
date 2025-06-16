@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Entregador - MayconLog</title>
+    <link rel="manifest" href="/public/manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0ibTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiIgZmlsbD0iIzFlNDBhZiIvPgo8L3N2Zz4K">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#10b981',
+                        danger: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Overlay -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-secondary"></div>
+            <span class="text-gray-700">Carregando...</span>
+        </div>
+    </div>
+
+    <!-- Tela de Aguardando Aprovação -->
+    <div id="telaAprovacao" class="min-h-screen flex items-center justify-center hidden">
+        <div class="max-w-md w-full mx-4">
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Aguardando Aprovação</h2>
+                <p class="text-gray-600 mb-6">
+                    Seu cadastro foi realizado com sucesso! Aguarde a aprovação do administrador para começar a aceitar entregas.
+                </p>
+                <p class="text-sm text-gray-500 mb-6">
+                    Você receberá um email quando sua conta for aprovada.
+                </p>
+                <div class="space-y-3">
+                    <button 
+                        onclick="verificarAprovacao()"
+                        class="w-full bg-secondary text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                    >
+                        Verificar Status
+                    </button>
+                    <button 
+                        onclick="logout()"
+                        class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                    >
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="bg-white shadow-sm border-b hidden">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-secondary rounded-full w-10 h-10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5 17h-2a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h2v10zm4 0h-2v-14h2v14zm4 0h-2v-10h2v10zm4 0h-2v-6h2v6zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Dashboard Entregador</h1>
+                        <p id="nomeEntregador" class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <span id="statusOnline" class="flex items-center text-sm">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                        Online
+                    </span>
+                    <button 
+                        onclick="logout()"
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="container mx-auto px-4 py-8 hidden">
+        <!-- Cards de Estatísticas -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Entregas Hoje</p>
+                        <p id="entregasHoje" class="text-2xl font-bold text-secondary">0</p>
+                    </div>
+                    <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Em Andamento</p>
+                        <p id="entregasAndamento" class="text-2xl font-bold text-blue-600">0</p>
+                    </div>
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Disponíveis</p>
+                        <p id="entregasDisponiveis" class="text-2xl font-bold text-orange-600">0</p>
+                    </div>
+                    <div class="bg-orange-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Total Ganhos</p>
+                        <p id="totalGanhos" class="text-2xl font-bold text-purple-600">R$ 0</p>
+                    </div>
+                    <div class="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-white rounded-xl shadow-sm">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8 px-6">
+                    <button 
+                        onclick="trocarTab('disponiveis')" 
+                        id="tabDisponiveis" 
+                        class="py-4 px-1 border-b-2 border-secondary font-medium text-sm text-secondary"
+                    >
+                        Pedidos Disponíveis
+                    </button>
+                    <button 
+                        onclick="trocarTab('aceitos')" 
+                        id="tabAceitos" 
+                        class="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+                    >
+                        Meus Pedidos
+                    </button>
+                    <button 
+                        onclick="trocarTab('historico')" 
+                        id="tabHistorico" 
+                        class="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+                    >
+                        Histórico
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content - Disponíveis -->
+            <div id="contentDisponiveis" class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Pedidos Aguardando Entregador</h3>
+                    <button 
+                        onclick="carregarPedidosDisponiveis()"
+                        class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+                <div id="listaPedidosDisponiveis" class="space-y-4">
+                    <!-- Lista será carregada dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Tab Content - Aceitos -->
+            <div id="contentAceitos" class="p-6 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Meus Pedidos em Andamento</h3>
+                    <button 
+                        onclick="carregarMeusPedidos()"
+                        class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+                <div id="listaMeusPedidos" class="space-y-4">
+                    <!-- Lista será carregada dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Tab Content - Histórico -->
+            <div id="contentHistorico" class="p-6 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Entregas Concluídas</h3>
+                    <button 
+                        onclick="carregarHistorico()"
+                        class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+                <div id="listaHistorico" class="space-y-4">
+                    <!-- Lista será carregada dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="/src/js/firebase-config.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Verificar autenticação e aprovação ao carregar
+        window.addEventListener('load', async () => {
+            const userData = await verificarTipoUsuario('entregador');
+            if (userData) {
+                currentUser = userData;
+                if (!userData.aprovado) {
+                    // Mostrar tela de aprovação
+                    document.getElementById('telaAprovacao').classList.remove('hidden');
+                } else {
+                    // Mostrar dashboard principal
+                    document.getElementById('header').classList.remove('hidden');
+                    document.getElementById('mainContent').classList.remove('hidden');
+                    document.getElementById('nomeEntregador').textContent = userData.nome;
+                    carregarEstatisticas();
+                    carregarPedidosDisponiveis();
+                }
+            }
+        });
+
+        // Verificar aprovação manualmente
+        async function verificarAprovacao() {
+            mostrarLoading();
+            try {
+                const user = await verificarLogin();
+                if (user) {
+                    const userDoc = await db.collection('usuarios').doc(user.uid).get();
+                    const userData = userDoc.data();
+                    
+                    if (userData && userData.aprovado) {
+                        mostrarSucesso('Sua conta foi aprovada! Redirecionando...');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        mostrarErro('Sua conta ainda não foi aprovada');
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao verificar aprovação:', error);
+                mostrarErro('Erro ao verificar status');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Trocar tabs
+        function trocarTab(tab) {
+            // Reset all tabs
+            document.querySelectorAll('[id^="tab"]').forEach(el => {
+                el.className = 'py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700';
+            });
+            document.querySelectorAll('[id^="content"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Activate selected tab
+            const tabElement = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
+            tabElement.className = 'py-4 px-1 border-b-2 border-secondary font-medium text-sm text-secondary';
+            document.getElementById('content' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+
+            // Load content based on tab
+            if (tab === 'aceitos') {
+                carregarMeusPedidos();
+            } else if (tab === 'historico') {
+                carregarHistorico();
+            }
+        }
+
+        // Carregar estatísticas
+        async function carregarEstatisticas() {
+            try {
+                const user = await verificarLogin();
+                const hoje = new Date();
+                hoje.setHours(0, 0, 0, 0);
+                
+                // Pedidos do entregador
+                const meusPedidos = await db.collection('pedidos')
+                    .where('entregadorId', '==', user.uid)
+                    .get();
+
+                // Pedidos disponíveis
+                const pedidosDisponiveis = await db.collection('pedidos')
+                    .where('status', '==', 'aguardando')
+                    .get();
+
+                let entregasHoje = 0;
+                let entregasAndamento = 0;
+                let totalGanhos = 0;
+
+                meusPedidos.docs.forEach(doc => {
+                    const data = doc.data();
+                    const dataPedido = data.criadoEm ? data.criadoEm.toDate() : new Date();
+                    
+                    // Entregas de hoje
+                    if (dataPedido >= hoje && data.status === 'entregue') {
+                        entregasHoje++;
+                    }
+                    
+                    // Em andamento
+                    if (['aceito', 'a_caminho'].includes(data.status)) {
+                        entregasAndamento++;
+                    }
+                    
+                    // Total de ganhos (taxa de entrega)
+                    if (data.status === 'entregue' && data.taxaEntrega) {
+                        totalGanhos += parseFloat(data.taxaEntrega);
+                    }
+                });
+
+                document.getElementById('entregasHoje').textContent = entregasHoje;
+                document.getElementById('entregasAndamento').textContent = entregasAndamento;
+                document.getElementById('entregasDisponiveis').textContent = pedidosDisponiveis.size;
+                document.getElementById('totalGanhos').textContent = 'R$ ' + totalGanhos.toFixed(2);
+
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // Carregar pedidos disponíveis
+        async function carregarPedidosDisponiveis() {
+            mostrarLoading();
+            try {
+                const pedidos = await db.collection('pedidos')
+                    .where('status', '==', 'aguardando')
+                    .orderBy('criadoEm', 'desc')
+                    .get();
+
+                const lista = document.getElementById('listaPedidosDisponiveis');
+                lista.innerHTML = '';
+
+                if (pedidos.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhum pedido disponível no momento</p>';
+                } else {
+                    pedidos.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemPedidoDisponivel(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar pedidos disponíveis:', error);
+                mostrarErro('Erro ao carregar pedidos disponíveis');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Carregar meus pedidos
+        async function carregarMeusPedidos() {
+            mostrarLoading();
+            try {
+                const user = await verificarLogin();
+                const pedidos = await db.collection('pedidos')
+                    .where('entregadorId', '==', user.uid)
+                    .where('status', 'in', ['aceito', 'a_caminho'])
+                    .orderBy('criadoEm', 'desc')
+                    .get();
+
+                const lista = document.getElementById('listaMeusPedidos');
+                lista.innerHTML = '';
+
+                if (pedidos.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Você não possui pedidos em andamento</p>';
+                } else {
+                    pedidos.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemMeuPedido(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar meus pedidos:', error);
+                mostrarErro('Erro ao carregar meus pedidos');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Carregar histórico
+        async function carregarHistorico() {
+            mostrarLoading();
+            try {
+                const user = await verificarLogin();
+                const pedidos = await db.collection('pedidos')
+                    .where('entregadorId', '==', user.uid)
+                    .where('status', '==', 'entregue')
+                    .orderBy('criadoEm', 'desc')
+                    .limit(20)
+                    .get();
+
+                const lista = document.getElementById('listaHistorico');
+                lista.innerHTML = '';
+
+                if (pedidos.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhuma entrega concluída ainda</p>';
+                } else {
+                    pedidos.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemHistorico(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar histórico:', error);
+                mostrarErro('Erro ao carregar histórico');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Criar item de pedido disponível
+        function criarItemPedidoDisponivel(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+            
+            const valorTotal = (parseFloat(data.valorPedido || 0) + parseFloat(data.taxaEntrega || 0)).toFixed(2);
+            
+            div.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h4 class="font-medium text-gray-900">Pedido #${id.substring(0, 8)}</h4>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                                Aguardando
+                            </span>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600 mb-3">
+                            <div>
+                                <p><strong>Loja:</strong> ${data.nomeLoja}</p>
+                                <p><strong>Cliente:</strong> ${data.nomeCliente}</p>
+                                <p><strong>Telefone:</strong> ${data.telefoneCliente}</p>
+                            </div>
+                            <div>
+                                <p><strong>Valor Total:</strong> R$ ${valorTotal}</p>
+                                <p><strong>Taxa Entrega:</strong> R$ ${parseFloat(data.taxaEntrega || 0).toFixed(2)}</p>
+                                <p><strong>Distância:</strong> ~5km</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 mb-3">
+                            <p><strong>Endereço:</strong> ${data.enderecoEntrega}</p>
+                            <p><strong>Descrição:</strong> ${data.descricaoPedido}</p>
+                        </div>
+                        
+                        <div class="text-xs text-gray-500">
+                            <p>Criado: ${data.criadoEm ? new Date(data.criadoEm.toDate()).toLocaleString('pt-BR') : 'N/A'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ml-4">
+                        <button 
+                            onclick="aceitarPedido('${id}')"
+                            class="bg-secondary text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-colors"
+                        >
+                            Aceitar Entrega
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Criar item de meu pedido
+        function criarItemMeuPedido(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+            
+            const statusConfig = {
+                'aceito': { color: 'bg-blue-100 text-blue-800', texto: 'Aceito - Ir buscar' },
+                'a_caminho': { color: 'bg-purple-100 text-purple-800', texto: 'A Caminho' }
+            };
+            
+            const status = statusConfig[data.status];
+            const valorTotal = (parseFloat(data.valorPedido || 0) + parseFloat(data.taxaEntrega || 0)).toFixed(2);
+            
+            div.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h4 class="font-medium text-gray-900">Pedido #${id.substring(0, 8)}</h4>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full ${status.color}">
+                                ${status.texto}
+                            </span>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600 mb-3">
+                            <div>
+                                <p><strong>Loja:</strong> ${data.nomeLoja}</p>
+                                <p><strong>Cliente:</strong> ${data.nomeCliente}</p>
+                                <p><strong>Telefone:</strong> ${data.telefoneCliente}</p>
+                            </div>
+                            <div>
+                                <p><strong>Valor Total:</strong> R$ ${valorTotal}</p>
+                                <p><strong>Sua Taxa:</strong> R$ ${parseFloat(data.taxaEntrega || 0).toFixed(2)}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-600 mb-3">
+                            <p><strong>Endereço:</strong> ${data.enderecoEntrega}</p>
+                            <p><strong>Descrição:</strong> ${data.descricaoPedido}</p>
+                            ${data.observacoes ? `<p><strong>Observações:</strong> ${data.observacoes}</p>` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col space-y-2 ml-4">
+                        ${data.status === 'aceito' ? `
+                        <button 
+                            onclick="atualizarStatus('${id}', 'a_caminho')"
+                            class="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-600 transition-colors"
+                        >
+                            Saí para Entrega
+                        </button>
+                        ` : ''}
+                        ${data.status === 'a_caminho' ? `
+                        <button 
+                            onclick="atualizarStatus('${id}', 'entregue')"
+                            class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors"
+                        >
+                            Marcar Entregue
+                        </button>
+                        ` : ''}
+                        <a 
+                            href="tel:${data.telefoneCliente}"
+                            class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition-colors text-center"
+                        >
+                            Ligar Cliente
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Criar item do histórico
+        function criarItemHistorico(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+            
+            const valorTotal = (parseFloat(data.valorPedido || 0) + parseFloat(data.taxaEntrega || 0)).toFixed(2);
+            
+            div.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h4 class="font-medium text-gray-900">Pedido #${id.substring(0, 8)}</h4>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                                Entregue
+                            </span>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600 mb-3">
+                            <div>
+                                <p><strong>Loja:</strong> ${data.nomeLoja}</p>
+                                <p><strong>Cliente:</strong> ${data.nomeCliente}</p>
+                            </div>
+                            <div>
+                                <p><strong>Valor Total:</strong> R$ ${valorTotal}</p>
+                                <p><strong>Você Ganhou:</strong> R$ ${parseFloat(data.taxaEntrega || 0).toFixed(2)}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs text-gray-500">
+                            <p>Entregue em: ${data.entregueEm ? new Date(data.entregueEm.toDate()).toLocaleString('pt-BR') : 'N/A'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Aceitar pedido
+        async function aceitarPedido(pedidoId) {
+            if (!confirm('Tem certeza que deseja aceitar este pedido?')) return;
+            
+            mostrarLoading();
+            try {
+                const user = await verificarLogin();
+                
+                await db.collection('pedidos').doc(pedidoId).update({
+                    status: 'aceito',
+                    entregadorId: user.uid,
+                    nomeEntregador: currentUser.nome,
+                    aceitoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                mostrarSucesso('Pedido aceito! Vá até a loja para buscar.');
+                carregarEstatisticas();
+                carregarPedidosDisponiveis();
+                carregarMeusPedidos();
+                
+            } catch (error) {
+                console.error('Erro ao aceitar pedido:', error);
+                mostrarErro('Erro ao aceitar pedido');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Atualizar status do pedido
+        async function atualizarStatus(pedidoId, novoStatus) {
+            let mensagem = '';
+            switch (novoStatus) {
+                case 'a_caminho':
+                    mensagem = 'Confirma que está a caminho da entrega?';
+                    break;
+                case 'entregue':
+                    mensagem = 'Confirma que o pedido foi entregue?';
+                    break;
+            }
+            
+            if (!confirm(mensagem)) return;
+            
+            mostrarLoading();
+            try {
+                const updateData = {
+                    status: novoStatus
+                };
+                
+                if (novoStatus === 'a_caminho') {
+                    updateData.saiuParaEntregaEm = firebase.firestore.FieldValue.serverTimestamp();
+                } else if (novoStatus === 'entregue') {
+                    updateData.entregueEm = firebase.firestore.FieldValue.serverTimestamp();
+                }
+                
+                await db.collection('pedidos').doc(pedidoId).update(updateData);
+                
+                let sucessoMsg = '';
+                switch (novoStatus) {
+                    case 'a_caminho':
+                        sucessoMsg = 'Status atualizado: A caminho!';
+                        break;
+                    case 'entregue':
+                        sucessoMsg = 'Parabéns! Entrega concluída!';
+                        break;
+                }
+                
+                mostrarSucesso(sucessoMsg);
+                carregarEstatisticas();
+                carregarMeusPedidos();
+                
+            } catch (error) {
+                console.error('Erro ao atualizar status:', error);
+                mostrarErro('Erro ao atualizar status');
+            } finally {
+                esconderLoading();
+            }
+        }
+    </script>
+</body>
+</html>

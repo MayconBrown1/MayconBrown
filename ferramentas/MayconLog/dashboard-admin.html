@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - MayconLog</title>
+    <link rel="manifest" href="/public/manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0ibTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiIgZmlsbD0iIzFlNDBhZiIvPgo8L3N2Zz4K">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#10b981',
+                        danger: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Overlay -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+            <span class="text-gray-700">Carregando...</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-purple-500 rounded-full w-10 h-10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-8c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm2 4h-2v-2h2v2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Dashboard Admin</h1>
+                        <p class="text-sm text-gray-600">Painel de administração MayconLog</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <span id="nomeAdmin" class="text-gray-700 font-medium"></span>
+                    <button 
+                        onclick="logout()"
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Cards de Estatísticas -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Lojas Pendentes</p>
+                        <p id="lojasPendentes" class="text-2xl font-bold text-orange-600">-</p>
+                    </div>
+                    <div class="bg-orange-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Entregadores Pendentes</p>
+                        <p id="entregadoresPendentes" class="text-2xl font-bold text-blue-600">-</p>
+                    </div>
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5 17h-2a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h2v10zm4 0h-2v-14h2v14zm4 0h-2v-10h2v10zm4 0h-2v-6h2v6zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Lojas Ativas</p>
+                        <p id="lojasAtivas" class="text-2xl font-bold text-secondary">-</p>
+                    </div>
+                    <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Entregadores Ativos</p>
+                        <p id="entregadoresAtivos" class="text-2xl font-bold text-secondary">-</p>
+                    </div>
+                    <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-white rounded-xl shadow-sm">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8 px-6">
+                    <button 
+                        onclick="trocarTab('lojas')" 
+                        id="tabLojas" 
+                        class="py-4 px-1 border-b-2 border-purple-500 font-medium text-sm text-purple-600"
+                    >
+                        Lojas Pendentes
+                    </button>
+                    <button 
+                        onclick="trocarTab('entregadores')" 
+                        id="tabEntregadores" 
+                        class="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+                    >
+                        Entregadores Pendentes
+                    </button>
+                    <button 
+                        onclick="trocarTab('usuarios')" 
+                        id="tabUsuarios" 
+                        class="py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700"
+                    >
+                        Todos os Usuários
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content - Lojas -->
+            <div id="contentLojas" class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Lojas Aguardando Aprovação</h3>
+                    <button 
+                        onclick="carregarLojasPendentes()"
+                        class="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-600 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+                <div id="listaLojasPendentes" class="space-y-4">
+                    <!-- Lista será carregada dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Tab Content - Entregadores -->
+            <div id="contentEntregadores" class="p-6 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Entregadores Aguardando Aprovação</h3>
+                    <button 
+                        onclick="carregarEntregadoresPendentes()"
+                        class="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-600 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+                <div id="listaEntregadoresPendentes" class="space-y-4">
+                    <!-- Lista será carregada dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Tab Content - Usuários -->
+            <div id="contentUsuarios" class="p-6 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Todos os Usuários do Sistema</h3>
+                    <button 
+                        onclick="carregarTodosUsuarios()"
+                        class="bg-purple-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-600 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+                <div id="listaTodosUsuarios" class="space-y-4">
+                    <!-- Lista será carregada dinamicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="/src/js/firebase-config.js"></script>
+
+    <script>
+        // Verificar autenticação ao carregar
+        window.addEventListener('load', async () => {
+            const userData = await verificarTipoUsuario('admin');
+            if (userData) {
+                document.getElementById('nomeAdmin').textContent = userData.nome || userData.email;
+                carregarEstatisticas();
+                carregarLojasPendentes();
+            }
+        });
+
+        // Trocar tabs
+        function trocarTab(tab) {
+            // Reset all tabs
+            document.querySelectorAll('[id^="tab"]').forEach(el => {
+                el.className = 'py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700';
+            });
+            document.querySelectorAll('[id^="content"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Activate selected tab
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).className = 
+                'py-4 px-1 border-b-2 border-purple-500 font-medium text-sm text-purple-600';
+            document.getElementById('content' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+
+            // Load content based on tab
+            if (tab === 'entregadores') {
+                carregarEntregadoresPendentes();
+            } else if (tab === 'usuarios') {
+                carregarTodosUsuarios();
+            }
+        }
+
+        // Carregar estatísticas
+        async function carregarEstatisticas() {
+            try {
+                const usuarios = await db.collection('usuarios').get();
+                
+                let lojasPendentes = 0;
+                let entregadoresPendentes = 0;
+                let lojasAtivas = 0;
+                let entregadoresAtivos = 0;
+
+                usuarios.docs.forEach(doc => {
+                    const data = doc.data();
+                    if (data.tipo === 'loja') {
+                        if (data.aprovado) lojasAtivas++;
+                        else lojasPendentes++;
+                    } else if (data.tipo === 'entregador') {
+                        if (data.aprovado) entregadoresAtivos++;
+                        else entregadoresPendentes++;
+                    }
+                });
+
+                document.getElementById('lojasPendentes').textContent = lojasPendentes;
+                document.getElementById('entregadoresPendentes').textContent = entregadoresPendentes;
+                document.getElementById('lojasAtivas').textContent = lojasAtivas;
+                document.getElementById('entregadoresAtivos').textContent = entregadoresAtivos;
+
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // Carregar lojas pendentes
+        async function carregarLojasPendentes() {
+            mostrarLoading();
+            try {
+                const lojas = await db.collection('usuarios')
+                    .where('tipo', '==', 'loja')
+                    .where('aprovado', '==', false)
+                    .get();
+
+                const lista = document.getElementById('listaLojasPendentes');
+                lista.innerHTML = '';
+
+                if (lojas.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhuma loja aguardando aprovação</p>';
+                } else {
+                    lojas.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemLoja(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar lojas:', error);
+                mostrarErro('Erro ao carregar lojas pendentes');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Carregar entregadores pendentes
+        async function carregarEntregadoresPendentes() {
+            mostrarLoading();
+            try {
+                const entregadores = await db.collection('usuarios')
+                    .where('tipo', '==', 'entregador')
+                    .where('aprovado', '==', false)
+                    .get();
+
+                const lista = document.getElementById('listaEntregadoresPendentes');
+                lista.innerHTML = '';
+
+                if (entregadores.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhum entregador aguardando aprovação</p>';
+                } else {
+                    entregadores.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemEntregador(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar entregadores:', error);
+                mostrarErro('Erro ao carregar entregadores pendentes');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Carregar todos os usuários
+        async function carregarTodosUsuarios() {
+            mostrarLoading();
+            try {
+                const usuarios = await db.collection('usuarios').get();
+
+                const lista = document.getElementById('listaTodosUsuarios');
+                lista.innerHTML = '';
+
+                if (usuarios.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhum usuário encontrado</p>';
+                } else {
+                    usuarios.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemUsuario(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+                mostrarErro('Erro ao carregar usuários');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Criar item de loja
+        function criarItemLoja(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+            
+            div.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <h4 class="font-medium text-gray-900">${data.nomeEmpresa || 'Nome não informado'}</h4>
+                        <div class="text-sm text-gray-600 space-y-1 mt-2">
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>CNPJ:</strong> ${data.cnpj || 'Não informado'}</p>
+                            <p><strong>Telefone:</strong> ${data.telefone || 'Não informado'}</p>
+                            <p><strong>Endereço:</strong> ${data.endereco || 'Não informado'}</p>
+                            <p><strong>Cadastro:</strong> ${data.criadoEm ? new Date(data.criadoEm.toDate()).toLocaleString('pt-BR') : 'N/A'}</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 ml-4">
+                        <button 
+                            onclick="aprovarUsuario('${id}')"
+                            class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors"
+                        >
+                            Aprovar
+                        </button>
+                        <button 
+                            onclick="rejeitarUsuario('${id}')"
+                            class="bg-danger text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600 transition-colors"
+                        >
+                            Rejeitar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Criar item de entregador
+        function criarItemEntregador(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+            
+            div.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <h4 class="font-medium text-gray-900">${data.nome || 'Nome não informado'}</h4>
+                        <div class="text-sm text-gray-600 space-y-1 mt-2">
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>CPF:</strong> ${data.cpf || 'Não informado'}</p>
+                            <p><strong>Telefone:</strong> ${data.telefone || 'Não informado'}</p>
+                            <p><strong>Veículo:</strong> ${data.veiculo || 'Não informado'}</p>
+                            <p><strong>CNH:</strong> ${data.cnh || 'Não informado'}</p>
+                            <p><strong>Cadastro:</strong> ${data.criadoEm ? new Date(data.criadoEm.toDate()).toLocaleString('pt-BR') : 'N/A'}</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 ml-4">
+                        <button 
+                            onclick="aprovarUsuario('${id}')"
+                            class="bg-secondary text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors"
+                        >
+                            Aprovar
+                        </button>
+                        <button 
+                            onclick="rejeitarUsuario('${id}')"
+                            class="bg-danger text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600 transition-colors"
+                        >
+                            Rejeitar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Criar item de usuário
+        function criarItemUsuario(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200';
+            
+            const statusBadge = data.aprovado ? 
+                '<span class="bg-secondary text-white text-xs px-2 py-1 rounded-full">Aprovado</span>' :
+                '<span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">Pendente</span>';
+            
+            const tipoBadge = {
+                'admin': '<span class="bg-purple-500 text-white text-xs px-2 py-1 rounded-full">Admin</span>',
+                'loja': '<span class="bg-primary text-white text-xs px-2 py-1 rounded-full">Loja</span>',
+                'entregador': '<span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Entregador</span>'
+            };
+            
+            div.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <h4 class="font-medium text-gray-900">${data.nome || data.nomeEmpresa || 'Nome não informado'}</h4>
+                            ${tipoBadge[data.tipo] || ''}
+                            ${statusBadge}
+                        </div>
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>Cadastro:</strong> ${data.criadoEm ? new Date(data.criadoEm.toDate()).toLocaleString('pt-BR') : 'N/A'}</p>
+                        </div>
+                    </div>
+                    ${data.tipo !== 'admin' && !data.aprovado ? `
+                    <div class="flex space-x-2 ml-4">
+                        <button 
+                            onclick="aprovarUsuario('${id}')"
+                            class="bg-secondary text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition-colors"
+                        >
+                            Aprovar
+                        </button>
+                        <button 
+                            onclick="rejeitarUsuario('${id}')"
+                            class="bg-danger text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition-colors"
+                        >
+                            Rejeitar
+                        </button>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Aprovar usuário
+        async function aprovarUsuario(userId) {
+            if (!confirm('Tem certeza que deseja aprovar este usuário?')) return;
+            
+            mostrarLoading();
+            try {
+                await db.collection('usuarios').doc(userId).update({
+                    aprovado: true,
+                    dataAprovacao: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                mostrarSucesso('Usuário aprovado com sucesso!');
+                carregarEstatisticas();
+                carregarLojasPendentes();
+                carregarEntregadoresPendentes();
+                carregarTodosUsuarios();
+                
+            } catch (error) {
+                console.error('Erro ao aprovar usuário:', error);
+                mostrarErro('Erro ao aprovar usuário');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Rejeitar usuário
+        async function rejeitarUsuario(userId) {
+            if (!confirm('Tem certeza que deseja rejeitar este usuário? Esta ação irá deletar a conta.')) return;
+            
+            mostrarLoading();
+            try {
+                // Deletar documento do usuário
+                await db.collection('usuarios').doc(userId).delete();
+                
+                mostrarSucesso('Usuário rejeitado e removido do sistema');
+                carregarEstatisticas();
+                carregarLojasPendentes();
+                carregarEntregadoresPendentes();
+                carregarTodosUsuarios();
+                
+            } catch (error) {
+                console.error('Erro ao rejeitar usuário:', error);
+                mostrarErro('Erro ao rejeitar usuário');
+            } finally {
+                esconderLoading();
+            }
+        }
+    </script>
+</body>
+</html>

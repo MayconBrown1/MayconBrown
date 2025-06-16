@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da Loja - MayconLog</title>
+    <link rel="manifest" href="/public/manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0ibTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiIgZmlsbD0iIzFlNDBhZiIvPgo8L3N2Zz4K">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#10b981',
+                        danger: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading Overlay -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+            <span class="text-gray-700">Carregando...</span>
+        </div>
+    </div>
+
+    <!-- Tela de Aguardando Aprovação -->
+    <div id="telaAprovacao" class="min-h-screen flex items-center justify-center hidden">
+        <div class="max-w-md w-full mx-4">
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Aguardando Aprovação</h2>
+                <p class="text-gray-600 mb-6">
+                    Seu cadastro foi realizado com sucesso! Aguarde a aprovação do administrador para começar a usar o sistema.
+                </p>
+                <p class="text-sm text-gray-500 mb-6">
+                    Você receberá um email quando sua conta for aprovada.
+                </p>
+                <div class="space-y-3">
+                    <button 
+                        onclick="verificarAprovacao()"
+                        class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                    >
+                        Verificar Status
+                    </button>
+                    <button 
+                        onclick="logout()"
+                        class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                    >
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="bg-white shadow-sm border-b hidden">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-primary rounded-full w-10 h-10 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Painel da Loja</h1>
+                        <p id="nomeLoja" class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button 
+                        onclick="logout()"
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="container mx-auto px-4 py-8 hidden">
+        <!-- Cards de Estatísticas -->
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Pedidos Hoje</p>
+                        <p id="pedidosHoje" class="text-2xl font-bold text-primary">0</p>
+                    </div>
+                    <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Em Andamento</p>
+                        <p id="pedidosAndamento" class="text-2xl font-bold text-orange-600">0</p>
+                    </div>
+                    <div class="bg-orange-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Entregues</p>
+                        <p id="pedidosEntregues" class="text-2xl font-bold text-secondary">0</p>
+                    </div>
+                    <div class="bg-green-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm">Total Pedidos</p>
+                        <p id="totalPedidos" class="text-2xl font-bold text-gray-700">0</p>
+                    </div>
+                    <div class="bg-gray-100 rounded-full w-12 h-12 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão Novo Pedido -->
+        <div class="mb-6">
+            <button 
+                onclick="abrirModalNovoPedido()"
+                class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-flex items-center"
+            >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Criar Novo Pedido
+            </button>
+        </div>
+
+        <!-- Lista de Pedidos -->
+        <div class="bg-white rounded-xl shadow-sm">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800">Meus Pedidos</h3>
+                    <button 
+                        onclick="carregarPedidos()"
+                        class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors"
+                    >
+                        Atualizar
+                    </button>
+                </div>
+            </div>
+            <div id="listaPedidos" class="p-6">
+                <!-- Lista será carregada dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Pedido -->
+    <div id="modalNovoPedido" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800">Criar Novo Pedido</h3>
+                    <button 
+                        onclick="fecharModalNovoPedido()"
+                        class="text-gray-500 hover:text-gray-700"
+                    >
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <form id="formNovoPedido" class="p-6 space-y-4">
+                <div>
+                    <label for="nomeCliente" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nome do Cliente
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nomeCliente" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="João Silva"
+                    >
+                </div>
+
+                <div>
+                    <label for="telefoneCliente" class="block text-sm font-medium text-gray-700 mb-2">
+                        Telefone do Cliente
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="telefoneCliente" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="(11) 99999-9999"
+                    >
+                </div>
+
+                <div>
+                    <label for="enderecoEntrega" class="block text-sm font-medium text-gray-700 mb-2">
+                        Endereço de Entrega
+                    </label>
+                    <textarea 
+                        id="enderecoEntrega" 
+                        required
+                        rows="3"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Rua, número, bairro, cidade - CEP"
+                    ></textarea>
+                </div>
+
+                <div>
+                    <label for="descricaoPedido" class="block text-sm font-medium text-gray-700 mb-2">
+                        Descrição do Pedido
+                    </label>
+                    <textarea 
+                        id="descricaoPedido" 
+                        required
+                        rows="3"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Descreva os itens e detalhes do pedido"
+                    ></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="valorPedido" class="block text-sm font-medium text-gray-700 mb-2">
+                            Valor do Pedido
+                        </label>
+                        <input 
+                            type="number" 
+                            id="valorPedido" 
+                            required
+                            step="0.01"
+                            min="0"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                            placeholder="0.00"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="taxaEntrega" class="block text-sm font-medium text-gray-700 mb-2">
+                            Taxa de Entrega
+                        </label>
+                        <input 
+                            type="number" 
+                            id="taxaEntrega" 
+                            required
+                            step="0.01"
+                            min="0"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                            placeholder="0.00"
+                        >
+                    </div>
+                </div>
+
+                <div>
+                    <label for="observacoes" class="block text-sm font-medium text-gray-700 mb-2">
+                        Observações (opcional)
+                    </label>
+                    <textarea 
+                        id="observacoes" 
+                        rows="2"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Informações adicionais para o entregador"
+                    ></textarea>
+                </div>
+
+                <div class="flex space-x-4 pt-4">
+                    <button 
+                        type="button"
+                        onclick="fecharModalNovoPedido()"
+                        class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                    >
+                        Cancelar
+                    </button>
+                    <button 
+                        type="submit"
+                        class="flex-1 bg-primary text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                    >
+                        Criar Pedido
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="/src/js/firebase-config.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Verificar autenticação e aprovação ao carregar
+        window.addEventListener('load', async () => {
+            const userData = await verificarTipoUsuario('loja');
+            if (userData) {
+                currentUser = userData;
+                if (!userData.aprovado) {
+                    // Mostrar tela de aprovação
+                    document.getElementById('telaAprovacao').classList.remove('hidden');
+                } else {
+                    // Mostrar painel principal
+                    document.getElementById('header').classList.remove('hidden');
+                    document.getElementById('mainContent').classList.remove('hidden');
+                    document.getElementById('nomeLoja').textContent = userData.nomeEmpresa;
+                    carregarEstatisticas();
+                    carregarPedidos();
+                }
+            }
+        });
+
+        // Verificar aprovação manualmente
+        async function verificarAprovacao() {
+            mostrarLoading();
+            try {
+                const user = await verificarLogin();
+                if (user) {
+                    const userDoc = await db.collection('usuarios').doc(user.uid).get();
+                    const userData = userDoc.data();
+                    
+                    if (userData && userData.aprovado) {
+                        mostrarSucesso('Sua conta foi aprovada! Redirecionando...');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        mostrarErro('Sua conta ainda não foi aprovada');
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao verificar aprovação:', error);
+                mostrarErro('Erro ao verificar status');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Máscara telefone
+        document.getElementById('telefoneCliente').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+            e.target.value = value;
+        });
+
+        // Carregar estatísticas
+        async function carregarEstatisticas() {
+            try {
+                const user = await verificarLogin();
+                const hoje = new Date();
+                hoje.setHours(0, 0, 0, 0);
+                
+                const pedidos = await db.collection('pedidos')
+                    .where('lojaId', '==', user.uid)
+                    .get();
+
+                let pedidosHoje = 0;
+                let pedidosAndamento = 0;
+                let pedidosEntregues = 0;
+                const totalPedidos = pedidos.size;
+
+                pedidos.docs.forEach(doc => {
+                    const data = doc.data();
+                    const dataPedido = data.criadoEm ? data.criadoEm.toDate() : new Date();
+                    
+                    // Pedidos de hoje
+                    if (dataPedido >= hoje) {
+                        pedidosHoje++;
+                    }
+                    
+                    // Status dos pedidos
+                    if (['aguardando', 'aceito', 'a_caminho'].includes(data.status)) {
+                        pedidosAndamento++;
+                    } else if (data.status === 'entregue') {
+                        pedidosEntregues++;
+                    }
+                });
+
+                document.getElementById('pedidosHoje').textContent = pedidosHoje;
+                document.getElementById('pedidosAndamento').textContent = pedidosAndamento;
+                document.getElementById('pedidosEntregues').textContent = pedidosEntregues;
+                document.getElementById('totalPedidos').textContent = totalPedidos;
+
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // Carregar pedidos
+        async function carregarPedidos() {
+            mostrarLoading();
+            try {
+                const user = await verificarLogin();
+                const pedidos = await db.collection('pedidos')
+                    .where('lojaId', '==', user.uid)
+                    .orderBy('criadoEm', 'desc')
+                    .get();
+
+                const lista = document.getElementById('listaPedidos');
+                lista.innerHTML = '';
+
+                if (pedidos.empty) {
+                    lista.innerHTML = '<p class="text-gray-500 text-center py-8">Nenhum pedido criado ainda. Crie seu primeiro pedido!</p>';
+                } else {
+                    pedidos.docs.forEach(doc => {
+                        const data = doc.data();
+                        const item = criarItemPedido(doc.id, data);
+                        lista.appendChild(item);
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar pedidos:', error);
+                mostrarErro('Erro ao carregar pedidos');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Criar item de pedido
+        function criarItemPedido(id, data) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4';
+            
+            const statusConfig = {
+                'aguardando': { color: 'bg-yellow-100 text-yellow-800', texto: 'Aguardando Entregador' },
+                'aceito': { color: 'bg-blue-100 text-blue-800', texto: 'Aceito pelo Entregador' },
+                'a_caminho': { color: 'bg-purple-100 text-purple-800', texto: 'A Caminho' },
+                'entregue': { color: 'bg-green-100 text-green-800', texto: 'Entregue' },
+                'cancelado': { color: 'bg-red-100 text-red-800', texto: 'Cancelado' }
+            };
+            
+            const status = statusConfig[data.status] || statusConfig['aguardando'];
+            const valorTotal = (parseFloat(data.valorPedido || 0) + parseFloat(data.taxaEntrega || 0)).toFixed(2);
+            
+            div.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h4 class="font-medium text-gray-900">Pedido #${id.substring(0, 8)}</h4>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full ${status.color}">
+                                ${status.texto}
+                            </span>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div>
+                                <p><strong>Cliente:</strong> ${data.nomeCliente}</p>
+                                <p><strong>Telefone:</strong> ${data.telefoneCliente}</p>
+                                <p><strong>Endereço:</strong> ${data.enderecoEntrega}</p>
+                            </div>
+                            <div>
+                                <p><strong>Valor Pedido:</strong> R$ ${parseFloat(data.valorPedido || 0).toFixed(2)}</p>
+                                <p><strong>Taxa Entrega:</strong> R$ ${parseFloat(data.taxaEntrega || 0).toFixed(2)}</p>
+                                <p><strong>Total:</strong> R$ ${valorTotal}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 text-sm text-gray-600">
+                            <p><strong>Descrição:</strong> ${data.descricaoPedido}</p>
+                            ${data.observacoes ? `<p><strong>Observações:</strong> ${data.observacoes}</p>` : ''}
+                        </div>
+                        
+                        <div class="mt-2 text-xs text-gray-500">
+                            <p>Criado em: ${data.criadoEm ? new Date(data.criadoEm.toDate()).toLocaleString('pt-BR') : 'N/A'}</p>
+                            ${data.entregadorId ? `<p>Entregador: ${data.nomeEntregador || 'N/A'}</p>` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col space-y-2 ml-4">
+                        <button 
+                            onclick="gerarLinkRastreio('${id}')"
+                            class="bg-primary text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors"
+                        >
+                            Link de Rastreio
+                        </button>
+                        ${data.status === 'aguardando' ? `
+                        <button 
+                            onclick="cancelarPedido('${id}')"
+                            class="bg-danger text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition-colors"
+                        >
+                            Cancelar
+                        </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Abrir modal novo pedido
+        function abrirModalNovoPedido() {
+            document.getElementById('modalNovoPedido').classList.remove('hidden');
+        }
+
+        // Fechar modal novo pedido
+        function fecharModalNovoPedido() {
+            document.getElementById('modalNovoPedido').classList.add('hidden');
+            document.getElementById('formNovoPedido').reset();
+        }
+
+        // Criar novo pedido
+        document.getElementById('formNovoPedido').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nomeCliente = document.getElementById('nomeCliente').value;
+            const telefoneCliente = document.getElementById('telefoneCliente').value;
+            const enderecoEntrega = document.getElementById('enderecoEntrega').value;
+            const descricaoPedido = document.getElementById('descricaoPedido').value;
+            const valorPedido = document.getElementById('valorPedido').value;
+            const taxaEntrega = document.getElementById('taxaEntrega').value;
+            const observacoes = document.getElementById('observacoes').value;
+            
+            if (!nomeCliente || !telefoneCliente || !enderecoEntrega || !descricaoPedido || !valorPedido || !taxaEntrega) {
+                mostrarErro('Preencha todos os campos obrigatórios');
+                return;
+            }
+            
+            mostrarLoading();
+            
+            try {
+                const user = await verificarLogin();
+                
+                // Criar pedido no Firestore
+                await db.collection('pedidos').add({
+                    lojaId: user.uid,
+                    nomeLoja: currentUser.nomeEmpresa,
+                    nomeCliente: nomeCliente,
+                    telefoneCliente: telefoneCliente,
+                    enderecoEntrega: enderecoEntrega,
+                    descricaoPedido: descricaoPedido,
+                    valorPedido: parseFloat(valorPedido),
+                    taxaEntrega: parseFloat(taxaEntrega),
+                    observacoes: observacoes,
+                    status: 'aguardando',
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                mostrarSucesso('Pedido criado com sucesso!');
+                fecharModalNovoPedido();
+                carregarEstatisticas();
+                carregarPedidos();
+                
+            } catch (error) {
+                console.error('Erro ao criar pedido:', error);
+                mostrarErro('Erro ao criar pedido');
+            } finally {
+                esconderLoading();
+            }
+        });
+
+        // Gerar link de rastreio
+        function gerarLinkRastreio(pedidoId) {
+            const link = `${window.location.origin}/rastreio.html?codigo=${pedidoId}`;
+            
+            // Copiar para clipboard
+            navigator.clipboard.writeText(link).then(() => {
+                mostrarSucesso('Link de rastreio copiado!');
+            }).catch(() => {
+                // Fallback para navegadores mais antigos
+                const textarea = document.createElement('textarea');
+                textarea.value = link;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                mostrarSucesso('Link de rastreio copiado!');
+            });
+        }
+
+        // Cancelar pedido
+        async function cancelarPedido(pedidoId) {
+            if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
+            
+            mostrarLoading();
+            try {
+                await db.collection('pedidos').doc(pedidoId).update({
+                    status: 'cancelado',
+                    canceladoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                mostrarSucesso('Pedido cancelado com sucesso!');
+                carregarEstatisticas();
+                carregarPedidos();
+                
+            } catch (error) {
+                console.error('Erro ao cancelar pedido:', error);
+                mostrarErro('Erro ao cancelar pedido');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('modalNovoPedido').addEventListener('click', function(e) {
+            if (e.target === this) {
+                fecharModalNovoPedido();
+            }
+        });
+    </script>
+</body>
+</html>

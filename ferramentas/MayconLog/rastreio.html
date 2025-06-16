@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento - MayconLog</title>
+    <link rel="manifest" href="/public/manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0ibTMgOWw5LTcgOSA3djExYTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0yeiIgZmlsbD0iIzFlNDBhZiIvPgo8L3N2Zz4K">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#10b981',
+                        danger: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Loading Overlay -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+            <span class="text-gray-700">Carregando...</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-primary text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="m3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    </svg>
+                    <h1 class="text-2xl font-bold">MayconLog</h1>
+                </div>
+                <a href="/" class="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                    Voltar ao Início
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Busca Manual -->
+        <div id="buscaManual" class="max-w-2xl mx-auto mb-8">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Rastrear Pedido</h2>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input 
+                        type="text" 
+                        id="codigoRastreio"
+                        placeholder="Digite o código do pedido" 
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                    <button 
+                        onclick="buscarPedido()"
+                        class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                    >
+                        Rastrear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultado do Rastreamento -->
+        <div id="resultadoRastreamento" class="max-w-4xl mx-auto hidden">
+            <!-- Informações do Pedido -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Detalhes do Pedido</h2>
+                    <span id="statusBadge" class="px-4 py-2 rounded-full text-sm font-medium"></span>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Informações da Entrega</h3>
+                        <div class="space-y-3 text-gray-600">
+                            <p><strong>Código:</strong> <span id="codigoPedido"></span></p>
+                            <p><strong>Loja:</strong> <span id="nomeLoja"></span></p>
+                            <p><strong>Cliente:</strong> <span id="nomeCliente"></span></p>
+                            <p><strong>Telefone:</strong> <span id="telefoneCliente"></span></p>
+                            <p><strong>Endereço:</strong> <span id="enderecoEntrega"></span></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Detalhes do Pedido</h3>
+                        <div class="space-y-3 text-gray-600">
+                            <p><strong>Descrição:</strong> <span id="descricaoPedido"></span></p>
+                            <p><strong>Valor:</strong> <span id="valorPedido"></span></p>
+                            <p><strong>Taxa de Entrega:</strong> <span id="taxaEntrega"></span></p>
+                            <p><strong>Total:</strong> <span id="valorTotal"></span></p>
+                            <p id="observacoesContainer" class="hidden"><strong>Observações:</strong> <span id="observacoes"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações do Entregador -->
+                <div id="infoEntregador" class="mt-8 pt-6 border-t border-gray-200 hidden">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Entregador</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-gray-600">
+                        <p><strong>Nome:</strong> <span id="nomeEntregador"></span></p>
+                        <p><strong>Veículo:</strong> <span id="veiculoEntregador"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline de Status -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Status da Entrega</h3>
+                <div id="timeline" class="space-y-6">
+                    <!-- Timeline será construída dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Mapa Simulado -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Localização</h3>
+                <div id="mapaSsimulado" class="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
+                    <div class="text-center text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <p class="text-lg font-medium">Mapa da Entrega</p>
+                        <p class="text-sm" id="statusMapa">Acompanhe a localização em tempo real</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pedido Não Encontrado -->
+        <div id="pedidoNaoEncontrado" class="max-w-2xl mx-auto text-center hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.87 0-5.395 1.516-6.829 3.791M12 15v6.172M12 15v-6.172"/>
+                </svg>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Pedido Não Encontrado</h2>
+                <p class="text-gray-600 mb-6">
+                    Não foi possível encontrar um pedido com este código. Verifique se o código está correto.
+                </p>
+                <button 
+                    onclick="novaConsulta()"
+                    class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                >
+                    Tentar Novamente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="/src/js/firebase-config.js"></script>
+
+    <script>
+        // Verificar se há código na URL ao carregar
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const codigo = urlParams.get('codigo');
+            
+            if (codigo) {
+                document.getElementById('codigoRastreio').value = codigo;
+                buscarPedido();
+            }
+        });
+
+        // Permitir Enter no campo de busca
+        document.getElementById('codigoRastreio').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarPedido();
+            }
+        });
+
+        // Buscar pedido
+        async function buscarPedido() {
+            const codigo = document.getElementById('codigoRastreio').value.trim();
+            
+            if (!codigo) {
+                mostrarErro('Digite o código do pedido');
+                return;
+            }
+            
+            mostrarLoading();
+            
+            try {
+                const pedidoDoc = await db.collection('pedidos').doc(codigo).get();
+                
+                if (!pedidoDoc.exists) {
+                    mostrarPedidoNaoEncontrado();
+                    return;
+                }
+                
+                const pedidoData = pedidoDoc.data();
+                mostrarResultado(codigo, pedidoData);
+                
+            } catch (error) {
+                console.error('Erro ao buscar pedido:', error);
+                mostrarErro('Erro ao buscar pedido. Tente novamente.');
+            } finally {
+                esconderLoading();
+            }
+        }
+
+        // Mostrar resultado do rastreamento
+        function mostrarResultado(codigo, data) {
+            // Esconder busca manual e mostrar resultado
+            document.getElementById('buscaManual').classList.add('hidden');
+            document.getElementById('pedidoNaoEncontrado').classList.add('hidden');
+            document.getElementById('resultadoRastreamento').classList.remove('hidden');
+            
+            // Preencher informações básicas
+            document.getElementById('codigoPedido').textContent = codigo.substring(0, 8);
+            document.getElementById('nomeLoja').textContent = data.nomeLoja || 'N/A';
+            document.getElementById('nomeCliente').textContent = data.nomeCliente || 'N/A';
+            document.getElementById('telefoneCliente').textContent = data.telefoneCliente || 'N/A';
+            document.getElementById('enderecoEntrega').textContent = data.enderecoEntrega || 'N/A';
+            document.getElementById('descricaoPedido').textContent = data.descricaoPedido || 'N/A';
+            document.getElementById('valorPedido').textContent = 'R$ ' + parseFloat(data.valorPedido || 0).toFixed(2);
+            document.getElementById('taxaEntrega').textContent = 'R$ ' + parseFloat(data.taxaEntrega || 0).toFixed(2);
+            
+            const valorTotal = (parseFloat(data.valorPedido || 0) + parseFloat(data.taxaEntrega || 0)).toFixed(2);
+            document.getElementById('valorTotal').textContent = 'R$ ' + valorTotal;
+            
+            // Observações (se houver)
+            if (data.observacoes) {
+                document.getElementById('observacoes').textContent = data.observacoes;
+                document.getElementById('observacoesContainer').classList.remove('hidden');
+            }
+            
+            // Status badge
+            const statusConfig = {
+                'aguardando': { color: 'bg-yellow-100 text-yellow-800', texto: 'Aguardando Entregador' },
+                'aceito': { color: 'bg-blue-100 text-blue-800', texto: 'Aceito pelo Entregador' },
+                'a_caminho': { color: 'bg-purple-100 text-purple-800', texto: 'A Caminho' },
+                'entregue': { color: 'bg-green-100 text-green-800', texto: 'Entregue' },
+                'cancelado': { color: 'bg-red-100 text-red-800', texto: 'Cancelado' }
+            };
+            
+            const status = statusConfig[data.status] || statusConfig['aguardando'];
+            const statusBadge = document.getElementById('statusBadge');
+            statusBadge.className = `px-4 py-2 rounded-full text-sm font-medium ${status.color}`;
+            statusBadge.textContent = status.texto;
+            
+            // Informações do entregador
+            if (data.entregadorId && data.nomeEntregador) {
+                document.getElementById('nomeEntregador').textContent = data.nomeEntregador;
+                document.getElementById('veiculoEntregador').textContent = 'Veículo do entregador';
+                document.getElementById('infoEntregador').classList.remove('hidden');
+            }
+            
+            // Construir timeline
+            construirTimeline(data);
+            
+            // Atualizar mapa simulado
+            atualizarMapaSimulado(data.status);
+        }
+
+        // Construir timeline de status
+        function construirTimeline(data) {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+            
+            const eventos = [
+                {
+                    status: 'aguardando',
+                    titulo: 'Pedido Criado',
+                    descricao: 'Aguardando entregador aceitar',
+                    timestamp: data.criadoEm,
+                    icone: '📋',
+                    ativo: true
+                },
+                {
+                    status: 'aceito',
+                    titulo: 'Pedido Aceito',
+                    descricao: 'Entregador a caminho da loja',
+                    timestamp: data.aceitoEm,
+                    icone: '✅',
+                    ativo: ['aceito', 'a_caminho', 'entregue'].includes(data.status)
+                },
+                {
+                    status: 'a_caminho',
+                    titulo: 'Saiu para Entrega',
+                    descricao: 'Entregador a caminho do destino',
+                    timestamp: data.saiuParaEntregaEm,
+                    icone: '🚚',
+                    ativo: ['a_caminho', 'entregue'].includes(data.status)
+                },
+                {
+                    status: 'entregue',
+                    titulo: 'Pedido Entregue',
+                    descricao: 'Entrega concluída com sucesso',
+                    timestamp: data.entregueEm,
+                    icone: '🎉',
+                    ativo: data.status === 'entregue'
+                }
+            ];
+            
+            eventos.forEach((evento, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start';
+                
+                const ativo = evento.ativo;
+                const isLast = index === eventos.length - 1;
+                
+                div.innerHTML = `
+                    <div class="flex flex-col items-center mr-4">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg ${
+                            ativo ? 'bg-secondary text-white' : 'bg-gray-200 text-gray-400'
+                        }">
+                            ${evento.icone}
+                        </div>
+                        ${!isLast ? `<div class="w-0.5 h-8 ${ativo ? 'bg-secondary' : 'bg-gray-200'} mt-2"></div>` : ''}
+                    </div>
+                    <div class="flex-1 pb-8">
+                        <h4 class="font-semibold ${ativo ? 'text-gray-900' : 'text-gray-400'}">${evento.titulo}</h4>
+                        <p class="text-sm ${ativo ? 'text-gray-600' : 'text-gray-400'} mb-1">${evento.descricao}</p>
+                        ${evento.timestamp && ativo ? `
+                        <p class="text-xs text-gray-500">
+                            ${new Date(evento.timestamp.toDate()).toLocaleString('pt-BR')}
+                        </p>
+                        ` : ''}
+                    </div>
+                `;
+                
+                timeline.appendChild(div);
+            });
+        }
+
+        // Atualizar mapa simulado
+        function atualizarMapaSimulado(status) {
+            const statusMapa = document.getElementById('statusMapa');
+            
+            switch (status) {
+                case 'aguardando':
+                    statusMapa.textContent = 'Aguardando entregador aceitar o pedido';
+                    break;
+                case 'aceito':
+                    statusMapa.textContent = 'Entregador a caminho da loja';
+                    break;
+                case 'a_caminho':
+                    statusMapa.textContent = 'Entregador a caminho do destino';
+                    break;
+                case 'entregue':
+                    statusMapa.textContent = 'Pedido entregue com sucesso';
+                    break;
+                case 'cancelado':
+                    statusMapa.textContent = 'Pedido foi cancelado';
+                    break;
+                default:
+                    statusMapa.textContent = 'Status da entrega';
+            }
+        }
+
+        // Mostrar pedido não encontrado
+        function mostrarPedidoNaoEncontrado() {
+            document.getElementById('buscaManual').classList.add('hidden');
+            document.getElementById('resultadoRastreamento').classList.add('hidden');
+            document.getElementById('pedidoNaoEncontrado').classList.remove('hidden');
+        }
+
+        // Nova consulta
+        function novaConsulta() {
+            document.getElementById('buscaManual').classList.remove('hidden');
+            document.getElementById('resultadoRastreamento').classList.add('hidden');
+            document.getElementById('pedidoNaoEncontrado').classList.add('hidden');
+            document.getElementById('codigoRastreio').value = '';
+            document.getElementById('codigoRastreio').focus();
+        }
+
+        // Atualização automática a cada 30 segundos se estiver rastreando
+        setInterval(() => {
+            const resultado = document.getElementById('resultadoRastreamento');
+            if (!resultado.classList.contains('hidden')) {
+                const codigo = document.getElementById('codigoRastreio').value;
+                if (codigo) {
+                    buscarPedido();
+                }
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
