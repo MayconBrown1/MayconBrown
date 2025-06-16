@@ -80,13 +80,14 @@
     <div class="overflow-x-auto bg-white shadow-lg rounded-xl">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-indigo-600 text-white">
-          <tr>
-            <th class="px-4 py-2 text-left">Nome</th>
-            <th class="px-4 py-2 text-left">Email</th>
-            <th class="px-4 py-2 text-left">WhatsApp</th>
-            <th class="px-4 py-2 text-left">Data</th>
-          </tr>
-        </thead>
+  <tr>
+    <th class="px-4 py-2 text-left">Nome</th>
+    <th class="px-4 py-2 text-left">Email</th>
+    <th class="px-4 py-2 text-left">WhatsApp</th>
+    <th class="px-4 py-2 text-left">Data</th>
+    <th class="px-4 py-2 text-left">Ações</th>
+  </tr>
+</thead>
         <tbody id="contatoList" class="divide-y divide-gray-300">
           <!-- Contatos aparecem aqui -->
         </tbody>
@@ -118,32 +119,44 @@
     }
 
     db.collection("contatos").orderBy("data", "desc").onSnapshot(snapshot => {
-      tbody.innerHTML = "";
+  tbody.innerHTML = "";
 
-      snapshot.forEach(doc => {
-        const contato = doc.data();
+  snapshot.forEach(doc => {
+    const contato = doc.data();
 
-        const row = document.createElement("tr");
-        row.classList.add("hover:bg-gray-100", "cursor-pointer");
-        row.onclick = () => abrirModal(contato.mensagem || "Mensagem não encontrada.");
+    const row = document.createElement("tr");
+    row.classList.add("hover:bg-gray-100");
 
-        row.innerHTML = `
-          <td class="px-4 py-2">${contato.nome || ''}</td>
-          <td class="px-4 py-2">${contato.email || ''}</td>
-          <td class="px-4 py-2">${contato.whatsapp || ''}</td>
-          <td class="px-4 py-2 text-sm text-gray-500">${contato.data ? new Date(contato.data).toLocaleString() : ''}</td>
-        `;
+    row.innerHTML = `
+      <td class="px-4 py-2 cursor-pointer" onclick="abrirModal('${contato.mensagem || 'Mensagem não encontrada.'}')">${contato.nome || ''}</td>
+      <td class="px-4 py-2 cursor-pointer" onclick="abrirModal('${contato.mensagem || 'Mensagem não encontrada.'}')">${contato.email || ''}</td>
+      <td class="px-4 py-2 cursor-pointer" onclick="abrirModal('${contato.mensagem || 'Mensagem não encontrada.'}')">${contato.whatsapp || ''}</td>
+      <td class="px-4 py-2 text-sm text-gray-500 cursor-pointer" onclick="abrirModal('${contato.mensagem || 'Mensagem não encontrada.'}')">${contato.data ? new Date(contato.data).toLocaleString() : ''}</td>
+      <td class="px-4 py-2">
+        <button onclick="apagarMensagem('${doc.id}')" class="text-red-600 hover:underline">Apagar</button>
+      </td>
+    `;
 
-        tbody.appendChild(row);
-      });
-    });
+    tbody.appendChild(row);
+  });
+});
 
     // Fecha o modal se clicar fora
     modal.addEventListener('click', (e) => {
       if (e.target === modal) fecharModal();
     });
+  function apagarMensagem(id) {
+  if (confirm("Tem certeza que deseja apagar essa mensagem?")) {
+    db.collection("contatos").doc(id).delete().then(() => {
+      alert("Mensagem apagada com sucesso.");
+    }).catch(error => {
+      console.error("Erro ao apagar:", error);
+      alert("Erro ao apagar a mensagem.");
+    });
+  }
+}
   </script>
-
+  
       <!-- Rodapé -->
     <footer class="bg-white border-t py-6 mt-16 text-center text-sm text-gray-500">
       <p>&copy; 2025 Maycon Brown. Todos os direitos reservados.</p>
