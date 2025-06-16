@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Contatos | Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDrt1bbLUjT8uzILn_cLgeRSDdMAM2ZHmI",
+    authDomain: "mayconbrown-bda8c.firebaseapp.com",
+    projectId: "mayconbrown-bda8c",
+    storageBucket: "mayconbrown-bda8c.firebasestorage.app",
+    messagingSenderId: "226624962636",
+    appId: "1:226624962636:web:410ad40aa6099ca57474e9",
+    measurementId: "G-Y1BTTK576V"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6 text-center">Mensagens Recebidas</h1>
+
+    <div class="overflow-x-auto bg-white shadow-lg rounded-xl">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-indigo-600 text-white">
+          <tr>
+            <th class="px-4 py-2 text-left">Nome</th>
+            <th class="px-4 py-2 text-left">Email</th>
+            <th class="px-4 py-2 text-left">WhatsApp</th>
+            <th class="px-4 py-2 text-left">Data</th>
+          </tr>
+        </thead>
+        <tbody id="contatoList" class="divide-y divide-gray-300">
+          <!-- Contatos aparecem aqui -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-md relative">
+      <h2 class="text-xl font-semibold mb-4">Mensagem do Contato</h2>
+      <p id="modalMensagem" class="whitespace-pre-wrap text-gray-700"></p>
+      <button onclick="fecharModal()" class="mt-6 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    const tbody = document.getElementById("contatoList");
+    const modal = document.getElementById("modal");
+    const modalMensagem = document.getElementById("modalMensagem");
+
+    function abrirModal(mensagem) {
+      modalMensagem.textContent = mensagem;
+      modal.classList.remove("hidden");
+    }
+
+    function fecharModal() {
+      modal.classList.add("hidden");
+    }
+
+    db.collection("contatos").orderBy("data", "desc").onSnapshot(snapshot => {
+      tbody.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const contato = doc.data();
+
+        const row = document.createElement("tr");
+        row.classList.add("hover:bg-gray-100", "cursor-pointer");
+        row.onclick = () => abrirModal(contato.mensagem || "Mensagem não encontrada.");
+
+        row.innerHTML = `
+          <td class="px-4 py-2">${contato.nome || ''}</td>
+          <td class="px-4 py-2">${contato.email || ''}</td>
+          <td class="px-4 py-2">${contato.whatsapp || ''}</td>
+          <td class="px-4 py-2 text-sm text-gray-500">${contato.data ? new Date(contato.data).toLocaleString() : ''}</td>
+        `;
+
+        tbody.appendChild(row);
+      });
+    });
+
+    // Fecha o modal se clicar fora
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) fecharModal();
+    });
+  </script>
+</body>
+</html>
