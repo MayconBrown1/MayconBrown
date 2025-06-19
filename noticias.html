@@ -1,200 +1,32 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WHDTPBXW');</script>
-<!-- End Google Tag Manager -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portal de Notícias - Acompanhe as últimas notícias e debates políticos de São Paulo com análise detalhada e atualizações em tempo real.">
-    <meta name="keywords" content="notícias, São Paulo, política, debate, atualidades, jornalismo">
-    <meta name="author" content="Portal de Notícias">
-    <title>Portal de Notícias</title>
-    <link rel="icon" href="img/icone.ico" type="image/x-icon">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('https://mayconbrown.com.br/img/svg/fundo-site.svg');
-            background-size: cover; /* Faz a imagem cobrir toda a tela */
-            background-position: center; /* Centraliza a imagem de fundo */
-            color: #333;
-        }
-        header {
-            background-color: #444;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .news-article {
-            background-color: white;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .news-article img {
-            max-width: 100%;
-            height: auto; /* Mantém a proporção da imagem */
-            border-radius: 8px;
-        }
-        .news-article h2 {
-            margin-top: 0;
-            font-size: 1.5em;
-            line-height: 1.4;
-        }
-        .news-article p {
-            margin: 0 0 10px 0;
-            line-height: 1.6;
-        }
-        footer {
-            background-color: #444;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            width: 100%;
-            bottom: 0;
-            clear: both;
-        }
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            .news-article {
-                padding: 15px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHDTPBXW"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-    <header>
-        <h1>Portal de Notícias</h1>
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Página com iFrame - Brown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-900 text-white flex flex-col items-center min-h-screen">
+
+    <!-- Logo -->
+    <header class="w-full p-4 flex justify-center">
+        <a href="https://mayconbrown.com.br/" target="_blank">
+        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="w-[400px] max-w-full">
+        </a>
     </header>
 
-    <!-- Adicione mais artigos de notícias aqui -->
+    <!-- Área do iframe e da imagem sobreposta -->
+    <div class="relative w-full max-w-5xl aspect-video">
+        
+        <!-- Imagem sobre o iframe -->
+        <img src="img/test.png" alt="Imagem sobre iframe"
+            class="absolute top-0 left-0 w-full h-full z-20 pointer-events-none" />
+        
+        <!-- iframe -->
+        <iframe src="https://s3.glbimg.com/v1/AUTH_e1b09a2d222b4900a437a46914be81e5/static/amp/index.html?videosids=992055&adunit=tvg_G1%2FOutros&adcustomdata=ambient%3Damp%26tvg_pgStr%3Dg1%2F%C3%BAltimas+not%C3%ADcias%26tipo_pagina%3Dvideo&domain=g1.globo.com&ambient=amp&ga_productUA=UA-296593-3&ga_extras=%7B%22dimension1%22%3A%22amp%22%7D&ga4_measurementid=G-4DF8YFDHV7"
+                class="absolute top-0 left-0 w-full h-full border border-gray-700 shadow-lg z-10" frameborder="0"></iframe>
+    
+    </div>
 
-<!--   <div class="container">
-        <section class="news-article">
-            <h2>TITULO</h2>
-            <img src="HTML DA IMAGEM" alt="SOBRE A">
-            <p><strong>Data:</strong> 01/09/2024</p> 
-            <p></p>
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-        </section> 
--->
-
-
-    <!--   <div class="container">
-        <section class="news-article">
-            <h2>TITULO</h2>
-            <img src="HTML DA IMAGEM" alt="SOBRE A">
-            <p><strong>Data:</strong> 01/09/2024</p> 
-            <p></p>
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-        </section> 
--->
-
-
-    <!--   <div class="container">
-        <section class="news-article">
-            <h2>TITULO</h2>
-            <img src="HTML DA IMAGEM" alt="SOBRE A">
-            <p><strong>Data:</strong> 01/09/2024</p> 
-            <p></p>
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-        </section> 
--->
-
-
-    <!--   <div class="container">
-        <section class="news-article">
-            <h2>TITULO</h2>
-            <img src="HTML DA IMAGEM" alt="SOBRE A">
-            <p><strong>Data:</strong> 01/09/2024</p> 
-            <p></p>
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-            <p></p> 
-        </section> 
-
-
-
-
-    <div class="container">
-        <section class="news-article">
-            <h2>Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro em Veneza</h2>
-            <img src="https://i.ytimg.com/vi/OrX7kv4FPT4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAEMmCcWggPJE0f8Y1DciRXFTtKyg" alt="Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro">
-            <p><strong>Data:</strong> 01/09/2024</p> 
-            <p>Selton Mello e Fernanda Torres se emocionam com aplausos de 10 minutos a filme brasileiro em Veneza. A ovação ocorreu após a exibição do filme ‘Ainda Estou Aqui’, dirigido por Walter Salles, na 81ª edição do Festival de Veneza, na Itália, neste domingo, 1º. O longa foi aplaudido por cerca de 10 minutos pelo público presente na sessão de gala e deixou os atores emocionados com a reação. O drama conta a história de Eunice Paiva, que luta para descobrir o paradeiro de seu marido após ele ser levado pela Polícia Militar em 1971, durante a ditadura no Brasil. Reprodução/cinematographico7/Instagram Reprodução/oficialfernandatorres/Instagram Reprodução/simonezuccolotto/Instagram</p>
-        </section>
-
-        <section class="news-article">
-            <h2>Marco Pigossi se casa com cineasta Marco Calvani na Itália</h2>
-            <img src="https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/09/casamento-pigosi-calvani.jpg?w=1220&h=674&crop=1&quality=85" alt="Marco Pigossi e Marco Calvani se casam na Itália ">
-            <p><strong>Data:</strong> 02/09/2024</p> 
-            <p>O ator Marco Pigossi, 35, se casou com o cineasta italiano Marco Calvani, 43, no último sábado (31), em Toscana, na Itália. A cerimônia intimista ocorreu após o casal oficializar a união civil no final de 2023, em São Paulo.</p>
-            <p>Um breve vídeo do evento foi publicado pelo portal Hugo Gloss no Instagram. Para o momento, os dois, que estavam descalços, usaram ternos claros iguais, e, logo na sequência, foram recebidos pelos convidados.</p>
-            <p>Pigossi e Calvani assumiram o relacionamento em novembro de 2021, durante o “Thanksgiving” (Dia de Ação de Graças, em tradução). Na época, o brasileiro postou um story andando de mãos dadas com o namorado e brincou: “Chocando um total de zero pessoas”.</p>
-            <p>Quem é Marco Calvani, marido de Marco Pigossi? Irmão mais velho do ator famoso Luca Calvani, Marco Calvani é um dramaturgo, diretor, cineasta, tradutor e ator italiano. Dentre seus trabalhos por trás das telas, estão “Best Place” e “The View From Up Here” (2017).</p>
-        </section>
-
-        <section class="news-article">
-            <h2>“Boules”, “Pablito” e xingamentos: o debate agressivo em SP que deixou propostas de lado</h2>
-            <img src="https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2024/09/WhatsApp-Image-2024-09-01-at-21.33.00.jpeg?w=1029&h=547&crop=1&quality=85" alt="Imagem do debate em São Paulo mostrando candidatos discutindo acaloradamente">
-            <p><strong>Data:</strong> 01/09/2024</p>
-            <p>“Picareta”, “bananinha”, “palhaço”, “bandido”, “invasor”, “criminoso”, “sem caráter”, “estelionatário”, “ladrãozinho”, “vagabundo”. Essas foram apenas algumas das expressões utilizadas pelos principais candidatos à prefeitura de São Paulo durante o debate promovido pela TV Gazeta em parceria com o canal MyNews.</p>
-            <p>O encontro, que aconteceu neste domingo (1º), foi marcado pela agressividade e acusações. E também por um acirramento no tom de acusações e perguntas por parte dos principais candidatos à prefeitura de São Paulo contra Pablo Marçal (PRTB). Poucos dos problemas da cidade foram discutidos. Entre as raríssimas interações envolvendo aspectos de São Paulo, o tom foi similarmente agressivo.</p>
-            <p>Em ascensão nas pesquisas, Marçal virou alvo principal de todos os candidatos. Quatro pesquisas divulgadas na última semana apontam empate técnico na liderança entre Boulos, Nunes e Marçal. Marcado por ataques entre os políticos, o debate foi pobre em propostas e em nível das discussões.</p>
-            <p>Datena chegou a deixar o púlpito e caminhar em direção a Pablo Marçal, o chamando de “vagabundo”. Ele foi advertido formalmente pela moderadora, a jornalista Denise Campos de Toledo — que também repreendeu Marçal por chamar o jornalista “para a briga”.</p>
-            <p>A comunicadora pediu reiteradamente durante as mais de duas horas que os candidatos se comportassem, tivessem decoro e respeitassem a televisão e os eleitores. Ela revelou que, nos bastidores, houve embates.</p>
-            <p>Anteriormene, o apresentador licenciado já havia atacado Ricardo Nunes. “Ele disse que eu não tenho coragem de falar na sua cara, eu falo na sua cara: picareta”, afirmou. Os dois protagonizaram um bate-boca acalorado com o microfone desligado.</p>
-            <p>O encontro entre os candidatos foi marcado por uma quantidade cansativa de pedidos de direito de resposta. O terceiro bloco contemplava o sorteio de perguntas temáticas que obrigou os candidatos a falar sobre as questões da maior metrópole da América do Sul — mas, reitere-se, en passant.</p>
-            <p>Depois de faltarem ao debate promovido pela revista Veja em parceria com a universidade ESPM, Datena, Boulos e Nunes concordaram em comparecer depois de a Gazeta estipular regras mais rígidas — com a possibilidade de expulsão de candidatos em caso de descumprimento do acordado pelas campanhas junto à rede de televisão. As ausências do trio no debate anterior foram criticadas por Pablo Marçal e Tabata Amaral.</p>
-            <p>Entre as regras, estava a proibição de apresentação de objetos pelos candidatos.</p>
-            <p>Pela ordem definida por sorteio, Marçal já iniciou dando o tom que o debate teria. Ele iniciou as discussões provocando Guilherme Boulos. O candidato do PRTB passou as mais de duas horas referindo-se ao candidato do PSOL de “Boules”, em alusão ao episódio envolvendo a adaptação do Hino Nacional com linguagem neutra em um evento de campanha do psolista. Ele voltou a aludir que Boulos já fez uso de drogas.</p>
-            <p>“Sobre o uso de droga, a farsa já foi demonstrada. O cidadão usar um homônimo para atacar uma pessoa mostra o nível de alguém que quer ser prefeito de São Paulo”, respondeu Boulos, que, em tom mais duro do que anteriormente, afirmou que Marçal “é bandido e condenado” e que a população “está sabendo disso agora”. Ele mencionou supostas condenações de Marçal e ligou o candidato a Nunes e Bolsonaro.</p>
-            <p>Tentando colar sua imagem à de Jair Bolsonaro, Nunes adotou um tom mais parecido com o do ex-presidente e iniciou o debate chamando o candidato do PRTB de “Pablito”, com quem divide os votos bolsonaristas. “[Marçal] participou, foi condenado e preso por integrar uma quadrilha que entrava na conta das pessoas e subtraía recursos dos mais humildes e aposentados”, acusou o prefeito. Ele chamou o candidato de “tchutchuca do PCC”, referiu-se a Boulos como “invasor”.</p>
-            <p>Boulos mirou os eleitores da periferia, onde tem menos afeição por parte do eleitorado. Ele apresentou em mais de uma ocasião sua candidata a vice, Marta Suplicy (PT), que já foi prefeita de São Paulo e foi bem avaliada nas regiões mais pobres.</p>
-            <p>Além de trazer ao debate os vídeos produzidos pela campanha repletos de acusações contra Pablo Marçal, Tabata mirou Nunes e indagou o prefeito sobre índices envolvendo a educação na capital paulista e sobre políticas para a cracolândia.</p>
-            <p>Datena mirou sua narrativa em mostrar-se como um prefeito que basearia sua gestão no combate à criminalidade, trazendo sua experiência como apresentador de um programa policial.</p>
-            <p>Marçal repetiu a estratégia de outros debates, inventou apelidos para todos os candidatos e aproveitou os momentos em que dividiu a tela com adversários para pedir, fazendo gestos com as mãos, votos.</p>
-            <p>Ao final de um cansativo debate, o eleitor ficou carente de respostas sobre as políticas públicas para a maior e mais rica metrópole do país. Os cortes para as redes sociais, porém, estão garantidos.</p>
-        </section>
-    </div> -->
-
-    <footer>
-        <p>&copy; 2024 Portal de Notícias. Todos os direitos reservados.</p>
-    </footer>
-</body>
-</html>
+    </body>
+    </html>
