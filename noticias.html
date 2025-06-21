@@ -1,36 +1,26 @@
-    <!DOCTYPE html>
-    <html lang="pt-br">
-    <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Israel ao Vivo - Brown</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
-    </head>
-    <body class="bg-gray-900 text-white flex flex-col items-center min-h-screen">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Israel ao Vivo - Brown</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="https://mayconbrown.com.br/img/icone.ico" type="image/x-icon">
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center min-h-screen">
 
-    <!-- Logo -->
-    <header class="w-full p-4 flex justify-center">
-        <a href="https://mayconbrown.com.br/" target="_blank">
-        <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="w-[400px] max-w-full">
-        </a>
-    </header>
+  <!-- Logo -->
+  <header class="w-full p-4 flex justify-center">
+    <a href="https://mayconbrown.com.br/" target="_blank">
+      <img src="https://mayconbrown.com.br/img/svg/logobranca.svg" alt="Logo" class="w-[400px] max-w-full">
+    </a>
+  </header>
 
-    <!-- Área do iframe e da imagem sobreposta -->
-    <div class="relative w-full max-w-5xl aspect-video">
-        
-        <!-- Imagem sobre o iframe -->
-        <img src="img/test.png" alt="Imagem sobre iframe"
-            class="absolute top-0 left-0 w-full h-full z-20 pointer-events-none" />
-        
-        <!-- iframe -->
-        <iframe src="https://s3.glbimg.com/v1/AUTH_e1b09a2d222b4900a437a46914be81e5/static/amp/index.html?videosids=992055&adunit=tvg_G1%2FOutros&adcustomdata=ambient%3Damp%26tvg_pgStr%3Dg1%2F%C3%BAltimas+not%C3%ADcias%26tipo_pagina%3Dvideo&domain=g1.globo.com&ambient=amp&ga_productUA=UA-296593-3&ga_extras=%7B%22dimension1%22%3A%22amp%22%7D&ga4_measurementid=G-4DF8YFDHV7"
-                class="absolute top-0 left-0 w-full h-full border border-gray-700 shadow-lg z-10" frameborder="0"></iframe>
+  <!-- Segundo iframe -->
+  <div class="relative w-full max-w-5xl aspect-video mb-8">
+    <iframe src="https://www.tzevaadom.co.il/en/"
+            class="absolute top-0 left-0 w-full h-full border border-gray-700 shadow-lg z-10" frameborder="0" allowfullscreen></iframe>
+  </div>
 
-        <iframe src="https://www.tzevaadom.co.il/en/"
-                class="absolute top-0 left-0 w-full h-full border border-gray-700 shadow-lg z-10" frameborder="0"></iframe>
-    
-    </div>
-
-    </body>
-    </html>
+</body>
+</html>
